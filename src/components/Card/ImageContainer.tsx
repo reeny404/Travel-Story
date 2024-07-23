@@ -40,7 +40,7 @@ const ImageContainer = ({
       )}
       {size === "recommend" && (
         <Image
-          src="/bookmark.svg"
+          src="/cardImages/bookmark.svg"
           alt="bookmark"
           width={20}
           height={20}

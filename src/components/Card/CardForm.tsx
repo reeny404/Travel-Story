@@ -43,7 +43,7 @@ const CardForm = ({
         {Array.from({ length: filledIcon }).map((_, index) => (
           <Image
             key={`filled-${index}`}
-            src="/filledStar.svg"
+            src="/cardImages/filledStar.svg"
             alt="filled star"
             width={20}
             height={20}
@@ -53,7 +53,7 @@ const CardForm = ({
         {Array.from({ length: unFilledIcon }).map((_, index) => (
           <Image
             key={`unfilled-${index}`}
-            src="/unfilledStar.svg"
+            src="/cardImages/unfilledStar.svg"
             alt="unfilled star"
             width={20}
             height={20}

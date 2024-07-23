@@ -1,4 +1,5 @@
 import CardForm from "./CardForm";
+import CardType from "./CardType";
 import ImageContainer from "./ImageContainer";
 
 //image 컨테이너 , text container, areaForm (intro, detail, recommend),
@@ -26,6 +27,7 @@ function Card() {
       />
       <CardForm intent="intro" items={mockAreaData} />
 
+      <CardType type="home" title="할인하는 숙소" linkUrl="/" />
       <ImageContainer
         isTitle
         size="recommend"
