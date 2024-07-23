@@ -5,14 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { ComponentProps } from "react";
 
-type cardFormProps = cardFormVariantProps & {
+type CardFormProps = CardFormVariantProps & {
   title?: string;
   description?: string;
   items?: string[];
   rating?: number;
 } & ComponentProps<"div">;
 
-type cardFormVariantProps = VariantProps<typeof cardFormVariant>;
+type CardFormVariantProps = VariantProps<typeof cardFormVariant>;
 
 const cardFormVariant = cva("m-2 w-full h-1/3", {
   variants: {
@@ -33,7 +33,7 @@ const CardForm = ({
   items,
   rating,
   ...props
-}: cardFormProps) => {
+}: CardFormProps) => {
   const makeRatingIcon = (rating: number) => {
     const maximum = 5;
     const filledIcon = rating;

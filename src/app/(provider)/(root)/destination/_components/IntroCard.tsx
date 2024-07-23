@@ -2,13 +2,13 @@ import CardForm from "@/components/Card/CardForm";
 import ImageContainer from "@/components/Card/ImageContainer";
 import Link from "next/link";
 
-type introCardProps = {
+type IntroCardProps = {
   title: string;
   imageUrl: string;
   items: string[];
 };
 
-function IntroCard({ title, imageUrl, items }: introCardProps) {
+function IntroCard({ title, imageUrl, items }: IntroCardProps) {
   return (
     <div className="w-[375px] h-full relative">
       <ImageContainer

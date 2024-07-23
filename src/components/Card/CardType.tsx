@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-type cardTypeProps = {
+type CardTypeProps = {
   type: string;
   title: string;
   linkUrl: string;
@@ -9,7 +9,7 @@ type cardTypeProps = {
 
 // 타입은 이미지의 파일명과 동일해야 합니다.
 
-function CardType({ type, title, linkUrl }: cardTypeProps) {
+function CardType({ type, title, linkUrl }: CardTypeProps) {
   return (
     <div className="w-full h-4 mb-2 flex items-center justify-between">
       <div className="flex items-center aspect-auto">
