@@ -4,7 +4,7 @@ import ImageContainer from "@/components/Card/ImageContainer";
 
 function recommendCard() {
   return (
-    <div>
+    <>
       <CardType type="home" title="할인하는 숙소" linkUrl="/" />
       <ImageContainer
         isTitle
@@ -17,7 +17,8 @@ function recommendCard() {
         description="고대의 역사가 살아숨쉬는 도시"
         rating={4}
       />
-    </div>
+      <button className="w-10 h-10 z-10">넘기기</button>
+    </>
   );
 }
 

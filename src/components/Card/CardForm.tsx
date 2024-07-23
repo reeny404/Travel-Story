@@ -2,6 +2,7 @@
 import { VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
 import Image from "next/image";
+import Link from "next/link";
 import { ComponentProps } from "react";
 
 type cardFormProps = cardFormVariantProps & {
@@ -76,9 +77,9 @@ const CardForm = ({
         </>
       ) : (
         items?.map((item, index) => (
-          <h2 key={index} className="font-semibold">
+          <Link href={"/"} key={index} className="font-semibold">
             {item}
-          </h2>
+          </Link>
         ))
       )}
     </div>

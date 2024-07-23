@@ -1,18 +1,30 @@
 import CardForm from "@/components/Card/CardForm";
 import ImageContainer from "@/components/Card/ImageContainer";
+import Link from "next/link";
 
-function IntroCard() {
-  const mockAreaData = ["로마", "나폴리", "피렌체", "볼로냐", "베네치아"];
+type introCardProps = {
+  title: string;
+  imageUrl: string;
+  items: string[];
+};
 
+function IntroCard({ title, imageUrl, items }: introCardProps) {
   return (
-    <div className="w-[375px] h-full">
+    <div className="w-[375px] h-full relative">
       <ImageContainer
         isTitle={true}
-        title="ITALY"
+        title={title}
         size="intro"
-        imageUrl="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/Italy.jpg"
+        imageUrl={imageUrl}
       />
-      <CardForm intent="intro" items={mockAreaData} />
+      <CardForm intent="intro" items={items} />
+
+      <Link
+        href={"/"}
+        className="flex justify-center items-center bg-black border rounded-3xl text-white w-20 h-12 absolute bottom-[31%] right-3"
+      >
+        넘기기
+      </Link>
     </div>
   );
 }
