@@ -1,11 +1,12 @@
 import { VariantProps, cva } from "class-variance-authority";
 import Image from "next/image";
+import { ComponentProps } from "react";
 
 type imageContainerProps = imageVariantProps & {
   title?: string;
   isTitle: boolean;
   imageUrl: string;
-};
+} & ComponentProps<"div">;
 
 type imageVariantProps = VariantProps<typeof imageVariant>;
 
@@ -26,9 +27,10 @@ const ImageContainer = ({
   isTitle,
   title,
   imageUrl,
+  ...props
 }: imageContainerProps) => {
   return (
-    <div className={imageVariant({ size })}>
+    <div className={imageVariant({ size })} {...props}>
       <Image src={imageUrl} alt="이미지" layout="fill" objectFit="cover" />
       {isTitle && (
         <h1 className="absolute bottom-0 left-0 -mb-6 text-[64px] font-bold">
