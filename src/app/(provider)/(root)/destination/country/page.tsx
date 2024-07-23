@@ -1,4 +1,4 @@
-import IntroCard from "./_components/IntroCard";
+import IntroCard from "../_components/IntroCard";
 
 function RecommendIntroPage() {
   // 데이터 호출 -> id 또한 여기서 가져오니 버튼은 여기있으나 안에있으나 도찐 개찐
