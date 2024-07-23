@@ -9,23 +9,34 @@ function Card() {
     <div className="flex flex-col justify-center items-center">
       <ImageContainer
         isTitle
-        size="small"
+        size="detail"
         imageUrl="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/Italy.jpg"
       />
       <CardForm
         title="르네상스의 발상지, 예술과 낭만의 중심 이탈리아"
         description="여행지 소개 여행지 소개 여행지 소개 여행지 소개 여행지 소개 여행지 소개여행지 소개여행지 소개여행지 소개"
-        intent="intro"
+        intent="detail"
       />
       <hr />
       <ImageContainer
         isTitle={true}
         title="ITALY"
-        size="small"
+        size="intro"
         imageUrl="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/Italy.jpg"
       />
-      <CardForm intent="detail" items={mockAreaData} />
+      <CardForm intent="intro" items={mockAreaData} />
 
+      <ImageContainer
+        isTitle
+        size="recommend"
+        imageUrl="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/Italy.jpg"
+      />
+      <CardForm
+        intent="detail"
+        title="숙소 명"
+        description="고대의 역사가 살아숨쉬는 도시"
+        rating={4}
+      />
       <div className="w-[134px] h-1 bg-black opacity-70 fixed bottom-3"></div>
     </div>
   );
