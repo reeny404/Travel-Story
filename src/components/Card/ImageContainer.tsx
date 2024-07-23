@@ -13,7 +13,7 @@ type imageVariantProps = VariantProps<typeof imageVariant>;
 const imageVariant = cva("relative w-full bg-[#f0f0f0] aspect-auto", {
   variants: {
     size: {
-      intro: "min-h-[562px]",
+      intro: "h-2/3",
       detail: "min-h-[353px]",
       recommend: "min-h-[189px]",
     },

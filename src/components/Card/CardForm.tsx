@@ -13,10 +13,10 @@ type cardFormProps = cardFormVariantProps & {
 
 type cardFormVariantProps = VariantProps<typeof cardFormVariant>;
 
-const cardFormVariant = cva("m-2 w-full", {
+const cardFormVariant = cva("m-2 w-full h-1/3", {
   variants: {
     intent: {
-      intro: "p-9 pt-7 pb-16 h-[250px] flex flex-col justify-around",
+      intro: "p-9 pt-7 pb-10 flex flex-col justify-around",
       detail: "p-4",
     },
   },

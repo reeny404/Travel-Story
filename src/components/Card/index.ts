@@ -1,1 +1,1 @@
-export { default } from "./Card";
+export { default } from "../../app/(provider)/(root)/recommend/_components/Card";
