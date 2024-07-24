@@ -7,12 +7,19 @@ type AreaCardType = {
   description: string;
   rating: number;
   imageUrl: string;
+  linkUrl: string;
 };
 
-function AreaCard({ title, description, rating, imageUrl }: AreaCardType) {
+function AreaCard({
+  title,
+  description,
+  rating,
+  imageUrl,
+  linkUrl,
+}: AreaCardType) {
   return (
     <>
-      <CardType type="home" title="할인하는 숙소" linkUrl="/" />
+      <CardType type="home" title="할인하는 숙소" linkUrl={linkUrl} />
       <ImageContainer
         isTitle
         size="area"
