@@ -8,7 +8,7 @@ function RecommendCard() {
       <CardType type="home" title="할인하는 숙소" linkUrl="/" />
       <ImageContainer
         isTitle
-        size="recommend"
+        size="area"
         imageUrl="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/Italy.jpg"
       />
       <CardForm

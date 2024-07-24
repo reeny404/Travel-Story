@@ -1,6 +1,7 @@
+import AreaCard from "../_components/AreaCard";
 import IntroCard from "../_components/IntroCard";
 
-function RecommendIntroPage() {
+function IntroPage() {
   // 데이터 호출 -> id 또한 여기서 가져오니 버튼은 여기있으나 안에있으나 도찐 개찐
   const countryInfo = {
     id: 1,
@@ -15,6 +16,7 @@ function RecommendIntroPage() {
 
   return (
     <div className=" w-screen h-screen max-h-[812px] flex justify-center">
+      <AreaCard />
       <IntroCard
         title={countryInfo.name}
         imageUrl={countryInfo.imageUrl}
@@ -24,4 +26,4 @@ function RecommendIntroPage() {
   );
 }
 
-export default RecommendIntroPage;
+export default IntroPage;
