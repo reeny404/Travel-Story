@@ -1,6 +1,6 @@
 import DetailCard from "../../_components/DetailCard";
 
-function RecommendDetailPage() {
+function CountryDetailPage() {
   return (
     <div className=" w-screen h-screen max-h-[812px] flex flex-col justify-center items-center">
       <DetailCard />
@@ -8,4 +8,4 @@ function RecommendDetailPage() {
   );
 }
 
-export default RecommendDetailPage;
+export default CountryDetailPage;
