@@ -1,7 +1,7 @@
 import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
-
+// area ItemsPage가 있어야 될듯????
 type AreaCardType = {
   title: string;
   description: string;
