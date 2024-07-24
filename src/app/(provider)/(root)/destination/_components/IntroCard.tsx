@@ -22,12 +22,14 @@ function IntroCard({ title, imageUrl, items }: IntroCardProps) {
   const router = useRouter();
 
   const bind = useDrag((state) => {
-    const newX = state.offset[0] * movementScale;
-    api.start({ x: newX });
+    if (state.movement[0] < 0 && state.axis === "x") {
+      const newX = state.offset[0] * movementScale;
+      api.start({ x: newX });
 
-    if (state.last) {
-      setX(newX);
-      router.push("/destination/country/1");
+      if (state.last) {
+        setX(newX);
+        router.push("/destination/country/1");
+      }
     }
   });
 

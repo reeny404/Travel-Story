@@ -2,7 +2,14 @@ import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 
-function AreaCard() {
+type AreaCardType = {
+  title: string;
+  description: string;
+  rating: number;
+  imageUrl: string;
+};
+
+function AreaCard({ title, description, rating, imageUrl }: AreaCardType) {
   return (
     <>
       <CardType type="home" title="할인하는 숙소" linkUrl="/" />
@@ -13,9 +20,9 @@ function AreaCard() {
       />
       <CardForm
         intent="detail"
-        title="숙소 명"
-        description="고대의 역사가 살아숨쉬는 도시"
-        rating={4}
+        title={title}
+        description={description}
+        rating={rating}
       />
     </>
   );
