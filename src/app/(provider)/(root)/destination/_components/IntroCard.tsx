@@ -20,7 +20,7 @@ function IntroCard({ title, imageUrl, items }: IntroCardProps) {
       <CardForm intent="intro" items={items} />
 
       <Link
-        href={"/"}
+        href={"/destination/country/1"}
         className="flex justify-center items-center bg-black border rounded-3xl text-white w-20 h-12 absolute bottom-[31%] right-3"
       >
         넘기기

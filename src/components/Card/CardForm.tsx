@@ -18,7 +18,7 @@ const cardFormVariant = cva("m-2 w-full ", {
   variants: {
     intent: {
       intro: "p-9 pt-7 pb-10 flex flex-col justify-around h-1/3",
-      detail: "p-4 h-1/3",
+      detail: "p-4 ",
       review: "p-9 pt-7 pb-10 flex flex-col justify-around",
     },
   },
