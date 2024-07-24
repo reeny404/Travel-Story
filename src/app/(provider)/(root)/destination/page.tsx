@@ -3,6 +3,8 @@ import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
 import { ReactNode } from "react";
+import MainCityTemplate from "./_components/MainCityTemplate";
+import ReviewCard from "./_components/ReviewCard";
 
 // 상단에 띄울 4개의 나라는 하드코딩
 
@@ -81,10 +83,22 @@ function DestinationPage() {
       <div className="w-full h-20 bg-gray-400 flex justify-center items-center text-white mt-10">
         광고배너
       </div>
-      <div className="mt-10 mb-10">
-        <CardType linkUrl="/" title="할인하는 숙소" type="home" />
+      <div className=" mb-10">
+        <CardType
+          linkUrl="/"
+          title="할인하는 숙소"
+          type="home"
+          innerClassName="mt-5"
+        />
         <CarouselWrapper items={carouselArr} />
       </div>
+      <MainCityTemplate />
+      <ReviewCard
+        title="장소명"
+        description="회원 리뷰 내용 줄줄줄줄줄줄"
+        rating={4}
+        imageUrl={IMAGE_URL}
+      />
     </div>
   );
 }

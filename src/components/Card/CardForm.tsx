@@ -14,11 +14,12 @@ type CardFormProps = CardFormVariantProps & {
 
 type CardFormVariantProps = VariantProps<typeof cardFormVariant>;
 
-const cardFormVariant = cva("m-2 w-full h-1/3", {
+const cardFormVariant = cva("m-2 w-full ", {
   variants: {
     intent: {
-      intro: "p-9 pt-7 pb-10 flex flex-col justify-around",
-      detail: "p-4",
+      intro: "p-9 pt-7 pb-10 flex flex-col justify-around h-1/3",
+      detail: "p-4 h-1/3",
+      review: "p-9 pt-7 pb-10 flex flex-col justify-around",
     },
   },
   defaultVariants: {
@@ -46,8 +47,8 @@ const CardForm = ({
             key={`filled-${index}`}
             src="/cardImages/filledStar.svg"
             alt="filled star"
-            width={20}
-            height={20}
+            width={15}
+            height={15}
             objectFit="contain"
           />
         ))}
@@ -56,8 +57,8 @@ const CardForm = ({
             key={`unfilled-${index}`}
             src="/cardImages/unfilledStar.svg"
             alt="unfilled star"
-            width={20}
-            height={20}
+            width={15}
+            height={15}
             objectFit="contain"
           />
         ))}
@@ -67,10 +68,23 @@ const CardForm = ({
 
   return (
     <div className={cardFormVariant({ intent })} {...props}>
-      {intent === "detail" ? (
+      {intent !== "intro" ? (
         <>
-          <h2 className=" text-xl font-bold mt-2 mb-2">{title}</h2>
-          <p className={clsx(rating !== undefined && rating >= 0 && "mb-3")}>
+          <h2
+            className={clsx(
+              "text-xl font-bold mt-2 mb-2",
+              intent === "review" && "text-[15px]"
+            )}
+          >
+            {title}
+          </h2>
+          <p
+            className={clsx(
+              rating !== undefined && rating >= 0 && "mb-3",
+              intent === "review" &&
+                "text-sm overflow-x-hidden whitespace-nowrap text-ellipsis  "
+            )}
+          >
             {description}
           </p>
           {rating !== undefined && makeRatingIcon(rating)}
