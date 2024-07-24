@@ -2,7 +2,7 @@ import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 
-function RecommendCard() {
+function AreaCard() {
   return (
     <>
       <CardType type="home" title="할인하는 숙소" linkUrl="/" />
@@ -21,4 +21,4 @@ function RecommendCard() {
   );
 }
 
-export default RecommendCard;
+export default AreaCard;
