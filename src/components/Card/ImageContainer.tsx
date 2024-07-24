@@ -15,7 +15,7 @@ const imageVariant = cva("relative w-full bg-[#f0f0f0] aspect-auto", {
     size: {
       intro: "h-2/3",
       detail: "min-h-[353px]",
-      recommend: "min-h-[189px]",
+      area: "min-h-[189px]",
     },
   },
   defaultVariants: {
@@ -38,7 +38,7 @@ const ImageContainer = ({
           {title}
         </h1>
       )}
-      {size === "recommend" && (
+      {size === "area" && (
         <Image
           src="/cardImages/bookmark.svg"
           alt="bookmark"

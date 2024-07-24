@@ -1,7 +1,7 @@
 import CardForm from "@/components/Card/CardForm";
 import ImageContainer from "@/components/Card/ImageContainer";
 
-function detailCard() {
+function DetailCard() {
   return (
     <>
       <ImageContainer
@@ -18,4 +18,4 @@ function detailCard() {
   );
 }
 
-export default detailCard;
+export default DetailCard;
