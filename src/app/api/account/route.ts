@@ -20,16 +20,13 @@ export async function GET(request: NextRequest) {
     .single();
 
 
-  return NextResponse.json({ data, error, status: 200, message: "OK" });
-
-  // return NextResponse.json({ data, error, status: 200, message: "OK" }, error ? {
-  //   status: 500,
-  //   statusText: `[${error.code}] ${error.hint} > ${error.message}`
-  // } : {
-  //   status: 200,
-  //   statusText: "OK",
-  // });
-
+  return NextResponse.json({ data, error, status: 200, message: "OK" }, error ? {
+    status: 400,
+    statusText: `[${error.code}] ${error.hint} > ${error.message}`
+  } : {
+    status: 200,
+    statusText: "OK",
+  });
 }
 
 /**
