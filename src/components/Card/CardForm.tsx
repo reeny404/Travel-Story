@@ -92,7 +92,11 @@ const CardForm = ({
         </>
       ) : (
         items?.map((item, index) => (
-          <Link href={"/"} key={index} className="font-semibold">
+          <Link
+            href={`/destination/city/${item.id}` || "/"}
+            key={index}
+            className="font-semibold max-w-28"
+          >
             {item.name}
           </Link>
         ))

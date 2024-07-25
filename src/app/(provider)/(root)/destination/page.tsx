@@ -3,7 +3,6 @@ import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
 import { ReactNode } from "react";
-import MainCityTemplate from "./_components/MainCityTemplate";
 import ReviewCard from "./_components/ReviewCard";
 
 // 상단에 띄울 4개의 나라는 하드코딩
@@ -92,7 +91,7 @@ function DestinationPage() {
         />
         <CarouselWrapper items={carouselArr} />
       </div>
-      <MainCityTemplate />
+      {/* <MainCityTemplate /> */}
       <ReviewCard
         title="장소명"
         description="회원 리뷰 내용 줄줄줄줄줄줄"

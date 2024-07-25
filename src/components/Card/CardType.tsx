@@ -27,7 +27,7 @@ function CardType({ type, title, linkUrl, innerClassName }: CardTypeProps) {
         )}
         <h1 className="font-semibold ">{title}</h1>
       </div>
-      <Link href={linkUrl} className="flex text-xs text-[#828282]">
+      <Link href={linkUrl || "/"} className="flex text-xs text-[#828282]">
         자세히 보기
         <Image
           src={`/cardImages/right-arrow.svg`}

@@ -48,7 +48,7 @@ class CityAPI {
    */
   async getCitiesByCountry(id: number) {
     try {
-      const path = `/api/city/countryId`;
+      const path = `/api/city/country`;
       const response = await this.axios.get<{ data: CityType[] }>(path, {
         params: {
           id,

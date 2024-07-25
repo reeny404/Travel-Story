@@ -28,18 +28,57 @@ class AreaAPI {
    * @param isMultiple  {boolean} 다수 지역 or 한개의 지역
    * @returns
    */
-  async getAreasById(id: number, isMultiple: boolean) {
+  async getAreasById(id: number) {
     try {
       const path = `/api/area/${id}`;
-      const response = await this.axios.get<AreaType[] | AreaType>(path, {
+      const response = await this.axios.get<AreaType>(path, {
         params: {
           id,
-          isMultiple,
         },
       });
 
       const data = response.data;
       return data;
+    } catch (error) {
+      console.log("Error fetching data : ", error);
+    }
+  }
+
+  /**
+   *
+   * @param id {number} cityId
+   * @returns
+   */
+  async getCitiesByCity(id: number) {
+    try {
+      const path = `/api/area/city`;
+      const response = await this.axios.get<{ data: AreaType[] }>(path, {
+        params: {
+          id,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log("Error fetching data : ", error);
+    }
+  }
+
+  /**
+   *
+   * @param id {number} cityId
+   * @param type {string} areaType
+   * @returns
+   */
+  async getCitiesByCountry(id: number, type: string) {
+    try {
+      const path = `/api/area/country`;
+      const response = await this.axios.get<{ data: AreaType[] }>(path, {
+        params: {
+          id,
+          type,
+        },
+      });
+      return response.data;
     } catch (error) {
       console.log("Error fetching data : ", error);
     }

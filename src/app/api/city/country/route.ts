@@ -15,7 +15,11 @@ export async function GET(request: NextRequest) {
 
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("area").select("*").eq("id", id);
+  const { data, error } = await supabase
+    .from("city")
+    .select("*")
+    .eq("countryId", id);
+
   if (error) {
     return NextResponse.json({
       status: 500,
@@ -37,7 +41,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     status: 200,
     message: "Success",
-    data: data[0],
+    data: data,
     error: null,
   });
 }

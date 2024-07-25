@@ -6,3 +6,5 @@ export type IntroCities = {
   name: string;
   id: number;
 };
+
+export type City = Tables<"city">;

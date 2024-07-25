@@ -48,12 +48,12 @@ function IntroCard({ title, imageUrl, items, countryId }: IntroCardProps) {
           isTitle={true}
           title={title}
           size="intro"
-          imageUrl={imageUrl || "/"}
+          imageUrl={imageUrl || "/123"}
         />
         <CardForm intent="intro" items={items} />
 
         <Link
-          href={`/destination/country/${countryId}`}
+          href={`/destination/country/${countryId}` || "/"}
           className="flex justify-center items-center bg-black border rounded-3xl text-white w-20 h-12 absolute bottom-[31%] right-3"
         >
           넘기기

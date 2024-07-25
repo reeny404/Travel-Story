@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+  const type = searchParams.get("type");
+
   if (!id) {
     return NextResponse.json({
       status: 400,
@@ -16,10 +18,12 @@ export async function GET(request: NextRequest) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("city")
+    .from("area")
     .select("*")
-    .eq("countryId", id);
-  console.log("data", data);
+    .eq("countryId", id)
+    // 이거 왜 as string 안해주면 타입이 string이 아니지?
+    .eq("type", type as string);
+
   if (error) {
     return NextResponse.json({
       status: 500,
