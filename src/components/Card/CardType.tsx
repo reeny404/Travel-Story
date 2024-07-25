@@ -2,24 +2,29 @@ import Image from "next/image";
 import Link from "next/link";
 
 type CardTypeProps = {
-  type: string;
+  type?: string;
   title: string;
   linkUrl: string;
+  innerClassName?: string;
 };
 
 // 타입은 이미지의 파일명과 동일해야 합니다.
 
-function CardType({ type, title, linkUrl }: CardTypeProps) {
+function CardType({ type, title, linkUrl, innerClassName }: CardTypeProps) {
   return (
-    <div className="w-full h-4 mb-2 flex items-center justify-between">
+    <div
+      className={`w-full h-4 mb-2 flex items-center justify-between ${innerClassName}`}
+    >
       <div className="flex items-center aspect-auto">
-        <Image
-          src={`/cardImages/${type}.png`}
-          alt="type"
-          width={16}
-          height={16}
-          objectFit="cover"
-        />
+        {type && (
+          <Image
+            src={`/cardImages/${type}.png`}
+            alt="type"
+            width={16}
+            height={16}
+            objectFit="cover"
+          />
+        )}
         <h1 className="font-semibold ">{title}</h1>
       </div>
       <Link href={linkUrl} className="flex text-xs text-[#828282]">

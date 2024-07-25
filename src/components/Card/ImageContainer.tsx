@@ -16,6 +16,7 @@ const imageVariant = cva("relative w-full bg-[#f0f0f0] aspect-auto", {
       intro: "h-2/3",
       detail: "min-h-[353px]",
       area: "min-h-[189px]",
+      review: "min-h-[100px]",
     },
   },
   defaultVariants: {

@@ -1,4 +1,3 @@
-import AreaCard from "../_components/AreaCard";
 import IntroCard from "../_components/IntroCard";
 
 function IntroPage() {
@@ -16,7 +15,6 @@ function IntroPage() {
 
   return (
     <div className=" w-screen h-screen max-h-[812px] flex justify-center">
-      <AreaCard />
       <IntroCard
         title={countryInfo.name}
         imageUrl={countryInfo.imageUrl}

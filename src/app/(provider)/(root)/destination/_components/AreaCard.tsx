@@ -1,11 +1,25 @@
 import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
+// area ItemsPage가 있어야 될듯????
+type AreaCardType = {
+  title: string;
+  description: string;
+  rating: number;
+  imageUrl: string;
+  linkUrl: string;
+};
 
-function AreaCard() {
+function AreaCard({
+  title,
+  description,
+  rating,
+  imageUrl,
+  linkUrl,
+}: AreaCardType) {
   return (
     <>
-      <CardType type="home" title="할인하는 숙소" linkUrl="/" />
+      <CardType type="home" title="할인하는 숙소" linkUrl={linkUrl} />
       <ImageContainer
         isTitle
         size="area"
@@ -13,9 +27,9 @@ function AreaCard() {
       />
       <CardForm
         intent="detail"
-        title="숙소 명"
-        description="고대의 역사가 살아숨쉬는 도시"
-        rating={4}
+        title={title}
+        description={description}
+        rating={rating}
       />
     </>
   );

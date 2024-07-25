@@ -3,9 +3,12 @@ import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
 import { ReactNode } from "react";
-import DetailCard from "../../_components/DetailCard";
+import MainCityTemplate from "./_components/MainCityTemplate";
+import ReviewCard from "./_components/ReviewCard";
 
-function CountryDetailPage() {
+// 상단에 띄울 4개의 나라는 하드코딩
+
+function DestinationPage() {
   const IMAGE_URL =
     "https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/Italy.jpg";
 
@@ -48,15 +51,38 @@ function CountryDetailPage() {
       </div>
     );
   });
+  const carouselArrImg: ReactNode[] = slides.map((slide, idx) => {
+    return (
+      <div key={idx} className="embla__slide flex-none w-full  ">
+        <div className="flex flex-col relative">
+          <ImageContainer isTitle size="detail" imageUrl={slide.imageUrl} />
+        </div>
+      </div>
+    );
+  });
 
+  const countries = ["네덜란드", "독일", "이탈리아", "스페인"];
+  const makeCountryCircles = (countries: string[]) => {
+    return (
+      <div className="flex justify-around mt-7">
+        {countries.map((country: string) => {
+          return (
+            <div className="flex flex-col items-center" key={country}>
+              <div className="w-16 h-16 bg-gray-500 rounded-full"></div>
+              <p>{country}</p>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
   return (
-    <div className=" container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col ">
-      <DetailCard
-        title="르네상스의 발상지, 예술과 낭만의 중심 이탈리아"
-        description="여행지 소개 여행지 소개 여행지 소개 여행지 소개 여행지 소개 여행지 소개여행지 소개여행지 소개여행지 소개"
-        imageUrl={IMAGE_URL}
-      />
-      <div className="w-full h-10 bg-gray-300 ">탭바</div>
+    <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col ">
+      <CarouselWrapper items={carouselArrImg} />
+      {makeCountryCircles(countries)}
+      <div className="w-full h-20 bg-gray-400 flex justify-center items-center text-white mt-10">
+        광고배너
+      </div>
       <div className=" mb-10">
         <CardType
           linkUrl="/"
@@ -66,8 +92,15 @@ function CountryDetailPage() {
         />
         <CarouselWrapper items={carouselArr} />
       </div>
+      <MainCityTemplate />
+      <ReviewCard
+        title="장소명"
+        description="회원 리뷰 내용 줄줄줄줄줄줄"
+        rating={4}
+        imageUrl={IMAGE_URL}
+      />
     </div>
   );
 }
 
-export default CountryDetailPage;
+export default DestinationPage;
