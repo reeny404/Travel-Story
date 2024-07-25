@@ -14,7 +14,9 @@ export default function AccountBookPage() {
   const { data: account, isLoading } = useQuery<Account>({
     queryKey: [QUERY_KEY.account],
     queryFn: () =>
-      axios.get(`${BASE_URL}/api/account?scheduleId=${scheduleId}`),
+      axios
+        .get(`${BASE_URL}/api/account?scheduleId=${scheduleId}`)
+        .then(({ data }) => data),
   });
 
   if (isLoading) {

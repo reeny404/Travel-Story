@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     .single();
 
 
-  return NextResponse.json({ data, error, status: 200, message: "OK" }, error ? {
+  return NextResponse.json(data, error ? {
     status: 400,
     statusText: `[${error.code}] ${error.hint} > ${error.message}`
   } : {
