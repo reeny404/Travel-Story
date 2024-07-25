@@ -1,47 +1,45 @@
 "use client";
-import { emailValidCheck } from "@/utils/emailCheck";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent } from "react";
 
 type AuthFormProps = {
   label: string;
   placeholder?: string;
   isPassword?: boolean;
+  isInputValid: boolean;
+  onSubmit: () => void;
+  onChange: (value: string) => void;
 };
 
 function AuthForm({
   label,
   placeholder = "",
   isPassword = false,
+  isInputValid = true,
+  onSubmit,
+  onChange,
 }: AuthFormProps) {
-  const [isInputValid, setIsInputValid] = useState<boolean>(true);
-  const [labelText, setLabelText] = useState<string>(label);
-  //이메일 유효성 검사
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const email = e.currentTarget.value;
-    const validValue = emailValidCheck(email);
-    setIsInputValid(validValue);
+  //input change마다 상태가 바뀌게하는 함수
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const input = e.currentTarget.value;
+    onChange(input);
   };
 
-  //비밀번호 유효성 검사
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const password = e.currentTarget.value;
-    if (password.length > 5) {
-      setLabelText("유효한 비밀번호입니다.");
-      return setIsInputValid(false);
-    }
-    setLabelText("아직 6자리가 아니에요.");
-    return setIsInputValid(true);
+  //submit 될때 supabase 로직 넣는 함수
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit();
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <label className="text-[14px]">
-        {labelText}
+        {label}
         <input
-          onChange={isPassword ? handlePasswordChange : handleEmailChange}
+          onChange={handleChange}
           placeholder={placeholder}
           type={isPassword ? "password" : "text"}
-          autoComplete="off"
+          autoComplete="new-password"
           className="w-full h-[48px] text-[20px] border-b border-black bg-transparent focus:outline-none placeholder:text-gray-300"
         />
       </label>
