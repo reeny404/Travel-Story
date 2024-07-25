@@ -1,12 +1,12 @@
 "use client";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useRef } from "react";
 
 type AuthFormProps = {
   label: string;
   placeholder?: string;
   isPassword?: boolean;
   isInputValid: boolean;
-  onSubmit: () => void;
+  onSubmit: (value: string) => void;
   onChange: (value: string) => void;
 };
 
@@ -18,6 +18,8 @@ function AuthForm({
   onSubmit,
   onChange,
 }: AuthFormProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   //input change마다 상태가 바뀌게하는 함수
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -28,7 +30,8 @@ function AuthForm({
   //submit 될때 supabase 로직 넣는 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit();
+    const value = inputRef.current?.value as string;
+    onSubmit(value);
   };
 
   return (
@@ -37,6 +40,7 @@ function AuthForm({
         {label}
         <input
           onChange={handleChange}
+          ref={inputRef}
           placeholder={placeholder}
           type={isPassword ? "password" : "text"}
           autoComplete="new-password"
