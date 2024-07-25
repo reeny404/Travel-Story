@@ -1,13 +1,13 @@
 import { Tables } from "@/types/supabase";
-import axios, { AxiosInstance } from "axios";
+import { AxiosInstance } from "axios";
 
 type CountryType = Tables<"country">;
 
 class CountryAPI {
   private axios: AxiosInstance;
 
-  constructor() {
-    this.axios = axios.create({ baseURL: "http://localhost:3000/" });
+  constructor(axios: AxiosInstance) {
+    this.axios = axios;
   }
 
   async getCountries() {
