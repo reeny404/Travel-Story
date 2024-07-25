@@ -12,7 +12,7 @@ const meta: Meta<typeof TagButton> = {
     intent: {
       control: {
         type: "select",
-        options: ["primary"],
+        options: ["primary", "blue"],
       },
       description: "버튼의 색상",
       defaultValue: "primary",
@@ -76,7 +76,7 @@ export const Large: Story = {
     children: (
       <>
         <img src="/testImg/logo2.png" alt="logo" width={16} height={16} />
-        버튼 체크
+        이미지 체크
       </>
     ),
   },
