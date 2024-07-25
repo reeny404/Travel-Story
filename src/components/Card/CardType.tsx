@@ -22,7 +22,7 @@ function CardType({ type, title, linkUrl, innerClassName }: CardTypeProps) {
             alt="type"
             width={16}
             height={16}
-            objectFit="cover"
+            className="object-cover"
           />
         )}
         <h1 className="font-semibold ">{title}</h1>
@@ -34,7 +34,7 @@ function CardType({ type, title, linkUrl, innerClassName }: CardTypeProps) {
           alt="right-arrow"
           width={12}
           height={12}
-          objectFit="cover"
+          className="object-cover"
         />
       </Link>
     </div>

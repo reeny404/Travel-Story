@@ -1,4 +1,5 @@
 // components/CardForm.js
+import { IntroCities } from "@/types/Country";
 import { VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
 import Image from "next/image";
@@ -8,7 +9,7 @@ import { ComponentProps } from "react";
 type CardFormProps = CardFormVariantProps & {
   title?: string;
   description?: string;
-  items?: string[];
+  items?: IntroCities[];
   rating?: number;
 } & ComponentProps<"div">;
 
@@ -49,7 +50,7 @@ const CardForm = ({
             alt="filled star"
             width={15}
             height={15}
-            objectFit="contain"
+            className="object-contain"
           />
         ))}
         {Array.from({ length: unFilledIcon }).map((_, index) => (
@@ -59,7 +60,7 @@ const CardForm = ({
             alt="unfilled star"
             width={15}
             height={15}
-            objectFit="contain"
+            className="object-contain"
           />
         ))}
       </div>
@@ -92,7 +93,7 @@ const CardForm = ({
       ) : (
         items?.map((item, index) => (
           <Link href={"/"} key={index} className="font-semibold">
-            {item}
+            {item.name}
           </Link>
         ))
       )}

@@ -3,6 +3,8 @@ import { AxiosInstance } from "axios";
 
 type CountryType = Tables<"country">;
 
+export const countryAPI = {};
+
 class CountryAPI {
   private axios: AxiosInstance;
 
@@ -13,7 +15,7 @@ class CountryAPI {
   async getCountries() {
     try {
       const path = "/api/country";
-      const response = await this.axios.get<CountryType>(path);
+      const response = await this.axios.get<{ data: CountryType }>(path);
 
       const data = response.data;
       return data;
@@ -25,7 +27,7 @@ class CountryAPI {
   async getCountry(id: number) {
     try {
       const path = `/api/country/${id}`;
-      const response = await this.axios.get<CountryType>(path, {
+      const response = await this.axios.get<{ data: CountryType }>(path, {
         params: {
           id,
         },
