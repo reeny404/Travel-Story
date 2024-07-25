@@ -21,13 +21,13 @@ class CityAPI {
       console.error("Error fetching data : ", error);
     }
   }
-
-  async getCity(id: number) {
+  async getCitiesById(id: number, isMultiple: boolean) {
     try {
       const path = `/api/city/${id}`;
-      const response = await this.axios.get<CountryType>(path, {
+      const response = await this.axios.get<CountryType[] | CountryType>(path, {
         params: {
           id,
+          isMultiple,
         },
       });
       return response.data;
