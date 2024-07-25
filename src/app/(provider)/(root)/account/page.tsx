@@ -87,7 +87,7 @@ export default function AccountBookPage() {
             width="24"
             height="24"
           />
-          <span>{account.content}</span>
+          <span>{account.desc}</span>
         </div>
       </main>
     </div>

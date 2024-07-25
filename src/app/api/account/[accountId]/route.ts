@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 const ACCOUNT_BOOK = "accountBook";
 const PK_ACCOUNT_ID = "id";
-const FK_SCHEDULE_ID = "scheduleId";
 
 type parameters = { params: { accountId: number } };
 
@@ -15,12 +14,12 @@ type parameters = { params: { accountId: number } };
  */
 export async function PUT(request: NextRequest, { params: { accountId } }: parameters) {
   // TODO 세션 사용자 정보와 account 작성자 같은지 체크
-  const { amount, type, content }: Account = await request.json();
+  const { amount, type, payType, desc: content }: Account = await request.json();
 
   const supabase = createClient();
   const { data, error } = await supabase
     .from(ACCOUNT_BOOK)
-    .update({ amount, type, content })
+    .update({ amount, type, payType, content })
     .eq(PK_ACCOUNT_ID, accountId)
     .select()
     .single();
