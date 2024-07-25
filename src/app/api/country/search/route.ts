@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
+  const name = searchParams.get("name");
 
-  if (!id) {
+  if (!name) {
     return NextResponse.json({
       status: 400,
       message: "Bad Request",
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("country")
     .select("*")
-    .eq("id", id);
+    .eq("name", name);
   if (error) {
     return NextResponse.json({
       status: 500,

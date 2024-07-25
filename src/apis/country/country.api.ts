@@ -35,6 +35,18 @@ class CountryAPI {
       console.log("Error fetching data : ", error);
     }
   }
+
+  async search(name: string) {
+    try {
+      const path = `/api/country/search`;
+      const response = await this.axios.get<CountryType>(path, {
+        params: {
+          name,
+        },
+      });
+      return response.data;
+    } catch (error) {}
+  }
 }
 
 export default CountryAPI;

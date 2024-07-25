@@ -10,7 +10,7 @@ function IntroPage() {
 
   const { data } = useQuery({
     queryKey: ["country"],
-    queryFn: () => countryInstance.getCountry(1),
+    queryFn: () => countryInstance.search("Japan"),
   });
   console.log("data", data);
 
