@@ -6,6 +6,7 @@ type AuthFormProps = {
   placeholder?: string;
   isPassword?: boolean;
   isInputValid: boolean;
+  value?: string;
   onSubmit: (value: string) => void;
   onChange: (value: string) => void;
 };
@@ -15,6 +16,7 @@ function AuthForm({
   placeholder = "",
   isPassword = false,
   isInputValid = true,
+  value = "",
   onSubmit,
   onChange,
 }: AuthFormProps) {
@@ -44,6 +46,7 @@ function AuthForm({
           placeholder={placeholder}
           type={isPassword ? "password" : "text"}
           autoComplete="new-password"
+          defaultValue={value}
           className="w-full h-[48px] text-[20px] border-b border-black bg-transparent focus:outline-none placeholder:text-gray-300"
         />
       </label>

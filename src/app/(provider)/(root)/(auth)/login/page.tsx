@@ -1,5 +1,6 @@
 "use client";
 import useAuthFlow from "@/hooks/useAuthFlow";
+import { useAuthStore } from "@/stores/auth.store";
 import AuthForm from "./_components/AuthForm/AuthForm";
 import AuthPage from "./_components/AuthPage/AuthPage";
 
@@ -17,6 +18,7 @@ function Login() {
     handleNickChange,
     handleNewPasswordSubmit,
   } = useAuthFlow();
+  const { user } = useAuthStore();
   return (
     <>
       {step === "email" && (
@@ -47,6 +49,7 @@ function Login() {
             label={labelText ? labelText : "이메일을 입력해주세요."}
             onChange={handleEmailChange}
             onSubmit={handleSignupSubmit}
+            value={user.email}
             isInputValid={isInputValid}
           />
         </AuthPage>
