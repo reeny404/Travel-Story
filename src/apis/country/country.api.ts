@@ -11,11 +11,29 @@ class CountryAPI {
   }
 
   async getCountries() {
-    const path = "/api/country";
-    const response = await this.axios.get<CountryType>(path);
+    try {
+      const path = "/api/country";
+      const response = await this.axios.get<CountryType>(path);
 
-    const data = response.data;
-    return data;
+      const data = response.data;
+      return data;
+    } catch (error) {
+      console.error("Error fetching data : ", error);
+    }
+  }
+
+  async getCountry(id: number) {
+    try {
+      const path = `/api/country/${id}`;
+      const response = await this.axios.get<CountryType>(path, {
+        params: {
+          id,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log("Error fetching data : ", error);
+    }
   }
 }
 
