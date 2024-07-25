@@ -1,4 +1,5 @@
 import { createClient } from "@/supabase/server";
+import { Account } from "@/types/Account";
 import { NextRequest, NextResponse } from "next/server";
 
 const ACCOUNT_BOOK = "accountBook";
@@ -31,7 +32,18 @@ export async function GET(request: NextRequest) {
 
 /**
  * account 생성한다.
- * @param scheduleId
+ * @param Account { type, payType, amount, desc, areaType, areaName }
  */
 export async function POST(request: NextRequest) {
+  const account = (await request.json()) as Account;
+
+  const supabase = createClient();
+  const { data } = await supabase
+    .from(ACCOUNT_BOOK)
+    .insert({
+      ...account
+    })
+    .select();
+
+  return NextResponse.json(data);
 }
