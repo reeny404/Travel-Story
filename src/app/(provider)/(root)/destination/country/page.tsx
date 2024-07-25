@@ -1,7 +1,12 @@
-import IntroCard from "../_components/IntroCard";
+"use client";
 
+import CountryAPI from "@/apis/country/country.api";
+import IntroCard from "../_components/IntroCard";
+// 굳이 SEO에 노출 될 필요 없음
 function IntroPage() {
   // 데이터 호출 -> id 또한 여기서 가져오니 버튼은 여기있으나 안에있으나 도찐 개찐
+  const countryInstance = new CountryAPI();
+
   const countryInfo = {
     id: 1,
     name: "ITALY",
