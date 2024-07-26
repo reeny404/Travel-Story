@@ -1,7 +1,6 @@
 "use client";
 
 import { api } from "@/apis/api";
-import { QUERY_KEY } from "@/constants/QueryKey";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Badge from "../../../../components/Badge";
@@ -11,7 +10,7 @@ const types = ["현금", "이체", "체크", "신용"];
 
 export default function AccountBookPage() {
   const { data: account, isLoading } = useQuery({
-    queryKey: [QUERY_KEY.account],
+    queryKey: ["account"],
     queryFn: () => api.account.get(scheduleId),
   });
 
