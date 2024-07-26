@@ -8,6 +8,7 @@ function useAuthFlow() {
   const [step, setStep] = useState<string>("email");
   const [isInputValid, setIsInputValid] = useState<boolean>(true);
   const [labelText, setLabelText] = useState<string>("");
+  const [labelColor, setLabelColor] = useState<string>("text-black");
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
 
   /** Change 관련 handle */
@@ -21,18 +22,22 @@ function useAuthFlow() {
   const handlePasswordChange = (password: string) => {
     if (password.length > 5) {
       setLabelText("유효한 비밀번호입니다.");
+      setLabelColor("green");
       return setIsInputValid(false);
     }
     setLabelText("아직 6자리가 아니에요.");
+    setLabelColor("red");
     return setIsInputValid(true);
   };
 
   // password check 유효성 검사
   const handleCheckPassword = (password: string) => {
     if (password === user.password) {
+      setLabelColor("green");
       setLabelText("입력한 비밀번호와 일치해요!");
       return setIsInputValid(false);
     }
+    setLabelColor("red");
     setLabelText("아직 입력한 비밀번호와 일치하지 않아요.");
     return setIsInputValid(true);
   };
@@ -40,9 +45,11 @@ function useAuthFlow() {
   // nickname 유효성 검사
   const handleNickChange = (nickname: string) => {
     if (nickname.length > 7 || nickname.length < 2) {
+      setLabelColor("red");
       setLabelText("2~8글자로 입력해주세요!");
       return setIsInputValid(true);
     }
+    setLabelColor("green");
     setLabelText("사용하실 수 있는 이름입니다.");
     return setIsInputValid(false);
   };
@@ -117,11 +124,13 @@ function useAuthFlow() {
   const handleNewPasswordSubmit = (password: string) => {
     setLabelText("");
     putPassword(password);
+    setLabelColor("black");
     setStep("check-password");
   };
 
-  const handleCheckPasswordSubmit = (password: string) => {
+  const handleCheckPasswordSubmit = () => {
     setLabelText("");
+    setLabelColor("black");
     setStep("nickname");
   };
 
@@ -129,6 +138,7 @@ function useAuthFlow() {
   return {
     step,
     labelText,
+    labelColor,
     isInputValid,
     handleEmailSubmit,
     handlePasswordSubmit,
