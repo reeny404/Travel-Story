@@ -13,8 +13,10 @@ export default function PlanListPage() {
             {DateUtil.parse("yyyy년 MM월 dd일", new Date())}
           </span>
           <div className="flex items-center space-x-2">
+            {/* TODO 필터 미구현 */}
             <button className="text-sm">필터</button>
             <button className="text-sm flex justify-center">
+              {/* TODO 정렬 미구현 */}
               최신순
               <Image
                 src="/icon/arrowToExpand.svg"
@@ -28,7 +30,7 @@ export default function PlanListPage() {
         <PlanList />
       </div>
       <Link
-        href="/plan/create"
+        href="/plan/create" // TODO 클릭 링크 현재는 flow 미정이라, url 점검 필요
         className="w-12 h-12 fixed bottom-8 right-8 bg-blue-500 rounded-full hover:brightness-110"
       >
         <div className="w-full h-full flex justify-center items-center">

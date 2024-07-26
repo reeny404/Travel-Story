@@ -5,7 +5,7 @@ import { Tables } from "@/types/supabase";
 type props = { plan: Tables<"plan"> };
 
 function Plan({ plan }: props) {
-  const { id, title, imagesUrl, startDate, endDate } = plan;
+  const { title, imagesUrl, startDate, endDate } = plan;
 
   return (
     <div className="flex items-center p-4 bg-white shadow hover:shadow-md">
