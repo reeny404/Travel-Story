@@ -2,7 +2,6 @@ import { City, Country } from "@/types/Recommend";
 import Image from "next/image";
 
 function RecommendFormItem({ item }: { item: City | Country }) {
-  console.log("item", item);
   return (
     <section className="flex w-full items-center m-1" key={item.id}>
       <div className="w-16 h-16 bg-white opacity70 rounded-full relative aspect-auto">

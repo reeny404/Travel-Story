@@ -5,16 +5,22 @@ import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
+import useRecommendStore from "@/stores/recommend.store";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import DetailCard from "../../_components/DetailCard";
 import RecommendForm from "../../_components/RecommendForm";
 // TODO 케러셀  -> 스와이퍼.js로 수정하면서 데이터 수정
 // 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
 function CountryDetailPage() {
+  const { countryId, setCountryId } = useRecommendStore();
   const pathname = usePathname();
-  const countryId = parseInt(pathname.split("/").slice(-1)[0]);
+
+  useEffect(() => {
+    const nowCountryId = parseInt(pathname.split("/").slice(-1)[0]);
+    setCountryId(nowCountryId);
+  }, []);
 
   const { data: country } = useQuery({
     queryKey: ["country", countryId],
@@ -22,13 +28,13 @@ function CountryDetailPage() {
   });
 
   const { data: areas } = useQuery({
-    queryKey: ["areas"],
+    queryKey: ["areas", countryId],
     queryFn: () => api.area.getAreasByCountry(countryId, "accommodation"),
     select: (data) => data?.data,
   });
 
   const { data: place } = useQuery({
-    queryKey: ["place"],
+    queryKey: ["place", countryId],
     queryFn: () => api.area.getAreasByCountry(countryId, "place"),
     select: (data) => data?.data,
   });
@@ -48,6 +54,7 @@ function CountryDetailPage() {
             intent="detail"
             title={area.title}
             description={area?.description!}
+            linkUrl="/"
           />
         </div>
       </div>
@@ -63,6 +70,7 @@ function CountryDetailPage() {
             intent="detail"
             title={area.title}
             description={area?.description!}
+            linkUrl="/"
           />
         </div>
       </div>
@@ -78,15 +86,18 @@ function CountryDetailPage() {
       <div className="w-full h-10 bg-gray-300 ">탭바</div>
       <div className=" mb-10">
         <CardType
-          linkUrl="/"
+          linkUrl={`/recommend/country/${countryId}/accommodation`}
           title="할인하는 숙소"
           type="home"
-          innerClassName="mt-5"
         />
         <CarouselWrapper items={carouselArr} />
       </div>
       <RecommendForm info={cities!} />
-      <CardType linkUrl="/" title="문화 탐방" type="architect" />
+      <CardType
+        linkUrl={`/recommend/country/${countryId}/place`}
+        title="문화 탐방"
+        type="architect"
+      />
       <CarouselWrapper items={placeCarouselArr} />
     </div>
   );
