@@ -19,8 +19,8 @@ function CityDetailPage() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const cityId = parseInt(pathname.split("/").slice(-1)[0]);
-    setCityId(cityId);
+    const nowCityId = parseInt(pathname.split("/").slice(-1)[0]);
+    setCityId(nowCityId);
   }, [pathname]);
 
   const { data: city } = useQuery({
@@ -87,14 +87,14 @@ function CityDetailPage() {
       />
       <div className="w-full h-10 bg-gray-300 ">탭바</div>
       <CardType
-        linkUrl="/recommend/area/accommodation"
+        linkUrl={`/recommend/city/${cityId}/accommodation`}
         title="할인하는 숙소"
         type="home"
       />
       <CarouselWrapper items={carouselArr} />
       <RecommendForm info={areas!} />
       <CardType
-        linkUrl="/recommend/area/place"
+        linkUrl={`/recommend/city/${cityId}/place`}
         title="문화 탐방"
         type="architect"
       />
