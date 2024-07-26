@@ -49,7 +49,7 @@ class AreaAPI {
    * @param id {number} cityId
    * @returns
    */
-  async getCitiesByCity(id: number) {
+  async getAreasByCity(id: number) {
     try {
       const path = `/api/area/city`;
       const response = await this.axios.get<{ data: AreaType[] }>(path, {
@@ -69,7 +69,7 @@ class AreaAPI {
    * @param type {string} areaType
    * @returns
    */
-  async getCitiesByCountry(id: number, type: string) {
+  async getAreasByCountry(id: number, type: string) {
     try {
       const path = `/api/area/country`;
       const response = await this.axios.get<{ data: AreaType[] }>(path, {

@@ -1,6 +1,7 @@
 import CardType from "@/components/Card/CardType";
 import { Area, City, Country } from "@/types/Recommend";
 import { seperateArr } from "@/utils/seperateArr";
+import { v4 } from "uuid";
 import RecommendFormItem from "./RecommendFormItem";
 
 // 도시에 대한 추천, 관광지에 대한 추천 데이터 -> 이를 info로 정했습니다.
@@ -14,7 +15,7 @@ function RecommendForm({ info }: { info: City[] | Country[] | Area[] }) {
   const generateItems = (info: City[] | Country[]) => {
     return (
       // 이 div를 슬라이드로 바꾸면 될 것 같음.
-      <div className="w-full">
+      <div key={v4()} className="w-full">
         {info?.map((item, idx) => {
           return <RecommendFormItem key={idx} item={item} />;
         })}

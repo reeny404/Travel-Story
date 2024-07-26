@@ -14,7 +14,7 @@ function AreaDetailPage() {
 
   const { data: areas } = useQuery({
     queryKey: ["area", cityId],
-    queryFn: () => api.area.getCitiesByCity(cityId),
+    queryFn: () => api.area.getAreasByCity(cityId),
     select: (data) => data?.data,
   });
 

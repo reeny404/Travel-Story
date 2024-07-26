@@ -23,13 +23,13 @@ function CountryDetailPage() {
 
   const { data: areas } = useQuery({
     queryKey: ["areas"],
-    queryFn: () => api.area.getCitiesByCountry(countryId, "accommodation"),
+    queryFn: () => api.area.getAreasByCountry(countryId, "accommodation"),
     select: (data) => data?.data,
   });
 
   const { data: place } = useQuery({
     queryKey: ["place"],
-    queryFn: () => api.area.getCitiesByCountry(countryId, "place"),
+    queryFn: () => api.area.getAreasByCountry(countryId, "place"),
     select: (data) => data?.data,
   });
 

@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import DetailCard from "../../_components/DetailCard";
+import RecommendForm from "../../_components/RecommendForm";
 
 function CityDetailPage() {
   const { setCityId, cityId } = useRecommendStore();
@@ -30,7 +31,7 @@ function CityDetailPage() {
 
   const { data: areas } = useQuery({
     queryKey: ["areas", cityId],
-    queryFn: () => api.area.getCitiesByCity(cityId),
+    queryFn: () => api.area.getAreasByCity(cityId),
     select: (data) => data?.data,
     staleTime: 1000 * 10,
   });
@@ -89,7 +90,7 @@ function CityDetailPage() {
         type="home"
       />
       <CarouselWrapper items={carouselArr} />
-      {/* <RecommendForm key={1} info={areas!} /> */}
+      <RecommendForm info={areas!} />
       <CardType
         linkUrl="/recommend/area/place"
         title="문화 탐방"
