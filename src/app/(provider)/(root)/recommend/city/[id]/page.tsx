@@ -7,6 +7,7 @@ import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
 import useRecommendStore from "@/stores/recommend.store";
+import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
@@ -34,11 +35,9 @@ function CityDetailPage() {
     staleTime: 1000 * 10,
   });
 
-  const accomodationAreas = areas?.filter(
-    (area) => area.type === "accommodation"
-  );
+  const accomodationAreas = filterByAreaType(areas!, "accommodation");
 
-  const placeAreas = areas?.filter((area) => area.type === "place");
+  const placeAreas = filterByAreaType(areas!, "place");
 
   const placeCarouselArr: ReactNode[] | undefined = placeAreas?.map(
     (area, idx) => {

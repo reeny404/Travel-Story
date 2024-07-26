@@ -2,6 +2,7 @@
 
 import { api } from "@/apis/api";
 import useRecommendStore from "@/stores/recommend.store";
+import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import AreaCard from "../../_components/AreaCard";
@@ -17,9 +18,7 @@ function AreaDetailPage() {
     select: (data) => data?.data,
   });
 
-  const filteredArea = areas?.filter((area) => {
-    return area?.type === areaType;
-  });
+  const filteredArea = filterByAreaType(areas!, areaType);
 
   return (
     <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col">
