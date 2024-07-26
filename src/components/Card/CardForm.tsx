@@ -11,7 +11,7 @@ type CardFormProps = CardFormVariantProps & {
   description?: string;
   items?: IntroCities[];
   rating?: number;
-  linkUrl: string;
+  linkUrl?: string;
 } & ComponentProps<"div">;
 
 type CardFormVariantProps = VariantProps<typeof cardFormVariant>;
