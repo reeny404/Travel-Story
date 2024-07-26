@@ -11,7 +11,6 @@ import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import DetailCard from "../../_components/DetailCard";
-import RecommendForm from "../../_components/RecommendForm";
 
 function CityDetailPage() {
   const { setCityId, cityId } = useRecommendStore();
@@ -91,7 +90,7 @@ function CityDetailPage() {
         type="home"
       />
       <CarouselWrapper items={carouselArr} />
-      <RecommendForm key={1} info={areas!} />
+      {/* <RecommendForm key={1} info={areas!} /> */}
       <CardType
         linkUrl="/recommend/area/place"
         title="문화 탐방"

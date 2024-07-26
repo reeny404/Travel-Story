@@ -10,9 +10,9 @@ function AreaDetailPage() {
   const pathname = usePathname();
   const areaType = pathname.split("/").slice(-1)[0];
   const { cityId } = useRecommendStore();
-  console.log("cityId,areaType", cityId, areaType);
+
   const { data: areas } = useQuery({
-    queryKey: ["area"],
+    queryKey: ["area", cityId],
     queryFn: () => api.area.getCitiesByCity(cityId),
     select: (data) => data?.data,
   });

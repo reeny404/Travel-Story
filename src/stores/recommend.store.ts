@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, PersistOptions } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 type RecommendStore = {
   cityId: number;
@@ -8,13 +8,8 @@ type RecommendStore = {
   setCountryId: (countryId: number) => void;
 };
 
-type MyPersist = (
-  config: (set: any, get: any, api: any) => RecommendStore,
-  options: PersistOptions<RecommendStore>
-) => (set: any, get: any, api: any) => RecommendStore;
-
-const useRecommendStore = create<RecommendStore>(
-  (persist as MyPersist)(
+const useRecommendStore = create<RecommendStore>()(
+  persist(
     (set) => ({
       cityId: 1,
       countryId: 1,
@@ -22,8 +17,7 @@ const useRecommendStore = create<RecommendStore>(
       setCountryId: (countryId: number) => set({ countryId }),
     }),
     {
-      name: "recommend-storage",
-      getStorage: () => localStorage,
+      name: "recommend",
     }
   )
 );
