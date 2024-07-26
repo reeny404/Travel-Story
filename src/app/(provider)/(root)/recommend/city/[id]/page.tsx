@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import DetailCard from "../../_components/DetailCard";
+import RecommendForm from "../../_components/RecommendForm";
 
 function CityDetailPage() {
   const pathname = usePathname();
@@ -29,6 +30,26 @@ function CityDetailPage() {
 
   const accomodationAreas = areas?.filter(
     (area) => area.type === "accommodation"
+  );
+
+  const placeAreas = areas?.filter((area) => area.type === "place");
+
+  const placeCarouselArr: ReactNode[] | undefined = placeAreas?.map(
+    (area, idx) => {
+      return (
+        <div key={idx} className="embla__slide flex-none w-full ">
+          <div className="flex flex-col relative">
+            <ImageContainer isTitle size="area" imageUrl={area?.imageUrl!} />
+            <CardForm
+              intent="detail"
+              title={area.title}
+              description={area?.description!}
+              rating={4}
+            />
+          </div>
+        </div>
+      );
+    }
   );
 
   const carouselArr: ReactNode[] | undefined = accomodationAreas?.map(
@@ -57,15 +78,11 @@ function CityDetailPage() {
         imageUrl={city?.imageUrl!}
       />
       <div className="w-full h-10 bg-gray-300 ">탭바</div>
-      <div className=" mb-10">
-        <CardType
-          linkUrl="/"
-          title="할인하는 숙소"
-          type="home"
-          innerClassName="mt-5"
-        />
-        <CarouselWrapper items={carouselArr} />
-      </div>
+      <CardType linkUrl="/" title="할인하는 숙소" type="home" />
+      <CarouselWrapper items={carouselArr} />
+      <RecommendForm info={areas!} />
+      <CardType linkUrl="/" title="문화 탐방" type="architect" />
+      <CarouselWrapper items={placeCarouselArr} />
     </div>
   );
 }

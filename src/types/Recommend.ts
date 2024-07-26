@@ -8,3 +8,5 @@ export type IntroCities = {
 };
 
 export type City = Tables<"city">;
+
+export type Area = Tables<"area">;

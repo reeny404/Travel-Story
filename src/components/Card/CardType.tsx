@@ -13,7 +13,7 @@ type CardTypeProps = {
 function CardType({ type, title, linkUrl, innerClassName }: CardTypeProps) {
   return (
     <div
-      className={`w-full h-4 mb-2 flex items-center justify-between ${innerClassName}`}
+      className={`w-full h-6 mb-4 mt-4 flex items-center justify-between ${innerClassName}`}
     >
       <div className="flex items-center aspect-auto">
         {type && (
