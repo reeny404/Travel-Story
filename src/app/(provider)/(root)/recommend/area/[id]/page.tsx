@@ -1,6 +1,7 @@
 "use client";
 
 import { api } from "@/apis/api";
+import ImageContainer from "@/components/Card/ImageContainer";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 
@@ -13,10 +14,18 @@ function AreaDetailPage() {
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data?.data,
   });
-  console.log("area", area);
+
+  // 타입 관련 오류 해결해야됨
 
   return (
-    <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col"></div>
+    <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col">
+      <ImageContainer imageUrl={area?.imageUrl! || "/123"} isTitle />
+      <p>
+        {" "}
+        {area?.krName}
+        {area?.description} {area?.info?.notes as string}
+      </p>
+    </div>
   );
 }
 
