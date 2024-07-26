@@ -1,15 +1,40 @@
+"use client";
+
+import { api } from "@/apis/api";
+import useRecommendStore from "@/stores/recommend.store";
+import { useQuery } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
 import AreaCard from "../../_components/AreaCard";
 
 function AreaDetailPage() {
+  const pathname = usePathname();
+  const areaType = pathname.split("/").slice(-1)[0];
+  const { cityId } = useRecommendStore();
+  console.log("cityId,areaType", cityId, areaType);
+  const { data: areas } = useQuery({
+    queryKey: ["area"],
+    queryFn: () => api.area.getCitiesByCity(cityId),
+    select: (data) => data?.data,
+  });
+
+  const filteredArea = areas?.filter((area) => {
+    return area?.type === areaType;
+  });
+
   return (
     <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col">
-      <AreaCard
-        title="숙소 명"
-        description="고대의 역사가 살아 숨쉬는 도시"
-        rating={4}
-        imageUrl="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/Italy.jpg"
-        linkUrl="/"
-      />
+      {filteredArea?.map((area, idx) => {
+        return (
+          <AreaCard
+            key={idx}
+            title={area.title}
+            description={area.description}
+            rating={4}
+            imageUrl={area.imageUrl!}
+            linkUrl="/"
+          />
+        );
+      })}
     </div>
   );
 }

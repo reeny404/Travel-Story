@@ -83,7 +83,7 @@ const CardForm = ({
             className={clsx(
               rating !== undefined && rating >= 0 && "mb-3",
               intent === "review" &&
-                "text-sm overflow-x-hidden whitespace-nowrap text-ellipsis  "
+                "text-sm overflow-x-hidden whitespace-nowrap text-ellipsis"
             )}
           >
             {description}

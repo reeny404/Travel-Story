@@ -34,7 +34,7 @@ const ImageContainer = ({
   return (
     <div className={imageVariant({ size })} {...props}>
       <Image
-        src={imageUrl}
+        src={imageUrl || "/"}
         alt="이미지"
         priority
         fill

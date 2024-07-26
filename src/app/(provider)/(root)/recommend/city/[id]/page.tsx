@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { api } from "@/apis/api";
@@ -5,15 +6,21 @@ import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
+import useRecommendStore from "@/stores/recommend.store";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import DetailCard from "../../_components/DetailCard";
 import RecommendForm from "../../_components/RecommendForm";
 
 function CityDetailPage() {
+  const { setCityId, cityId } = useRecommendStore();
   const pathname = usePathname();
-  const cityId = parseInt(pathname.split("/").slice(-1)[0]);
+
+  useEffect(() => {
+    const cityId = parseInt(pathname.split("/").slice(-1)[0]);
+    setCityId(cityId);
+  }, [pathname]);
 
   const { data: city } = useQuery({
     queryKey: ["city", cityId],
@@ -78,10 +85,18 @@ function CityDetailPage() {
         imageUrl={city?.imageUrl!}
       />
       <div className="w-full h-10 bg-gray-300 ">탭바</div>
-      <CardType linkUrl="/" title="할인하는 숙소" type="home" />
+      <CardType
+        linkUrl="/recommend/area/accommodation"
+        title="할인하는 숙소"
+        type="home"
+      />
       <CarouselWrapper items={carouselArr} />
-      <RecommendForm info={areas!} />
-      <CardType linkUrl="/" title="문화 탐방" type="architect" />
+      <RecommendForm key={1} info={areas!} />
+      <CardType
+        linkUrl="/recommend/area/place"
+        title="문화 탐방"
+        type="architect"
+      />
       <CarouselWrapper items={placeCarouselArr} />
     </div>
   );
