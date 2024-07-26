@@ -1,7 +1,7 @@
 "use client";
+import { api } from "@/apis/api";
 import { useAuthStore } from "@/stores/auth.store";
 import { emailValidCheck } from "@/utils/emailCheck";
-import axios from "axios";
 import { useState } from "react";
 
 function useAuthFlow() {
@@ -59,38 +59,20 @@ function useAuthFlow() {
   const handleEmailSubmit = async (email: string) => {
     putEmail(email);
     setLabelText("");
-    try {
-      const response = await axios.get("/api/auth/user", {
-        params: {
-          email: email,
-        },
-      });
-      if (response.status === 200) {
-        setStep("password");
-      } else if (response.status === 201) {
-        setStep("add-user");
-      }
-    } catch (error) {
-      console.log("이메일 확인 도중 오류발생: ", error);
-    }
+    const nextStep = await api.auth.emailUser(email);
+    setStep(nextStep);
   };
 
   // 로그인 password 버튼 누를 시
   const handlePasswordSubmit = async (password: string) => {
     setLabelText("");
-    try {
-      const response = await axios.post("/api/auth/login", {
-        email: user.email,
-        password: password,
-      });
-
-      if (response.status === 200) {
-        console.log("로그인 완료: ", response.data);
-      } else {
-        console.log("로그인 실패: ", response.data);
-      }
-    } catch (error) {
-      console.log("로그인 중에 오류 발생함: ", error);
+    const response = await api.auth.login(user.email, password);
+    if (response?.status === 201) {
+      setLabelColor("red");
+      setLabelText("비밀번호가 일치하지 않습니다.");
+    } else {
+      // 로그인한 유저 데이터 저장하는 로직 넣을 곳
+      console.log(response?.data);
     }
   };
 
@@ -98,24 +80,11 @@ function useAuthFlow() {
   const handleNickSubmit = async (nickname: string) => {
     putNickname(nickname);
     console.log(user.email, user.password);
-    try {
-      const response = await axios.post("/api/auth/signup", {
-        email: user.email,
-        password: user.password,
-        nickname: nickname,
-      });
-      if (response.status === 200) {
-        console.log("회원가입 완료: ", response.data);
-      } else {
-        console.log("회원가입 실패:", response.data);
-      }
-    } catch (e) {
-      console.log("회원가입 중 오류 발생:", e);
-    }
+    await api.auth.signUp(user.email, user.password, nickname);
   };
 
   //회원가입 email 버튼 누를 시
-  const handleSignupSubmit = (email: string) => {
+  const handleSignupSubmit = () => {
     setLabelText("");
     setStep("new-password");
   };
@@ -134,22 +103,27 @@ function useAuthFlow() {
     setStep("nickname");
   };
 
-  //객체로
   return {
-    step,
-    labelText,
-    labelColor,
-    isInputValid,
-    handleEmailSubmit,
-    handlePasswordSubmit,
-    handleNickSubmit,
-    handleEmailChange,
-    handlePasswordChange,
-    handleSignupSubmit,
-    handleNickChange,
-    handleNewPasswordSubmit,
-    handleCheckPasswordSubmit,
-    handleCheckPassword,
+    state: {
+      step,
+      labelText,
+      labelColor,
+      isInputValid,
+    },
+    submit: {
+      handleEmailSubmit,
+      handlePasswordSubmit,
+      handleNickSubmit,
+      handleSignupSubmit,
+      handleNewPasswordSubmit,
+      handleCheckPasswordSubmit,
+    },
+    change: {
+      handleEmailChange,
+      handlePasswordChange,
+      handleNickChange,
+      handleCheckPassword,
+    },
   };
 }
 

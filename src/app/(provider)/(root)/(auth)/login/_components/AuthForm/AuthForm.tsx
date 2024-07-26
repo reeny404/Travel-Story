@@ -1,4 +1,5 @@
 "use client";
+import clsx from "clsx";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 
@@ -25,13 +26,12 @@ function AuthForm({
 }: AuthFormProps) {
   const [isInputPassword, setIsPassword] = useState<boolean>(isPassword);
   const inputRef = useRef<HTMLInputElement>(null);
-  const colorClass = {
-    black: "text-black",
-    red: "text-[#FF0000]",
-    green: "text-[#00B53C]",
-  };
 
-  const textColor = colorClass[labelColor];
+  const textColor = clsx({
+    "text-black": labelColor === "black",
+    "text-[#FF0000]": labelColor === "red",
+    "text-[#00B53C]": labelColor === "green",
+  });
 
   // input change마다 상태가 바뀌게하는 함수
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +54,7 @@ function AuthForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <label className={`text-[14px] ${textColor}`}>
+      <label className={clsx("text-[14px]", textColor)}>
         {label}
         <div className="relative">
           <input

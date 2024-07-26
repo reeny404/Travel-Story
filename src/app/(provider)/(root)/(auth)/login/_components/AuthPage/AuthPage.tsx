@@ -24,7 +24,7 @@ function AuthPage({
         <div className="mt-[79px]">
           <div className="flex justify-evenly items-center">
             <div className="flex-grow h-[1px] bg-gray-200"></div>
-            <p className="text-gray-300 mx-2">또는</p>
+            <p className="text-gray-300 mx-2 text-[14px]">또는</p>
             <div className="flex-grow h-[1px] bg-gray-200"></div>
           </div>
           <div className="mt-4">

@@ -5,23 +5,10 @@ import AuthForm from "./_components/AuthForm/AuthForm";
 import AuthPage from "./_components/AuthPage/AuthPage";
 
 function Login() {
-  const {
-    step,
-    labelText,
-    labelColor,
-    isInputValid,
-    handleEmailChange,
-    handlePasswordChange,
-    handleEmailSubmit,
-    handlePasswordSubmit,
-    handleSignupSubmit,
-    handleNickSubmit,
-    handleNickChange,
-    handleNewPasswordSubmit,
-    handleCheckPasswordSubmit,
-    handleCheckPassword,
-  } = useAuthFlow();
+  const { state, submit, change } = useAuthFlow();
+  const { step, labelText, labelColor, isInputValid } = state;
   const { user } = useAuthStore();
+
   return (
     <>
       {step === "email" && (
@@ -30,8 +17,8 @@ function Login() {
             label={labelText ? labelText : "이메일을 입력하세요."}
             labelColor={labelColor}
             placeholder="example@gmail.com"
-            onSubmit={handleEmailSubmit}
-            onChange={handleEmailChange}
+            onSubmit={submit.handleEmailSubmit}
+            onChange={change.handleEmailChange}
             isInputValid={isInputValid}
           />
         </AuthPage>
@@ -42,8 +29,8 @@ function Login() {
             label={labelText ? labelText : "6자리 이상 입력하세요."}
             labelColor={labelColor}
             isPassword={true}
-            onSubmit={handlePasswordSubmit}
-            onChange={handlePasswordChange}
+            onSubmit={submit.handlePasswordSubmit}
+            onChange={change.handlePasswordChange}
             isInputValid={isInputValid}
           />
         </AuthPage>
@@ -53,8 +40,8 @@ function Login() {
           <AuthForm
             label={labelText ? labelText : "이메일을 입력해주세요."}
             labelColor={labelColor}
-            onChange={handleEmailChange}
-            onSubmit={handleSignupSubmit}
+            onChange={change.handleEmailChange}
+            onSubmit={submit.handleSignupSubmit}
             value={user.email}
             isInputValid={isInputValid}
           />
@@ -65,8 +52,8 @@ function Login() {
           <AuthForm
             label={labelText ? labelText : "6자리 이상 입력해주세요."}
             labelColor={labelColor}
-            onChange={handlePasswordChange}
-            onSubmit={handleNewPasswordSubmit}
+            onChange={change.handlePasswordChange}
+            onSubmit={submit.handleNewPasswordSubmit}
             isPassword={true}
             isInputValid={isInputValid}
           />
@@ -77,8 +64,8 @@ function Login() {
           <AuthForm
             label={labelText ? labelText : "다시 한 번 입력해주세요."}
             labelColor={labelColor}
-            onChange={handleCheckPassword}
-            onSubmit={handleCheckPasswordSubmit}
+            onChange={change.handleCheckPassword}
+            onSubmit={submit.handleCheckPasswordSubmit}
             isPassword={true}
             isInputValid={isInputValid}
           />
@@ -90,8 +77,8 @@ function Login() {
             label={labelText ? labelText : "2~8글자로 입력해주세요."}
             labelColor={labelColor}
             placeholder="홍길동"
-            onSubmit={handleNickSubmit}
-            onChange={handleNickChange}
+            onSubmit={submit.handleNickSubmit}
+            onChange={change.handleNickChange}
             isInputValid={isInputValid}
           />
         </AuthPage>

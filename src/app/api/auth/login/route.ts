@@ -11,7 +11,19 @@ export async function POST(request: NextRequest) {
       password,
     });
     if (error) {
-      return NextResponse.json({ message: error.message }, { status: 400 });
+      if (
+        error.status === 400 &&
+        error.message === "Invalid login credentials"
+      ) {
+        return NextResponse.json(
+          { message: "비밀번호가 틀렸습니다." },
+          { status: 201 }
+        );
+      }
+      return NextResponse.json(
+        { message: error.message },
+        { status: error.status || 400 }
+      );
     }
 
     return NextResponse.json({ message: "로그인 성공", data }, { status: 200 });
