@@ -15,16 +15,12 @@ function AreaDetailPage() {
     select: (data) => data?.data,
   });
 
-  // 타입 관련 오류 해결해야됨
+  // json 타입 관련 오류 해결해야됨
 
   return (
     <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col">
       <ImageContainer imageUrl={area?.imageUrl! || "/123"} isTitle />
-      <p>
-        {" "}
-        {area?.krName}
-        {area?.description} {area?.info?.notes as string}
-      </p>
+      <p> {area?.krName}</p>
     </div>
   );
 }
