@@ -27,6 +27,16 @@ function useAuthFlow() {
     return setIsInputValid(true);
   };
 
+  // password check 유효성 검사
+  const handleCheckPassword = (password: string) => {
+    if (password === user.password) {
+      setLabelText("입력한 비밀번호와 일치해요!");
+      return setIsInputValid(false);
+    }
+    setLabelText("아직 입력한 비밀번호와 일치하지 않아요.");
+    return setIsInputValid(true);
+  };
+
   // nickname 유효성 검사
   const handleNickChange = (nickname: string) => {
     if (nickname.length > 7 || nickname.length < 2) {
@@ -59,9 +69,22 @@ function useAuthFlow() {
   };
 
   // 로그인 password 버튼 누를 시
-  const handlePasswordSubmit = () => {
+  const handlePasswordSubmit = async (password: string) => {
     setLabelText("");
-    console.log("로그인 완료");
+    try {
+      const response = await axios.post("/api/auth/login", {
+        email: user.email,
+        password: password,
+      });
+
+      if (response.status === 200) {
+        console.log("로그인 완료: ", response.data);
+      } else {
+        console.log("로그인 실패: ", response.data);
+      }
+    } catch (error) {
+      console.log("로그인 중에 오류 발생함: ", error);
+    }
   };
 
   // 회원가입 nickname 버튼 누를 시
@@ -75,7 +98,7 @@ function useAuthFlow() {
         nickname: nickname,
       });
       if (response.status === 200) {
-        console.log("회원가입 완료", response.data);
+        console.log("회원가입 완료: ", response.data);
       } else {
         console.log("회원가입 실패:", response.data);
       }
@@ -94,6 +117,11 @@ function useAuthFlow() {
   const handleNewPasswordSubmit = (password: string) => {
     setLabelText("");
     putPassword(password);
+    setStep("check-password");
+  };
+
+  const handleCheckPasswordSubmit = (password: string) => {
+    setLabelText("");
     setStep("nickname");
   };
 
@@ -110,6 +138,8 @@ function useAuthFlow() {
     handleSignupSubmit,
     handleNickChange,
     handleNewPasswordSubmit,
+    handleCheckPasswordSubmit,
+    handleCheckPassword,
   };
 }
 

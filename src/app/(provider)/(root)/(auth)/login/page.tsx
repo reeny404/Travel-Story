@@ -17,6 +17,8 @@ function Login() {
     handleNickSubmit,
     handleNickChange,
     handleNewPasswordSubmit,
+    handleCheckPasswordSubmit,
+    handleCheckPassword,
   } = useAuthFlow();
   const { user } = useAuthStore();
   return (
@@ -60,6 +62,17 @@ function Login() {
             label={labelText ? labelText : "6자리 이상 입력해주세요."}
             onChange={handlePasswordChange}
             onSubmit={handleNewPasswordSubmit}
+            isPassword={true}
+            isInputValid={isInputValid}
+          />
+        </AuthPage>
+      )}
+      {step === "check-password" && (
+        <AuthPage title={"비밀번호를\n확인해주세요."}>
+          <AuthForm
+            label={labelText ? labelText : "다시 한 번 입력해주세요."}
+            onChange={handleCheckPassword}
+            onSubmit={handleCheckPasswordSubmit}
             isPassword={true}
             isInputValid={isInputValid}
           />

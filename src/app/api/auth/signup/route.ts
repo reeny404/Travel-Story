@@ -5,7 +5,6 @@ export const POST = async (request: NextRequest) => {
   const supabase = createClient();
   const { email, password, nickname } = await request.json();
 
-  console.log("가입한 회원 정보: ", email, password, nickname);
   try {
     const { data, error } = await supabase.auth.signUp({
       email: email,

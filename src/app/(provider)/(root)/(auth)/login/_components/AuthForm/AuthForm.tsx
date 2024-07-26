@@ -47,7 +47,8 @@ function AuthForm({
           type={isPassword ? "password" : "text"}
           autoComplete="new-password"
           defaultValue={value}
-          className="w-full h-[48px] text-[20px] border-b border-black bg-transparent focus:outline-none placeholder:text-gray-300"
+          readOnly={value ? true : false}
+          className="w-full h-[48px] text-[20px] border-b border-black bg-transparent focus:outline-none focus:border-[#007AFF] placeholder:text-gray-300"
         />
       </label>
       <button
