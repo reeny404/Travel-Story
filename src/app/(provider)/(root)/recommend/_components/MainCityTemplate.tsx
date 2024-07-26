@@ -1,5 +1,5 @@
 import CardType from "@/components/Card/CardType";
-import { City } from "@/types/Country";
+import { City } from "@/types/Recommend";
 
 function MainCityTemplate({ cities }: { cities: City[] }) {
   const makeCountryCircles = (cities: City[]) => {

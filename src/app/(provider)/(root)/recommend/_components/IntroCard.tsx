@@ -2,7 +2,7 @@
 
 import CardForm from "@/components/Card/CardForm";
 import ImageContainer from "@/components/Card/ImageContainer";
-import { IntroCities } from "@/types/Country";
+import { IntroCities } from "@/types/Recommend";
 import { animated, useSpring } from "@react-spring/web";
 import { useDrag } from "@use-gesture/react";
 import Link from "next/link";
@@ -29,7 +29,7 @@ function IntroCard({ title, imageUrl, items, countryId }: IntroCardProps) {
 
       if (state.last) {
         setX(newX);
-        router.push("/destination/country/1");
+        router.push("/recommmend/country/1");
       }
     }
   });
@@ -53,7 +53,7 @@ function IntroCard({ title, imageUrl, items, countryId }: IntroCardProps) {
         <CardForm intent="intro" items={items} />
 
         <Link
-          href={`/destination/country/${countryId}` || "/"}
+          href={`/recommmend/country/${countryId}` || "/"}
           className="flex justify-center items-center bg-black border rounded-3xl text-white w-20 h-12 absolute bottom-[31%] right-3"
         >
           넘기기

@@ -1,5 +1,5 @@
 // components/CardForm.js
-import { IntroCities } from "@/types/Country";
+import { IntroCities } from "@/types/Recommend";
 import { VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
 import Image from "next/image";
@@ -93,7 +93,7 @@ const CardForm = ({
       ) : (
         items?.map((item, index) => (
           <Link
-            href={`/destination/city/${item.id}` || "/"}
+            href={`/recommend/city/${item.id}` || "/"}
             key={index}
             className="font-semibold max-w-28"
           >
