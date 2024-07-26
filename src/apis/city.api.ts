@@ -30,12 +30,14 @@ class CityAPI {
   async getCityById(id: number) {
     try {
       const path = `/api/city/${id}`;
-      const response = await this.axios.get<CityType>(path, {
+      const response = await this.axios.get<{ data: CityType }>(path, {
         params: {
           id,
         },
       });
-      return response.data;
+
+      const data = response.data;
+      return data;
     } catch (error) {
       console.log("Error fetching data : ", error);
     }

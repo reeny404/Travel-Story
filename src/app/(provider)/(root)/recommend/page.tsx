@@ -7,7 +7,7 @@ import ReviewCard from "./_components/ReviewCard";
 
 // 상단에 띄울 4개의 나라는 하드코딩
 
-function DestinationPage() {
+function RecommendPage() {
   const IMAGE_URL =
     "https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/Italy.jpg";
 
@@ -102,4 +102,4 @@ function DestinationPage() {
   );
 }
 
-export default DestinationPage;
+export default RecommendPage;

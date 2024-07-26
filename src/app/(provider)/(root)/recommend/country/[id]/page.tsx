@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import DetailCard from "../../_components/DetailCard";
-import MainCityTemplate from "../../_components/MainCityTemplate";
+import RecommendForm from "../../_components/RecommendForm";
 // TODO 케러셀  -> 스와이퍼.js로 수정하면서 데이터 수정
 function CountryDetailPage() {
   const pathname = usePathname();
@@ -64,7 +64,7 @@ function CountryDetailPage() {
         />
         <CarouselWrapper items={carouselArr} />
       </div>
-      <MainCityTemplate cities={cities!} />
+      <RecommendForm info={cities!} />
     </div>
   );
 }

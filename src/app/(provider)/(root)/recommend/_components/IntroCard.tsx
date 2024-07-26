@@ -29,7 +29,7 @@ function IntroCard({ title, imageUrl, items, countryId }: IntroCardProps) {
 
       if (state.last) {
         setX(newX);
-        router.push("/recommmend/country/1");
+        router.push("/recommend/country/1");
       }
     }
   });
@@ -53,7 +53,7 @@ function IntroCard({ title, imageUrl, items, countryId }: IntroCardProps) {
         <CardForm intent="intro" items={items} />
 
         <Link
-          href={`/recommmend/country/${countryId}` || "/"}
+          href={`/recommend/country/${countryId}` || "/"}
           className="flex justify-center items-center bg-black border rounded-3xl text-white w-20 h-12 absolute bottom-[31%] right-3"
         >
           넘기기

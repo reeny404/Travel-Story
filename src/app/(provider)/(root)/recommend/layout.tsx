@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
-function DestinationLayout({ children }: PropsWithChildren) {
+function RecommendLayout({ children }: PropsWithChildren) {
   return <div className="">{children}</div>;
 }
 
-export default DestinationLayout;
+export default RecommendLayout;
