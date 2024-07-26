@@ -24,6 +24,7 @@ function ReviewCard({ title, description, rating, imageUrl }: ReviewCardProps) {
         </div>
         <div className="w-2/3">
           <CardForm
+            linkUrl="/"
             title={title}
             description={description}
             intent="review"

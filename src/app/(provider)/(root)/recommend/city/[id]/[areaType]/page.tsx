@@ -30,7 +30,7 @@ function AreaTypePage() {
             description={area.description}
             rating={4}
             imageUrl={area.imageUrl!}
-            linkUrl="/"
+            linkUrl={`/recommend/area/${area.id}`}
           />
         );
       })}

@@ -1,40 +1,22 @@
 "use client";
 
 import { api } from "@/apis/api";
-import useRecommendStore from "@/stores/recommend.store";
-import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
-import AreaCard from "../../_components/AreaCard";
 
 function AreaDetailPage() {
   const pathname = usePathname();
-  const areaType = pathname.split("/").slice(-1)[0];
-  const { cityId } = useRecommendStore();
+  const areaId = parseInt(pathname.split("/").slice(-1)[0]);
 
-  const { data: areas } = useQuery({
-    queryKey: ["area", cityId],
-    queryFn: () => api.area.getAreasByCity(cityId),
+  const { data: area } = useQuery({
+    queryKey: ["area", areaId],
+    queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data?.data,
   });
-
-  const filteredArea = filterByAreaType(areas!, areaType);
+  console.log("area", area);
 
   return (
-    <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col">
-      {filteredArea?.map((area, idx) => {
-        return (
-          <AreaCard
-            key={idx}
-            title={area.title}
-            description={area.description}
-            rating={4}
-            imageUrl={area.imageUrl!}
-            linkUrl="/"
-          />
-        );
-      })}
-    </div>
+    <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col"></div>
   );
 }
 

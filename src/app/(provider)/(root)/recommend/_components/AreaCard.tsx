@@ -9,7 +9,13 @@ type AreaCardType = {
   linkUrl: string;
 };
 
-function AreaCard({ title, description, rating, imageUrl }: AreaCardType) {
+function AreaCard({
+  title,
+  description,
+  rating,
+  imageUrl,
+  linkUrl,
+}: AreaCardType) {
   return (
     <>
       <ImageContainer isTitle size="area" imageUrl={imageUrl} />
@@ -18,6 +24,7 @@ function AreaCard({ title, description, rating, imageUrl }: AreaCardType) {
         title={title}
         description={description}
         rating={rating}
+        linkUrl={linkUrl}
       />
     </>
   );

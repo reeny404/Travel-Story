@@ -11,6 +11,7 @@ type CardFormProps = CardFormVariantProps & {
   description?: string;
   items?: IntroCities[];
   rating?: number;
+  linkUrl: string;
 } & ComponentProps<"div">;
 
 type CardFormVariantProps = VariantProps<typeof cardFormVariant>;
@@ -34,6 +35,7 @@ const CardForm = ({
   description,
   items,
   rating,
+  linkUrl,
   ...props
 }: CardFormProps) => {
   const makeRatingIcon = (rating: number) => {
@@ -71,14 +73,15 @@ const CardForm = ({
     <div className={cardFormVariant({ intent })} {...props}>
       {intent !== "intro" ? (
         <>
-          <h2
+          <Link
+            href={linkUrl!}
             className={clsx(
               "text-xl font-bold mt-2 mb-2",
               intent === "review" && "text-[15px]"
             )}
           >
             {title}
-          </h2>
+          </Link>
           <p
             className={clsx(
               rating !== undefined && rating >= 0 && "mb-3",

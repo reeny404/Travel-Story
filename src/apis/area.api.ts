@@ -1,7 +1,5 @@
-import { Tables } from "@/types/supabase";
+import { Area } from "@/types/Recommend";
 import { AxiosInstance } from "axios";
-
-type AreaType = Tables<"area">;
 
 class AreaAPI {
   private axios: AxiosInstance;
@@ -13,7 +11,7 @@ class AreaAPI {
   async getAreas() {
     try {
       const path = "/api/area";
-      const response = await this.axios.get<AreaType>(path);
+      const response = await this.axios.get<Area>(path);
       const data = response.data;
 
       return data;
@@ -31,7 +29,7 @@ class AreaAPI {
   async getAreasById(id: number) {
     try {
       const path = `/api/area/${id}`;
-      const response = await this.axios.get<AreaType>(path, {
+      const response = await this.axios.get<{ data: Area }>(path, {
         params: {
           id,
         },
@@ -52,7 +50,7 @@ class AreaAPI {
   async getAreasByCity(id: number) {
     try {
       const path = `/api/area/city`;
-      const response = await this.axios.get<{ data: AreaType[] }>(path, {
+      const response = await this.axios.get<{ data: Area[] }>(path, {
         params: {
           id,
         },
@@ -72,7 +70,7 @@ class AreaAPI {
   async getAreasByCountry(id: number, type: string) {
     try {
       const path = `/api/area/country`;
-      const response = await this.axios.get<{ data: AreaType[] }>(path, {
+      const response = await this.axios.get<{ data: Area[] }>(path, {
         params: {
           id,
           type,
@@ -93,7 +91,7 @@ class AreaAPI {
   async search(name: string) {
     try {
       const path = `/api/area/search`;
-      const response = await this.axios.get<AreaType>(path, {
+      const response = await this.axios.get<Area>(path, {
         params: {
           name,
         },

@@ -47,6 +47,7 @@ function CityDetailPage() {
           <div className="flex flex-col relative">
             <ImageContainer isTitle size="area" imageUrl={area?.imageUrl!} />
             <CardForm
+              linkUrl="/"
               intent="detail"
               title={area.title}
               description={area?.description!}
@@ -65,6 +66,7 @@ function CityDetailPage() {
           <div className="flex flex-col relative">
             <ImageContainer isTitle size="area" imageUrl={area?.imageUrl!} />
             <CardForm
+              linkUrl="/"
               intent="detail"
               title={area.title}
               description={area?.description!}
