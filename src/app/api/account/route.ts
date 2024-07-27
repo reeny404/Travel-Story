@@ -1,5 +1,5 @@
 import { createClient } from "@/supabase/server";
-import { Account } from "@/types/Account";
+import { Tables } from "@/types/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
 const ACCOUNT_BOOK = "accountBook";
@@ -12,6 +12,12 @@ const FK_SCHEDULE_ID = "scheduleId";
  */
 export async function GET(request: NextRequest) {
   const scheduleId = request.nextUrl.searchParams.get(FK_SCHEDULE_ID);
+  if (!scheduleId) {
+    return NextResponse.json(null, {
+      status: 400,
+      statusText: "스케줄 아이디가 없습니다. :" + scheduleId
+    });
+  }
 
   const supabase = createClient();
   const { data, error } = await supabase
@@ -35,7 +41,7 @@ export async function GET(request: NextRequest) {
  * @param Account { type, payType, amount, desc, areaType, areaName }
  */
 export async function POST(request: NextRequest) {
-  const account = (await request.json()) as Account;
+  const account = (await request.json()) as Tables<"accountBook">;
 
   const supabase = createClient();
   const { data } = await supabase
