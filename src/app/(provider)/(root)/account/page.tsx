@@ -1,9 +1,7 @@
 "use client";
 
-import { BASE_URL, QUERY_KEY } from "@/constants/QueryKey";
-import { Account } from "@/types/Account";
+import { api } from "@/apis/api";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Image from "next/image";
 import Badge from "../../../../components/Badge";
 
@@ -11,12 +9,9 @@ const scheduleId = "cff1bd2a-6a3f-4eac-9a9f-b76db923b7de";
 const types = ["현금", "이체", "체크", "신용"];
 
 export default function AccountBookPage() {
-  const { data: account, isLoading } = useQuery<Account>({
-    queryKey: [QUERY_KEY.account],
-    queryFn: () =>
-      axios
-        .get(`${BASE_URL}/api/account?scheduleId=${scheduleId}`)
-        .then(({ data }) => data),
+  const { data: account, isLoading } = useQuery({
+    queryKey: ["account"],
+    queryFn: () => api.account.get(scheduleId),
   });
 
   if (isLoading) {

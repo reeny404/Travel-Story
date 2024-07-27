@@ -74,7 +74,7 @@ const CardForm = ({
       {intent !== "intro" ? (
         <>
           <Link
-            href={linkUrl!}
+            href={linkUrl! || "/"}
             className={clsx(
               "text-xl font-bold mt-2 mb-2",
               intent === "review" && "text-[15px]"
