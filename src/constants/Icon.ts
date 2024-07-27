@@ -6,6 +6,7 @@ export const ICON = {
     },
   },
   avatar: {
+    black: "avatar-black",
     gray: "avatar-gray",
   },
   chevron: {
