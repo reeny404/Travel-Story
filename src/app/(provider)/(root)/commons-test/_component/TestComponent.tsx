@@ -73,6 +73,8 @@ function TestComponent() {
           >
             Submit
           </SubmitButton>
+
+          <p>헤더 두 개 보이는 것이 정상입니다.</p>
         </section>
       </section>
     </MainLayout>

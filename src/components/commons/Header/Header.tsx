@@ -41,7 +41,7 @@ export type HeaderProps = {
   }[];
 };
 
-export default function Header({
+function Header({
   backgroundColor,
   leftIcons,
   title = "TripStory",
@@ -104,3 +104,5 @@ export default function Header({
     </header>
   );
 }
+
+export default Header;
