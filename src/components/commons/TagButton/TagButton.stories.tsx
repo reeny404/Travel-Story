@@ -9,7 +9,7 @@ const meta: Meta<typeof TagButton> = {
   },
   tags: ["autodocs"],
   argTypes: {
-    intent: {
+    theme: {
       control: {
         type: "select",
         options: ["primary", "blue"],
@@ -43,7 +43,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Xs: Story = {
   args: {
-    intent: "primary",
+    theme: "primary",
     size: "xs",
     isChecked: false,
     children: "힐링",
@@ -52,7 +52,7 @@ export const Xs: Story = {
 
 export const Small: Story = {
   args: {
-    intent: "primary",
+    theme: "primary",
     size: "sm",
     isChecked: false,
     children: "여행",
@@ -61,7 +61,7 @@ export const Small: Story = {
 
 export const Medium: Story = {
   args: {
-    intent: "primary",
+    theme: "primary",
     size: "md",
     isChecked: false,
     children: "휴식",
@@ -70,12 +70,12 @@ export const Medium: Story = {
 
 export const Large: Story = {
   args: {
-    intent: "primary",
+    theme: "primary",
     size: "lg",
     isChecked: false,
     children: (
       <>
-        <img src="/testImg/logo2.png" alt="logo" width={16} height={16} />
+        <img src="/icons/list-black.png" alt="logo" width={16} height={16} />
         이미지 체크
       </>
     ),
@@ -84,7 +84,7 @@ export const Large: Story = {
 
 export const Checked: Story = {
   args: {
-    intent: "primary",
+    theme: "primary",
     size: "sm",
     isChecked: true,
     children: "선택됨",

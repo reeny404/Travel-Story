@@ -1,12 +1,12 @@
 import { VariantProps, cva } from "class-variance-authority";
 import { ComponentProps, PropsWithChildren } from "react";
 
-type SubmitButtonIntent = "primary" | "light" | "kakao";
+type SubmitButtonTheme = "primary" | "light" | "kakao";
 type SubmitButtonSize = "sm" | "md" | "lg";
 
 const buttonVariant = cva("rounded-lg font-semibold", {
   variants: {
-    intent: {
+    theme: {
       primary: "bg-black text-white",
       light: "bg-white text-black",
       kakao: "bg-[#F9E000] text-black",
@@ -27,26 +27,26 @@ const buttonVariant = cva("rounded-lg font-semibold", {
   },
   compoundVariants: [
     {
-      intent: "primary",
+      theme: "primary",
       variant: "outline",
       size: "lg",
       className: "bg-white !text-black font-normal border-black",
     },
     {
-      intent: "primary",
+      theme: "primary",
       variant: "outline",
       size: "md",
       className: "bg-white !text-black font-normal border-black",
     },
     {
-      intent: "primary",
+      theme: "primary",
       variant: "outline",
       size: "sm",
       className: "bg-white !text-black text-sm font-normal border-black",
     },
   ],
   defaultVariants: {
-    intent: "primary",
+    theme: "primary",
     size: "sm",
     disabled: false,
   },
@@ -54,13 +54,13 @@ const buttonVariant = cva("rounded-lg font-semibold", {
 
 type ButtonVariants = VariantProps<typeof buttonVariant>;
 
-type SubmitButtonProps = Omit<ButtonVariants, "intent"> & {
-  intent: SubmitButtonIntent;
+type SubmitButtonProps = Omit<ButtonVariants, "theme"> & {
+  theme: SubmitButtonTheme;
   size?: SubmitButtonSize;
 } & ComponentProps<"button">;
 
 function SubmitButton({
-  intent,
+  theme,
   variant,
   size,
   disabled,
@@ -70,7 +70,7 @@ function SubmitButton({
   return (
     <button
       type="submit"
-      className={buttonVariant({ intent, variant, size, disabled })}
+      className={buttonVariant({ theme, variant, size, disabled })}
       disabled={disabled}
       {...props}
     >

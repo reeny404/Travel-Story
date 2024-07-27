@@ -1,12 +1,12 @@
 import { cva, VariantProps } from "class-variance-authority";
 import { ComponentProps, PropsWithChildren } from "react";
 
-type TagButtonIntent = "primary" | "blue";
+type TagButtonTheme = "primary" | "blue";
 type TagButtonSize = "xs" | "sm" | "md" | "lg";
 
 const tagVariant = cva("text-sm rounded-2xl hover:opacity-90", {
   variants: {
-    intent: {
+    theme: {
       primary: "bg-transparent border border-black text-black",
       blue: "bg-[#06F] text-white font-semibold",
     },
@@ -22,7 +22,7 @@ const tagVariant = cva("text-sm rounded-2xl hover:opacity-90", {
     },
   },
   defaultVariants: {
-    intent: "primary",
+    theme: "primary",
     size: "sm",
     isChecked: false,
   },
@@ -31,12 +31,12 @@ const tagVariant = cva("text-sm rounded-2xl hover:opacity-90", {
 type TagVariants = VariantProps<typeof tagVariant>;
 
 type TagButtonProps = Omit<TagVariants, "size"> & {
-  intent: TagButtonIntent;
+  theme: TagButtonTheme;
   size: TagButtonSize;
 } & ComponentProps<"button">;
 
 function TagButton({
-  intent,
+  theme,
   size,
   isChecked,
   children,
@@ -45,7 +45,7 @@ function TagButton({
   return (
     <button
       type="button"
-      className={tagVariant({ intent, size, isChecked })}
+      className={tagVariant({ theme, size, isChecked })}
       {...props}
     >
       <div className="flex justify-center items-center gap-1">{children}</div>
