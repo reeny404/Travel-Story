@@ -6,6 +6,7 @@ import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
 import Tab from "@/components/Tab/Tab";
+import { useTab } from "@/hooks/useTab";
 import useRecommendStore from "@/stores/recommend.store";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
@@ -15,7 +16,8 @@ import RecommendForm from "../../_components/RecommendForm";
 // TODO 케러셀  -> 스와이퍼.js로 수정하면서 데이터 수정
 // 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
 function CountryDetailPage() {
-  const { countryId, setCountryId, currentTab } = useRecommendStore();
+  const { countryId, setCountryId } = useRecommendStore();
+  const { currentTab } = useTab();
   const pathname = usePathname();
 
   useEffect(() => {
