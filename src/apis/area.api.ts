@@ -1,4 +1,4 @@
-import { Area } from "@/types/Recommend";
+import { Area, AreaReview } from "@/types/Recommend";
 import { AxiosInstance } from "axios";
 
 class AreaAPI {
@@ -98,6 +98,20 @@ class AreaAPI {
       });
       const data = response.data;
 
+      return data;
+    } catch (error) {}
+  }
+
+  async getAreaRating(id: number) {
+    try {
+      const path = `/api/area/rating`;
+      const response = await this.axios.get<{ data: AreaReview[] }>(path, {
+        params: {
+          id,
+        },
+      });
+
+      const data = response.data;
       return data;
     } catch (error) {}
   }

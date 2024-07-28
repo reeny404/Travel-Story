@@ -2,8 +2,10 @@
 
 import { api } from "@/apis/api";
 import ImageContainer from "@/components/Card/ImageContainer";
+import RatingIcons from "@/components/Card/RatingIcons";
 import Tab from "@/components/Tab/Tab";
 import { useTab } from "@/hooks/useTab";
+import { calcRatings } from "@/utils/calcRatings";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 
@@ -16,6 +18,13 @@ function AreaDetailPage() {
     queryKey: ["area", areaId],
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data?.data,
+  });
+
+  const { data: rating } = useQuery({
+    queryKey: ["areaRating", areaId],
+    queryFn: () => api.area.getAreaRating(areaId),
+    select: (data) =>
+      calcRatings(data?.data.totalRating, data?.data.dataLength),
   });
 
   const convertTypeToKr = (type: string) => {
@@ -33,7 +42,6 @@ function AreaDetailPage() {
     }
   };
   // json 타입 관련 오류 해결해야됨
-  console.log("area", currentTab);
 
   return (
     <>
@@ -51,7 +59,9 @@ function AreaDetailPage() {
               />
               <p className="p-3 flex justify-between items-center font-semibold">
                 <span>{convertTypeToKr(area.type!)}</span>
-                <span>별점</span>
+                <div>
+                  <RatingIcons rating={rating!} />
+                </div>
               </p>
               <p className="px-3 flex justify-between items-center font-semibold">
                 <span>영업중</span>
