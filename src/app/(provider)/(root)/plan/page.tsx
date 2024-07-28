@@ -3,7 +3,7 @@ import BottomSheet from "./_components/BottomSheet";
 function PlanPage() {
   return (
     <div className="max-w-[375px] w-screen mx-auto">
-      <BottomSheet type="place" status="add" />
+      <BottomSheet type="move" status="add" />
     </div>
   );
 }

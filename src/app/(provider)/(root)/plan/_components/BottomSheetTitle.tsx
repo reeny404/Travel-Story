@@ -1,5 +1,7 @@
+"use client";
 import { BottomSheetType } from "@/types/plan";
 import React, { useEffect, useState } from "react";
+import TransportOption from "./TransportOption";
 
 function BottomSheetTitle({ type, status }: BottomSheetType) {
   const [inpTitleValue, setTitleValue] = useState("");
@@ -7,6 +9,10 @@ function BottomSheetTitle({ type, status }: BottomSheetType) {
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitleValue(event.target.value);
+  };
+
+  const handleMoveTitleChange = (label: string) => {
+    setTitleValue(label);
   };
 
   useEffect(() => {
@@ -31,13 +37,27 @@ function BottomSheetTitle({ type, status }: BottomSheetType) {
   return (
     <div>
       <input
-        className="w-full h-10 pl-2 text-lg outline-none"
+        className="w-full h-10 pl-2 text-lg outline-none bg-white font-bold"
         type="text"
         name="title"
         value={inpTitleValue}
         onChange={handleTitleChange}
         placeholder={titlePlaceholder}
+        disabled={type === "move"}
       />
+      {type === "move" && (
+        <ul className="my-5 mx-auto grid grid-cols-3 gap-y-5">
+          {["도보", "자전거", "렌트카", "대중교통", "선박", "항공"].map(
+            (option) => (
+              <TransportOption
+                key={option}
+                label={option}
+                onClick={handleMoveTitleChange}
+              />
+            )
+          )}
+        </ul>
+      )}
     </div>
   );
 }

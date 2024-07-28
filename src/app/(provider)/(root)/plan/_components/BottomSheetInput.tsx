@@ -45,7 +45,7 @@ export default function BottomSheetInput({
     <div className="flex items-center">
       <i className="mr-2 w-8 text-center">{icon}</i>
       <input
-        className="border-0 outline-0 w-[90%] border-b-[1px] border-white transition-colors focus:border-blue-300"
+        className="border-0 outline-0 w-[90%] border-b-[1px] text-sm border-white transition-colors focus:border-blue-300"
         type={type === "spend" ? "number" : "text"}
         name={type}
         value={inputValue}
