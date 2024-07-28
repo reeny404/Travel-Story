@@ -1,6 +1,11 @@
-import { Area, AreaReview } from "@/types/Recommend";
-import { AxiosInstance } from "axios";
-
+import { Area, Rating, RecommendResponse } from "@/types/Recommend";
+import { AxiosError, AxiosInstance } from "axios";
+type RatingResponse = {
+  status: number;
+  message: string;
+  data: { rating: number; pieces: number };
+  error: null | AxiosError;
+};
 class AreaAPI {
   private axios: AxiosInstance;
 
@@ -102,18 +107,19 @@ class AreaAPI {
     } catch (error) {}
   }
 
-  async getAreaRating(id: number) {
+  async getAreaRating(id: number): Promise<RatingResponse | undefined> {
     try {
       const path = `/api/area/rating`;
-      const response = await this.axios.get<{ data: AreaReview[] }>(path, {
+      const response = await this.axios.get<RecommendResponse<Rating>>(path, {
         params: {
           id,
         },
       });
-
       const data = response.data;
       return data;
-    } catch (error) {}
+    } catch (error) {
+      throw new Error();
+    }
   }
 }
 

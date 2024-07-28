@@ -39,12 +39,12 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const totalRating = data.reduce((acc, review) => acc + review.rating, 0);
+  const rating = data.reduce((acc, review) => acc + review.rating, 0);
 
   return NextResponse.json({
     status: 200,
     message: "Success",
-    data: { totalRating, dataLength: data.length },
+    data: { rating, pieces: data.length },
     error: null,
   });
 }

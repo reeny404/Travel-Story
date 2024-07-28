@@ -4,8 +4,10 @@ import { api } from "@/apis/api";
 import ImageContainer from "@/components/Card/ImageContainer";
 import RatingIcons from "@/components/Card/RatingIcons";
 import { useTab } from "@/hooks/useTab";
+import { Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -20,11 +22,27 @@ function AreaDetailPage() {
     select: (data) => data?.data,
   });
 
-  const { data: rating } = useQuery({
+  const { data: rating } = useQuery<
+    RecommendResponse<Rating>,
+    AxiosError,
+    Rating
+  >({
     queryKey: ["areaRating", areaId],
-    queryFn: () => api.area.getAreaRating(areaId),
-    select: (data) =>
-      calcRatings(data?.data.totalRating, data?.data.dataLength),
+    queryFn: async () => {
+      const response = await api.area.getAreaRating(areaId);
+      if (!response) {
+        throw new Error("응답값이 없습니다.");
+      }
+      return response;
+    },
+    select: ({ data }) => {
+      const rating = calcRatings(data);
+      if (!rating) {
+        throw new Error("반환할 값이 없습니다.");
+      }
+
+      return { rating, pieces: data.pieces };
+    },
   });
 
   const convertTypeToKr = (type: string) => {
@@ -41,15 +59,15 @@ function AreaDetailPage() {
       return "쇼핑";
     }
   };
-  // json 타입 관련 오류 해결해야됨
 
   return (
     <>
       {isLoading ? (
         <div>loading...</div>
       ) : (
-        area && (
-          <section className="container overflow-x-hidden w-screen h-full max-w-[375px] mx-auto flex-col">
+        area &&
+        rating && (
+          <section className="container overflow-x-hidden w-screen h-full max-w-[375px] mx-auto flex-col relative">
             <h1 className="w-full p-3 text-xl font-bold">{area?.title}</h1>
             <div className="w-full h-full">
               <ImageContainer
@@ -60,7 +78,7 @@ function AreaDetailPage() {
               <p className="p-3 flex justify-between items-center font-semibold">
                 <span>{convertTypeToKr(area.type!)}</span>
                 <div>
-                  <RatingIcons rating={rating!} />
+                  <RatingIcons rating={rating.rating} />
                 </div>
               </p>
               <p className="px-3 flex justify-between items-center font-semibold">
@@ -93,9 +111,9 @@ function AreaDetailPage() {
               </div>
               <div className="w-full grid grid-cols-2 p-3">
                 <div className="flex flex-col gap-y-2 items-center justify-center">
-                  <p className="text-3xl">{rating}</p>
+                  <p className="text-3xl">{rating.rating}</p>
                   <div>
-                    <RatingIcons rating={rating} />
+                    <RatingIcons rating={rating.rating} />
                   </div>
                   <p className="text-xm text-[#8B8B8B]">{`(2)`}</p>
                 </div>
@@ -152,7 +170,7 @@ function AreaDetailPage() {
                 </div>
               </div>
               <div className="mt-4">
-                <RatingIcons rating={rating} />
+                <RatingIcons rating={rating.rating} />
               </div>
               <div className="w-full text-xs text-ellipsis line-clamp-3">
                 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용
@@ -169,6 +187,10 @@ function AreaDetailPage() {
                   className="object-cover w-full"
                 />
               </div>
+            </div>
+            <div className="w-full h-10 px-3 flex">
+              <button className="w-10 h-full bg-blue-500">북</button>
+              <button className="w-full">내 여행에 추가</button>
             </div>
           </section>
         )
