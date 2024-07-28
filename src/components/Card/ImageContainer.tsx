@@ -38,7 +38,7 @@ const ImageContainer = ({
         alt="이미지"
         priority
         fill
-        className="object-cover"
+        className="object-fill"
       />
       {isTitle && (
         <h1 className="absolute bottom-0 left-0 -mb-6 text-[64px] font-bold">
