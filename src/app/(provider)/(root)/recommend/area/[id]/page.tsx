@@ -6,10 +6,11 @@ import RatingIcons from "@/components/Card/RatingIcons";
 import { useTab } from "@/hooks/useTab";
 import { Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useCallback } from "react";
 
 function AreaDetailPage() {
   const pathname = usePathname();
@@ -44,8 +45,15 @@ function AreaDetailPage() {
       return { rating, pieces: data.pieces };
     },
   });
+  const BOOKMARK_DATA = {
+    userId: "66ec615f-1dd3-45df-83b6-2e178b5abbc3",
+    areaId: 1,
+  };
+  const { mutate: addBookmark } = useMutation({
+    mutationFn: () => api.area.addBookmark(BOOKMARK_DATA),
+  });
 
-  const convertTypeToKr = (type: string) => {
+  const convertTypeToKr = useCallback((type: string) => {
     if (type === "restaurant") {
       return "식당";
     }
@@ -58,7 +66,7 @@ function AreaDetailPage() {
     if (type === "shop") {
       return "쇼핑";
     }
-  };
+  }, []);
 
   return (
     <>
@@ -188,9 +196,18 @@ function AreaDetailPage() {
                 />
               </div>
             </div>
-            <div className="w-full h-10 px-3 flex">
-              <button className="w-10 h-full bg-blue-500">북</button>
-              <button className="w-full">내 여행에 추가</button>
+            <div className="w-full h-10 px-3 flex gap-x-2 fixed bottom-0">
+              <button
+                onClick={() => {
+                  addBookmark();
+                }}
+                className="w-14 h-full bg-blue-500 border rounded-md"
+              >
+                북
+              </button>
+              <button className="w-72 h-full bg-gray-300 border rounded-md">
+                내 여행에 추가
+              </button>
             </div>
           </section>
         )

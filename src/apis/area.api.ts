@@ -121,6 +121,18 @@ class AreaAPI {
       throw new Error();
     }
   }
-}
 
+  async addBookmark(data: BookmarkType) {
+    console.log("userId", data.userId, data.areaId);
+    const { userId, areaId } = data;
+    const path = "/api/area/bookmark/add";
+    const response = await this.axios.post(path, { userId, areaId });
+
+    console.log("response", response);
+  }
+}
+type BookmarkType = {
+  userId: string;
+  areaId: number;
+};
 export default AreaAPI;
