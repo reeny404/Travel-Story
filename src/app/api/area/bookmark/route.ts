@@ -46,3 +46,32 @@ export async function GET(request: NextRequest) {
     error: null,
   });
 }
+export async function POST(request: NextRequest) {
+  const data = await request.json();
+  const userId = data.userId;
+  const areaId = data.areaId;
+  const supabase = createClient();
+
+  const { data: insertedData } = await supabase
+    .from("areaBookmark")
+    .insert({ userId, areaId })
+    .select();
+  return NextResponse.json(insertedData);
+}
+
+export async function DELETE(request: NextRequest) {
+  const data = await request.json();
+  const userId = data.userId;
+  const areaId = data.areaId;
+
+  const supabase = createClient();
+
+  const { data: deletedData } = await supabase
+    .from("areaBookmark")
+    .delete()
+    .eq("userId", userId)
+    .eq("areaId", areaId)
+    .select();
+
+  return NextResponse.json(deletedData);
+}

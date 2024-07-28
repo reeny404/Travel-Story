@@ -50,7 +50,7 @@ function AreaDetailPage() {
     areaId: 1,
   };
   const { mutate: addBookmark } = useMutation({
-    mutationFn: () => api.area.addBookmark(BOOKMARK_DATA),
+    mutationFn: () => api.area.deleteBookmark(BOOKMARK_DATA),
   });
 
   const convertTypeToKr = useCallback((type: string) => {

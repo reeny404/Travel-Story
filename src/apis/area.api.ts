@@ -123,10 +123,19 @@ class AreaAPI {
   }
 
   async addBookmark(data: BookmarkType) {
-    console.log("userId", data.userId, data.areaId);
     const { userId, areaId } = data;
-    const path = "/api/area/bookmark/add";
+    const path = "/api/area/bookmark";
     const response = await this.axios.post(path, { userId, areaId });
+
+    console.log("response", response);
+  }
+
+  async deleteBookmark(data: BookmarkType) {
+    const { userId, areaId } = data;
+    const path = "/api/area/bookmark";
+    const response = await this.axios.delete(path, {
+      data: { userId, areaId },
+    });
 
     console.log("response", response);
   }
