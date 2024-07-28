@@ -13,6 +13,7 @@ const TransportOption: React.FC<TransportOptionProps> = ({
     <li className="text-center">
       <button
         className="w-14 h-14 leading-14 bg-gray-100 rounded-lg"
+        type="button"
         onClick={() => onClick(label)}
       >
         {label}
