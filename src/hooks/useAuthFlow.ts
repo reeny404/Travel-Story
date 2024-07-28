@@ -2,6 +2,7 @@
 import { api } from "@/apis/api";
 import { useAuthStore } from "@/stores/auth.store";
 import { emailValidCheck } from "@/utils/emailCheck";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function useAuthFlow() {
@@ -10,6 +11,7 @@ function useAuthFlow() {
   const [labelText, setLabelText] = useState<string>("");
   const [labelColor, setLabelColor] = useState<string>("text-black");
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
+  const router = useRouter();
 
   /** Change 관련 handle */
   // 로그인 email 유효성 검사
@@ -72,6 +74,7 @@ function useAuthFlow() {
       setLabelText("비밀번호가 일치하지 않습니다.");
     } else {
       // 로그인한 유저 데이터 저장하는 로직 넣을 곳
+      router.push("/");
       console.log(response?.data);
     }
   };
@@ -81,6 +84,7 @@ function useAuthFlow() {
     putNickname(nickname);
     console.log(user.email, user.password);
     await api.auth.signUp(user.email, user.password, nickname);
+    router.push("/");
   };
 
   //회원가입 email 버튼 누를 시
