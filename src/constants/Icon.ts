@@ -4,16 +4,28 @@ export const ICON = {
       black: "arrow-back-black",
       white: "arrow-back-white",
     },
+    down: {
+      black: "arrow-down-black",
+    },
+    up: {
+      black: "arrow-up-black",
+    },
   },
   avatar: {
     black: "avatar-black",
     gray: "avatar-gray",
+  },
+  cancel: {
+    black: "cancel-black",
   },
   chevron: {
     blue: "chevron-blue",
   },
   dottedSquare: {
     blue: "dotted-square-blue",
+  },
+  home: {
+    black: "home-black",
   },
   edit: {
     black: "edit-black",

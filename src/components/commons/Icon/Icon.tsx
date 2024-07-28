@@ -1,18 +1,13 @@
 import Image from "next/image";
 
-type IconButtonProps = {
+type IconProps = {
   icon: string;
   alt?: string;
   size?: number;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-function IconButton({
-  icon,
-  alt = "icon",
-  size = 20,
-  onClick,
-}: IconButtonProps) {
+function Icon({ icon, alt = "icon", size = 20, onClick }: IconProps) {
   const iconPath = `/icons/${icon}.png`;
 
   return (
@@ -25,4 +20,4 @@ function IconButton({
   );
 }
 
-export default IconButton;
+export default Icon;

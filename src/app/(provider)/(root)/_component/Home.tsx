@@ -1,8 +1,13 @@
+"use client";
+
 import { ICON } from "@/constants/Icon";
+import useDrawerStore from "@/stores/useDrawerStore";
 import Link from "next/link";
-import MainLayout from "../layout";
+import MainLayout from "../MainLayout";
 
 function Home() {
+  const { openDrawer } = useDrawerStore();
+
   return (
     <MainLayout
       headerProps={{
@@ -12,11 +17,11 @@ function Home() {
             icon: ICON.menu.burgerBlack,
             alt: "Back",
             size: 20,
-            path: "/",
+            onClick: openDrawer,
           },
         ],
         title: "TripStory",
-        titleAlign: "left",
+        titleAlign: "left" as const,
         rightIcons: [
           {
             icon: ICON.notification.black,
@@ -34,6 +39,9 @@ function Home() {
       }}
     >
       <main className="w-full h-full">
+        <section className="w-full h-[222px] bg-black">
+          <div></div>
+        </section>
         <Link
           href="/commons-test"
           className="flex justify-center items-centerp-2 border border-black rounded hover:bg-slate-100"

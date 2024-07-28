@@ -3,9 +3,8 @@
 import SubmitButton from "@/components/commons/SubmitButton";
 import TagButton from "@/components/commons/TagButton";
 import CountryButton from "@/components/CountryButton";
-import { ICON } from "@/constants/Icon";
 import { useState } from "react";
-import MainLayout from "../../layout";
+import MainLayout from "../../MainLayout";
 
 function TestComponent() {
   const [isChecked, setIsChecked] = useState(false);
@@ -13,29 +12,7 @@ function TestComponent() {
   const toggleChecked = () => setIsChecked(!isChecked);
   return (
     // header에 onClick 이벤트를 설정해야 할 페이지면 이렇게 클라이언트 컴포넌트 안에서 header 호출
-    <MainLayout
-      headerProps={{
-        backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            size: 20,
-            path: "back",
-          },
-        ],
-        title: "Test Header",
-        titleAlign: "center",
-        rightIcons: [
-          {
-            icon: ICON.notification.black,
-            alt: "Notifications",
-            size: 20,
-            onClick: () => alert("alert test"),
-          },
-        ],
-      }}
-    >
+    <MainLayout>
       <section className="container mx-auto p-4 space-y-8">
         <section className="space-y-4">
           <h2 className="text-lg font-semibold">TagButton Example</h2>

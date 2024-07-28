@@ -1,6 +1,6 @@
 "use client";
 
-import IconButton from "@/components/commons/IconButton/IconButton";
+import Icon from "@/components/commons/Icon/Icon";
 import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
@@ -71,7 +71,7 @@ function Header({
       <div className="flex items-center">
         {leftIcons &&
           leftIcons.map((icon, index) => (
-            <IconButton
+            <Icon
               key={index}
               icon={icon.icon}
               alt={icon.alt}
@@ -92,7 +92,7 @@ function Header({
       <div className="flex items-center ml-auto">
         {rightIcons &&
           rightIcons.map((icon, index) => (
-            <IconButton
+            <Icon
               key={index}
               icon={icon.icon}
               alt={icon.alt}
