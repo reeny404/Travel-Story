@@ -73,7 +73,7 @@ function TestComponent() {
           >
             Submit
           </SubmitButton>
-
+          <p>삭제 예정의 테스트 페이지입니다.</p>
           <p>헤더 두 개 보이는 것이 정상입니다.</p>
         </section>
       </section>
