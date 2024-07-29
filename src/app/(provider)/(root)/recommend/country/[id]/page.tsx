@@ -4,13 +4,15 @@ import { api } from "@/apis/api";
 import { IntroQueryFn, IntroQueryReturn } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { usePathname } from "next/navigation";
 import CountryIntroCard from "../../_components/CountryPage/CountryIntroCard";
-// [id]로 가야해
-// 기존 [id]는 detail [id]로 가야해
 
 const QEURY_KEY = "CountryIntroData";
-
+// 일본의 정보는 들어오나 도시의 정보가 존재하지 않아서 뜨지 않음.
 function IntroPage() {
+  const pathname = usePathname();
+  const countryId = parseInt(pathname.split("/").slice(-1)[0]);
+
   const { data: IntroCountry, isLoading } = useQuery<
     IntroQueryFn,
     AxiosError,
@@ -18,8 +20,8 @@ function IntroPage() {
   >({
     queryKey: [QEURY_KEY],
     queryFn: async () => {
-      const country = await api.country.getCountry(1);
-      const city = await api.city.getCitiesByCountry(1);
+      const country = await api.country.getCountry(countryId);
+      const city = await api.city.getCitiesByCountry(countryId);
       return { country, city };
     },
     select: (data) => {

@@ -1,9 +1,8 @@
 import ImageFrame from "@/components/Frame/ImageFrame";
-import { City, Country } from "@/types/Recommend";
+import { Area, City } from "@/types/Recommend";
 import Link from "next/link";
 
-function MainTourItem({ item }: { item: City | Country }) {
-  console.log("typeof item", typeof item);
+function MainTourItem({ item }: { item: City | Area }) {
   return (
     <section className="flex w-full items-center m-1">
       <div className="w-16 h-16 bg-white opacity-70 rounded-full">

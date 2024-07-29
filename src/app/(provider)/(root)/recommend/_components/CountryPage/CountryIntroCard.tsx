@@ -1,6 +1,6 @@
 import { IntroQueryReturn } from "@/types/Recommend";
 import Link from "next/link";
-import InstroSlider from "../InstroSlider";
+import InstroSlider from "./InstroSlider";
 
 type CounntryintroCardProps = {
   title: string;
