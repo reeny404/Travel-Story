@@ -43,7 +43,7 @@ function BottomSheetTitle({ type, status }: BottomSheetType) {
         value={inpTitleValue}
         onChange={handleTitleChange}
         placeholder={titlePlaceholder}
-        disabled={type === "move"}
+        disabled={type === "move" || status == "read"}
       />
       {type === "move" && (
         <ul className="my-5 mx-auto grid grid-cols-3 gap-y-5">

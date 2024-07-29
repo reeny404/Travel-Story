@@ -11,7 +11,7 @@ import PlusIcon from "./_components/PlusIcon";
 export default function PlanListPage() {
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [bottomSheetConfig, setBottomSheetConfig] = useState<BottomSheetType>({
-    type: "move",
+    type: "memo",
     status: "add",
   });
 
@@ -71,7 +71,7 @@ export default function PlanListPage() {
       {/* 바텀 시트 올라오는 예시 */}
       <button
         className="w-12 h-12 fixed bottom-20 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        onClick={() => handleOpen("move", "add")}
+        onClick={() => handleOpen("memo", "read")}
       >
         <div className="w-full h-full flex justify-center items-center">
           <p className="text-white">생성</p>

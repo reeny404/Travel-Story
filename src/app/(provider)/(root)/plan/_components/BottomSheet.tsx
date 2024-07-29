@@ -1,6 +1,7 @@
 "use client";
 import { BottomSheetType } from "@/types/plan";
 import { useEffect, useRef, useState } from "react";
+import BottomSheetCheckList from "./BottomSheetCheckList";
 import BottomSheetInput from "./BottomSheetInput";
 import BottomSheetTitle from "./BottomSheetTitle";
 
@@ -57,9 +58,9 @@ function BottomSheet({ type, status, onClose }: BottomSheetProps) {
         {type !== "memo" && type !== "place" && type !== "customePlace" && (
           <BottomSheetInput type="place" isDisabled={status === "read"} />
         )}
-        {/* {type === "memo" && (
-          <BottomSheetCheckList status={status}/>
-        )} */}
+        {type === "memo" && (
+          <BottomSheetCheckList type={type} status={status} />
+        )}
       </form>
     </div>
   );
