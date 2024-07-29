@@ -6,11 +6,16 @@ import RatingIcons from "@/components/Card/RatingIcons";
 import { useTab } from "@/hooks/useTab";
 import { Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback } from "react";
+
+const BOOKMARK_DATA = {
+  userId: "66ec615f-1dd3-45df-83b6-2e178b5abbc3",
+  areaId: 1,
+};
 
 function AreaDetailPage() {
   const pathname = usePathname();
@@ -44,13 +49,6 @@ function AreaDetailPage() {
 
       return { rating, pieces: data.pieces };
     },
-  });
-  const BOOKMARK_DATA = {
-    userId: "66ec615f-1dd3-45df-83b6-2e178b5abbc3",
-    areaId: 1,
-  };
-  const { mutate: addBookmark } = useMutation({
-    mutationFn: () => api.area.deleteBookmark(BOOKMARK_DATA),
   });
 
   const convertTypeToKr = useCallback((type: string) => {
@@ -92,8 +90,8 @@ function AreaDetailPage() {
               <p className="px-3 flex justify-between items-center font-semibold">
                 <span>영업중</span>
                 <span>
-                  {area.info?.opening_hours.open} ~
-                  {area.info?.opening_hours.close}
+                  {/* {area.info?.opening_hours.open} ~
+                  {area.info?.opening_hours.close} */}
                 </span>
               </p>
               <p className="px-3 py-6 font-semibold">{area.description}</p>
@@ -198,9 +196,7 @@ function AreaDetailPage() {
             </div>
             <div className="w-full h-10 px-3 flex gap-x-2 fixed bottom-0">
               <button
-                onClick={() => {
-                  addBookmark();
-                }}
+                onClick={() => {}}
                 className="w-14 h-full bg-blue-500 border rounded-md"
               >
                 북
