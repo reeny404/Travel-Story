@@ -35,7 +35,6 @@ class AreaAPI {
         id,
       },
     });
-    console.log("response.data", response.data);
 
     const data = response.data;
     return data;
