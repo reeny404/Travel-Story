@@ -6,7 +6,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ReactNode } from "react";
 
 type CarouselProps = {
-  slides: ReactNode[] | string[];
+  slides: ReactNode[] | string[] | undefined;
   options?: EmblaOptionsType;
 };
 

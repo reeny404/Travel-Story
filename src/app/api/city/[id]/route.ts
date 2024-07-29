@@ -4,8 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
-  const isMultiple = searchParams.get("isMultiple");
-  console.log("isMultiple", isMultiple);
   if (!id) {
     return NextResponse.json({
       status: 400,
@@ -17,10 +15,7 @@ export async function GET(request: NextRequest) {
 
   const supabase = createClient();
 
-  const { data, error } =
-    isMultiple === "true"
-      ? await supabase.from("city").select("*").eq("countryId", id)
-      : await supabase.from("city").select("*").eq("id", id);
+  const { data, error } = await supabase.from("city").select("*").eq("id", id);
   if (error) {
     return NextResponse.json({
       status: 500,
@@ -42,7 +37,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     status: 200,
     message: "Success",
-    data: isMultiple === "true" ? data : data[0],
+    data: data[0],
     error: null,
   });
 }
