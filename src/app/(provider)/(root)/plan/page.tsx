@@ -12,7 +12,7 @@ export default function PlanListPage() {
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [bottomSheetConfig, setBottomSheetConfig] = useState<BottomSheetType>({
     type: "memo",
-    status: "add",
+    status: "read",
   });
 
   const handleOpen = (

@@ -2,14 +2,21 @@
 import { BottomSheetType } from "@/types/plan";
 import { useEffect, useRef, useState } from "react";
 import BottomSheetCheckList from "./BottomSheetCheckList";
+import BottomSheetImages from "./BottomSheetImages";
 import BottomSheetInput from "./BottomSheetInput";
 import BottomSheetTitle from "./BottomSheetTitle";
+import UpdateButton from "./UpdateButton"; // 추가
 
 type BottomSheetProps = BottomSheetType & {
   onClose: () => void;
 };
 
-function BottomSheet({ type, status, onClose }: BottomSheetProps) {
+function BottomSheet({
+  type,
+  status: initialStatus,
+  onClose,
+}: BottomSheetProps) {
+  const [status, setStatus] = useState(initialStatus);
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const formRef = useRef<HTMLFormElement>(null);
@@ -29,6 +36,31 @@ function BottomSheet({ type, status, onClose }: BottomSheetProps) {
       setIsOpening(false);
     }, 300);
   }, []);
+
+  const getFormData = () => {
+    const formData = new FormData(formRef.current!);
+    const data: Record<string, any> = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+    return data;
+  };
+
+  const handleUpdate = () => {
+    setStatus("update");
+    const data = getFormData();
+    // DB 업데이트 로직 구현
+    console.log("데이터 업데이트됨", data);
+  };
+  const handleRead = () => {
+    setStatus("update");
+  };
+
+  const handleAdd = () => {
+    const data = getFormData();
+    // DB 추가 로직 구현
+    console.log("데이터 추가됨", data);
+  };
 
   return (
     <div
@@ -61,6 +93,14 @@ function BottomSheet({ type, status, onClose }: BottomSheetProps) {
         {type === "memo" && (
           <BottomSheetCheckList type={type} status={status} />
         )}
+        <BottomSheetImages type={type} status={status} />
+
+        <UpdateButton
+          status={status}
+          onUpdate={handleUpdate}
+          onAdd={handleAdd}
+          onRead={handleRead}
+        />
       </form>
     </div>
   );

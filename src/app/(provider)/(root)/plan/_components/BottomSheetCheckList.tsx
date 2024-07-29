@@ -64,10 +64,11 @@ function BottomSheetCheckList({ type, status }: CheckListProps) {
                 />
                 <button
                   type="button"
-                  className={`w-12 h-12 border-[1px] border-gray-300 ${
-                    item.isCheck ? "bg-blue text-white" : "bg-white text-black"
+                  className={`w-8 h-8 border-[1px] border-gray-300 ${
+                    item.isCheck
+                      ? "bg-blue-500 text-white border-0"
+                      : "bg-white text-black"
                   }`}
-                  onClick={() => handleCheck(index)}
                 >
                   ✔
                 </button>
