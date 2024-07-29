@@ -1,7 +1,5 @@
-import { Tables } from "@/types/supabase";
+import { Country, RecommendResponse } from "@/types/Recommend";
 import { AxiosInstance } from "axios";
-
-type CountryType = Tables<"country">;
 
 export const countryAPI = {};
 
@@ -12,43 +10,35 @@ class CountryAPI {
     this.axios = axios;
   }
 
-  async getCountries() {
-    try {
-      const path = "/api/country";
-      const response = await this.axios.get<{ data: CountryType }>(path);
+  async getCountries(): Promise<RecommendResponse<Country[]>> {
+    const path = "/api/country";
+    const response = await this.axios.get<RecommendResponse<Country[]>>(path);
 
-      const data = response.data;
-      return data;
-    } catch (error) {
-      console.error("Error fetching data : ", error);
-    }
+    const data = response.data;
+    return data;
   }
 
-  async getCountry(id: number) {
-    try {
-      const path = `/api/country/${id}`;
-      const response = await this.axios.get<{ data: CountryType }>(path, {
-        params: {
-          id,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.log("Error fetching data : ", error);
-    }
+  async getCountry(id: number): Promise<RecommendResponse<Country>> {
+    const path = `/api/country/${id}`;
+    const response = await this.axios.get<RecommendResponse<Country>>(path, {
+      params: {
+        id,
+      },
+    });
+    const data = response.data;
+    return data;
   }
 
   // TODO 한글로 검색 가능하도록 수정 필요
-  async search(name: string) {
-    try {
-      const path = `/api/country/search`;
-      const response = await this.axios.get<CountryType>(path, {
-        params: {
-          name,
-        },
-      });
-      return response.data;
-    } catch (error) {}
+  async search(name: string): Promise<RecommendResponse<Country[]>> {
+    const path = `/api/country/search`;
+    const response = await this.axios.get<RecommendResponse<Country[]>>(path, {
+      params: {
+        name,
+      },
+    });
+    const data = response.data;
+    return data;
   }
 }
 
