@@ -5,10 +5,8 @@ import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
-
 import Tab from "@/components/Tab/Tab";
 import { useTab } from "@/hooks/useTab";
-
 import useRecommendStore from "@/stores/recommend.store";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
@@ -51,7 +49,6 @@ function CountryDetailPage() {
     queryFn: () => api.city.getCitiesByCountry(countryId),
     select: (data) => data?.data,
   });
-
   const carouselArr: ReactNode[] | undefined = areas?.map((area, idx) => {
     return (
       <div key={idx} className="embla__slide flex-none w-full ">
@@ -90,7 +87,6 @@ function CountryDetailPage() {
         description={country?.data.description!}
         imageUrl={country?.data.imageUrl!}
       />
-
       <Tab />
       {currentTab === "accommodation" && (
         <div className=" mb-10">
@@ -113,7 +109,6 @@ function CountryDetailPage() {
         </>
       )}
       <RecommendForm info={cities!} />
-
     </div>
   );
 }
