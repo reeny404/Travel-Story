@@ -1,7 +1,5 @@
-import { Tables } from "@/types/supabase";
+import { Area } from "@/types/Recommend";
 import { AxiosInstance } from "axios";
-
-type AreaType = Tables<"area">;
 
 class AreaAPI {
   private axios: AxiosInstance;
@@ -13,7 +11,7 @@ class AreaAPI {
   async getAreas() {
     try {
       const path = "/api/area";
-      const response = await this.axios.get<AreaType>(path);
+      const response = await this.axios.get<Area>(path);
       const data = response.data;
 
       return data;
@@ -28,18 +26,57 @@ class AreaAPI {
    * @param isMultiple  {boolean} 다수 지역 or 한개의 지역
    * @returns
    */
-  async getAreasById(id: number, isMultiple: boolean) {
+  async getAreasById(id: number) {
     try {
       const path = `/api/area/${id}`;
-      const response = await this.axios.get<AreaType[] | AreaType>(path, {
+      const response = await this.axios.get<{ data: Area }>(path, {
         params: {
           id,
-          isMultiple,
         },
       });
 
       const data = response.data;
       return data;
+    } catch (error) {
+      console.log("Error fetching data : ", error);
+    }
+  }
+
+  /**
+   *
+   * @param id {number} cityId
+   * @returns
+   */
+  async getAreasByCity(id: number) {
+    try {
+      const path = `/api/area/city`;
+      const response = await this.axios.get<{ data: Area[] }>(path, {
+        params: {
+          id,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log("Error fetching data : ", error);
+    }
+  }
+
+  /**
+   *
+   * @param id {number} cityId
+   * @param type {string} areaType
+   * @returns
+   */
+  async getAreasByCountry(id: number, type: string) {
+    try {
+      const path = `/api/area/country`;
+      const response = await this.axios.get<{ data: Area[] }>(path, {
+        params: {
+          id,
+          type,
+        },
+      });
+      return response.data;
     } catch (error) {
       console.log("Error fetching data : ", error);
     }
@@ -54,7 +91,7 @@ class AreaAPI {
   async search(name: string) {
     try {
       const path = `/api/area/search`;
-      const response = await this.axios.get<AreaType>(path, {
+      const response = await this.axios.get<Area>(path, {
         params: {
           name,
         },
