@@ -32,7 +32,7 @@ function CountryIntroCard({
         })}
       </div>
       <Link
-        href={`/recommend/country/${countryId}`}
+        href={`/recommend/country/${countryId}/detail`}
         className="flex justify-center items-center bg-black border rounded-3xl text-white w-20 h-12 absolute bottom-[40%] z-10 right-3"
       >
         넘기기

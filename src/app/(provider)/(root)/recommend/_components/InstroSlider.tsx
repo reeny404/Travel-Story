@@ -18,7 +18,7 @@ function InstroSlider(country: IntroSliderProps) {
       <Swiper
         touchRatio={0.1}
         onSlideChange={() =>
-          router.push(`/recommend/country/${country.countryId}`)
+          router.push(`/recommend/country/${country.countryId}/detail`)
         }
       >
         <SwiperSlide>
