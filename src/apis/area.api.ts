@@ -6,6 +6,7 @@ type RatingResponse = {
   data: { rating: number; pieces: number };
   error: null | AxiosError;
 };
+
 class AreaAPI {
   private axios: AxiosInstance;
 

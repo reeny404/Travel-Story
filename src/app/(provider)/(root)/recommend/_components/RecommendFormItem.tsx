@@ -3,6 +3,7 @@ import Image from "next/image";
 
 function RecommendFormItem({ item }: { item: City | Country }) {
   return (
+
     <section className="flex w-full items-center m-1">
       <div className="w-16 h-16 bg-white opacity-70 rounded-full relative aspect-auto">
         <Image

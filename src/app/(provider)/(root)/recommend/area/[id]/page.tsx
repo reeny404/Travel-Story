@@ -20,6 +20,7 @@ const BOOKMARK_DATA = {
 function AreaDetailPage() {
   const pathname = usePathname();
   const areaId = parseInt(pathname.split("/").slice(-1)[0]);
+
   const { currentTab } = useTab();
 
   const { data: area, isLoading } = useQuery({

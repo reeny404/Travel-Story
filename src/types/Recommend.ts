@@ -25,3 +25,4 @@ export type RecommendResponse<T> = {
   data: T;
   error: null | AxiosError;
 };
+
