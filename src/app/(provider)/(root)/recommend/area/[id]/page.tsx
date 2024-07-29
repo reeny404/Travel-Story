@@ -4,7 +4,7 @@ import { api } from "@/apis/api";
 import Tab from "@/components/Tab/Tab";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
-import { Area, Rating, RecommendResponse } from "@/types/Recommend";
+import { Area, AreaReview, Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -34,33 +34,32 @@ function AreaDetailPage() {
   >({
     queryKey: ["areasById", areaId],
     queryFn: () => api.area.getAreasById(areaId),
-    select: (data) => data?.data,
+    select: (data) => data.data,
   });
 
-  const { data: rating } = useQuery<
-    RecommendResponse<Rating>,
+  const { data: areaReviews } = useQuery<
+    RecommendResponse<AreaReview[]>,
     AxiosError,
-    Rating
+    AreaReview[]
   >({
+    queryKey: ["areaReviews", areaId],
+    queryFn: () => api.area.getReviews(areaId),
+    select: (data) => data.data,
+  });
+
+  const { data: rating } = useQuery<Rating>({
     queryKey: ["areaRating", areaId],
     queryFn: async () => {
       const response = await api.area.getAreaRating(areaId);
-
-      if (!response) {
-        throw new Error("응답값이 없습니다.");
-      }
-      return response;
-    },
-    select: ({ data }) => {
-      const rating = calcRatings(data);
-      if (!rating) {
+      if (!response.data) {
         return { rating: 0, pieces: 0 };
       }
+      const { rating, pieces } = calcRatings(response.data);
 
-      return { rating, pieces: data.pieces };
+      return { rating, pieces };
     },
   });
-
+  console.log("rating,pieces", rating);
   return (
     <>
       {isLoading ? (
@@ -81,12 +80,21 @@ function AreaDetailPage() {
             <Liner />
             <ReviewSummaryCard rating={rating} />
             <Liner />
-            <AreaReviewCard
-              name="홍길동"
-              imageUrl={"/"}
-              createdAt={"123"}
-              rating={rating.rating}
-            />
+            {areaReviews &&
+              areaReviews?.map((review, idx) => {
+                return (
+                  <AreaReviewCard
+                    key={idx}
+                    userIageUrl="/"
+                    name="홍길동"
+                    imageUrl={"/"}
+                    createdAt={review.createdAt}
+                    rating={rating.rating}
+                    description={review.content!}
+                  />
+                );
+              })}
+
             <UnderBar />
           </section>
         )

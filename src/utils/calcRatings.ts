@@ -1,8 +1,9 @@
 import { Rating } from "@/types/Recommend";
 
-export const calcRatings = ({ rating, pieces }: Rating): number | undefined => {
-  if (!rating || !pieces) {
-    return 0;
+export const calcRatings = ({ rating, pieces }: Rating): Rating => {
+  console.log("rating,pieces", rating, pieces);
+  if (!rating) {
+    return { rating: 0, pieces: 0 };
   }
-  return Math.round(rating / pieces);
+  return { rating: Math.round(rating / pieces), pieces };
 };

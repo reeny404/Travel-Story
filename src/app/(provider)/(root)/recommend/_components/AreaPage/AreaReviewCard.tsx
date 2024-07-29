@@ -5,16 +5,22 @@ import Image from "next/image";
 type AreaReviewCardProps = {
   name: string;
   createdAt: string;
+  userIageUrl: string;
   imageUrl: string;
   rating: number;
+  description: string;
 };
 
 function AreaReviewCard({
   name,
   createdAt,
+  userIageUrl,
   imageUrl,
   rating,
+  description,
 }: AreaReviewCardProps) {
+  const date = createdAt.slice(0, 10).replaceAll("-", ".");
+
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
       <div className="flex justify-around w-full">
@@ -31,18 +37,14 @@ function AreaReviewCard({
         </div>
         <div className="flex flex-col justify-center gap-y-1 w-2/3 ml-5 relation">
           <h1 className="text-sm font-bold">{name}</h1>
-          <p className="text-xs font-semibold">createdAt</p>
+          <p className="text-xs font-semibold">{date}</p>
         </div>
       </div>
       <div className="mt-3">
         <RatingIcons rating={rating} />
       </div>
       <div className="w-full text-xs text-ellipsis line-clamp-3">
-        리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용
-        리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용
-        리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용
-        리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용 리뷰내용
-        리뷰내용 리뷰내용
+        {description}
       </div>
       <div className="w-full h-[150px] relative aspect-auto">
         <Image

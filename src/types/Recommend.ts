@@ -24,6 +24,11 @@ export type Area = Tables<"area"> & {
   };
 };
 
+export type BookmarkType = {
+  userId: string;
+  areaId: number;
+};
+
 export type AreaReview = Tables<"areaReview">;
 
 export type Rating = {

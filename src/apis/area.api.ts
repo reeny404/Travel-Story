@@ -1,4 +1,10 @@
-import { Area, Rating, RecommendResponse } from "@/types/Recommend";
+import {
+  Area,
+  AreaReview,
+  BookmarkType,
+  Rating,
+  RecommendResponse,
+} from "@/types/Recommend";
 import { AxiosError, AxiosInstance } from "axios";
 type RatingResponse = {
   status: number;
@@ -109,6 +115,21 @@ class AreaAPI {
     }
   }
 
+  // areaId에 합치하는 리뷰들을 가져옵니다.
+  async getReviews(id: number): Promise<RecommendResponse<AreaReview[]>> {
+    const path = `api/area/review`;
+    const response = await this.axios.get<RecommendResponse<AreaReview[]>>(
+      path,
+      {
+        params: {
+          id,
+        },
+      }
+    );
+    const data = response.data;
+    return data;
+  }
+
   async addBookmark(data: BookmarkType) {
     const { userId, areaId } = data;
     const path = "/api/area/bookmark";
@@ -127,8 +148,5 @@ class AreaAPI {
     console.log("response", response);
   }
 }
-type BookmarkType = {
-  userId: string;
-  areaId: number;
-};
+
 export default AreaAPI;
