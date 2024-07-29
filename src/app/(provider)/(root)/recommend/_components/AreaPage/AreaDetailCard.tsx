@@ -30,12 +30,12 @@ function AreaDetailCard({ area, rating }: AreaDetailCardProps) {
         <div className="w-full h-[207px] relative">
           <Image src={area.imageUrl!} alt="img" fill className="rounded-sm" />
         </div>
-        <p className="p-3 flex justify-between items-center font-semibold">
+        <div className="p-3 flex justify-between items-center font-semibold">
           <span>{convertTypeToKr(area.type!)}</span>
           <div>
             <RatingIcons rating={rating.rating} />
           </div>
-        </p>
+        </div>
         <p className="px-3 flex justify-between items-center font-semibold">
           <span>영업중</span>
           <span>

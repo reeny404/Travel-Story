@@ -26,7 +26,7 @@ function InstroSlider(country: IntroSliderProps) {
             src={country.imageUrl}
             roundType="sm"
             alt="countryImage"
-            className="h-[530px]"
+            className="h-[400px] w-full"
           />
         </SwiperSlide>
         <SwiperSlide></SwiperSlide>

@@ -18,7 +18,7 @@ function CountryIntroCard({
   return (
     <div className="w-full relative">
       <InstroSlider title={title} imageUrl={imageUrl} countryId={countryId} />
-      <div className="p-9 h-80 flex flex-col justify-around">
+      <div className="p-9 h-64 flex flex-col justify-around">
         {cities.map((city, idx) => {
           return (
             <Link
@@ -33,7 +33,7 @@ function CountryIntroCard({
       </div>
       <Link
         href={`/recommend/country/${countryId}/detail`}
-        className="flex justify-center items-center bg-black border rounded-3xl text-white w-20 h-12 absolute bottom-[40%] z-10 right-3"
+        className="flex justify-center items-center bg-black border rounded-3xl text-white w-20 h-12 absolute bottom-[36%] z-10 right-3"
       >
         넘기기
       </Link>

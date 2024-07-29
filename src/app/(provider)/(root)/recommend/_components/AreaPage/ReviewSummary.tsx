@@ -31,7 +31,7 @@ function ReviewSummaryCard({ rating }: { rating: Rating }) {
           <p className="text-xm text-[#8B8B8B]">{`(${rating.pieces})`}</p>
         </div>
         <div className="flex flex-col gap-y-1 p-1  justify-center">
-          <p className="flex gap-x-1 text-sm font-semibold relative">
+          <div className="flex gap-x-1 text-sm font-semibold relative">
             <Image
               src="/icon/delicious.png"
               alt="image"
@@ -40,8 +40,8 @@ function ReviewSummaryCard({ rating }: { rating: Rating }) {
               className="object-contain"
             />
             <span>음식이 맛있어요</span>
-          </p>
-          <p className="flex gap-x-1 text-sm font-semibold">
+          </div>
+          <div className="flex gap-x-1 text-sm font-semibold">
             {" "}
             <Image
               src="/icon/clean.png"
@@ -51,8 +51,8 @@ function ReviewSummaryCard({ rating }: { rating: Rating }) {
               className="object-contain"
             />
             <span>시설이 청결해요</span>
-          </p>
-          <p className="flex gap-x-1 text-sm font-semibold">
+          </div>
+          <div className="flex gap-x-1 text-sm font-semibold">
             {" "}
             <Image
               src="/icon/cool.png"
@@ -62,7 +62,7 @@ function ReviewSummaryCard({ rating }: { rating: Rating }) {
               className="object-contain"
             />
             <span>인테리어가 멋져요</span>
-          </p>
+          </div>
         </div>
       </div>
     </div>

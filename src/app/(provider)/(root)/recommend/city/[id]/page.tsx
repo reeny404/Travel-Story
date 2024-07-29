@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { api } from "@/apis/api";
@@ -14,9 +13,9 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
-import CarouselItem from "../../_components/CarouselItem";
-import DetailCard from "../../_components/DetailCard";
-import MainTourForm from "../../_components/MainTourForm";
+import DetailCard from "../../_components/Cards/DetailCard";
+import CarouselItem from "../../_components/Carousel/CarouselItem";
+import MainTourForm from "../../_components/MainTour/MainTourForm";
 
 function CityDetailPage() {
   const { setCityId, cityId } = useRecommendStore();

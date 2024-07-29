@@ -6,6 +6,7 @@ type CarouselListProps<T> = {
     description: string;
     imageUrl: string;
     title: string;
+    linkUrl: string;
   };
 };
 
@@ -13,10 +14,11 @@ function CarouselList<T>({ items, getDefaultProps }: CarouselListProps<T>) {
   return (
     <>
       {items?.map((item, idx) => {
-        const { description, imageUrl, title } = getDefaultProps(item);
+        const { description, imageUrl, title, linkUrl } = getDefaultProps(item);
         return (
           <CarouselItem
             key={idx}
+            linkUrl={linkUrl}
             description={description}
             imageUrl={imageUrl}
             title={title}

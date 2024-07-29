@@ -16,11 +16,6 @@ import ReviewSummaryCard from "../../_components/AreaPage/ReviewSummary";
 import UnderBar from "../../_components/AreaPage/UnderBar";
 import Liner from "../../_components/Liner";
 
-const BOOKMARK_DATA = {
-  userId: "66ec615f-1dd3-45df-83b6-2e178b5abbc3",
-  areaId: 1,
-};
-
 function AreaDetailPage() {
   const pathname = usePathname();
   const areaId = parseInt(pathname.split("/").slice(-1)[0]);
@@ -51,15 +46,13 @@ function AreaDetailPage() {
     queryKey: ["areaRating", areaId],
     queryFn: async () => {
       const response = await api.area.getAreaRating(areaId);
-      if (!response.data) {
+      if (!response?.data) {
         return { rating: 0, pieces: 0 };
       }
       const { rating, pieces } = calcRatings(response.data);
-
       return { rating, pieces };
     },
   });
-  console.log("rating,pieces", rating);
   return (
     <>
       {isLoading ? (

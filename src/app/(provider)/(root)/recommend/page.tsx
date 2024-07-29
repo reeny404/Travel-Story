@@ -2,8 +2,8 @@ import CardType from "@/components/Card/CardType";
 import Carousel from "@/components/Carousel/Carousel";
 import ImageFrame from "@/components/Frame/ImageFrame";
 import { ReactNode } from "react";
-import AreaCard from "./_components/AreaCard";
-import ReviewCard from "./_components/ReviewCard";
+import AreaCard from "./_components/Cards/AreaCard";
+import ReviewCard from "./_components/Cards/ReviewCard";
 
 // 상단에 띄울 4개의 나라는 하드코딩
 

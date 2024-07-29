@@ -16,7 +16,7 @@ function AreaReviewCard({
   createdAt,
   userIageUrl,
   imageUrl,
-  rating,
+  rating = 0,
   description,
 }: AreaReviewCardProps) {
   const date = createdAt.slice(0, 10).replaceAll("-", ".");

@@ -1,4 +1,4 @@
-import AreaCard from "./AreaCard";
+import AreaCard from "../Cards/AreaCard";
 
 type CarouselItemType = {
   imageUrl: string;

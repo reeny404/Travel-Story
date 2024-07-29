@@ -37,7 +37,7 @@ function IntroPage() {
     staleTime: 1000 * 60 * 60 * 10,
   });
   return (
-    <div className=" h-full max-w-[365px] flex ">
+    <div className=" h-full w-full ">
       {isLoading ? (
         <div>loading...</div>
       ) : (

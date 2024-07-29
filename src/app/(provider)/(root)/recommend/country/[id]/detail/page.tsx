@@ -12,9 +12,9 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
-import CarouselItem from "../../../_components/CarouselItem";
-import DetailCard from "../../../_components/DetailCard";
-import MainTourForm from "../../../_components/MainTourForm";
+import DetailCard from "../../../_components/Cards/DetailCard";
+import CarouselItem from "../../../_components/Carousel/CarouselItem";
+import MainTourForm from "../../../_components/MainTour/MainTourForm";
 // 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
 // 이 페이지는 SSR이여야함
 function CountryDetailPage() {
@@ -46,19 +46,6 @@ function CountryDetailPage() {
     },
   });
 
-  const areaCarouselItems: ReactNode[] | undefined = areas?.map((area, idx) => {
-    return (
-      <>
-        <CarouselItem
-          description={area.description}
-          imageUrl={area.imageUrl!}
-          title={area.title}
-          linkUrl={`/recommend/area/${area.id}`}
-        />
-      </>
-    );
-  });
-
   const { data: places } = useQuery<
     RecommendResponse<Area[]>,
     AxiosError,
@@ -71,6 +58,42 @@ function CountryDetailPage() {
     },
   });
 
+  const { data: restaurants } = useQuery<
+    RecommendResponse<Area[]>,
+    AxiosError,
+    Area[]
+  >({
+    queryKey: ["restaurantAreas", countryId],
+    queryFn: () => api.area.getAreasByCountry(countryId, "restaurant"),
+    select: (data) => {
+      return data?.data;
+    },
+  });
+
+  const { data: shops } = useQuery<
+    RecommendResponse<Area[]>,
+    AxiosError,
+    Area[]
+  >({
+    queryKey: ["shopAreas", countryId],
+    queryFn: () => api.area.getAreasByCountry(countryId, "shop"),
+    select: (data) => {
+      return data?.data;
+    },
+  });
+
+  const areaCarouselItems: ReactNode[] | undefined = areas?.map((area, idx) => {
+    return (
+      <>
+        <CarouselItem
+          description={area.description}
+          imageUrl={area.imageUrl!}
+          title={area.title}
+          linkUrl={`/recommend/area/${area.id}`}
+        />
+      </>
+    );
+  });
   const placeCarouselItems: ReactNode[] | undefined = places?.map(
     (place, idx) => {
       return (
@@ -85,7 +108,32 @@ function CountryDetailPage() {
       );
     }
   );
-
+  const restaurantCarouselItems: ReactNode[] | undefined = restaurants?.map(
+    (restaurant, idx) => {
+      return (
+        <>
+          <CarouselItem
+            description={restaurant.description}
+            imageUrl={restaurant.imageUrl!}
+            title={restaurant.title}
+            linkUrl={`/recommend/area/${restaurant.id}`}
+          />
+        </>
+      );
+    }
+  );
+  const shopCarouselItems: ReactNode[] | undefined = shops?.map((shop, idx) => {
+    return (
+      <>
+        <CarouselItem
+          description={shop.description}
+          imageUrl={shop.imageUrl!}
+          title={shop.title}
+          linkUrl={`/recommend/area/${shop.id}`}
+        />
+      </>
+    );
+  });
   const { data: cities } = useQuery<
     RecommendResponse<City[]>,
     AxiosError,
@@ -126,6 +174,26 @@ function CountryDetailPage() {
             type="architect"
           />
           <Carousel slides={placeCarouselItems!} />
+        </>
+      )}
+      {currentTab === "restaurant" && (
+        <>
+          <CardType
+            linkUrl={`/recommend/country/${countryId}/restaurant`}
+            title="문화 탐방"
+            type="architect"
+          />
+          <Carousel slides={restaurantCarouselItems!} />
+        </>
+      )}
+      {currentTab === "shop" && (
+        <>
+          <CardType
+            linkUrl={`/recommend/country/${countryId}/shop`}
+            title="문화 탐방"
+            type="architect"
+          />
+          <Carousel slides={shopCarouselItems!} />
         </>
       )}
       <MainTourForm citiesInfo={cities!} />
