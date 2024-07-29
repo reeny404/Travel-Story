@@ -4,7 +4,7 @@ import { api } from "@/apis/api";
 import ImageContainer from "@/components/Card/ImageContainer";
 import RatingIcons from "@/components/Card/RatingIcons";
 import { useTab } from "@/hooks/useTab";
-import { Rating, RecommendResponse } from "@/types/Recommend";
+import { Area, Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -23,8 +23,12 @@ function AreaDetailPage() {
 
   const { currentTab } = useTab();
 
-  const { data: area, isLoading } = useQuery({
-    queryKey: ["area", areaId],
+  const { data: area, isLoading } = useQuery<
+    RecommendResponse<Area>,
+    AxiosError,
+    Area
+  >({
+    queryKey: ["areasById", areaId],
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data?.data,
   });
@@ -74,7 +78,7 @@ function AreaDetailPage() {
       ) : (
         area &&
         rating && (
-          <section className="container overflow-x-hidden w-screen h-full max-w-[375px] mx-auto flex-col relative">
+          <section className="container overflow-x-hidden h-full max-w-[375px] flex-col relative">
             <h1 className="w-full p-3 text-xl font-bold">{area?.title}</h1>
             <div className="w-full h-full">
               <ImageContainer

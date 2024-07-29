@@ -13,7 +13,7 @@ type ImageVariantProps = VariantProps<typeof imageVariant>;
 const imageVariant = cva("relative w-full bg-[#f0f0f0] aspect-auto", {
   variants: {
     size: {
-      intro: "h-2/3",
+      intro: "h-[530px]",
       detail: "h-[353px]",
       area: "h-[189px]",
       review: "h-[100px]",
@@ -39,7 +39,6 @@ const ImageContainer = ({
         priority
         fill
         className="object-fill"
-
       />
       {isTitle && (
         <h1 className="absolute bottom-0 left-0 -mb-6 text-[64px] font-bold">

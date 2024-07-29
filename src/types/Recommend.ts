@@ -3,9 +3,13 @@ import { Tables } from "./supabase";
 
 export type Country = Tables<"country">;
 
-export type IntroCities = {
-  name: string;
-  id: number;
+export type IntroQueryFn = {
+  city: RecommendResponse<City[]>;
+  country: RecommendResponse<Country>;
+};
+export type IntroQueryReturn = {
+  cities: { name: string; id: number }[];
+  country: Country;
 };
 
 export type City = Tables<"city">;
@@ -25,4 +29,3 @@ export type RecommendResponse<T> = {
   data: T;
   error: null | AxiosError;
 };
-

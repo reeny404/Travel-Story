@@ -1,7 +1,7 @@
 import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
-import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
+import Carousel from "@/components/Carousel/Carousel";
 import { ReactNode } from "react";
 import ReviewCard from "./_components/ReviewCard";
 
@@ -35,9 +35,9 @@ function RecommendPage() {
     },
   ];
 
-  const carouselArr: ReactNode[] = slides.map((slide, idx) => {
+  const slidesArr: ReactNode[] = slides.map((slide, idx) => {
     return (
-      <div key={idx} className="embla__slide flex-none w-full ">
+      <div key={idx} className="flex-none w-full ">
         <div className="flex flex-col relative">
           <ImageContainer isTitle size="area" imageUrl={slide.imageUrl} />
           <CardForm
@@ -46,15 +46,15 @@ function RecommendPage() {
             description={slide.desc}
             rating={slide.rating}
             linkUrl="/"
-
           />
         </div>
       </div>
     );
   });
-  const carouselArrImg: ReactNode[] = slides.map((slide, idx) => {
+
+  const imgSildesArr: ReactNode[] = slides.map((slide, idx) => {
     return (
-      <div key={idx} className="embla__slide flex-none w-full  ">
+      <div key={idx} className="flex-none w-full  ">
         <div className="flex flex-col relative">
           <ImageContainer isTitle size="detail" imageUrl={slide.imageUrl} />
         </div>
@@ -78,8 +78,8 @@ function RecommendPage() {
     );
   };
   return (
-    <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col ">
-      <CarouselWrapper items={carouselArrImg} />
+    <div className="container overflow-x-hidden  h-full max-w-[375px]  flex-col ">
+      <Carousel slides={imgSildesArr} />
       {makeCountryCircles(countries)}
       <div className="w-full h-20 bg-gray-400 flex justify-center items-center text-white mt-10">
         광고배너
@@ -91,8 +91,8 @@ function RecommendPage() {
           type="home"
           innerClassName="mt-5"
         />
-        <CarouselWrapper items={carouselArr} />
       </div>
+      <Carousel slides={slidesArr} />
       {/* <MainCityTemplate /> */}
       <ReviewCard
         title="장소명"
