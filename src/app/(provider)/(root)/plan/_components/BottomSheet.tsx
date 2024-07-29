@@ -47,10 +47,19 @@ function BottomSheet({ type, status, onClose }: BottomSheetProps) {
         } transition-transform duration-300`}
       >
         <BottomSheetTitle type={type} status={status} />
-        <BottomSheetInput type="time" isDisabled={status === "read"} />
+        {type !== "memo" && (
+          <BottomSheetInput type="time" isDisabled={status === "read"} />
+        )}
         <BottomSheetInput type="memo" isDisabled={status === "read"} />
-        <BottomSheetInput type="spend" isDisabled={status === "read"} />
-        <BottomSheetInput type="place" isDisabled={status === "read"} />
+        {type !== "memo" && (
+          <BottomSheetInput type="spend" isDisabled={status === "read"} />
+        )}
+        {type !== "memo" && type !== "place" && type !== "customePlace" && (
+          <BottomSheetInput type="place" isDisabled={status === "read"} />
+        )}
+        {/* {type === "memo" && (
+          <BottomSheetCheckList status={status}/>
+        )} */}
       </form>
     </div>
   );
