@@ -3,7 +3,7 @@
 import { ICON } from "@/constants/Icon";
 import useDrawerStore from "@/stores/useDrawerStore";
 import Link from "next/link";
-import MainLayout from "../MainLayout";
+import MainLayout from "../../../../components/Layout/MainLayout";
 
 function Home() {
   const { openDrawer } = useDrawerStore();

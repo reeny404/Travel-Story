@@ -1,7 +1,6 @@
 import Header from "@/components/commons/Header";
 import { HeaderProps } from "@/components/commons/Header/Header";
-import Drawer from "@/components/Drawer/Drawer";
-import useDrawerStore from "@/stores/useDrawerStore";
+import ClientDrawer from "../Drawer/ClientDrawer";
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -9,12 +8,10 @@ type MainLayoutProps = {
 };
 
 function MainLayout({ children, headerProps }: MainLayoutProps) {
-  const { isOpen } = useDrawerStore();
-
   return (
     <>
       {headerProps && <Header {...headerProps} />}
-      {isOpen && <Drawer />}
+      <ClientDrawer />
       {children}
     </>
   );

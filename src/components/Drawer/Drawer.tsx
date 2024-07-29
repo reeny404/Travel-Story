@@ -1,35 +1,7 @@
 import { ICON } from "@/constants/Icon";
 import useDrawerStore from "@/stores/useDrawerStore";
 import Image from "next/image";
-import Link from "next/link";
-
-type DrawerLinkProps = {
-  href: string;
-  imgPath: string;
-  alt: string;
-  label: string;
-  hasArrow?: boolean;
-};
-
-const Category = ({ href, imgPath, alt, label, hasArrow }: DrawerLinkProps) => (
-  <Link
-    href={href}
-    className="flex justify-between items-center bg-white mb-3 p-4"
-  >
-    <div className="flex items-center gap-3">
-      <Image src={imgPath} alt={alt} width={18} height={18} />
-      <span className="mt-[2px]">{label}</span>
-    </div>
-    {hasArrow && (
-      <Image
-        src={`/icons/${ICON.arrow.down.black}.png`}
-        alt={alt}
-        width={16}
-        height={8}
-      />
-    )}
-  </Link>
-);
+import Category from "./Category";
 
 function Drawer() {
   const { isOpen, closeDrawer } = useDrawerStore();
@@ -51,7 +23,7 @@ function Drawer() {
       </div>
       <nav className="flex flex-col">
         <Category
-          href="#"
+          href="/"
           imgPath="/icons/home-black.png"
           alt="home"
           label="홈"
@@ -63,14 +35,12 @@ function Drawer() {
           label="마이 페이지"
         />
         <Category
-          href="#"
           imgPath="/icons/home-black.png"
           alt="home"
           label="내 여행 플래너"
           hasArrow
         />
         <Category
-          href="#"
           imgPath="/icons/home-black.png"
           alt="home"
           label="여행지"
