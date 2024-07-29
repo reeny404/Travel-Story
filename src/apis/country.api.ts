@@ -1,0 +1,55 @@
+import { Tables } from "@/types/supabase";
+import { AxiosInstance } from "axios";
+
+type CountryType = Tables<"country">;
+
+export const countryAPI = {};
+
+class CountryAPI {
+  private axios: AxiosInstance;
+
+  constructor(axios: AxiosInstance) {
+    this.axios = axios;
+  }
+
+  async getCountries() {
+    try {
+      const path = "/api/country";
+      const response = await this.axios.get<{ data: CountryType }>(path);
+
+      const data = response.data;
+      return data;
+    } catch (error) {
+      console.error("Error fetching data : ", error);
+    }
+  }
+
+  async getCountry(id: number) {
+    try {
+      const path = `/api/country/${id}`;
+      const response = await this.axios.get<{ data: CountryType }>(path, {
+        params: {
+          id,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log("Error fetching data : ", error);
+    }
+  }
+
+  // TODO 한글로 검색 가능하도록 수정 필요
+  async search(name: string) {
+    try {
+      const path = `/api/country/search`;
+      const response = await this.axios.get<CountryType>(path, {
+        params: {
+          name,
+        },
+      });
+      return response.data;
+    } catch (error) {}
+  }
+}
+
+export default CountryAPI;

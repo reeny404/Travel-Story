@@ -1,4 +1,5 @@
 // components/CardForm.js
+import { IntroCities } from "@/types/Recommend";
 import { VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
 import Image from "next/image";
@@ -8,8 +9,9 @@ import { ComponentProps } from "react";
 type CardFormProps = CardFormVariantProps & {
   title?: string;
   description?: string;
-  items?: string[];
+  items?: IntroCities[];
   rating?: number;
+  linkUrl?: string;
 } & ComponentProps<"div">;
 
 type CardFormVariantProps = VariantProps<typeof cardFormVariant>;
@@ -33,6 +35,7 @@ const CardForm = ({
   description,
   items,
   rating,
+  linkUrl,
   ...props
 }: CardFormProps) => {
   const makeRatingIcon = (rating: number) => {
@@ -49,17 +52,17 @@ const CardForm = ({
             alt="filled star"
             width={15}
             height={15}
-            objectFit="contain"
+            className="object-contain"
           />
         ))}
         {Array.from({ length: unFilledIcon }).map((_, index) => (
           <Image
             key={`unfilled-${index}`}
-            src="/cardImages/unfilledStar.svg"
+            src="/cardImages/unFilledStar.svg"
             alt="unfilled star"
             width={15}
             height={15}
-            objectFit="contain"
+            className="object-contain"
           />
         ))}
       </div>
@@ -70,19 +73,20 @@ const CardForm = ({
     <div className={cardFormVariant({ intent })} {...props}>
       {intent !== "intro" ? (
         <>
-          <h2
+          <Link
+            href={linkUrl! || "/"}
             className={clsx(
               "text-xl font-bold mt-2 mb-2",
               intent === "review" && "text-[15px]"
             )}
           >
             {title}
-          </h2>
+          </Link>
           <p
             className={clsx(
               rating !== undefined && rating >= 0 && "mb-3",
               intent === "review" &&
-                "text-sm overflow-x-hidden whitespace-nowrap text-ellipsis  "
+                "text-sm overflow-x-hidden whitespace-nowrap text-ellipsis"
             )}
           >
             {description}
@@ -91,8 +95,12 @@ const CardForm = ({
         </>
       ) : (
         items?.map((item, index) => (
-          <Link href={"/"} key={index} className="font-semibold">
-            {item}
+          <Link
+            href={`/recommend/city/${item.id}` || "/"}
+            key={index}
+            className="font-semibold max-w-28"
+          >
+            {item.name}
           </Link>
         ))
       )}

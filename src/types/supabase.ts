@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -9,83 +9,117 @@
 export type Database = {
   public: {
     Tables: {
-      acouuntBook: {
+      accountBook: {
         Row: {
           amount: number;
-          areaId: number;
+          areaId: number | null;
           areaName: string;
           areaType: string;
           createdAt: string;
           desc: string;
           id: number;
-          planId: number;
-          scheduleId: number;
+          payType: string;
+          planId: string;
+          scheduleId: string;
           type: string;
-          userId: number;
+          userId: string;
         };
         Insert: {
           amount?: number;
-          areaId?: number;
+          areaId?: number | null;
           areaName?: string;
           areaType?: string;
           createdAt?: string;
           desc?: string;
           id?: number;
-          planId?: number;
-          scheduleId?: number;
+          payType?: string;
+          planId: string;
+          scheduleId: string;
           type?: string;
-          userId?: number;
+          userId: string;
         };
         Update: {
           amount?: number;
-          areaId?: number;
+          areaId?: number | null;
           areaName?: string;
           areaType?: string;
           createdAt?: string;
           desc?: string;
           id?: number;
-          planId?: number;
-          scheduleId?: number;
+          payType?: string;
+          planId?: string;
+          scheduleId?: string;
           type?: string;
-          userId?: number;
+          userId?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "acouuntBook_planId_fkey";
+            columns: ["planId"];
+            isOneToOne: false;
+            referencedRelation: "plan";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "acouuntBook_schduleId_fkey";
+            columns: ["scheduleId"];
+            isOneToOne: false;
+            referencedRelation: "schedule";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "acouuntBook_userId_fkey1";
+            columns: ["userId"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       area: {
         Row: {
-          cityId: number | null;
+          cityId: number;
+          countryId: number | null;
           createdAt: string;
           description: string;
           id: number;
           imageUrl: string | null;
           info: Json | null;
+          krName: string | null;
           lat: number | null;
           lng: number | null;
           name: string;
+          title: string;
           type: string | null;
         };
         Insert: {
-          cityId?: number | null;
+          cityId: number;
+          countryId?: number | null;
           createdAt?: string;
           description?: string;
           id?: number;
           imageUrl?: string | null;
           info?: Json | null;
+          krName?: string | null;
           lat?: number | null;
           lng?: number | null;
           name?: string;
+          title?: string;
           type?: string | null;
         };
         Update: {
-          cityId?: number | null;
+          cityId?: number;
+          countryId?: number | null;
           createdAt?: string;
           description?: string;
           id?: number;
           imageUrl?: string | null;
           info?: Json | null;
+          krName?: string | null;
           lat?: number | null;
           lng?: number | null;
           name?: string;
+          title?: string;
           type?: string | null;
         };
         Relationships: [
@@ -191,33 +225,36 @@ export type Database = {
       };
       city: {
         Row: {
-          content: string;
           countryId: number;
           created_at: string;
+          description: string;
           id: number;
-          imageUrls: Json | null;
+          imageUrl: string | null;
+          krName: string | null;
           lat: number;
           lng: number;
           name: string;
           title: string;
         };
         Insert: {
-          content: string;
           countryId: number;
           created_at?: string;
+          description: string;
           id?: number;
-          imageUrls?: Json | null;
+          imageUrl?: string | null;
+          krName?: string | null;
           lat: number;
           lng: number;
           name: string;
           title: string;
         };
         Update: {
-          content?: string;
           countryId?: number;
           created_at?: string;
+          description?: string;
           id?: number;
-          imageUrls?: Json | null;
+          imageUrl?: string | null;
+          krName?: string | null;
           lat?: number;
           lng?: number;
           name?: string;
@@ -237,26 +274,35 @@ export type Database = {
         Row: {
           continent: string | null;
           createdAt: string;
+          description: string | null;
           flagImageUrl: string | null;
           id: number;
           imageUrl: string | null;
+          krName: string | null;
           name: string;
+          title: string | null;
         };
         Insert: {
           continent?: string | null;
           createdAt?: string;
+          description?: string | null;
           flagImageUrl?: string | null;
           id?: number;
           imageUrl?: string | null;
+          krName?: string | null;
           name: string;
+          title?: string | null;
         };
         Update: {
           continent?: string | null;
           createdAt?: string;
+          description?: string | null;
           flagImageUrl?: string | null;
           id?: number;
           imageUrl?: string | null;
+          krName?: string | null;
           name?: string;
+          title?: string | null;
         };
         Relationships: [];
       };
