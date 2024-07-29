@@ -52,6 +52,7 @@ function CountryDetailPage() {
           description={area.description}
           imageUrl={area.imageUrl!}
           title={area.title}
+          linkUrl={`/recommend/area/${area.id}`}
         />
       </>
     );
@@ -77,6 +78,7 @@ function CountryDetailPage() {
             description={place.description}
             imageUrl={place.imageUrl!}
             title={place.title}
+            linkUrl={`/recommend/area/${place.id}`}
           />
         </>
       );

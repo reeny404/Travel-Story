@@ -1,5 +1,4 @@
-import CardForm from "@/components/Card/CardForm";
-import ImageContainer from "@/components/Card/ImageContainer";
+import ImageFrame from "@/components/Frame/ImageFrame";
 
 type DetailCardProps = {
   title: string;
@@ -10,13 +9,16 @@ type DetailCardProps = {
 function DetailCard({ title, description, imageUrl }: DetailCardProps) {
   return (
     <>
-      <ImageContainer isTitle size="detail" imageUrl={imageUrl || "/"} />
-      <CardForm
-        title={title}
-        description={description}
-        linkUrl="/"
-        intent="detail"
+      <ImageFrame
+        src={imageUrl}
+        alt="detailCard"
+        roundType="sm"
+        className="h-[353px]"
       />
+      <div className="p-4">
+        <p className="text-xl font-bold mt-2 mb-2">{title}</p>
+        <p className="">{description}</p>
+      </div>
     </>
   );
 }

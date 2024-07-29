@@ -1,20 +1,20 @@
 "use client";
 
-import ImageContainer from "@/components/Card/ImageContainer";
+import ImageFrame from "@/components/Frame/ImageFrame";
 import { useRouter } from "next/navigation";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 type IntroSliderProps = {
   title: string;
-  imageUrl: string;
+  imageUrl: string | null;
   countryId: number;
 };
 function InstroSlider(country: IntroSliderProps) {
   const router = useRouter();
 
   return (
-    <div className="w-[350px] h-[500px]">
+    <div className="w-full">
       <Swiper
         touchRatio={0.1}
         onSlideChange={() =>
@@ -22,11 +22,11 @@ function InstroSlider(country: IntroSliderProps) {
         }
       >
         <SwiperSlide>
-          <ImageContainer
-            isTitle={true}
-            title={country.title}
-            size="intro"
-            imageUrl={country.imageUrl || "/123"}
+          <ImageFrame
+            src={country.imageUrl}
+            roundType="sm"
+            alt="countryImage"
+            className="h-[530px]"
           />
         </SwiperSlide>
         <SwiperSlide></SwiperSlide>

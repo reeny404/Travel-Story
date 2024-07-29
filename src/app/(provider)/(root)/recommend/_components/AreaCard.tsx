@@ -1,11 +1,12 @@
-import CardForm from "@/components/Card/CardForm";
-import ImageContainer from "@/components/Card/ImageContainer";
+import RatingIcons from "@/components/Card/RatingIcons";
+import ImageFrame from "@/components/Frame/ImageFrame";
+import Link from "next/link";
 // area ItemsPage가 있어야 될듯????
 type AreaCardType = {
   title: string;
   description: string;
-  rating: number;
-  imageUrl: string;
+  rating?: number;
+  imageUrl: string | null;
   linkUrl: string;
 };
 
@@ -18,14 +19,19 @@ function AreaCard({
 }: AreaCardType) {
   return (
     <>
-      <ImageContainer isTitle size="area" imageUrl={imageUrl} />
-      <CardForm
-        intent="detail"
-        title={title}
-        description={description}
-        rating={rating}
-        linkUrl={linkUrl}
+      <ImageFrame
+        src={imageUrl}
+        alt="detailCard"
+        roundType="sm"
+        className="h-[189px]"
       />
+      <div className="p-4">
+        <Link href={linkUrl} className="text-xl font-bold mt-3 mb-3">
+          {title}
+        </Link>
+        <p className="mb-3">{description}</p>
+        {rating && <RatingIcons rating={rating} />}
+      </div>
     </>
   );
 }

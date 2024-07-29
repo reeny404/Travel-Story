@@ -4,7 +4,7 @@ import { api } from "@/apis/api";
 import { IntroQueryFn, IntroQueryReturn } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import IntroCard from "../_components/IntroCard";
+import CountryIntroCard from "../_components/CountryPage/CountryIntroCard";
 // [id]로 가야해
 // 기존 [id]는 detail [id]로 가야해
 
@@ -39,12 +39,16 @@ function IntroPage() {
       {isLoading ? (
         <div>loading...</div>
       ) : (
-        <IntroCard
-          countryId={IntroCountry?.country?.id!}
-          title={IntroCountry?.country?.name!}
-          imageUrl={IntroCountry?.country?.imageUrl!}
-          items={IntroCountry?.cities!}
-        />
+        <>
+          {IntroCountry && (
+            <CountryIntroCard
+              countryId={IntroCountry.country.id}
+              cities={IntroCountry.cities}
+              imageUrl={IntroCountry.country.imageUrl}
+              title={IntroCountry.country.name}
+            />
+          )}
+        </>
       )}
     </div>
   );

@@ -1,15 +1,23 @@
-import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
-import ImageContainer from "@/components/Card/ImageContainer";
+import RatingIcons from "@/components/Card/RatingIcons";
+import ImageFrame from "@/components/Frame/ImageFrame";
+import Link from "next/link";
 
 type ReviewCardProps = {
   title: string;
   description: string;
   rating: number;
-  imageUrl: string;
+  imageUrl: string | null;
+  linkUrl: string;
 };
 
-function ReviewCard({ title, description, rating, imageUrl }: ReviewCardProps) {
+function ReviewCard({
+  title,
+  description,
+  rating,
+  imageUrl,
+  linkUrl,
+}: ReviewCardProps) {
   return (
     <>
       <CardType
@@ -18,18 +26,21 @@ function ReviewCard({ title, description, rating, imageUrl }: ReviewCardProps) {
         type="thumsup"
         innerClassName="mt-5"
       />
-      <div className="flex w-full items-center h-[100px] mt-5 ">
-        <div className="w-1/3">
-          <ImageContainer isTitle size="review" imageUrl={imageUrl} />
-        </div>
-        <div className="w-2/3">
-          <CardForm
-            linkUrl="/"
-            title={title}
-            description={description}
-            intent="review"
-            rating={rating}
-          />
+      <div className="flex w-full items-center h-[106px] mt-5 ">
+        <ImageFrame
+          src={imageUrl}
+          alt="detailCard"
+          roundType="sm"
+          className="h-full w-[120px]"
+        />
+        <div className="ml-4">
+          <Link href={linkUrl} className="text-xl font-bold mt-2 mb-2">
+            {title}
+          </Link>
+          <p className="text-sm overflow-x-hidden whitespace-nowrap text-ellipsis mb-2">
+            {description}
+          </p>
+          <RatingIcons rating={rating} />
         </div>
       </div>
     </>

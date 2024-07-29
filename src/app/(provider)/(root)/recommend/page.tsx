@@ -1,8 +1,8 @@
-import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
-import ImageContainer from "@/components/Card/ImageContainer";
 import Carousel from "@/components/Carousel/Carousel";
+import ImageFrame from "@/components/Frame/ImageFrame";
 import { ReactNode } from "react";
+import AreaCard from "./_components/AreaCard";
 import ReviewCard from "./_components/ReviewCard";
 
 // 상단에 띄울 4개의 나라는 하드코딩
@@ -39,13 +39,11 @@ function RecommendPage() {
     return (
       <div key={idx} className="flex-none w-full ">
         <div className="flex flex-col relative">
-          <ImageContainer isTitle size="area" imageUrl={slide.imageUrl} />
-          <CardForm
-            intent="detail"
+          <AreaCard
             title={slide.title}
             description={slide.desc}
-            rating={slide.rating}
             linkUrl="/"
+            imageUrl={slide.imageUrl}
           />
         </div>
       </div>
@@ -54,10 +52,13 @@ function RecommendPage() {
 
   const imgSildesArr: ReactNode[] = slides.map((slide, idx) => {
     return (
-      <div key={idx} className="flex-none w-full  ">
-        <div className="flex flex-col relative">
-          <ImageContainer isTitle size="detail" imageUrl={slide.imageUrl} />
-        </div>
+      <div key={idx} className="relative w-full h-[350px]">
+        <ImageFrame
+          src={slide.imageUrl}
+          alt="img"
+          className="h-full"
+          roundType="sm"
+        />
       </div>
     );
   });
@@ -99,6 +100,7 @@ function RecommendPage() {
         description="회원 리뷰 내용 줄줄줄줄줄줄"
         rating={4}
         imageUrl={IMAGE_URL}
+        linkUrl={"/"}
       />
     </div>
   );

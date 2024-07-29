@@ -1,25 +1,22 @@
-import CardForm from "@/components/Card/CardForm";
-import ImageContainer from "@/components/Card/ImageContainer";
+import AreaCard from "./AreaCard";
 
 type CarouselItemType = {
   imageUrl: string;
   title: string;
   description: string;
+  linkUrl: string;
 };
 
 function CarouselItem(item: CarouselItemType) {
   return (
     <>
-      <div className="flex-none w-full ">
-        <div className="flex flex-col relative">
-          <ImageContainer isTitle size="area" imageUrl={item?.imageUrl!} />
-          <CardForm
-            intent="detail"
-            title={item.title}
-            description={item?.description!}
-            linkUrl="/"
-          />
-        </div>
+      <div className="w-full">
+        <AreaCard
+          title={item.title}
+          description={item.description}
+          imageUrl={item.imageUrl}
+          linkUrl={item.linkUrl}
+        />
       </div>
     </>
   );
