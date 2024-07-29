@@ -5,6 +5,10 @@ import { IntroQueryFn, IntroQueryReturn } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import IntroCard from "../_components/IntroCard";
+// [id]로 가야해
+// 기존 [id]는 detail [id]로 가야해
+
+const QEURY_KEY = "CountryIntroData";
 
 function IntroPage() {
   const { data: IntroCountry, isLoading } = useQuery<
@@ -12,7 +16,7 @@ function IntroPage() {
     AxiosError,
     IntroQueryReturn
   >({
-    queryKey: ["country"],
+    queryKey: [QEURY_KEY],
     queryFn: async () => {
       const country = await api.country.getCountry(1);
       const city = await api.city.getCitiesByCountry(1);

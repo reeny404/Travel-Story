@@ -8,7 +8,9 @@ import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
 import Tab from "@/components/Tab/Tab";
 import { useTab } from "@/hooks/useTab";
 import useRecommendStore from "@/stores/recommend.store";
+import { Area, City, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import DetailCard from "../../_components/DetailCard";
@@ -18,7 +20,7 @@ import RecommendForm from "../../_components/RecommendForm";
 function CountryDetailPage() {
   const { countryId, setCountryId } = useRecommendStore();
 
-  const { currentTab } = useTab();
+  const { currentTab, setCurrentTab, TABS } = useTab();
 
   const pathname = usePathname();
 
@@ -27,28 +29,42 @@ function CountryDetailPage() {
     setCountryId(nowCountryId);
   }, []);
 
-  const { data: country } = useQuery({
-    queryKey: ["country", countryId],
+  const { data: country } = useQuery<RecommendResponse<Country>>({
+    queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
   });
 
-  const { data: areas } = useQuery({
-    queryKey: ["areas", countryId],
+  //하나의 훅으로 만들어서 캐시된 것을 재사용 할 수 있게 만들면 좋을듯.
+  const { data: areas } = useQuery<
+    RecommendResponse<Area[]>,
+    AxiosError,
+    Area[]
+  >({
+    queryKey: ["accomodationAreas", countryId],
     queryFn: () => api.area.getAreasByCountry(countryId, "accommodation"),
     select: (data) => data?.data,
   });
 
-  const { data: place } = useQuery({
-    queryKey: ["place", countryId],
+  const { data: place } = useQuery<
+    RecommendResponse<Area[]>,
+    AxiosError,
+    Area[]
+  >({
+    queryKey: ["placeAreas", countryId],
     queryFn: () => api.area.getAreasByCountry(countryId, "place"),
     select: (data) => data?.data,
   });
 
-  const { data: cities } = useQuery({
+  const { data: cities } = useQuery<
+    RecommendResponse<City[]>,
+    AxiosError,
+    City[]
+  >({
     queryKey: ["cities", countryId],
     queryFn: () => api.city.getCitiesByCountry(countryId),
     select: (data) => data?.data,
   });
+
   const carouselArr: ReactNode[] | undefined = areas?.map((area, idx) => {
     return (
       <div key={idx} className="embla__slide flex-none w-full ">
@@ -81,13 +97,13 @@ function CountryDetailPage() {
     );
   });
   return (
-    <div className=" container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col ">
+    <div className=" container overflow-x-hidden max-w-[375px] h-full flex-col ">
       <DetailCard
         title={country?.data?.title!}
         description={country?.data.description!}
         imageUrl={country?.data.imageUrl!}
       />
-      <Tab />
+      <Tab TABS={TABS} currentTab={currentTab} setCurrentTab={setCurrentTab} />
       {currentTab === "accommodation" && (
         <div className=" mb-10">
           <CardType

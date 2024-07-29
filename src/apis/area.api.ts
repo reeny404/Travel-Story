@@ -14,16 +14,12 @@ class AreaAPI {
     this.axios = axios;
   }
 
-  async getAreas() {
-    try {
-      const path = "/api/area";
-      const response = await this.axios.get<Area>(path);
-      const data = response.data;
+  async getAreas(): Promise<RecommendResponse<Area[]>> {
+    const path = "/api/area";
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path);
+    const data = response.data;
 
-      return data;
-    } catch (error) {
-      console.error("Error fetching data : ", error);
-    }
+    return data;
   }
 
   /**
@@ -32,20 +28,16 @@ class AreaAPI {
    * @param isMultiple  {boolean} 다수 지역 or 한개의 지역
    * @returns
    */
-  async getAreasById(id: number) {
-    try {
-      const path = `/api/area/${id}`;
-      const response = await this.axios.get<{ data: Area }>(path, {
-        params: {
-          id,
-        },
-      });
+  async getAreasById(id: number): Promise<RecommendResponse<Area[]>> {
+    const path = `/api/area/${id}`;
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
+      params: {
+        id,
+      },
+    });
 
-      const data = response.data;
-      return data;
-    } catch (error) {
-      console.log("Error fetching data : ", error);
-    }
+    const data = response.data;
+    return data;
   }
 
   /**
@@ -53,18 +45,16 @@ class AreaAPI {
    * @param id {number} cityId
    * @returns
    */
-  async getAreasByCity(id: number) {
-    try {
-      const path = `/api/area/city`;
-      const response = await this.axios.get<{ data: Area[] }>(path, {
-        params: {
-          id,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.log("Error fetching data : ", error);
-    }
+  async getAreasByCity(id: number): Promise<RecommendResponse<Area[]>> {
+    const path = `/api/area/city`;
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
+      params: {
+        id,
+      },
+    });
+
+    const data = response.data;
+    return data;
   }
 
   /**
@@ -73,19 +63,18 @@ class AreaAPI {
    * @param type {string} areaType
    * @returns
    */
-  async getAreasByCountry(id: number, type: string) {
-    try {
-      const path = `/api/area/country`;
-      const response = await this.axios.get<{ data: Area[] }>(path, {
-        params: {
-          id,
-          type,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.log("Error fetching data : ", error);
-    }
+  async getAreasByCountry(
+    id: number,
+    type: string
+  ): Promise<RecommendResponse<Area[]>> {
+    const path = `/api/area/country`;
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
+      params: {
+        id,
+        type,
+      },
+    });
+    return response.data;
   }
 
   // TODO 한글 이름 검색 시 가능하도록 업데이트 해야함.
@@ -94,18 +83,16 @@ class AreaAPI {
    * @param name {string} 영문 이름
    * @returns
    */
-  async search(name: string) {
-    try {
-      const path = `/api/area/search`;
-      const response = await this.axios.get<Area>(path, {
-        params: {
-          name,
-        },
-      });
-      const data = response.data;
+  async search(name: string): Promise<RecommendResponse<Area[]>> {
+    const path = `/api/area/search`;
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
+      params: {
+        name,
+      },
+    });
 
-      return data;
-    } catch (error) {}
+    const data = response.data;
+    return data;
   }
 
   async getAreaRating(id: number): Promise<RatingResponse | undefined> {
