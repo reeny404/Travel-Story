@@ -2,8 +2,10 @@
 
 import { api } from "@/apis/api";
 import useRecommendStore from "@/stores/recommend.store";
+import { Area, RecommendResponse } from "@/types/Recommend";
 import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
 import AreaCard from "../../../_components/AreaCard";
 
@@ -12,7 +14,11 @@ function AreaTypePage() {
   const areaType = pathname.split("/").slice(-1)[0];
   const { cityId } = useRecommendStore();
 
-  const { data: areas } = useQuery({
+  const { data: areas } = useQuery<
+    RecommendResponse<Area[]>,
+    AxiosError,
+    Area[]
+  >({
     queryKey: ["area", cityId],
     queryFn: () => api.area.getAreasByCity(cityId),
     select: (data) => data?.data,

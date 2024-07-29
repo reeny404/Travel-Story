@@ -28,13 +28,14 @@ class AreaAPI {
    * @param isMultiple  {boolean} 다수 지역 or 한개의 지역
    * @returns
    */
-  async getAreasById(id: number): Promise<RecommendResponse<Area[]>> {
+  async getAreasById(id: number): Promise<RecommendResponse<Area>> {
     const path = `/api/area/${id}`;
-    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
+    const response = await this.axios.get<RecommendResponse<Area>>(path, {
       params: {
         id,
       },
     });
+    console.log("response.data", response.data);
 
     const data = response.data;
     return data;
@@ -52,7 +53,6 @@ class AreaAPI {
         id,
       },
     });
-
     const data = response.data;
     return data;
   }
