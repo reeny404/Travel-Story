@@ -3,8 +3,8 @@ import { persist } from "zustand/middleware";
 
 type RecommendStore = {
   cityId: number;
-  setCityId: (cityId: number) => void;
   countryId: number;
+  setCityId: (cityId: number) => void;
   setCountryId: (countryId: number) => void;
 };
 

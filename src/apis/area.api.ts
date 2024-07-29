@@ -1,5 +1,11 @@
-import { Area } from "@/types/Recommend";
-import { AxiosInstance } from "axios";
+import { Area, Rating, RecommendResponse } from "@/types/Recommend";
+import { AxiosError, AxiosInstance } from "axios";
+type RatingResponse = {
+  status: number;
+  message: string;
+  data: { rating: number; pieces: number };
+  error: null | AxiosError;
+};
 
 class AreaAPI {
   private axios: AxiosInstance;
@@ -101,6 +107,42 @@ class AreaAPI {
       return data;
     } catch (error) {}
   }
-}
 
+  async getAreaRating(id: number): Promise<RatingResponse | undefined> {
+    try {
+      const path = `/api/area/rating`;
+      const response = await this.axios.get<RecommendResponse<Rating>>(path, {
+        params: {
+          id,
+        },
+      });
+      const data = response.data;
+      return data;
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  async addBookmark(data: BookmarkType) {
+    const { userId, areaId } = data;
+    const path = "/api/area/bookmark";
+    const response = await this.axios.post(path, { userId, areaId });
+
+    console.log("response", response);
+  }
+
+  async deleteBookmark(data: BookmarkType) {
+    const { userId, areaId } = data;
+    const path = "/api/area/bookmark";
+    const response = await this.axios.delete(path, {
+      data: { userId, areaId },
+    });
+
+    console.log("response", response);
+  }
+}
+type BookmarkType = {
+  userId: string;
+  areaId: number;
+};
 export default AreaAPI;
