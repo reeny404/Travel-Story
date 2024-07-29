@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       ) {
         return NextResponse.json(
           { message: "비밀번호가 틀렸습니다." },
-          { status: 201 }
+          { status: 401 }
         );
       }
       return NextResponse.json(
@@ -25,7 +25,6 @@ export async function POST(request: NextRequest) {
         { status: error.status || 400 }
       );
     }
-
     return NextResponse.json({ message: "로그인 성공", data }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "서버 오류", error }, { status: 500 });

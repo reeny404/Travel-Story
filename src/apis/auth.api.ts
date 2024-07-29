@@ -12,14 +12,9 @@ class AuthAPI {
         email: email,
         password: password,
       });
-
-      if (response.status === 200) {
-        return response;
-      } else {
-        return response;
-      }
+      return response;
     } catch (error) {
-      console.log("로그인 중에 오류 발생함: ", error);
+      return false;
     }
   }
 

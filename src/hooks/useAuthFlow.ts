@@ -69,13 +69,12 @@ function useAuthFlow() {
   const handlePasswordSubmit = async (password: string) => {
     setLabelText("");
     const response = await api.auth.login(user.email, password);
-    if (response?.status === 201) {
+    if (!response) {
       setLabelColor("red");
       setLabelText("비밀번호가 일치하지 않습니다.");
     } else {
       // 로그인한 유저 데이터 저장하는 로직 넣을 곳
       router.push("/");
-      console.log(response?.data);
     }
   };
 
