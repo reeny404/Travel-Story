@@ -1,5 +1,4 @@
 import CardForm from "@/components/Card/CardForm";
-import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 // area ItemsPage가 있어야 될듯????
 type AreaCardType = {
@@ -19,17 +18,13 @@ function AreaCard({
 }: AreaCardType) {
   return (
     <>
-      <CardType type="home" title="할인하는 숙소" linkUrl={linkUrl} />
-      <ImageContainer
-        isTitle
-        size="area"
-        imageUrl="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/Italy.jpg"
-      />
+      <ImageContainer isTitle size="area" imageUrl={imageUrl} />
       <CardForm
         intent="detail"
         title={title}
         description={description}
         rating={rating}
+        linkUrl={linkUrl}
       />
     </>
   );

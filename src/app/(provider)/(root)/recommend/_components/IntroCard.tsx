@@ -2,6 +2,7 @@
 
 import CardForm from "@/components/Card/CardForm";
 import ImageContainer from "@/components/Card/ImageContainer";
+import { IntroCities } from "@/types/Recommend";
 import { animated, useSpring } from "@react-spring/web";
 import { useDrag } from "@use-gesture/react";
 import Link from "next/link";
@@ -11,10 +12,10 @@ import { useState } from "react";
 type IntroCardProps = {
   title: string;
   imageUrl: string;
-  items: string[];
+  items: IntroCities[];
+  countryId: number;
 };
-
-function IntroCard({ title, imageUrl, items }: IntroCardProps) {
+function IntroCard({ title, imageUrl, items, countryId }: IntroCardProps) {
   const [x, setX] = useState<number>(0);
   const [style, api] = useSpring(() => ({ x: 0 }));
   const movementScale = 0.1;
@@ -28,7 +29,7 @@ function IntroCard({ title, imageUrl, items }: IntroCardProps) {
 
       if (state.last) {
         setX(newX);
-        router.push("/destination/country/1");
+        router.push("/recommend/country/1");
       }
     }
   });
@@ -47,12 +48,12 @@ function IntroCard({ title, imageUrl, items }: IntroCardProps) {
           isTitle={true}
           title={title}
           size="intro"
-          imageUrl={imageUrl}
+          imageUrl={imageUrl || "/123"}
         />
         <CardForm intent="intro" items={items} />
 
         <Link
-          href={"/destination/country/1"}
+          href={`/recommend/country/${countryId}` || "/"}
           className="flex justify-center items-center bg-black border rounded-3xl text-white w-20 h-12 absolute bottom-[31%] right-3"
         >
           넘기기

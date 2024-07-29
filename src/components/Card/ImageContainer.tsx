@@ -14,9 +14,9 @@ const imageVariant = cva("relative w-full bg-[#f0f0f0] aspect-auto", {
   variants: {
     size: {
       intro: "h-2/3",
-      detail: "min-h-[353px]",
-      area: "min-h-[189px]",
-      review: "min-h-[100px]",
+      detail: "h-[353px]",
+      area: "h-[189px]",
+      review: "h-[100px]",
     },
   },
   defaultVariants: {
@@ -33,7 +33,13 @@ const ImageContainer = ({
 }: ImageContainerProps) => {
   return (
     <div className={imageVariant({ size })} {...props}>
-      <Image src={imageUrl} alt="이미지" layout="fill" objectFit="cover" />
+      <Image
+        src={imageUrl || "/"}
+        alt="이미지"
+        priority
+        fill
+        className="object-cover"
+      />
       {isTitle && (
         <h1 className="absolute bottom-0 left-0 -mb-6 text-[64px] font-bold">
           {title}
@@ -45,8 +51,7 @@ const ImageContainer = ({
           alt="bookmark"
           width={20}
           height={20}
-          objectFit="contain"
-          className="absolute top-2 right-2 z-10"
+          className="absolute top-2 right-2 z-10 object-contain"
         />
       )}
     </div>

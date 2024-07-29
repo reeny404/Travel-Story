@@ -10,8 +10,13 @@ type DetailCardProps = {
 function DetailCard({ title, description, imageUrl }: DetailCardProps) {
   return (
     <>
-      <ImageContainer isTitle size="detail" imageUrl={imageUrl} />
-      <CardForm title={title} description={description} intent="detail" />
+      <ImageContainer isTitle size="detail" imageUrl={imageUrl || "/"} />
+      <CardForm
+        title={title}
+        description={description}
+        linkUrl="/"
+        intent="detail"
+      />
     </>
   );
 }
