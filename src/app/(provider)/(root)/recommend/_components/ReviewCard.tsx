@@ -20,12 +20,7 @@ function ReviewCard({
 }: ReviewCardProps) {
   return (
     <>
-      <CardType
-        linkUrl="/"
-        title="최고의 후기"
-        type="thumsup"
-        innerClassName="mt-5"
-      />
+      <CardType title="최고의 후기" type="thumsup" innerClassName="mt-5" />
       <div className="flex w-full items-center h-[106px] mt-5 ">
         <ImageFrame
           src={imageUrl}

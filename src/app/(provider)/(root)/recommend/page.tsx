@@ -86,12 +86,7 @@ function RecommendPage() {
         광고배너
       </div>
       <div className=" mb-10">
-        <CardType
-          linkUrl="/"
-          title="할인하는 숙소"
-          type="home"
-          innerClassName="mt-5"
-        />
+        <CardType title="할인하는 숙소" type="home" innerClassName="mt-5" />
       </div>
       <Carousel slides={slidesArr} />
       {/* <MainCityTemplate /> */}

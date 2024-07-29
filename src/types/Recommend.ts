@@ -14,7 +14,15 @@ export type IntroQueryReturn = {
 
 export type City = Tables<"city">;
 
-export type Area = Tables<"area">;
+export type Area = Tables<"area"> & {
+  info: {
+    location: string;
+    name: string;
+    notes: string;
+    opening_hours?: { close: string; open: string };
+    ticket_price?: { adult?: string; child?: string; youth?: "string" };
+  };
+};
 
 export type AreaReview = Tables<"areaReview">;
 

@@ -1,6 +1,8 @@
 "use client";
 
 import { api } from "@/apis/api";
+import Tab from "@/components/Tab/Tab";
+import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
 import { Area, Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
@@ -9,8 +11,10 @@ import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
 import AreaDetailCard from "../../_components/AreaPage/AreaDetailCard";
 import AreaReviewCard from "../../_components/AreaPage/AreaReviewCard";
+import NoticeForm from "../../_components/AreaPage/NoticeForm";
 import ReviewSummaryCard from "../../_components/AreaPage/ReviewSummary";
 import UnderBar from "../../_components/AreaPage/UnderBar";
+import Liner from "../../_components/Liner";
 
 const BOOKMARK_DATA = {
   userId: "66ec615f-1dd3-45df-83b6-2e178b5abbc3",
@@ -21,7 +25,7 @@ function AreaDetailPage() {
   const pathname = usePathname();
   const areaId = parseInt(pathname.split("/").slice(-1)[0]);
 
-  const { currentTab } = useTab();
+  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
 
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
@@ -41,6 +45,7 @@ function AreaDetailPage() {
     queryKey: ["areaRating", areaId],
     queryFn: async () => {
       const response = await api.area.getAreaRating(areaId);
+
       if (!response) {
         throw new Error("응답값이 없습니다.");
       }
@@ -49,7 +54,7 @@ function AreaDetailPage() {
     select: ({ data }) => {
       const rating = calcRatings(data);
       if (!rating) {
-        throw new Error("반환할 값이 없습니다.");
+        return { rating: 0, pieces: 0 };
       }
 
       return { rating, pieces: data.pieces };
@@ -63,10 +68,19 @@ function AreaDetailPage() {
       ) : (
         area &&
         rating && (
-          <section className="container overflow-x-hidden h-full max-w-[375px] flex-col relative">
+          <section className="relative container overflow-x-hidden h-full max-w-[375px] flex-col">
             <AreaDetailCard area={area} rating={rating} />
-            {/* <Tab /> */}
+            <Liner />
+            <Tab
+              TABS={TABS.areaDetail}
+              currentTab={currentTab}
+              setCurrentTab={setCurrentTab}
+            />
+            <Liner />
+            <NoticeForm area={area} />
+            <Liner />
             <ReviewSummaryCard rating={rating} />
+            <Liner />
             <AreaReviewCard
               name="홍길동"
               imageUrl={"/"}

@@ -28,7 +28,7 @@ function ReviewSummaryCard({ rating }: { rating: Rating }) {
           <div>
             <RatingIcons rating={rating.rating} />
           </div>
-          <p className="text-xm text-[#8B8B8B]">{`(2)`}</p>
+          <p className="text-xm text-[#8B8B8B]">{`(${rating.pieces})`}</p>
         </div>
         <div className="flex flex-col gap-y-1 p-1  justify-center">
           <p className="flex gap-x-1 text-sm font-semibold relative">

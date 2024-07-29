@@ -17,7 +17,6 @@ function MainTourForm({ citiesInfo, areasInfo }: MainTourFormProps) {
   if (!citiesInfo && !areasInfo) {
     return;
   }
-  console.log("citiesInfo,areasInfo", citiesInfo, areasInfo);
   const seperatedInfo = citiesInfo
     ? seperateArr(citiesInfo, 3)
     : seperateArr(areasInfo!, 3);
@@ -45,7 +44,7 @@ function MainTourForm({ citiesInfo, areasInfo }: MainTourFormProps) {
 
   return (
     <div className="w-full flex flex-col p-4 justify-around mt-7 bg-gray-300">
-      <CardType linkUrl="/" title="주요 관광지" type="" />
+      <CardType title="주요 관광지" type="" />
       <Carousel slides={carouselItems} />
     </div>
   );

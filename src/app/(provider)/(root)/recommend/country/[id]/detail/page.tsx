@@ -4,6 +4,7 @@ import { api } from "@/apis/api";
 import CardType from "@/components/Card/CardType";
 import Carousel from "@/components/Carousel/Carousel";
 import Tab from "@/components/Tab/Tab";
+import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
 import useRecommendStore from "@/stores/recommend.store";
 import { Area, City, Country, RecommendResponse } from "@/types/Recommend";
@@ -19,7 +20,7 @@ import MainTourForm from "../../../_components/MainTourForm";
 function CountryDetailPage() {
   const { countryId, setCountryId } = useRecommendStore();
 
-  const { currentTab, setCurrentTab, TABS } = useTab();
+  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
 
   const pathname = usePathname();
 
@@ -102,7 +103,11 @@ function CountryDetailPage() {
         description={country?.data?.description!}
         imageUrl={country?.data?.imageUrl!}
       />
-      <Tab TABS={TABS} currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      <Tab
+        TABS={TABS.default}
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
+      />
       {currentTab === "accommodation" && (
         <div className=" mb-10">
           <CardType

@@ -5,6 +5,7 @@ import { api } from "@/apis/api";
 import CardType from "@/components/Card/CardType";
 import Carousel from "@/components/Carousel/Carousel";
 import Tab from "@/components/Tab/Tab";
+import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
 import useRecommendStore from "@/stores/recommend.store";
 import { Area, City, RecommendResponse } from "@/types/Recommend";
@@ -20,7 +21,7 @@ import MainTourForm from "../../_components/MainTourForm";
 function CityDetailPage() {
   const { setCityId, cityId } = useRecommendStore();
   const pathname = usePathname();
-  const { currentTab, setCurrentTab, TABS } = useTab();
+  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
 
   useEffect(() => {
     const nowCityId = parseInt(pathname.split("/").slice(-1)[0]);
@@ -80,7 +81,11 @@ function CityDetailPage() {
         description={city?.description!}
         imageUrl={city?.imageUrl!}
       />
-      <Tab currentTab={currentTab} setCurrentTab={setCurrentTab} TABS={TABS} />
+      <Tab
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
+        TABS={TABS.default}
+      />
       {currentTab === "accommodation" && (
         <>
           <CardType
