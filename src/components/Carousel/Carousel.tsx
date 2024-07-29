@@ -25,8 +25,8 @@ const Carousel = ({ slides }: CarouselProps) => {
         }}
         spaceBetween={30}
       >
-        {slides?.map((slide) => {
-          return <SwiperSlide>{slide}</SwiperSlide>;
+        {slides?.map((slide, idx) => {
+          return <SwiperSlide key={idx}>{slide}</SwiperSlide>;
         })}
       </Swiper>
     </section>
