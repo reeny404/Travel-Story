@@ -17,7 +17,7 @@ function MainTourForm({ citiesInfo, areasInfo }: MainTourFormProps) {
   if (!citiesInfo && !areasInfo) {
     return;
   }
-
+  console.log("citiesInfo,areasInfo", citiesInfo, areasInfo);
   const seperatedInfo = citiesInfo
     ? seperateArr(citiesInfo, 3)
     : seperateArr(areasInfo!, 3);
@@ -26,7 +26,13 @@ function MainTourForm({ citiesInfo, areasInfo }: MainTourFormProps) {
     return (
       <div key={v4()} className="w-full">
         {info?.map((item, idx) => {
-          return <MainTourItem key={idx} item={item} />;
+          return (
+            <MainTourItem
+              key={idx}
+              item={item}
+              itemType={citiesInfo ? "city" : "area"}
+            />
+          );
         })}
       </div>
     );
