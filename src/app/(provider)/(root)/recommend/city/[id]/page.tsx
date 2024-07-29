@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import CarouselItem from "../../_components/CarouselItem";
 import DetailCard from "../../_components/DetailCard";
-import RecommendForm from "../../_components/RecommendForm";
+import MainTourForm from "../../_components/MainTourForm";
 
 function CityDetailPage() {
   const { setCityId, cityId } = useRecommendStore();
@@ -53,6 +53,7 @@ function CityDetailPage() {
           description={place.description}
           imageUrl={place.imageUrl!}
           title={place.title}
+          linkUrl={`/recommend/area/${place.id}`}
         />
       </>
     );
@@ -66,6 +67,7 @@ function CityDetailPage() {
             description={area.description}
             imageUrl={area.imageUrl!}
             title={area.title}
+            linkUrl={`/recommend/area/${area.id}`}
           />
         </>
       );
@@ -100,7 +102,7 @@ function CityDetailPage() {
           <Carousel slides={placeCarouselItems} />
         </>
       )}
-      <RecommendForm info={areas!} />
+      <MainTourForm areasInfo={areas!} />
     </div>
   );
 }

@@ -13,9 +13,9 @@ import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import CarouselItem from "../../../_components/CarouselItem";
 import DetailCard from "../../../_components/DetailCard";
-import RecommendForm from "../../../_components/RecommendForm";
-// TODO 케러셀  -> 스와이퍼.js로 수정하면서 데이터 수정
+import MainTourForm from "../../../_components/MainTourForm";
 // 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
+// 이 페이지는 SSR이여야함
 function CountryDetailPage() {
   const { countryId, setCountryId } = useRecommendStore();
 
@@ -123,7 +123,7 @@ function CountryDetailPage() {
           <Carousel slides={placeCarouselItems!} />
         </>
       )}
-      <RecommendForm info={cities!} />
+      <MainTourForm citiesInfo={cities!} />
     </div>
   );
 }
