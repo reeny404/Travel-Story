@@ -17,7 +17,9 @@ import RecommendForm from "../../_components/RecommendForm";
 // 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
 function CountryDetailPage() {
   const { countryId, setCountryId } = useRecommendStore();
+
   const { currentTab } = useTab();
+
   const pathname = usePathname();
 
   useEffect(() => {

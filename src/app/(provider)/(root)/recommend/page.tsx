@@ -45,6 +45,8 @@ function RecommendPage() {
             title={slide.title}
             description={slide.desc}
             rating={slide.rating}
+            linkUrl="/"
+
           />
         </div>
       </div>
