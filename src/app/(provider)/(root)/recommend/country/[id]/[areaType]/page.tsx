@@ -1,7 +1,9 @@
 "use client";
 
 import { api } from "@/apis/api";
-import { Area, RecommendResponse } from "@/types/Recommend";
+import MainLayout from "@/components/Layout/MainLayout";
+import { ICON } from "@/constants/Icon";
+import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import AreaCard from "../../../_components/Cards/AreaCard";
@@ -12,7 +14,10 @@ type AreaTypePageProps = {
 function AreaTypePage({ params }: AreaTypePageProps) {
   const areaType = params.areaType;
   const countryId = parseInt(params.id);
-
+  const { data: country } = useQuery<RecommendResponse<Country>>({
+    queryKey: ["countryDetail", countryId],
+    queryFn: () => api.country.getCountry(countryId),
+  });
   const { data: areas } = useQuery<
     RecommendResponse<Area[]>,
     AxiosError,
@@ -24,20 +29,50 @@ function AreaTypePage({ params }: AreaTypePageProps) {
   });
 
   return (
-    <div className="container overflow-x-hidden h-full max-w-[375px] flex-col">
-      {areas?.map((area, idx) => {
-        return (
-          <AreaCard
-            key={idx}
-            title={area.title}
-            description={area.description}
-            rating={4}
-            imageUrl={area.imageUrl}
-            linkUrl={`/recommend/area/${area.id}`}
-          />
-        );
-      })}
-    </div>
+    <MainLayout
+      headerProps={{
+        backgroundColor: "white",
+        leftIcons: [
+          {
+            icon: ICON.arrow.back.black,
+            alt: "Back",
+            size: 20,
+            path: "/",
+          },
+        ],
+        title: country?.data.krName!,
+        titleAlign: "center",
+        rightIcons: [
+          {
+            icon: ICON.search.black,
+            alt: "Search",
+            size: 20,
+            onClick: () => {},
+          },
+          {
+            icon: ICON.menu.burgerBlack,
+            alt: "Menu",
+            size: 20,
+            onClick: () => {},
+          },
+        ],
+      }}
+    >
+      <div className="container overflow-x-hidden h-full max-w-[375px] flex-col">
+        {areas?.map((area, idx) => {
+          return (
+            <AreaCard
+              key={idx}
+              title={area.title}
+              description={area.description}
+              rating={4}
+              imageUrl={area.imageUrl}
+              linkUrl={`/recommend/area/${area.id}`}
+            />
+          );
+        })}
+      </div>
+    </MainLayout>
   );
 }
 

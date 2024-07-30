@@ -1,6 +1,5 @@
 import {
   Area,
-  AreaReview,
   BookmarkType,
   Rating,
   RecommendResponse,
@@ -113,21 +112,6 @@ class AreaAPI {
     } catch (error) {
       throw new Error();
     }
-  }
-
-  // areaId에 합치하는 리뷰들을 가져옵니다.
-  async getReviews(id: number): Promise<RecommendResponse<AreaReview[]>> {
-    const path = `api/area/review`;
-    const response = await this.axios.get<RecommendResponse<AreaReview[]>>(
-      path,
-      {
-        params: {
-          id,
-        },
-      }
-    );
-    const data = response.data;
-    return data;
   }
 
   async addBookmark(data: BookmarkType) {

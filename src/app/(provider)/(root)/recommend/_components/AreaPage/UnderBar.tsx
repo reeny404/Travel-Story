@@ -1,18 +1,9 @@
-import { createClient } from "@/supabase/client";
-import { useQuery } from "@tanstack/react-query";
-
 type UnderBarProps = {
   handleBookmark?: () => void;
   handleAddPlan?: () => void;
 };
 
 function UnderBar({ handleBookmark, handleAddPlan }: UnderBarProps) {
-  const supabase = createClient();
-  const { data: userInfo } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => supabase.auth.getUser(),
-  });
-  console.log("userInfo", userInfo);
   return (
     <div className="w-full h-10 px-3 flex gap-x-2 fixed bottom-0">
       <button

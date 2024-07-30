@@ -1,9 +1,12 @@
 "use client";
 
 import { api } from "@/apis/api";
+import MainLayout from "@/components/Layout/MainLayout";
 import Tab from "@/components/Tab/Tab";
+import { ICON } from "@/constants/Icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
+import { createClient } from "@/supabase/client";
 import { Area, AreaReview, Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
 import { useQuery } from "@tanstack/react-query";
@@ -21,7 +24,11 @@ type AreaDetailPage = {
 function AreaDetailPage({ params }: AreaDetailPage) {
   const areaId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
-
+  const supabase = createClient();
+  const { data: userInfo } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => supabase.auth.getUser(),
+  });
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
     AxiosError,
@@ -62,7 +69,35 @@ function AreaDetailPage({ params }: AreaDetailPage) {
   });
 
   return (
-    <>
+    <MainLayout
+      headerProps={{
+        backgroundColor: "white",
+        leftIcons: [
+          {
+            icon: ICON.arrow.back.black,
+            alt: "Back",
+            size: 20,
+            path: "/",
+          },
+        ],
+        title: area?.krName!,
+        titleAlign: "center",
+        rightIcons: [
+          {
+            icon: ICON.search.black,
+            alt: "Search",
+            size: 20,
+            onClick: () => {},
+          },
+          {
+            icon: ICON.menu.burgerBlack,
+            alt: "Menu",
+            size: 20,
+            onClick: () => {},
+          },
+        ],
+      }}
+    >
       {isLoading ? (
         <div>loading...</div>
       ) : (
@@ -87,7 +122,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                   <AreaReviewCard
                     key={idx}
                     userImageUrl="/"
-                    name="홍길동"
+                    name={userInfo?.data.user?.user_metadata.nickname}
                     imageUrl={review.imageUrls[0]}
                     createdAt={review.createdAt}
                     rating={rating.rating}
@@ -95,25 +130,12 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                   />
                 );
               })}
-            {userReviews &&
-              userReviews?.data.map((review, idx) => {
-                return (
-                  <AreaReviewCard
-                    key={idx}
-                    userImageUrl="/"
-                    name="홍길동"
-                    imageUrl={review.imageUrls[0]}
-                    createdAt={review.createdAt}
-                    rating={rating.rating}
-                    description={review.content!}
-                  />
-                );
-              })}
+
             <UnderBar />
           </section>
         )
       )}
-    </>
+    </MainLayout>
   );
 }
 

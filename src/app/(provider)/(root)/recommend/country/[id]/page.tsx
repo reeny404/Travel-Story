@@ -1,6 +1,8 @@
 "use client";
 
 import { api } from "@/apis/api";
+import MainLayout from "@/components/Layout/MainLayout";
+import { ICON } from "@/constants/Icon";
 import useRecommendStore from "@/stores/recommend.store";
 import { IntroQueryFn, IntroQueryReturn } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
@@ -44,22 +46,52 @@ function IntroPage({ params }: IntroPageProps) {
     staleTime: 1000 * 60 * 60 * 10,
   });
   return (
-    <div className=" h-full w-full ">
-      {isLoading ? (
-        <div>loading...</div>
-      ) : (
-        <>
-          {IntroCountry && (
-            <CountryIntroCard
-              countryId={IntroCountry.country?.id}
-              cities={IntroCountry.cities}
-              imageUrl={IntroCountry.country.imageUrl}
-              title={IntroCountry.country.name}
-            />
-          )}
-        </>
-      )}
-    </div>
+    <MainLayout
+      headerProps={{
+        backgroundColor: "transparent",
+        leftIcons: [
+          {
+            icon: ICON.menu.burgerWhite,
+            alt: "Menu",
+            size: 20,
+            onClick: () => {},
+          },
+        ],
+        title: IntroCountry?.country.krName!,
+        titleAlign: "center",
+        rightIcons: [
+          {
+            icon: ICON.search.white,
+            alt: "Search",
+            size: 20,
+            onClick: () => {},
+          },
+          {
+            icon: ICON.cancel.white,
+            alt: "Cancle",
+            size: 20,
+            path: "/",
+          },
+        ],
+      }}
+    >
+      <div className=" h-full w-full ">
+        {isLoading ? (
+          <div>loading...</div>
+        ) : (
+          <>
+            {IntroCountry && (
+              <CountryIntroCard
+                countryId={IntroCountry.country?.id}
+                cities={IntroCountry.cities}
+                imageUrl={IntroCountry.country.imageUrl}
+                title={IntroCountry.country.name}
+              />
+            )}
+          </>
+        )}
+      </div>
+    </MainLayout>
   );
 }
 

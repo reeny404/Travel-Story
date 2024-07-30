@@ -1,5 +1,6 @@
 import RatingIcons from "@/components/Card/RatingIcons";
 import Image from "next/image";
+import Liner from "../Liner";
 
 // props로 유저정보, 리뷰정보를 받아야함.
 type AreaReviewCardProps = {
@@ -32,7 +33,7 @@ function AreaReviewCard({
             className="rounded-full object-cover w-auto h-auto"
           />
         </div>
-        <div className="flex flex-col justify-center gap-y-1 w-2/3 ml-5 relation">
+        <div className="flex flex-col justify-center gap-y-1 w-[300px] px-5 relation">
           <h1 className="text-sm font-bold">{name}</h1>
           <p className="text-xs font-semibold">{date}</p>
         </div>
@@ -46,6 +47,7 @@ function AreaReviewCard({
       <div className="w-full h-[150px] relative aspect-auto">
         <Image src={imageUrl} alt="image" fill className="object-fill" />
       </div>
+      <Liner />
     </div>
   );
 }
