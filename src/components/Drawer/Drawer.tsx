@@ -9,7 +9,9 @@ function Drawer() {
 
   return (
     <aside
-      className={`fixed top-0 w-full max-w-xs h-full bg-[#F8F8F8] ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300`}
+      className={`fixed top-0 w-full max-w-xs h-full bg-[#F8F8F8] ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } transition-transform duration-300`}
     >
       <div className="flex justify-between items-center bg-white p-4">
         <h2 className="mx-auto">카테고리</h2>
@@ -36,6 +38,7 @@ function Drawer() {
           label="마이 페이지"
         />
         <Category
+          href="/plan"
           imgPath="/icons/home-black.png"
           alt="home"
           label="내 여행 플래너"

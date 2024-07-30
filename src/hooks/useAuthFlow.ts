@@ -81,7 +81,10 @@ function useAuthFlow() {
   // 회원가입 nickname 버튼 누를 시
   const handleNickSubmit = async (nickname: string) => {
     putNickname(nickname);
-    console.log(user.email, user.password);
+    if (!user.password) {
+      setLabelColor("red");
+      return setLabelText("오류가 발생했습니다. 다시 시도해주세요.");
+    }
     await api.auth.signUp(user.email, user.password, nickname);
     router.push("/");
   };
