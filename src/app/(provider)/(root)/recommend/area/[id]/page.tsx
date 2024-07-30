@@ -11,6 +11,7 @@ import { Area, AreaReview, Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useEffect, useRef } from "react";
 import AreaDetailCard from "../../_components/AreaPage/AreaDetailCard";
 import AreaReviewCard from "../../_components/AreaPage/AreaReviewCard";
 import NoticeForm from "../../_components/AreaPage/NoticeForm";
@@ -24,6 +25,7 @@ type AreaDetailPage = {
 function AreaDetailPage({ params }: AreaDetailPage) {
   const areaId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
+
   const supabase = createClient();
   const { data: userInfo } = useQuery({
     queryKey: ["user"],
@@ -49,13 +51,6 @@ function AreaDetailPage({ params }: AreaDetailPage) {
     select: (data) => data.data,
   });
 
-  // userId가 의존키로 들어가야함
-  const { data: userReviews } = useQuery<RecommendResponse<AreaReview[]>>({
-    queryKey: ["userReviews"],
-    queryFn: () =>
-      api.review.getReviewsByUser("80bf108c-63c1-43ce-b463-92b9a0915f0d"),
-  });
-
   const { data: rating } = useQuery<Rating>({
     queryKey: ["areaRating", areaId],
     queryFn: async () => {
@@ -67,6 +62,20 @@ function AreaDetailPage({ params }: AreaDetailPage) {
       return { rating, pieces };
     },
   });
+
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const currentTabIndex = TABS.areaDetail.findIndex(
+      (tab) => tab.en === currentTab
+    );
+    if (sectionRefs.current[currentTabIndex]) {
+      sectionRefs.current[currentTabIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [currentTab]);
 
   return (
     <MainLayout
@@ -103,7 +112,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
       ) : (
         area &&
         rating && (
-          <section className="relative container overflow-x-hidden h-full max-w-[375px] flex-col">
+          <section className="relative container h-full max-w-[375px] flex-col">
             <AreaDetailCard area={area} rating={rating} />
             <Liner />
             <Tab
@@ -112,13 +121,25 @@ function AreaDetailPage({ params }: AreaDetailPage) {
               setCurrentTab={setCurrentTab}
             />
             <Liner />
-            <NoticeForm area={area} />
-            <Liner />
-            <ReviewSummaryCard rating={rating} />
-            <Liner />
-            {areaReviews &&
-              areaReviews?.map((review, idx) => {
-                return (
+            <div
+              ref={(el) => {
+                sectionRefs.current[0] = el;
+              }}
+            >
+              <NoticeForm area={area} />
+              <Liner />
+            </div>
+            <div
+              ref={(el) => {
+                sectionRefs.current[2] = el;
+              }}
+            >
+              <ReviewSummaryCard rating={rating} />
+              <Liner />
+            </div>
+            <div>
+              {areaReviews &&
+                areaReviews.map((review, idx) => (
                   <AreaReviewCard
                     key={idx}
                     userImageUrl="/"
@@ -128,9 +149,8 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                     rating={rating.rating}
                     description={review.content!}
                   />
-                );
-              })}
-
+                ))}
+            </div>
             <UnderBar areaId={areaId} />
           </section>
         )
