@@ -18,6 +18,7 @@ function IntroPage({ params }: IntroPageProps) {
   const { setCountryId } = useRecommendStore();
   useEffect(() => {
     setCountryId(countryId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { data: IntroCountry, isLoading } = useQuery<
     IntroQueryFn,
