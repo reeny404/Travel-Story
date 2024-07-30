@@ -1,9 +1,4 @@
-import {
-  Area,
-  BookmarkType,
-  Rating,
-  RecommendResponse,
-} from "@/types/Recommend";
+import { Area, Rating, RecommendResponse } from "@/types/Recommend";
 import { AxiosError, AxiosInstance } from "axios";
 type RatingResponse = {
   status: number;
@@ -112,24 +107,6 @@ class AreaAPI {
     } catch (error) {
       throw new Error();
     }
-  }
-
-  async addBookmark(data: BookmarkType) {
-    const { userId, areaId } = data;
-    const path = "/api/area/bookmark";
-    const response = await this.axios.post(path, { userId, areaId });
-
-    console.log("response", response);
-  }
-
-  async deleteBookmark(data: BookmarkType) {
-    const { userId, areaId } = data;
-    const path = "/api/area/bookmark";
-    const response = await this.axios.delete(path, {
-      data: { userId, areaId },
-    });
-
-    console.log("response", response);
   }
 }
 

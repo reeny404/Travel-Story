@@ -131,7 +131,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                 );
               })}
 
-            <UnderBar />
+            <UnderBar areaId={areaId} />
           </section>
         )
       )}

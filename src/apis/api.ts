@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { AccountAPI } from "./account.api";
 import AreaAPI from "./area.api";
 import AuthAPI from "./auth.api";
+import BookmarkAPI from "./bookmark.api";
 import CityAPI from "./city.api";
 import CountryAPI from "./country.api";
 import PlanAPI from "./plan.api";
@@ -17,6 +18,7 @@ class API {
   account;
   plan;
   review;
+  bookmark;
 
   constructor() {
     this.axios = axios.create({
@@ -29,6 +31,7 @@ class API {
     this.account = new AccountAPI(this.axios);
     this.plan = new PlanAPI(this.axios);
     this.review = new ReviewAPI(this.axios);
+    this.bookmark = new BookmarkAPI(this.axios);
   }
 }
 
