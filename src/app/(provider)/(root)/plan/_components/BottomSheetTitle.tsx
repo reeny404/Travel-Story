@@ -26,6 +26,9 @@ function BottomSheetTitle({ type, status }: BottomSheetType) {
       case "place":
         setTitlePlaceholder("위치 추가하기");
         break;
+      case "customePlace":
+        setTitlePlaceholder("위치 추가하기");
+        break;
       case "move":
         setTitlePlaceholder("이동수단을 선택해주세요");
         break;

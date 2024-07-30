@@ -1,18 +1,20 @@
 "use client";
 import { BottomSheetType } from "@/types/plan";
-import { useState } from "react";
 import PlusIcon from "./PlusIcon";
 
 type CheckListProps = {
   type: BottomSheetType["type"];
   status: BottomSheetType["status"];
+  checkList: { text: string; isCheck: boolean }[];
+  setCheckList: (checkList: { text: string; isCheck: boolean }[]) => void;
 };
 
-function BottomSheetCheckList({ type, status }: CheckListProps) {
-  const [checkList, setCheckList] = useState([
-    { text: "사진 찍기", isCheck: false },
-  ]);
-
+function BottomSheetCheckList({
+  type,
+  status,
+  checkList,
+  setCheckList,
+}: CheckListProps) {
   const handleCheck = (index: number) => {
     const newCheckList = [...checkList];
     newCheckList[index].isCheck = !newCheckList[index].isCheck;
@@ -69,6 +71,7 @@ function BottomSheetCheckList({ type, status }: CheckListProps) {
                       ? "bg-blue-500 text-white border-0"
                       : "bg-white text-black"
                   }`}
+                  onClick={() => handleCheck(index)}
                 >
                   ✔
                 </button>

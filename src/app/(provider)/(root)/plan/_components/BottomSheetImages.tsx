@@ -1,12 +1,20 @@
 "use client";
 import { BottomSheetType } from "@/types/plan";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import PlusIcon from "./PlusIcon";
 
-function BottomSheetImages({ type, status }: BottomSheetType) {
-  const [images, setImages] = useState<string[]>([]);
+type BottomSheetImagesProps = BottomSheetType & {
+  images: string[];
+  setImages: (images: string[]) => void;
+};
 
+function BottomSheetImages({
+  type,
+  status,
+  images,
+  setImages,
+}: BottomSheetImagesProps) {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
@@ -19,8 +27,8 @@ function BottomSheetImages({ type, status }: BottomSheetType) {
 
   return (
     <div className="flex w-full">
-      <i className="mr-2 w-8 text-center">✔</i>
-      <ul className="flex gap-2">
+      <i className="mr-2 w-8 text-center">🖼</i>
+      <ul className="flex gap-2 flex-wrap">
         {images.map((imageSrc, index) => (
           <li
             key={index}
@@ -36,17 +44,21 @@ function BottomSheetImages({ type, status }: BottomSheetType) {
           </li>
         ))}
         {status !== "read" && (
-          <li className="flex items-center w-12 h-12 text-gray-300 overflow-hidden">
+          <li className="w-12 h-12 flex items-center justify-center bg-gray-300">
+            <label
+              htmlFor="image-upload"
+              className="cursor-pointer text-gray-500"
+            >
+              <PlusIcon />
+            </label>
             <input
               type="file"
+              id="image-upload"
               className="hidden"
-              id="imageUpload"
-              onChange={handleImageUpload}
+              accept="image/*"
               multiple
+              onChange={handleImageUpload}
             />
-            <label htmlFor="imageUpload" className="cursor-pointer">
-              <PlusIcon className="text-gray-300 ml-1" />
-            </label>
           </li>
         )}
       </ul>
