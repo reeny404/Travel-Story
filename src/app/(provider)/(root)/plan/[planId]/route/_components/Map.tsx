@@ -9,13 +9,14 @@ import {
 } from "@react-google-maps/api";
 import React, { useState } from "react";
 
-const KEY: string = process.env.MAP_API_KEY ?? "";
+const KEY: string = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
 type props = { locations: LatLng[] };
 
 function Map({ locations }: props) {
   const [isInit, setIsInit] = useState<boolean>(false);
   const center: LatLng = getCenter(locations);
 
+  console.log("KEY", KEY);
   const handleOnLoad = () => setIsInit(true);
 
   return (
