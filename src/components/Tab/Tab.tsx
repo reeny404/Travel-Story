@@ -9,7 +9,7 @@ type TabProps = {
 function Tab({ currentTab, setCurrentTab, TABS }: TabProps) {
   return (
     <div>
-      <div className="w-full h-10 flex justify-around items-center">
+      <div className="w-full h-10 bg-white flex justify-around items-center">
         {TABS.map((tab) => (
           <button
             key={tab.en}

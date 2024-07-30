@@ -6,7 +6,7 @@ import { Area, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
-import AreaCard from "../../../_components/AreaCard";
+import AreaCard from "../../../_components/Cards/AreaCard";
 
 function AreaTypePage() {
   const pathname = usePathname();
@@ -32,7 +32,7 @@ function AreaTypePage() {
             title={area.title}
             description={area.description}
             rating={4}
-            imageUrl={area.imageUrl!}
+            imageUrl={area.imageUrl}
             linkUrl={`/recommend/area/${area.id}`}
           />
         );

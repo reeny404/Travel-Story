@@ -7,7 +7,7 @@ import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
-import AreaCard from "../../../_components/AreaCard";
+import AreaCard from "../../../_components/Cards/AreaCard";
 
 function AreaTypePage() {
   const pathname = usePathname();
@@ -19,7 +19,7 @@ function AreaTypePage() {
     AxiosError,
     Area[]
   >({
-    queryKey: ["area", cityId],
+    queryKey: ["areasByCity", cityId],
     queryFn: () => api.area.getAreasByCity(cityId),
     select: (data) => data?.data,
   });
@@ -27,7 +27,7 @@ function AreaTypePage() {
   const filteredArea = filterByAreaType(areas!, areaType);
 
   return (
-    <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col">
+    <div className="container overflow-x-hidden h-full max-w-[375px] flex-col">
       {filteredArea?.map((area, idx) => {
         return (
           <AreaCard

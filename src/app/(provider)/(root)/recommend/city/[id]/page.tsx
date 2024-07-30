@@ -1,11 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { api } from "@/apis/api";
-import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
-import ImageContainer from "@/components/Card/ImageContainer";
-import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
+import Carousel from "@/components/Carousel/Carousel";
+import Tab from "@/components/Tab/Tab";
+import { TABS } from "@/constants/tabs";
+import { useTab } from "@/hooks/useTab";
 import useRecommendStore from "@/stores/recommend.store";
 import { Area, City, RecommendResponse } from "@/types/Recommend";
 import { filterByAreaType } from "@/utils/filterByAreaType";
@@ -13,12 +13,14 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
-import DetailCard from "../../_components/DetailCard";
-import RecommendForm from "../../_components/RecommendForm";
+import DetailCard from "../../_components/Cards/DetailCard";
+import CarouselItem from "../../_components/Carousel/CarouselItem";
+import MainTourForm from "../../_components/MainTour/MainTourForm";
 
 function CityDetailPage() {
   const { setCityId, cityId } = useRecommendStore();
   const pathname = usePathname();
+  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
 
   useEffect(() => {
     const nowCityId = parseInt(pathname.split("/").slice(-1)[0]);
@@ -26,7 +28,7 @@ function CityDetailPage() {
   }, [pathname]);
 
   const { data: city } = useQuery<RecommendResponse<City>, AxiosError, City>({
-    queryKey: ["city", cityId],
+    queryKey: ["cityById", cityId],
     queryFn: () => api.city.getCityById(cityId),
     select: (data) => data?.data,
   });
@@ -36,53 +38,40 @@ function CityDetailPage() {
     AxiosError,
     Area[]
   >({
-    queryKey: ["areas", cityId],
+    queryKey: ["areasByCity", cityId],
     queryFn: () => api.area.getAreasByCity(cityId),
     select: (data) => data?.data,
-    staleTime: 1000 * 10,
   });
 
-  const accomodationAreas = filterByAreaType(areas!, "accommodation");
+  const accommodationAreas = filterByAreaType(areas!, "accommodation");
 
   const placeAreas = filterByAreaType(areas!, "place");
+  const placeCarouselItems: ReactNode[] = placeAreas?.map((place, idx) => {
+    return (
+      <>
+        <CarouselItem
+          description={place.description}
+          imageUrl={place.imageUrl!}
+          title={place.title}
+          linkUrl={`/recommend/area/${place.id}`}
+        />
+      </>
+    );
+  });
 
-  const placeCarouselArr: ReactNode[] | undefined = placeAreas?.map(
-    (area, idx) => {
+  const accommodationAreasCarouselItems: ReactNode[] | undefined =
+    accommodationAreas?.map((area, idx) => {
       return (
-        <div key={idx} className="embla__slide flex-none w-full ">
-          <div className="flex flex-col relative">
-            <ImageContainer isTitle size="area" imageUrl={area?.imageUrl!} />
-            <CardForm
-              linkUrl="/"
-              intent="detail"
-              title={area.title}
-              description={area?.description!}
-              rating={4}
-            />
-          </div>
-        </div>
+        <>
+          <CarouselItem
+            description={area.description}
+            imageUrl={area.imageUrl!}
+            title={area.title}
+            linkUrl={`/recommend/area/${area.id}`}
+          />
+        </>
       );
-    }
-  );
-
-  const carouselArr: ReactNode[] | undefined = accomodationAreas?.map(
-    (area, idx) => {
-      return (
-        <div key={idx} className="embla__slide flex-none w-full ">
-          <div className="flex flex-col relative">
-            <ImageContainer isTitle size="area" imageUrl={area?.imageUrl!} />
-            <CardForm
-              linkUrl="/"
-              intent="detail"
-              title={area.title}
-              description={area?.description!}
-              rating={4}
-            />
-          </div>
-        </div>
-      );
-    }
-  );
+    });
 
   return (
     <div className=" container overflow-x-hidden h-full max-w-[375px] flex-col ">
@@ -91,20 +80,33 @@ function CityDetailPage() {
         description={city?.description!}
         imageUrl={city?.imageUrl!}
       />
-      <div className="w-full h-10 bg-gray-300 ">탭바</div>
-      <CardType
-        linkUrl={`/recommend/city/${cityId}/accommodation`}
-        title="할인하는 숙소"
-        type="home"
+      <Tab
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
+        TABS={TABS.default}
       />
-      <CarouselWrapper items={carouselArr} />
-      <RecommendForm info={areas!} />
-      <CardType
-        linkUrl={`/recommend/city/${cityId}/place`}
-        title="문화 탐방"
-        type="architect"
-      />
-      <CarouselWrapper items={placeCarouselArr} />
+      {currentTab === "accommodation" && (
+        <>
+          <CardType
+            linkUrl={`/recommend/city/${cityId}/accommodation`}
+            title="할인하는 숙소"
+            type="home"
+          />
+          <Carousel slides={accommodationAreasCarouselItems} />
+        </>
+      )}
+      {currentTab === "place" && (
+        <>
+          <CardType
+            linkUrl={`/recommend/city/${cityId}/place`}
+            title="문화 탐방"
+            type="architect"
+          />
+
+          <Carousel slides={placeCarouselItems} />
+        </>
+      )}
+      <MainTourForm areasInfo={areas!} />
     </div>
   );
 }

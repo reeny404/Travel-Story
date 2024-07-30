@@ -1,9 +1,9 @@
-import CardForm from "@/components/Card/CardForm";
 import CardType from "@/components/Card/CardType";
-import ImageContainer from "@/components/Card/ImageContainer";
-import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
+import Carousel from "@/components/Carousel/Carousel";
+import ImageFrame from "@/components/Frame/ImageFrame";
 import { ReactNode } from "react";
-import ReviewCard from "./_components/ReviewCard";
+import AreaCard from "./_components/Cards/AreaCard";
+import ReviewCard from "./_components/Cards/ReviewCard";
 
 // 상단에 띄울 4개의 나라는 하드코딩
 
@@ -35,29 +35,30 @@ function RecommendPage() {
     },
   ];
 
-  const carouselArr: ReactNode[] = slides.map((slide, idx) => {
+  const slidesArr: ReactNode[] = slides.map((slide, idx) => {
     return (
-      <div key={idx} className="embla__slide flex-none w-full ">
+      <div key={idx} className="flex-none w-full ">
         <div className="flex flex-col relative">
-          <ImageContainer isTitle size="area" imageUrl={slide.imageUrl} />
-          <CardForm
-            intent="detail"
+          <AreaCard
             title={slide.title}
             description={slide.desc}
-            rating={slide.rating}
             linkUrl="/"
-
+            imageUrl={slide.imageUrl}
           />
         </div>
       </div>
     );
   });
-  const carouselArrImg: ReactNode[] = slides.map((slide, idx) => {
+
+  const imgSildesArr: ReactNode[] = slides.map((slide, idx) => {
     return (
-      <div key={idx} className="embla__slide flex-none w-full  ">
-        <div className="flex flex-col relative">
-          <ImageContainer isTitle size="detail" imageUrl={slide.imageUrl} />
-        </div>
+      <div key={idx} className="relative w-full h-[350px]">
+        <ImageFrame
+          src={slide.imageUrl}
+          alt="img"
+          className="h-full"
+          roundType="sm"
+        />
       </div>
     );
   });
@@ -78,27 +79,23 @@ function RecommendPage() {
     );
   };
   return (
-    <div className="container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col ">
-      <CarouselWrapper items={carouselArrImg} />
+    <div className="container overflow-x-hidden  h-full max-w-[375px]  flex-col ">
+      <Carousel slides={imgSildesArr} />
       {makeCountryCircles(countries)}
       <div className="w-full h-20 bg-gray-400 flex justify-center items-center text-white mt-10">
         광고배너
       </div>
       <div className=" mb-10">
-        <CardType
-          linkUrl="/"
-          title="할인하는 숙소"
-          type="home"
-          innerClassName="mt-5"
-        />
-        <CarouselWrapper items={carouselArr} />
+        <CardType title="할인하는 숙소" type="home" innerClassName="mt-5" />
       </div>
+      <Carousel slides={slidesArr} />
       {/* <MainCityTemplate /> */}
       <ReviewCard
         title="장소명"
         description="회원 리뷰 내용 줄줄줄줄줄줄"
         rating={4}
         imageUrl={IMAGE_URL}
+        linkUrl={"/"}
       />
     </div>
   );
