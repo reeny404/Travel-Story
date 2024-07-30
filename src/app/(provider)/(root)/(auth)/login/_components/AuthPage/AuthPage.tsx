@@ -26,7 +26,7 @@ function AuthPage({
     if (error) {
       console.log("소셜로그인 중 에러: ", error);
     } else {
-      console.log(data);
+      // console.log(data);
       // router.push("/");
     }
   };

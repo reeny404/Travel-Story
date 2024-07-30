@@ -3,6 +3,7 @@
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { ICON } from "@/constants/Icon";
 import useDrawerStore from "@/stores/drawer.store";
+import Link from "next/link";
 import MainLayout from "../../../../components/Layout/MainLayout";
 
 function Home() {
@@ -40,7 +41,12 @@ function Home() {
     >
       <main className="w-full h-full">
         <section className="w-full h-[222px] bg-black" />
-        <SearchBar />
+        <Link
+          href="/search"
+          className="fixed top-[253px] left-1/2 trasform -translate-x-1/2"
+        >
+          <SearchBar />
+        </Link>
       </main>
     </MainLayout>
   );
