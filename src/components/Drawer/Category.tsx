@@ -12,7 +12,6 @@ type DrawerLinkProps = {
   imgPath: string;
   alt: string;
   label: string;
-  hasArrow?: boolean;
   subCategories?: Menu[];
 };
 
@@ -21,7 +20,6 @@ function Category({
   imgPath,
   alt,
   label,
-  hasArrow,
   subCategories,
 }: DrawerLinkProps) {
   const { closeDrawer } = useDrawerStore();
@@ -45,7 +43,7 @@ function Category({
           <Image src={imgPath} alt={alt} width={18} height={18} />
           <h3 className="mt-[2px]">{label}</h3>
         </div>
-        {hasArrow && (
+        {subCategories && (
           <Image
             src={`/icons/${ICON.arrow.down.black}.png`}
             alt={alt}

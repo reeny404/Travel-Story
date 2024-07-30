@@ -39,14 +39,12 @@ function Drawer() {
           imgPath="/icons/home-black.png"
           alt="home"
           label="내 여행 플래너"
-          hasArrow
           subCategories={MENU_PLAN}
         />
         <Category
           imgPath="/icons/home-black.png"
           alt="home"
           label="여행지"
-          hasArrow
         />
       </nav>
     </aside>
