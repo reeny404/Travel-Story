@@ -3,7 +3,10 @@
 import { BottomSheetType } from "@/types/plan";
 import { useState } from "react";
 import { createBottomSheet } from "../_components/BottomSheet";
+<<<<<<< HEAD
 import DayMenu from "./../_components/DayMenu";
+=======
+>>>>>>> f346f1dba674ae4ce07f5ca50e1f74bc5a00110b
 
 function PlanDetailPage({ params }: { params: { planId: string } }) {
   const planId = params.planId;

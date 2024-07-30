@@ -6,29 +6,23 @@ import Carousel from "@/components/Carousel/Carousel";
 import Tab from "@/components/Tab/Tab";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
-import useRecommendStore from "@/stores/recommend.store";
 import { Area, City, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { usePathname } from "next/navigation";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import DetailCard from "../../../_components/Cards/DetailCard";
 import CarouselItem from "../../../_components/Carousel/CarouselItem";
 import MainTourForm from "../../../_components/MainTour/MainTourForm";
 // 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
 // 이 페이지는 SSR이여야함
-function CountryDetailPage() {
-  const { countryId, setCountryId } = useRecommendStore();
 
+type CountryDetailPage = {
+  params: { id: string };
+};
+
+function CountryDetailPage({ params }: CountryDetailPage) {
+  const countryId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
-
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const nowCountryId = parseInt(pathname.split("/").slice(-2)[0]);
-    setCountryId(nowCountryId);
-  }, []);
-
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
@@ -57,7 +51,7 @@ function CountryDetailPage() {
       return data?.data;
     },
   });
-
+  console.log("places", places);
   const { data: restaurants } = useQuery<
     RecommendResponse<Area[]>,
     AxiosError,
@@ -146,11 +140,13 @@ function CountryDetailPage() {
 
   return (
     <div className=" container overflow-x-hidden max-w-[375px] h-full flex-col ">
-      <DetailCard
-        title={country?.data?.title!}
-        description={country?.data?.description!}
-        imageUrl={country?.data?.imageUrl!}
-      />
+      {country && (
+        <DetailCard
+          title={country?.data?.title!}
+          description={country?.data?.description!}
+          imageUrl={country?.data?.imageUrl!}
+        />
+      )}
       <Tab
         TABS={TABS.default}
         currentTab={currentTab}
