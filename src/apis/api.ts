@@ -6,7 +6,7 @@ import BookmarkAPI from "./bookmark.api";
 import CityAPI from "./city.api";
 import CountryAPI from "./country.api";
 import PlanAPI from "./plan.api";
-import ReviewAPI from "./review";
+import ReviewAPI from "./review.api";
 
 class API {
   private axios: AxiosInstance;

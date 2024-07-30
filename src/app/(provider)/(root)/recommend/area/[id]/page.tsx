@@ -112,7 +112,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
       ) : (
         area &&
         rating && (
-          <section className="relative container h-full max-w-[375px] flex-col">
+          <section className="relative container h-full max-w-[375px]">
             <AreaDetailCard area={area} rating={rating} />
             <Liner />
             <Tab
@@ -122,16 +122,16 @@ function AreaDetailPage({ params }: AreaDetailPage) {
             />
             <Liner />
             <div
-              ref={(el) => {
-                sectionRefs.current[0] = el;
+              ref={(tabEl) => {
+                sectionRefs.current[0] = tabEl;
               }}
             >
               <NoticeForm area={area} />
               <Liner />
             </div>
             <div
-              ref={(el) => {
-                sectionRefs.current[2] = el;
+              ref={(tabEl) => {
+                sectionRefs.current[2] = tabEl;
               }}
             >
               <ReviewSummaryCard rating={rating} />

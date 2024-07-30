@@ -81,6 +81,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     return (
       <>
         <CarouselItem
+          id={area.id}
           description={area.description}
           imageUrl={area.imageUrl!}
           title={area.title}
@@ -94,6 +95,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
       return (
         <>
           <CarouselItem
+            id={place.id}
             description={place.description}
             imageUrl={place.imageUrl!}
             title={place.title}
@@ -108,6 +110,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
       return (
         <>
           <CarouselItem
+            id={restaurant.id}
             description={restaurant.description}
             imageUrl={restaurant.imageUrl!}
             title={restaurant.title}
@@ -121,6 +124,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     return (
       <>
         <CarouselItem
+          id={shop.id}
           description={shop.description}
           imageUrl={shop.imageUrl!}
           title={shop.title}
