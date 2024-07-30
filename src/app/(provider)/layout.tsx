@@ -1,6 +1,6 @@
 "use client";
 
-import AuthProvider from "@/contexts/auth.contexts";
+import { AuthProvider } from "@/contexts/auth.contexts";
 import QueryProvider from "@/providers/query.provider";
 import { usePathStore } from "@/stores/path.store";
 import { usePathname } from "next/navigation";

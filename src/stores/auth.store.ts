@@ -14,8 +14,6 @@ export type User = {
   email: string;
   password?: string;
   nickname: string;
-  imageUrl: string;
-  recent: string[];
 };
 export const useAuthStore = create<UserStoreProps>()(
   immer((set) => ({
@@ -24,8 +22,6 @@ export const useAuthStore = create<UserStoreProps>()(
       email: "",
       password: "",
       nickname: "",
-      imageUrl: "",
-      recent: [],
     },
     putEmail: (newEmail) => {
       set((prevUser) => {

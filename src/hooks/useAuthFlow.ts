@@ -4,11 +4,11 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useStepStore } from "@/stores/step.store";
 import { emailValidCheck } from "@/utils/emailCheck";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 function useAuthFlow() {
-  const [isInputValid, setIsInputValid] = useState<boolean>(true);
-  const { setStep, setLabelColor, setLabelText } = useStepStore();
+  // const [isInputValid, setIsInputValid] = useState<boolean>(true);
+  const { setStep, setLabelColor, setLabelText, setIsInputValid } =
+    useStepStore();
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
   const router = useRouter();
 
@@ -59,20 +59,22 @@ function useAuthFlow() {
   // 로그인 email 버튼 누를 시
   const handleEmailSubmit = async (email: string) => {
     putEmail(email);
-    setLabelText("");
     const nextStep = await api.auth.emailUser(email);
     setStep(nextStep);
+    if (nextStep === "add-user") {
+      setIsInputValid(false);
+    } else {
+      setIsInputValid(true);
+    }
   };
 
   // 로그인 password 버튼 누를 시
   const handlePasswordSubmit = async (password: string) => {
-    setLabelText("");
     const response = await api.auth.login(user.email, password);
     if (!response) {
       setLabelColor("red");
       setLabelText("비밀번호가 일치하지 않습니다.");
     } else {
-      // 로그인한 유저 데이터 저장하는 로직 넣을 곳
       router.push("/");
     }
   };
@@ -90,28 +92,25 @@ function useAuthFlow() {
 
   //회원가입 email 버튼 누를 시
   const handleSignupSubmit = () => {
-    setLabelText("");
+    setIsInputValid(true);
     setStep("new-password");
   };
 
   //회원가입 password 버튼 누를 시
   const handleNewPasswordSubmit = (password: string) => {
-    setLabelText("");
+    setIsInputValid(true);
     putPassword(password);
     setLabelColor("black");
     setStep("check-password");
   };
 
   const handleCheckPasswordSubmit = () => {
-    setLabelText("");
+    setIsInputValid(true);
     setLabelColor("black");
     setStep("nickname");
   };
 
   return {
-    state: {
-      isInputValid,
-    },
     submit: {
       handleEmailSubmit,
       handlePasswordSubmit,

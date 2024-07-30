@@ -18,7 +18,8 @@ function AuthPage({
   children,
 }: PropsWithChildren<AuthPageProps>) {
   const supabase = createClient();
-  const { step, setStep, setLabelColor, setLabelText } = useStepStore();
+  const { step, setStep, setLabelColor, setLabelText, setIsInputValid } =
+    useStepStore();
   const { prevPath } = usePathStore();
   const router = useRouter();
 
@@ -28,14 +29,13 @@ function AuthPage({
     });
     if (error) {
       console.log("소셜로그인 중 에러: ", error);
-    } else {
-      console.log(data);
     }
   };
 
   const handleStepBack = () => {
     setLabelText("");
     setLabelColor("black");
+    setIsInputValid(true);
     switch (step) {
       case "email":
         router.push(`${prevPath}`);
@@ -48,6 +48,7 @@ function AuthPage({
         break;
       case "new-password":
         setStep("add-user");
+        setIsInputValid(false);
         break;
       case "check-password":
         setStep("new-password");

@@ -6,9 +6,8 @@ import AuthForm from "./_components/AuthForm/AuthForm";
 import AuthPage from "./_components/AuthPage/AuthPage";
 
 function Login() {
-  const { state, submit, change } = useAuthFlow();
-  const { isInputValid } = state;
-  const { step, labelText, labelColor } = useStepStore();
+  const { submit, change } = useAuthFlow();
+  const { step, labelText, labelColor, isInputValid } = useStepStore();
   const { user } = useAuthStore();
 
   return (
