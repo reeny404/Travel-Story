@@ -2,7 +2,7 @@
 
 import { BottomSheetType } from "@/types/plan";
 import { useState } from "react";
-import { createBottomSheet } from "../_components/BottomSheet"; // 경로를 실제 구조에 맞게 조정하세요.
+import { createBottomSheet } from "../_components/BottomSheet";
 
 function PlanDetailPage({ params }: { params: { planId: string } }) {
   const planId = params.planId;
