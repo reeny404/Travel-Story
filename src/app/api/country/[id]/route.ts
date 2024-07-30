@@ -1,10 +1,15 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest,
+  route: { params: { id: string } }
+) {
   const { searchParams } = request.nextUrl;
+  console.log("route", route.params.id, typeof route.params.id);
   const id = searchParams.get("id");
-  console.log("456", request.url, new URL(request.url));
+  console.log("searchParams", searchParams);
+  console.log("456", request.nextUrl, new URL(request.url));
   console.log(123, id);
   if (!id) {
     return NextResponse.json({
@@ -20,7 +25,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("country")
     .select("*")
-    .eq("id", id);
+    .eq("id", route.params.id);
   if (error) {
     return NextResponse.json({
       status: 500,
