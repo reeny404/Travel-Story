@@ -27,7 +27,7 @@ function Category({
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!hasArrow && href) {
+    if (href) {
       router.push(href);
       closeDrawer();
     }
