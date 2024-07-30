@@ -1,18 +1,18 @@
 "use client";
 
 import { ICON } from "@/constants/Icon";
-import useDrawerStore from "@/stores/useDrawerStore";
+import useDrawerStore from "@/stores/drawer.store";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu } from "./Menu";
+import { useState } from "react";
 
-type DrawerLinkProps = {
+type CategoryProps = {
   href?: string;
   imgPath: string;
   alt: string;
   label: string;
-  subCategories?: Menu[];
+  hasSubCategory?: boolean;
+  children?: React.ReactNode;
 };
 
 function Category({
@@ -20,16 +20,24 @@ function Category({
   imgPath,
   alt,
   label,
-  subCategories,
-}: DrawerLinkProps) {
-  const { closeDrawer } = useDrawerStore();
+  hasSubCategory,
+  children,
+}: CategoryProps) {
   const router = useRouter();
+  const { closeDrawer } = useDrawerStore();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (href) {
+
+    if (!hasSubCategory && href) {
       router.push(href);
       closeDrawer();
+      return;
+    }
+
+    if (hasSubCategory) {
+      setIsOpen(!isOpen);
     }
   };
 
@@ -43,24 +51,16 @@ function Category({
           <Image src={imgPath} alt={alt} width={18} height={18} />
           <h3 className="mt-[2px]">{label}</h3>
         </div>
-        {subCategories && (
+        {hasSubCategory && (
           <Image
-            src={`/icons/${ICON.arrow.down.black}.png`}
+            src={`/icons/${isOpen ? ICON.arrow.up.black : ICON.arrow.down.black}.png`}
             alt={alt}
             width={16}
             height={8}
           />
         )}
       </button>
-      {subCategories && (
-        <div className="px-12 py-4 flex flex-col">
-          {subCategories.map((menu, i) => (
-            <Link key={i} href={menu.link} className="pb-6">
-              {menu.title}
-            </Link>
-          ))}
-        </div>
-      )}
+      {isOpen && children}
     </>
   );
 }
