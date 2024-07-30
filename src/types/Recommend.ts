@@ -29,7 +29,9 @@ export type BookmarkType = {
   areaId: number;
 };
 
-export type AreaReview = Tables<"areaReview">;
+export type AreaReview = Tables<"areaReview"> & {
+  imageUrls: string[];
+};
 
 export type Rating = {
   rating: number;
