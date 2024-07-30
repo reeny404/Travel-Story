@@ -13,7 +13,7 @@ function layout({ children }: PropsWithChildren) {
               icon: ICON.arrow.back.black,
               alt: "back",
               size: 20,
-              path: "/",
+              path: "back",
             },
           ]}
         />
