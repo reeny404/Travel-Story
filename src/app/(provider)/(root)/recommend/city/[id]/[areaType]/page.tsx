@@ -37,6 +37,7 @@ function AreaTypePage({ params }: AreaTypePageProps) {
             rating={4}
             imageUrl={area.imageUrl!}
             linkUrl={`/recommend/area/${area.id}`}
+            id={area.id}
           />
         );
       })}

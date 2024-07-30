@@ -5,6 +5,7 @@ type CarouselItemType = {
   title: string;
   description: string;
   linkUrl: string;
+  id: number;
 };
 
 function CarouselItem(item: CarouselItemType) {
@@ -16,6 +17,7 @@ function CarouselItem(item: CarouselItemType) {
           description={item.description}
           imageUrl={item.imageUrl}
           linkUrl={item.linkUrl}
+          id={item.id}
         />
       </div>
     </>

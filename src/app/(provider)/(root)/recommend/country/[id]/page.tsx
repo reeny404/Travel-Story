@@ -51,7 +51,7 @@ function IntroPage({ params }: IntroPageProps) {
         backgroundColor: "transparent",
         leftIcons: [
           {
-            icon: ICON.menu.burgerWhite,
+            icon: ICON.menu.burgerBlack,
             alt: "Menu",
             size: 20,
             onClick: () => {},
@@ -61,13 +61,13 @@ function IntroPage({ params }: IntroPageProps) {
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.white,
+            icon: ICON.search.black,
             alt: "Search",
             size: 20,
             onClick: () => {},
           },
           {
-            icon: ICON.cancel.white,
+            icon: ICON.cancel.black,
             alt: "Cancle",
             size: 20,
             path: "/",

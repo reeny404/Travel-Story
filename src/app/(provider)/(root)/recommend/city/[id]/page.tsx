@@ -51,6 +51,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
     return (
       <>
         <CarouselItem
+          id={place.id}
           description={place.description}
           imageUrl={place.imageUrl!}
           title={place.title}
@@ -65,6 +66,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
       return (
         <>
           <CarouselItem
+            id={area.id}
             description={area.description}
             imageUrl={area.imageUrl!}
             title={area.title}
