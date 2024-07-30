@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 const MAXIMUM_RATING = 5;

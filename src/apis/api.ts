@@ -17,8 +17,9 @@ class API {
   plan;
 
   constructor() {
-    // TODO base URL BASE_URL 상수로 교체 필요 -> .env.local 에 값 추가 요청 해야함
-    this.axios = axios.create({ baseURL: "http://localhost:3000/" });
+    this.axios = axios.create({
+      baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    });
     this.country = new CountryAPI(this.axios);
     this.city = new CityAPI(this.axios);
     this.area = new AreaAPI(this.axios);

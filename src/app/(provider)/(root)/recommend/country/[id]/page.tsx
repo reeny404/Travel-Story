@@ -1,116 +1,59 @@
 "use client";
 
 import { api } from "@/apis/api";
-import CardForm from "@/components/Card/CardForm";
-import CardType from "@/components/Card/CardType";
-import ImageContainer from "@/components/Card/ImageContainer";
-import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
-import Tab from "@/components/Tab/Tab";
-import { useTab } from "@/hooks/useTab";
-import useRecommendStore from "@/stores/recommend.store";
+import { IntroQueryFn, IntroQueryReturn } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
-import { ReactNode, useEffect } from "react";
-import DetailCard from "../../_components/DetailCard";
-import RecommendForm from "../../_components/RecommendForm";
-// TODO 케러셀  -> 스와이퍼.js로 수정하면서 데이터 수정
-// 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
-function CountryDetailPage() {
-  const { countryId, setCountryId } = useRecommendStore();
+import CountryIntroCard from "../../_components/CountryPage/CountryIntroCard";
 
-  const { currentTab } = useTab();
-
+const QEURY_KEY = "CountryIntroData";
+// 일본의 정보는 들어오나 도시의 정보가 존재하지 않아서 뜨지 않음.
+function IntroPage() {
   const pathname = usePathname();
+  const countryId = parseInt(pathname.split("/").slice(-1)[0]);
 
-  useEffect(() => {
-    const nowCountryId = parseInt(pathname.split("/").slice(-1)[0]);
-    setCountryId(nowCountryId);
-  }, []);
-
-  const { data: country } = useQuery({
-    queryKey: ["country", countryId],
-    queryFn: () => api.country.getCountry(countryId),
-  });
-
-  const { data: areas } = useQuery({
-    queryKey: ["areas", countryId],
-    queryFn: () => api.area.getAreasByCountry(countryId, "accommodation"),
-    select: (data) => data?.data,
-  });
-
-  const { data: place } = useQuery({
-    queryKey: ["place", countryId],
-    queryFn: () => api.area.getAreasByCountry(countryId, "place"),
-    select: (data) => data?.data,
-  });
-
-  const { data: cities } = useQuery({
-    queryKey: ["cities", countryId],
-    queryFn: () => api.city.getCitiesByCountry(countryId),
-    select: (data) => data?.data,
-  });
-  const carouselArr: ReactNode[] | undefined = areas?.map((area, idx) => {
-    return (
-      <div key={idx} className="embla__slide flex-none w-full ">
-        <div className="flex flex-col relative">
-          <ImageContainer isTitle size="area" imageUrl={area?.imageUrl!} />
-          <CardForm
-            intent="detail"
-            title={area.title}
-            description={area?.description!}
-            linkUrl="/"
-          />
-        </div>
-      </div>
-    );
-  });
-
-  const placeCarouselArr: ReactNode[] | undefined = place?.map((area, idx) => {
-    return (
-      <div key={idx} className="embla__slide flex-none w-full ">
-        <div className="flex flex-col relative">
-          <ImageContainer isTitle size="area" imageUrl={area?.imageUrl!} />
-          <CardForm
-            intent="detail"
-            title={area.title}
-            description={area?.description!}
-            linkUrl="/"
-          />
-        </div>
-      </div>
-    );
+  const { data: IntroCountry, isLoading } = useQuery<
+    IntroQueryFn,
+    AxiosError,
+    IntroQueryReturn
+  >({
+    queryKey: [QEURY_KEY],
+    queryFn: async () => {
+      const country = await api.country.getCountry(countryId);
+      const city = await api.city.getCitiesByCountry(countryId);
+      return { country, city };
+    },
+    select: (data) => {
+      const { city, country } = data;
+      const cities = city?.data.slice(0, 5).map((city) => {
+        if (!city.krName || !city.id) {
+          throw new Error("krName is undefined");
+        }
+        return { name: city.krName, id: city.id };
+      });
+      return { country: country?.data, cities };
+    },
+    staleTime: 1000 * 60 * 60 * 10,
   });
   return (
-    <div className=" container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col ">
-      <DetailCard
-        title={country?.data?.title!}
-        description={country?.data.description!}
-        imageUrl={country?.data.imageUrl!}
-      />
-      <Tab />
-      {currentTab === "accommodation" && (
-        <div className=" mb-10">
-          <CardType
-            linkUrl={`/recommend/country/${countryId}/accommodation`}
-            title="할인하는 숙소"
-            type="home"
-          />
-          <CarouselWrapper items={carouselArr} />
-        </div>
-      )}
-      {currentTab === "place" && (
+    <div className=" h-full w-full ">
+      {isLoading ? (
+        <div>loading...</div>
+      ) : (
         <>
-          <CardType
-            linkUrl={`/recommend/country/${countryId}/place`}
-            title="문화 탐방"
-            type="architect"
-          />
-          <CarouselWrapper items={placeCarouselArr} />
+          {IntroCountry && (
+            <CountryIntroCard
+              countryId={IntroCountry.country.id}
+              cities={IntroCountry.cities}
+              imageUrl={IntroCountry.country.imageUrl}
+              title={IntroCountry.country.name}
+            />
+          )}
         </>
       )}
-      <RecommendForm info={cities!} />
     </div>
   );
 }
 
-export default CountryDetailPage;
+export default IntroPage;
