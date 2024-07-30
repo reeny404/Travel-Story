@@ -11,13 +11,12 @@ function ReviewSummaryCard({ rating }: { rating: Rating }) {
           onClick={() => console.log("리뷰 작성")}
           className="text-sm font-bold flex items-center aspect-auto"
         >
-          {" "}
           <Image
             src="/icon/edit.svg"
             alt="edit"
             width={12}
             height={12}
-            className="mr-1 object-contain"
+            className="mr-1 object-contain w-auto h-auto"
           />
           <span>리뷰작성</span>
         </button>

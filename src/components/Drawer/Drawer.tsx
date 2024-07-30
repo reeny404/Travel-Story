@@ -2,6 +2,7 @@ import { ICON } from "@/constants/Icon";
 import useDrawerStore from "@/stores/useDrawerStore";
 import Image from "next/image";
 import Category from "./Category";
+import { MENU_PLAN } from "./Menu";
 
 function Drawer() {
   const { isOpen, closeDrawer } = useDrawerStore();
@@ -41,13 +42,12 @@ function Drawer() {
           imgPath="/icons/home-black.png"
           alt="home"
           label="내 여행 플래너"
-          // hasArrow 연결을 위해 잠시 주석
+          subCategories={MENU_PLAN}
         />
         <Category
           imgPath="/icons/home-black.png"
           alt="home"
           label="여행지"
-          hasArrow
         />
       </nav>
     </aside>
