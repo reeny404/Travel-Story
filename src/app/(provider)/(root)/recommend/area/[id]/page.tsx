@@ -8,7 +8,6 @@ import { Area, AreaReview, Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { usePathname } from "next/navigation";
 import AreaDetailCard from "../../_components/AreaPage/AreaDetailCard";
 import AreaReviewCard from "../../_components/AreaPage/AreaReviewCard";
 import NoticeForm from "../../_components/AreaPage/NoticeForm";
@@ -16,10 +15,11 @@ import ReviewSummaryCard from "../../_components/AreaPage/ReviewSummary";
 import UnderBar from "../../_components/AreaPage/UnderBar";
 import Liner from "../../_components/Liner";
 
-function AreaDetailPage() {
-  const pathname = usePathname();
-  const areaId = parseInt(pathname.split("/").slice(-1)[0]);
-
+type AreaDetailPage = {
+  params: { id: string };
+};
+function AreaDetailPage({ params }: AreaDetailPage) {
+  const areaId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
 
   const { data: area, isLoading } = useQuery<
