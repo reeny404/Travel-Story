@@ -1,9 +1,12 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest,
+  route: { params: { id: string } }
+) {
   const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
+  const id = route.params.id;
   if (!id) {
     return NextResponse.json({
       status: 400,
