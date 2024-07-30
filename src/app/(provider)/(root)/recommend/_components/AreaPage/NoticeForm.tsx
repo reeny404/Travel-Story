@@ -1,5 +1,5 @@
 import ImageFrame from "@/components/Frame/ImageFrame";
-import { ICON } from "@/constants/icon";
+import { ICON } from "@/constants/Icon";
 import { Area } from "@/types/Recommend";
 
 function NoticeForm({ area }: { area: Area }) {

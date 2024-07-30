@@ -1,6 +1,6 @@
 "use client";
 
-import { ICON } from "@/constants/icon";
+import { ICON } from "@/constants/Icon";
 import useDrawerStore from "@/stores/drawer.store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

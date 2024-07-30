@@ -1,6 +1,6 @@
 "use client";
 
-import { ICON } from "@/constants/icon";
+import { ICON } from "@/constants/Icon";
 import Image from "next/image";
 import { useRef } from "react";
 

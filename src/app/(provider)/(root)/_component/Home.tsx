@@ -1,7 +1,7 @@
 "use client";
 
 import SearchBar from "@/components/SearchBar/SearchBar";
-import { ICON } from "@/constants/icon";
+import { ICON } from "@/constants/Icon";
 import useDrawerStore from "@/stores/drawer.store";
 import MainLayout from "../../../../components/Layout/MainLayout";
 

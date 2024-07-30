@@ -1,5 +1,5 @@
 import MainLayout from "@/components/Layout/MainLayout";
-import { ICON } from "@/constants/icon";
+import { ICON } from "@/constants/Icon";
 
 function MyPage() {
   return (
