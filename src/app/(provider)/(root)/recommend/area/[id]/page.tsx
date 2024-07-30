@@ -53,6 +53,8 @@ function AreaDetailPage() {
       return { rating, pieces };
     },
   });
+
+  console.log("first", areaReviews[0].imageUrls[0]);
   return (
     <>
       {isLoading ? (
@@ -78,7 +80,7 @@ function AreaDetailPage() {
                 return (
                   <AreaReviewCard
                     key={idx}
-                    userIageUrl="/"
+                    userImageUrl="/"
                     name="홍길동"
                     imageUrl={"/"}
                     createdAt={review.createdAt}

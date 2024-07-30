@@ -1,10 +1,9 @@
 import ImageFrame from "@/components/Frame/ImageFrame";
 import { ICON } from "@/constants/Icon";
 import { Area } from "@/types/Recommend";
-import { splitText } from "@/utils/splitText";
 
 function NoticeForm({ area }: { area: Area }) {
-  const splitNotes = splitText(area?.info.notes!, ".");
+  const splitNotes = area?.info.notes!.split(".");
 
   return (
     <section className="p-3 w-full">

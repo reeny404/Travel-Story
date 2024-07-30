@@ -5,7 +5,7 @@ import Image from "next/image";
 type AreaReviewCardProps = {
   name: string;
   createdAt: string;
-  userIageUrl: string;
+  userImageUrl: string;
   imageUrl: string;
   rating: number;
   description: string;
@@ -14,13 +14,12 @@ type AreaReviewCardProps = {
 function AreaReviewCard({
   name,
   createdAt,
-  userIageUrl,
+  userImageUrl,
   imageUrl,
   rating = 0,
   description,
 }: AreaReviewCardProps) {
   const date = createdAt.slice(0, 10).replaceAll("-", ".");
-
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
       <div className="flex justify-around w-full">
