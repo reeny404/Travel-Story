@@ -12,11 +12,11 @@ import UpdateButton from "../_components/UpdateButton";
 type BottomSheetProps = BottomSheetType & {
   onClose: () => void;
   planId: string;
-  id?: string; // 추가
+  id?: string;
 };
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL, // 환경 변수로 설정된 API URL 사용
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 1000,
 });
 
@@ -71,10 +71,10 @@ function BottomSheet({
     if (type === "memo") {
       data.checkList = checkList;
     }
-    data.id = id; // id 추가
+    data.id = id;
     console.log(data);
     try {
-      const response = await planAPI.updatePlan(planId, data); // PlanAPI 사용
+      const response = await planAPI.updatePlan(planId, data);
 
       if (!response) {
         console.error("Error updating data");
@@ -101,7 +101,7 @@ function BottomSheet({
     }
     console.log(data);
     try {
-      const response = await planAPI.addPlan(planId, data); // PlanAPI 사용
+      const response = await planAPI.addPlan(planId, data);
 
       if (!response) {
         console.error("Error adding data");
@@ -175,7 +175,7 @@ export function createBottomSheet() {
     status,
     onClose,
     planId,
-    id, // 추가
+    id,
   }: BottomSheetProps) {
     return (
       <BottomSheet
@@ -183,7 +183,7 @@ export function createBottomSheet() {
         status={status}
         onClose={onClose}
         planId={planId}
-        id={id} // 전달
+        id={id}
       />
     );
   };
