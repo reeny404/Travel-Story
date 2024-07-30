@@ -50,7 +50,6 @@ function AuthProvider({ children }: PropsWithChildren) {
     };
     checkUser();
   }, []);
-  console.log(user);
   return <>{children}</>;
 }
 
