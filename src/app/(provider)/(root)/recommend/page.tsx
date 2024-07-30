@@ -40,6 +40,7 @@ function RecommendPage() {
       <div key={idx} className="flex-none w-full ">
         <div className="flex flex-col relative">
           <AreaCard
+            id={idx}
             title={slide.title}
             description={slide.desc}
             linkUrl="/"
