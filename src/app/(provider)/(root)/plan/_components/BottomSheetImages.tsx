@@ -6,7 +6,7 @@ import PlusIcon from "./PlusIcon";
 
 type BottomSheetImagesProps = BottomSheetType & {
   images: string[];
-  setImages: (images: string[]) => void;
+  setImages: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 function BottomSheetImages({

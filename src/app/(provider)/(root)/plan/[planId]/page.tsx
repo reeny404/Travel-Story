@@ -10,7 +10,7 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [bottomSheetConfig, setBottomSheetConfig] = useState<BottomSheetType>({
     type: "customePlace",
-    status: "update",
+    status: "add",
   });
 
   const handleOpen = (
@@ -49,7 +49,7 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
       {/* 바텀 시트 예시 */}
       <button
         className="w-12 h-12 fixed bottom-20 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        onClick={() => handleOpen("customePlace", "update")}
+        onClick={() => handleOpen("customePlace", "add")}
       >
         <div className="w-full h-full flex justify-center items-center">
           <p className="text-white">생성</p>

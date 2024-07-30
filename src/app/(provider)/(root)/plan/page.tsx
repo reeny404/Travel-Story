@@ -1,4 +1,3 @@
-"use client";
 import { DateUtil } from "@/utils/DateUtil";
 import Image from "next/image";
 import Link from "next/link";
