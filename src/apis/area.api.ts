@@ -1,7 +1,17 @@
-import { Tables } from "@/types/supabase";
-import { AxiosInstance } from "axios";
-
-type AreaType = Tables<"area">;
+import {
+  Area,
+  AreaReview,
+  BookmarkType,
+  Rating,
+  RecommendResponse,
+} from "@/types/Recommend";
+import { AxiosError, AxiosInstance } from "axios";
+type RatingResponse = {
+  status: number;
+  message: string;
+  data: { rating: number; pieces: number };
+  error: null | AxiosError;
+};
 
 class AreaAPI {
   private axios: AxiosInstance;
@@ -10,16 +20,12 @@ class AreaAPI {
     this.axios = axios;
   }
 
-  async getAreas() {
-    try {
-      const path = "/api/area";
-      const response = await this.axios.get<AreaType>(path);
-      const data = response.data;
+  async getAreas(): Promise<RecommendResponse<Area[]>> {
+    const path = "/api/area";
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path);
+    const data = response.data;
 
-      return data;
-    } catch (error) {
-      console.error("Error fetching data : ", error);
-    }
+    return data;
   }
 
   /**
@@ -28,21 +34,52 @@ class AreaAPI {
    * @param isMultiple  {boolean} 다수 지역 or 한개의 지역
    * @returns
    */
-  async getAreasById(id: number, isMultiple: boolean) {
-    try {
-      const path = `/api/area/${id}`;
-      const response = await this.axios.get<AreaType[] | AreaType>(path, {
-        params: {
-          id,
-          isMultiple,
-        },
-      });
+  async getAreasById(id: number): Promise<RecommendResponse<Area>> {
+    const path = `/api/area/${id}`;
+    const response = await this.axios.get<RecommendResponse<Area>>(path, {
+      params: {
+        id,
+      },
+    });
 
-      const data = response.data;
-      return data;
-    } catch (error) {
-      console.log("Error fetching data : ", error);
-    }
+    const data = response.data;
+    return data;
+  }
+
+  /**
+   *
+   * @param id {number} cityId
+   * @returns
+   */
+  async getAreasByCity(id: number): Promise<RecommendResponse<Area[]>> {
+    const path = `/api/area/city`;
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
+      params: {
+        id,
+      },
+    });
+    const data = response.data;
+    return data;
+  }
+
+  /**
+   *
+   * @param id {number} cityId
+   * @param type {string} areaType
+   * @returns
+   */
+  async getAreasByCountry(
+    id: number,
+    type: string
+  ): Promise<RecommendResponse<Area[]>> {
+    const path = `/api/area/country`;
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
+      params: {
+        id,
+        type,
+      },
+    });
+    return response.data;
   }
 
   // TODO 한글 이름 검색 시 가능하도록 업데이트 해야함.
@@ -51,18 +88,64 @@ class AreaAPI {
    * @param name {string} 영문 이름
    * @returns
    */
-  async search(name: string) {
+  async search(name: string): Promise<RecommendResponse<Area[]>> {
+    const path = `/api/area/search`;
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
+      params: {
+        name,
+      },
+    });
+
+    const data = response.data;
+    return data;
+  }
+
+  async getAreaRating(id: number): Promise<RatingResponse | undefined> {
     try {
-      const path = `/api/area/search`;
-      const response = await this.axios.get<AreaType>(path, {
+      const path = `/api/area/rating`;
+      const response = await this.axios.get<RecommendResponse<Rating>>(path, {
         params: {
-          name,
+          id,
         },
       });
       const data = response.data;
-
       return data;
-    } catch (error) {}
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  // areaId에 합치하는 리뷰들을 가져옵니다.
+  async getReviews(id: number): Promise<RecommendResponse<AreaReview[]>> {
+    const path = `api/area/review`;
+    const response = await this.axios.get<RecommendResponse<AreaReview[]>>(
+      path,
+      {
+        params: {
+          id,
+        },
+      }
+    );
+    const data = response.data;
+    return data;
+  }
+
+  async addBookmark(data: BookmarkType) {
+    const { userId, areaId } = data;
+    const path = "/api/area/bookmark";
+    const response = await this.axios.post(path, { userId, areaId });
+
+    console.log("response", response);
+  }
+
+  async deleteBookmark(data: BookmarkType) {
+    const { userId, areaId } = data;
+    const path = "/api/area/bookmark";
+    const response = await this.axios.delete(path, {
+      data: { userId, areaId },
+    });
+
+    console.log("response", response);
   }
 }
 
