@@ -1,12 +1,12 @@
 "use client";
 
-import { useTab } from "@/hooks/useTab"; // 훅 경로를 적절히 수정하세요
+type TabProps = {
+  currentTab: string;
+  setCurrentTab: (currentTab: string) => void;
+  TABS: { kr: string; en: string }[];
+};
 
-function Tab() {
-  const { currentTab, setCurrentTab, TABS } = useTab();
-
-  console.log("selectedTab", currentTab);
-
+function Tab({ currentTab, setCurrentTab, TABS }: TabProps) {
   return (
     <div>
       <div className="w-full h-10 flex justify-around items-center">

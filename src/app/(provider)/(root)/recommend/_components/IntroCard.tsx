@@ -2,7 +2,7 @@
 
 import CardForm from "@/components/Card/CardForm";
 import ImageContainer from "@/components/Card/ImageContainer";
-import { IntroCities } from "@/types/Recommend";
+import { IntroQueryReturn } from "@/types/Recommend";
 import { animated, useSpring } from "@react-spring/web";
 import { useDrag } from "@use-gesture/react";
 import Link from "next/link";
@@ -12,7 +12,7 @@ import { useState } from "react";
 type IntroCardProps = {
   title: string;
   imageUrl: string;
-  items: IntroCities[];
+  items: IntroQueryReturn["cities"];
   countryId: number;
 };
 function IntroCard({ title, imageUrl, items, countryId }: IntroCardProps) {

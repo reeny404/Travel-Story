@@ -1,5 +1,5 @@
 // components/CardForm.js
-import { IntroCities } from "@/types/Recommend";
+import { IntroQueryReturn } from "@/types/Recommend";
 import { VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import { ComponentProps } from "react";
 type CardFormProps = CardFormVariantProps & {
   title?: string;
   description?: string;
-  items?: IntroCities[];
+  items?: IntroQueryReturn["cities"];
   rating?: number;
   linkUrl?: string;
 } & ComponentProps<"div">;

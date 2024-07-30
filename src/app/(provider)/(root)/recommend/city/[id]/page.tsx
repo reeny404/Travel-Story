@@ -7,8 +7,10 @@ import CardType from "@/components/Card/CardType";
 import ImageContainer from "@/components/Card/ImageContainer";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
 import useRecommendStore from "@/stores/recommend.store";
+import { Area, City, RecommendResponse } from "@/types/Recommend";
 import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import DetailCard from "../../_components/DetailCard";
@@ -23,13 +25,17 @@ function CityDetailPage() {
     setCityId(nowCityId);
   }, [pathname]);
 
-  const { data: city } = useQuery({
+  const { data: city } = useQuery<RecommendResponse<City>, AxiosError, City>({
     queryKey: ["city", cityId],
     queryFn: () => api.city.getCityById(cityId),
     select: (data) => data?.data,
   });
 
-  const { data: areas } = useQuery({
+  const { data: areas } = useQuery<
+    RecommendResponse<Area[]>,
+    AxiosError,
+    Area[]
+  >({
     queryKey: ["areas", cityId],
     queryFn: () => api.area.getAreasByCity(cityId),
     select: (data) => data?.data,
@@ -79,7 +85,7 @@ function CityDetailPage() {
   );
 
   return (
-    <div className=" container overflow-x-hidden w-screen h-screen max-w-[375px] mx-auto flex-col ">
+    <div className=" container overflow-x-hidden h-full max-w-[375px] flex-col ">
       <DetailCard
         title={city?.title!}
         description={city?.description!}
