@@ -6,11 +6,7 @@ export async function GET(
   route: { params: { id: string } }
 ) {
   const { searchParams } = request.nextUrl;
-  console.log("route", route.params.id, typeof route.params.id);
-  const id = searchParams.get("id");
-  console.log("searchParams", searchParams);
-  console.log("456", request.nextUrl, new URL(request.url));
-  console.log(123, id);
+  const id = route.params.id;
   if (!id) {
     return NextResponse.json({
       status: 400,
@@ -25,7 +21,7 @@ export async function GET(
   const { data, error } = await supabase
     .from("country")
     .select("*")
-    .eq("id", route.params.id);
+    .eq("id", id);
   if (error) {
     return NextResponse.json({
       status: 500,
