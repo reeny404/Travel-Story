@@ -1,34 +1,10 @@
-"use client";
-import { BottomSheetType } from "@/types/plan";
 import { DateUtil } from "@/utils/DateUtil";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { createBottomSheet } from "./_components/BottomSheet";
 import PlanList from "./_components/PlanList";
 import PlusIcon from "./_components/PlusIcon";
 
 export default function PlanListPage() {
-  const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
-  const [bottomSheetConfig, setBottomSheetConfig] = useState<BottomSheetType>({
-    type: "move",
-    status: "add",
-  });
-
-  const handleOpen = (
-    type: BottomSheetType["type"],
-    status: BottomSheetType["status"]
-  ) => {
-    setBottomSheetConfig({ type, status });
-    setBottomSheetVisible(true);
-  };
-
-  const handleClose = () => {
-    setBottomSheetVisible(false);
-  };
-
-  const BottomSheet = createBottomSheet();
-
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="p-4">
@@ -61,22 +37,6 @@ export default function PlanListPage() {
           <PlusIcon className="text-white" />
         </div>
       </Link>
-      {isBottomSheetVisible && (
-        <BottomSheet
-          type={bottomSheetConfig.type}
-          status={bottomSheetConfig.status}
-          onClose={handleClose}
-        />
-      )}
-      {/* 바텀 시트 올라오는 예시 */}
-      <button
-        className="w-12 h-12 fixed bottom-20 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        onClick={() => handleOpen("move", "add")}
-      >
-        <div className="w-full h-full flex justify-center items-center">
-          <p className="text-white">생성</p>
-        </div>
-      </button>
     </div>
   );
 }
