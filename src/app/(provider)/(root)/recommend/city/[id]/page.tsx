@@ -6,26 +6,22 @@ import Carousel from "@/components/Carousel/Carousel";
 import Tab from "@/components/Tab/Tab";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
-import useRecommendStore from "@/stores/recommend.store";
 import { Area, City, RecommendResponse } from "@/types/Recommend";
 import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { usePathname } from "next/navigation";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import DetailCard from "../../_components/Cards/DetailCard";
 import CarouselItem from "../../_components/Carousel/CarouselItem";
 import MainTourForm from "../../_components/MainTour/MainTourForm";
 
-function CityDetailPage() {
-  const { setCityId, cityId } = useRecommendStore();
-  const pathname = usePathname();
-  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
+type CityDetailPageProps = {
+  params: { id: string };
+};
 
-  useEffect(() => {
-    const nowCityId = parseInt(pathname.split("/").slice(-1)[0]);
-    setCityId(nowCityId);
-  }, [pathname]);
+function CityDetailPage({ params }: CityDetailPageProps) {
+  const cityId = parseInt(params.id);
+  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
 
   const { data: city } = useQuery<RecommendResponse<City>, AxiosError, City>({
     queryKey: ["cityById", cityId],

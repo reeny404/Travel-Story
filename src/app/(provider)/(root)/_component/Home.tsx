@@ -1,8 +1,8 @@
 "use client";
 
+import SearchBar from "@/components/SearchBar/SearchBar";
 import { ICON } from "@/constants/Icon";
-import useDrawerStore from "@/stores/useDrawerStore";
-import Link from "next/link";
+import useDrawerStore from "@/stores/drawer.store";
 import MainLayout from "../../../../components/Layout/MainLayout";
 
 function Home() {
@@ -27,7 +27,7 @@ function Home() {
             icon: ICON.notification.black,
             alt: "Notifications",
             size: 20,
-            path: "/",
+            path: "/commons-test",
           },
           {
             icon: ICON.avatar.black,
@@ -39,15 +39,8 @@ function Home() {
       }}
     >
       <main className="w-full h-full">
-        <section className="w-full h-[222px] bg-black">
-          <div></div>
-        </section>
-        <Link
-          href="/commons-test"
-          className="flex justify-center items-centerp-2 border border-black rounded hover:bg-slate-100"
-        >
-          테스트 페이지로 이동
-        </Link>
+        <section className="w-full h-[222px] bg-black" />
+        <SearchBar />
       </main>
     </MainLayout>
   );

@@ -12,9 +12,29 @@ export default class PlanAPI {
     return await this.axios
       .get<Tables<"plan">[]>(`/api/plan`)
       .then(({ data }) => data)
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         return [];
+      });
+  }
+
+  async updatePlan(planId: string, updatedData: Record<string, any>) {
+    return await this.axios
+      .put(`/api/plan/${planId}/schedule`, updatedData)
+      .then(({ data }) => data)
+      .catch((e) => {
+        console.error(e);
+        return null;
+      });
+  }
+
+  async addPlan(planId: string, newData: Record<string, any>) {
+    return await this.axios
+      .post(`/api/plan/${planId}/schedule`, newData)
+      .then(({ data }) => data)
+      .catch((e) => {
+        console.error(e);
+        return null;
       });
   }
 }
