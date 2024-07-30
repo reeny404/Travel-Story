@@ -5,6 +5,7 @@ import AuthAPI from "./auth.api";
 import CityAPI from "./city.api";
 import CountryAPI from "./country.api";
 import PlanAPI from "./plan.api";
+import ReviewAPI from "./review";
 
 class API {
   private axios: AxiosInstance;
@@ -15,6 +16,7 @@ class API {
   auth;
   account;
   plan;
+  review;
 
   constructor() {
     this.axios = axios.create({
@@ -26,6 +28,7 @@ class API {
     this.auth = new AuthAPI(this.axios);
     this.account = new AccountAPI(this.axios);
     this.plan = new PlanAPI(this.axios);
+    this.review = new ReviewAPI(this.axios);
   }
 }
 

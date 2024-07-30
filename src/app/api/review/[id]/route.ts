@@ -6,6 +6,7 @@ export async function GET(
   route: { params: { id: string } }
 ) {
   const id = route.params.id;
+  console.log("id", id);
   if (!id) {
     return NextResponse.json({
       status: 400,
@@ -17,12 +18,16 @@ export async function GET(
 
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("area").select("*").eq("id", id);
+  const { data, error } = await supabase
+    .from("areaReview")
+    .select("*")
+    .eq("userId", id);
+
   if (error) {
     return NextResponse.json({
       status: 500,
       message: "Internal Server Error",
-      error: { status: 500, message: "Internal Server Error" },
+      error: { status: 500, message: error.message },
       data: null,
     });
   }
@@ -39,7 +44,7 @@ export async function GET(
   return NextResponse.json({
     status: 200,
     message: "Success",
-    data: data[0],
+    data: data,
     error: null,
   });
 }

@@ -38,8 +38,15 @@ function AreaDetailPage({ params }: AreaDetailPage) {
     AreaReview[]
   >({
     queryKey: ["areaReviews", areaId],
-    queryFn: () => api.area.getReviews(areaId),
+    queryFn: () => api.review.getReviews(areaId),
     select: (data) => data.data,
+  });
+
+  // userId가 의존키로 들어가야함
+  const { data: userReviews } = useQuery<RecommendResponse<AreaReview[]>>({
+    queryKey: ["userReviews"],
+    queryFn: () =>
+      api.review.getReviewsByUser("80bf108c-63c1-43ce-b463-92b9a0915f0d"),
   });
 
   const { data: rating } = useQuery<Rating>({
@@ -81,14 +88,27 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                     key={idx}
                     userImageUrl="/"
                     name="홍길동"
-                    imageUrl={areaReviews[0].imageUrls[0]}
+                    imageUrl={review.imageUrls[0]}
                     createdAt={review.createdAt}
                     rating={rating.rating}
                     description={review.content!}
                   />
                 );
               })}
-
+            {userReviews &&
+              userReviews?.data.map((review, idx) => {
+                return (
+                  <AreaReviewCard
+                    key={idx}
+                    userImageUrl="/"
+                    name="홍길동"
+                    imageUrl={review.imageUrls[0]}
+                    createdAt={review.createdAt}
+                    rating={rating.rating}
+                    description={review.content!}
+                  />
+                );
+              })}
             <UnderBar />
           </section>
         )
