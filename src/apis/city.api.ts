@@ -1,7 +1,5 @@
-import { Tables } from "@/types/supabase";
+import { City, RecommendResponse } from "@/types/Recommend";
 import { AxiosInstance } from "axios";
-
-type CityType = Tables<"city">;
 
 class CityAPI {
   private axios: AxiosInstance;
@@ -10,16 +8,12 @@ class CityAPI {
     this.axios = axios;
   }
 
-  async getCities() {
-    try {
-      const path = "/api/city";
-      const response = await this.axios.get<CityType>(path);
+  async getCities(): Promise<RecommendResponse<City[]>> {
+    const path = "/api/city";
+    const response = await this.axios.get<RecommendResponse<City[]>>(path);
 
-      const data = response.data;
-      return data;
-    } catch (error) {
-      console.error("Error fetching data : ", error);
-    }
+    const data = response.data;
+    return data;
   }
 
   /**
@@ -27,20 +21,17 @@ class CityAPI {
    * @param id {number} cityId
    * @returns
    */
-  async getCityById(id: number) {
-    try {
-      const path = `/api/city/${id}`;
-      const response = await this.axios.get<{ data: CityType }>(path, {
-        params: {
-          id,
-        },
-      });
+  async getCityById(id: number): Promise<RecommendResponse<City>> {
+    const path = `/api/city/${id}`;
+    const response = await this.axios.get<RecommendResponse<City>>(path, {
+      params: {
+        id,
+      },
+    });
 
-      const data = response.data;
-      return data;
-    } catch (error) {
-      console.log("Error fetching data : ", error);
-    }
+    const data = response.data;
+
+    return data;
   }
 
   /**
@@ -48,18 +39,16 @@ class CityAPI {
    * @param id {number} countryId
    * @returns
    */
-  async getCitiesByCountry(id: number) {
-    try {
-      const path = `/api/city/country`;
-      const response = await this.axios.get<{ data: CityType[] }>(path, {
-        params: {
-          id,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.log("Error fetching data : ", error);
-    }
+  async getCitiesByCountry(id: number): Promise<RecommendResponse<City[]>> {
+    const path = `/api/city/country`;
+    const response = await this.axios.get<RecommendResponse<City[]>>(path, {
+      params: {
+        id,
+      },
+    });
+    const data = response.data;
+
+    return data;
   }
 
   // TODO 한글로 검색 할 수 있도록 수정 필요
@@ -68,16 +57,14 @@ class CityAPI {
    * @param name {string} 영문 이름
    * @returns
    */
-  async search(name: string) {
-    try {
-      const path = `/api/city/search`;
-      const response = await this.axios.get<CityType>(path, {
-        params: {
-          name,
-        },
-      });
-      return response.data;
-    } catch (error) {}
+  async search(name: string): Promise<RecommendResponse<City[]>> {
+    const path = `/api/city/search`;
+    const response = await this.axios.get<RecommendResponse<City[]>>(path, {
+      params: {
+        name,
+      },
+    });
+    return response.data;
   }
 }
 

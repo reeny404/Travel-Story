@@ -54,4 +54,10 @@ export const ICON = {
   settings: {
     black: "settings-black",
   },
+  notice: {
+    white: "notice-white",
+  },
+  credit: {
+    euro: "euro-black",
+  },
 } as const;
