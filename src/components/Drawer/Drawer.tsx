@@ -1,17 +1,14 @@
 import { ICON } from "@/constants/Icon";
-import useDrawerStore from "@/stores/useDrawerStore";
+import useDrawerStore from "@/stores/drawer.store";
 import Image from "next/image";
-import Category from "./Category";
-import { MENU_PLAN } from "./Menu";
+import CategoryList from "./CategoryList";
 
 function Drawer() {
   const { isOpen, closeDrawer } = useDrawerStore();
 
   return (
     <aside
-      className={`fixed top-0 w-full max-w-xs h-full bg-[#F8F8F8] ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } transition-transform duration-300`}
+      className={`fixed top-0 w-full max-w-xs h-full bg-[#F8F8F8] ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 z-[100]`}
     >
       <div className="flex justify-between items-center bg-white p-4">
         <h2 className="mx-auto">카테고리</h2>
@@ -24,32 +21,7 @@ function Drawer() {
           />
         </button>
       </div>
-      <nav className="flex flex-col">
-        <Category
-          href="/"
-          imgPath="/icons/home-black.png"
-          alt="home"
-          label="홈"
-        />
-        <Category
-          href="#"
-          imgPath="/icons/home-black.png"
-          alt="home"
-          label="마이 페이지"
-        />
-        <Category
-          href="/plan"
-          imgPath="/icons/home-black.png"
-          alt="home"
-          label="내 여행 플래너"
-          subCategories={MENU_PLAN}
-        />
-        <Category
-          imgPath="/icons/home-black.png"
-          alt="home"
-          label="여행지"
-        />
-      </nav>
+      <CategoryList />
     </aside>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Drawer from "@/components/Drawer/Drawer";
-import useDrawerStore from "@/stores/useDrawerStore";
+import useDrawerStore from "@/stores/drawer.store";
 
 function ClientDrawer() {
   const { isOpen } = useDrawerStore();

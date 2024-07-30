@@ -57,7 +57,7 @@ function CountryButton({
         )}
         onClick={onClick}
       >
-        <Image src={imgPath} alt={alt} layout="fill" className="object-cover" />
+        <Image src={imgPath} alt={alt} fill={true} className="object-cover" />
       </div>
 
       <div className="ml-[10px] flex-1 min-w-0">
