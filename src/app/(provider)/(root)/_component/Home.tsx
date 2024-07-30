@@ -1,11 +1,9 @@
 "use client";
 
 import SearchBar from "@/components/SearchBar/SearchBar";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import MainLayout from "../../../../components/Layout/MainLayout";
-
-const SEARCH_PLACEHOLDER = {};
 
 function Home() {
   const { openDrawer } = useDrawerStore();
@@ -35,7 +33,7 @@ function Home() {
             icon: ICON.avatar.black,
             alt: "Avatar",
             size: 20,
-            path: "/my-page",
+            path: "/login",
           },
         ],
       }}

@@ -3,16 +3,35 @@ import { Tables } from "./supabase";
 
 export type Country = Tables<"country">;
 
-export type IntroCities = {
-  name: string;
-  id: number;
+export type IntroQueryFn = {
+  city: RecommendResponse<City[]>;
+  country: RecommendResponse<Country>;
+};
+export type IntroQueryReturn = {
+  cities: { name: string; id: number }[];
+  country: Country;
 };
 
 export type City = Tables<"city">;
 
-export type Area = Tables<"area">;
+export type Area = Tables<"area"> & {
+  info: {
+    location: string;
+    name: string;
+    notes: string;
+    opening_hours?: { close: string; open: string };
+    ticket_price?: { adult?: string; child?: string; youth?: "string" };
+  };
+};
 
-export type AreaReview = Tables<"areaReview">;
+export type BookmarkType = {
+  userId: string;
+  areaId: number;
+};
+
+export type AreaReview = Tables<"areaReview"> & {
+  imageUrls: string[];
+};
 
 export type Rating = {
   rating: number;
@@ -25,4 +44,3 @@ export type RecommendResponse<T> = {
   data: T;
   error: null | AxiosError;
 };
-

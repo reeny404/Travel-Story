@@ -1,6 +1,6 @@
 "use client";
 
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ type CategoryProps = {
   imgPath: string;
   alt: string;
   label: string;
-  hasArrow?: boolean;
+  hasSubCategory?: boolean;
   children?: React.ReactNode;
 };
 
@@ -20,7 +20,7 @@ function Category({
   imgPath,
   alt,
   label,
-  hasArrow,
+  hasSubCategory,
   children,
 }: CategoryProps) {
   const router = useRouter();
@@ -30,13 +30,13 @@ function Category({
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (!hasArrow && href) {
+    if (!hasSubCategory && href) {
       router.push(href);
       closeDrawer();
       return;
     }
 
-    if (hasArrow) {
+    if (hasSubCategory) {
       setIsOpen(!isOpen);
     }
   };
@@ -51,7 +51,7 @@ function Category({
           <Image src={imgPath} alt={alt} width={18} height={18} />
           <h3 className="mt-[2px]">{label}</h3>
         </div>
-        {hasArrow && (
+        {hasSubCategory && (
           <Image
             src={`/icons/${isOpen ? ICON.arrow.up.black : ICON.arrow.down.black}.png`}
             alt={alt}

@@ -85,7 +85,7 @@ export default function BottomSheetInput({
         <input
           className="outline-0 w-22 border-[1px] text-sm border-gray appearance-none"
           type="time"
-          name={type}
+          name={"startTime"}
           value={startTime}
           disabled={isDisabled}
           onChange={handleStartTimeChange}
@@ -95,7 +95,7 @@ export default function BottomSheetInput({
         <input
           className="outline-0 w-22 border-[1px] text-center text-sm border-gray appearance-none"
           type="time"
-          name={type}
+          name={"endTime"}
           value={endTime}
           disabled={isDisabled}
           onChange={handleEndTimeChange}

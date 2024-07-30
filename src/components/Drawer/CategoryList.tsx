@@ -21,7 +21,7 @@ function CategoryList() {
         imgPath="/icons/home-black.png"
         alt="home"
         label="내 여행 플래너"
-        hasArrow
+        hasSubCategory
       >
         <MyTripPlanner />
       </Category>
@@ -29,7 +29,7 @@ function CategoryList() {
         imgPath="/icons/home-black.png"
         alt="home"
         label="여행지"
-        hasArrow
+        hasSubCategory
       >
         <TripList />
       </Category>
