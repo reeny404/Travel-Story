@@ -25,9 +25,7 @@ function AreaReviewCard({
       <div className="flex justify-around w-full">
         <div className="w-16 h-16 bg-white opacity-70 rounded-full relative aspect-auto">
           <Image
-            src={
-              "https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/areas/EiffelTower.jpg"
-            }
+            src={imageUrl}
             alt="image"
             sizes="width"
             fill
@@ -46,12 +44,7 @@ function AreaReviewCard({
         {description}
       </div>
       <div className="w-full h-[150px] relative aspect-auto">
-        <Image
-          src="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/country/areas/EiffelTower.jpg"
-          alt="image"
-          fill
-          className="object-fill"
-        />
+        <Image src={imageUrl} alt="image" fill className="object-fill" />
       </div>
     </div>
   );

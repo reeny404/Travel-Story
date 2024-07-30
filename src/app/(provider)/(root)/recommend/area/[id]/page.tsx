@@ -54,7 +54,6 @@ function AreaDetailPage() {
     },
   });
 
-  console.log("first", areaReviews[0].imageUrls[0]);
   return (
     <>
       {isLoading ? (
@@ -82,7 +81,7 @@ function AreaDetailPage() {
                     key={idx}
                     userImageUrl="/"
                     name="홍길동"
-                    imageUrl={"/"}
+                    imageUrl={areaReviews[0].imageUrls[0]}
                     createdAt={review.createdAt}
                     rating={rating.rating}
                     description={review.content!}
