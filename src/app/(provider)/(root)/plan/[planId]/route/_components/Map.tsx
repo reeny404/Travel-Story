@@ -9,6 +9,7 @@ import {
 } from "@react-google-maps/api";
 import React, { useState } from "react";
 
+const KEY: string = process.env.MAP_API_KEY ?? "";
 type props = { locations: LatLng[] };
 
 function Map({ locations }: props) {
@@ -18,10 +19,7 @@ function Map({ locations }: props) {
   const handleOnLoad = () => setIsInit(true);
 
   return (
-    <LoadScript
-      googleMapsApiKey="AIzaSyDl9L5mIy1L4UfpIWPJ_2yUJznFw02lCNQ"
-      onLoad={handleOnLoad}
-    >
+    <LoadScript googleMapsApiKey={KEY} onLoad={handleOnLoad}>
       <GoogleMap
         mapContainerStyle={{
           width: "100%",
