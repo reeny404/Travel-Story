@@ -3,10 +3,8 @@
 import { BottomSheetType } from "@/types/plan";
 import { useState } from "react";
 import { createBottomSheet } from "../_components/BottomSheet";
-<<<<<<< HEAD
 import DayMenu from "./../_components/DayMenu";
-=======
->>>>>>> f346f1dba674ae4ce07f5ca50e1f74bc5a00110b
+import ScheculeList from "./ScheculeList";
 
 function PlanDetailPage({ params }: { params: { planId: string } }) {
   const planId = params.planId;
@@ -36,13 +34,11 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#F8F8F8]">
       <div className="h-48 w-full bg-gray-200"></div>
       <DayMenu />
-      <div className="p-4">
-        <h1 className="text-2xl font-bold">Plan Detail Page</h1>
-        <p>Plan ID: {planId}</p>
-      </div>
+      {/* <p>Plan ID: {planId}</p> */}
+      <ScheculeList />
       {isBottomSheetVisible && (
         <BottomSheet
           type={bottomSheetConfig.type}
