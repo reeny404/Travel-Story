@@ -16,6 +16,7 @@ const CardMockUpData: SlideCardProps[] = [
     imageUrl: "/sampleImg.jpg",
     linkUrl: "#",
     tags: ["친구와 함께", "힐링", "식도락", "문화"],
+    id: 100,
   },
   {
     title: "파리",
@@ -23,6 +24,7 @@ const CardMockUpData: SlideCardProps[] = [
     imageUrl: "/sampleImg.jpg",
     linkUrl: "#",
     tags: ["예술", "로맨스", "미식", "쇼핑"],
+    id: 100001,
   },
   {
     title: "뉴욕",
@@ -30,6 +32,7 @@ const CardMockUpData: SlideCardProps[] = [
     imageUrl: "/sampleImg.jpg",
     linkUrl: "#",
     tags: ["야경", "엔터테인먼트", "패션", "다양성"],
+    id: 100002,
   },
   {
     title: "도쿄",
@@ -37,6 +40,7 @@ const CardMockUpData: SlideCardProps[] = [
     imageUrl: "/sampleImg.jpg",
     linkUrl: "#",
     tags: ["애니메이션", "전통", "기술", "쇼핑"],
+    id: 100003,
   },
 ];
 

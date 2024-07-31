@@ -1,13 +1,16 @@
 import RatingIcons from "@/components/Card/RatingIcons";
 import ImageFrame from "@/components/Frame/ImageFrame";
+import { useBookmarks } from "@/hooks/useBookmark";
+import Image from "next/image";
 import Link from "next/link";
 // area ItemsPage가 있어야 될듯????
-type AreaCardType = {
+export type AreaCardProps = {
   title: string;
   description: string;
   rating?: number;
   imageUrl: string | null;
   linkUrl: string;
+  id: number;
 };
 
 function AreaCard({
@@ -16,9 +19,12 @@ function AreaCard({
   rating,
   imageUrl,
   linkUrl,
-}: AreaCardType) {
+  id,
+}: AreaCardProps) {
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(id);
+
   return (
-    <>
+    <div className="w-full h-full relative">
       <ImageFrame
         src={imageUrl}
         alt="detailCard"
@@ -32,7 +38,21 @@ function AreaCard({
         <p className="text-sm">{description}</p>
         {rating && <RatingIcons rating={rating} />}
       </div>
-    </>
+      <Image
+        src={
+          isBookmarked
+            ? "/cardImages/bookmarked.png"
+            : "/cardImages/bookmark.svg"
+        }
+        alt="bookmark"
+        width={10}
+        height={10}
+        className="h-5 w-5 z-10 absolute top-2 right-3 hover:cursor-pointer"
+        onClick={() =>
+          isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate()
+        }
+      />
+    </div>
   );
 }
 

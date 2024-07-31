@@ -1,9 +1,11 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
+export async function GET(
+  request: NextRequest,
+  route: { params: { id: string } }
+) {
+  const id = route.params.id;
   if (!id) {
     return NextResponse.json({
       status: 400,
@@ -12,10 +14,13 @@ export async function GET(request: NextRequest) {
       data: null,
     });
   }
-
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("area").select("*").eq("id", id);
+  const { data, error } = await supabase
+    .from("area")
+    .select("*")
+    .eq("id", id)
+    .single();
   if (error) {
     return NextResponse.json({
       status: 500,
@@ -25,7 +30,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  if (!data || data.length === 0) {
+  if (!data) {
     return NextResponse.json({
       status: 404,
       message: "No Data",
@@ -37,7 +42,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     status: 200,
     message: "Success",
-    data: data[0],
+    data: data,
     error: null,
   });
 }

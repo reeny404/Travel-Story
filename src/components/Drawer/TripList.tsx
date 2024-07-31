@@ -38,7 +38,7 @@ function TripList() {
               imgPath="/sampleImg.jpg"
               alt={country}
               countryName={country}
-              onClick={() => router.push(`/recommend/country`)}
+              onClick={() => router.push(`/recommend/country/1`)}
             />
           </li>
         ))}

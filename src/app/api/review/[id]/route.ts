@@ -1,10 +1,12 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
-
+export async function GET(
+  request: NextRequest,
+  route: { params: { id: string } }
+) {
+  const id = route.params.id;
+  console.log("id", id);
   if (!id) {
     return NextResponse.json({
       status: 400,
@@ -17,7 +19,7 @@ export async function GET(request: NextRequest) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("areaBookmark")
+    .from("areaReview")
     .select("*")
     .eq("userId", id);
 
@@ -45,33 +47,4 @@ export async function GET(request: NextRequest) {
     data: data,
     error: null,
   });
-}
-export async function POST(request: NextRequest) {
-  const data = await request.json();
-  const userId = data.userId;
-  const areaId = data.areaId;
-  const supabase = createClient();
-
-  const { data: insertedData } = await supabase
-    .from("areaBookmark")
-    .insert({ userId, areaId })
-    .select();
-  return NextResponse.json(insertedData);
-}
-
-export async function DELETE(request: NextRequest) {
-  const data = await request.json();
-  const userId = data.userId;
-  const areaId = data.areaId;
-
-  const supabase = createClient();
-
-  const { data: deletedData } = await supabase
-    .from("areaBookmark")
-    .delete()
-    .eq("userId", userId)
-    .eq("areaId", areaId)
-    .select();
-
-  return NextResponse.json(deletedData);
 }

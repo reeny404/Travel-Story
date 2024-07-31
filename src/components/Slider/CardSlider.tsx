@@ -20,6 +20,7 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
               description={card.description}
               imageUrl={card.imageUrl}
               linkUrl={card.linkUrl}
+              id={card.id}
             />
             {card.tags && <PrimaryTagList tagList={card.tags} />}
           </div>

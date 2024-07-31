@@ -4,6 +4,7 @@ export type SlideCardProps = {
   imageUrl: string;
   linkUrl: string;
   tags?: string[] | undefined;
+  id: number;
 };
 
 export type SliderProps = {
