@@ -3,7 +3,7 @@
 import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
 import Tab from "@/components/Tab/Tab";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useTab } from "@/hooks/useTab";

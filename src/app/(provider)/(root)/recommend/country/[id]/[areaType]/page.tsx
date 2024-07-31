@@ -2,7 +2,7 @@
 
 import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";

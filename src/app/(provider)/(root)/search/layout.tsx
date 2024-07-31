@@ -1,5 +1,5 @@
 import Header from "@/components/commons/Header";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import { PropsWithChildren } from "react";
 
 function SearchLayout({ children }: PropsWithChildren) {

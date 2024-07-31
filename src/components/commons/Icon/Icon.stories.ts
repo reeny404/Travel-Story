@@ -1,4 +1,4 @@
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import Icon from "./Icon";

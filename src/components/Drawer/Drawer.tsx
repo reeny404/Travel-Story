@@ -1,4 +1,4 @@
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import Image from "next/image";
 import CategoryList from "./CategoryList";
