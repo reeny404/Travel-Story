@@ -21,6 +21,8 @@ type CityDetailPageProps = {
 
 function CityDetailPage({ params }: CityDetailPageProps) {
   const cityId = parseInt(params.id);
+  console.log(cityId);
+
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
 
   const { data: city } = useQuery<RecommendResponse<City>, AxiosError, City>({

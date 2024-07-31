@@ -9,16 +9,14 @@ type CarouselItemType = {
 
 function CarouselItem(item: CarouselItemType) {
   return (
-    <>
-      <div className="w-full">
-        <AreaCard
-          title={item.title}
-          description={item.description}
-          imageUrl={item.imageUrl}
-          linkUrl={item.linkUrl}
-        />
-      </div>
-    </>
+    <div className="w-full">
+      <AreaCard
+        title={item.title}
+        description={item.description}
+        imageUrl={item.imageUrl}
+        linkUrl={item.linkUrl}
+      />
+    </div>
   );
 }
 
