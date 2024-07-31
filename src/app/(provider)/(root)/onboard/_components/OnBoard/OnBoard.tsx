@@ -4,13 +4,14 @@ import SubmitButton from "@/components/commons/SubmitButton";
 import { ICON } from "@/constants/icon";
 import { useTravelType } from "@/stores/travelType.store";
 import { useRouter } from "next/navigation";
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import SelectForm from "../SelectForm/SelectForm";
 import SelectLayout from "../SelectLayout/SelectLayout";
 
 function OnBoard() {
   const { travelType } = useTravelType();
   const router = useRouter();
+  const [isValidated, setIsValidated] = useState<boolean>(true);
 
   const theme = [
     "힐링",
@@ -33,10 +34,23 @@ function OnBoard() {
     "반려동물과",
   ];
 
+  useEffect(() => {
+    if (
+      travelType.season.length !== 0 &&
+      travelType.theme.length !== 0 &&
+      travelType.travelMate.length !== 0
+    ) {
+      setIsValidated(false);
+    } else {
+      setIsValidated(true);
+    }
+  }, [travelType]);
+
   const handleTravelTypeClick = (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault();
+
     localStorage.setItem("userTravelType", JSON.stringify(travelType));
     document.cookie = "hasTravelType=true; path=/";
     router.push("/");
@@ -80,6 +94,7 @@ function OnBoard() {
           <SubmitButton
             theme="primary"
             size="lg"
+            disabled={isValidated}
             onClick={(e) => handleTravelTypeClick(e)}
           >
             설정 저장
