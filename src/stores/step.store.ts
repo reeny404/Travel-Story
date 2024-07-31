@@ -11,7 +11,7 @@ type StepStoreProps = {
   setIsInputValid: (value: boolean) => void;
 };
 
-export const useStepStore = create<StepStoreProps>((set) => ({
+export const useLoginStepStore = create<StepStoreProps>((set) => ({
   step: "email",
   labelText: "",
   labelColor: "black",

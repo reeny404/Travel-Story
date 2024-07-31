@@ -1,14 +1,14 @@
 "use client";
 import { api } from "@/apis/api";
 import { useAuthStore } from "@/stores/auth.store";
-import { useStepStore } from "@/stores/step.store";
+import { useLoginStepStore } from "@/stores/step.store";
 import { emailValidCheck } from "@/utils/emailCheck";
 import { useRouter } from "next/navigation";
 
 function useAuthFlow() {
   // const [isInputValid, setIsInputValid] = useState<boolean>(true);
   const { setStep, setLabelColor, setLabelText, setIsInputValid } =
-    useStepStore();
+    useLoginStepStore();
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
   const router = useRouter();
 

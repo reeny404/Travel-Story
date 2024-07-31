@@ -2,7 +2,7 @@
 import Header from "@/components/commons/Header";
 import { ICON } from "@/constants/Icon";
 import { usePathStore } from "@/stores/path.store";
-import { useStepStore } from "@/stores/step.store";
+import { useLoginStepStore } from "@/stores/step.store";
 import { createClient } from "@/supabase/client";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
@@ -19,7 +19,7 @@ function AuthPage({
 }: PropsWithChildren<AuthPageProps>) {
   const supabase = createClient();
   const { step, setStep, setLabelColor, setLabelText, setIsInputValid } =
-    useStepStore();
+    useLoginStepStore();
   const { prevPath } = usePathStore();
   const router = useRouter();
 

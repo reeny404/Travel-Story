@@ -38,8 +38,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
         if (event === "INITIAL_SESSION") {
           // 초기 세션 상태를 처리
           setUser(session?.user || null);
-        } else if (event === "SIGNED_IN") {
-          // 사용자가 로그인했을 때 처리
+        } else if (event === "SIGNED_IN" || event === "USER_UPDATED") {
+          // 사용자가 로그인과 업데이트를 했을 때 처리
           setUser(session!.user);
         } else if (event === "SIGNED_OUT") {
           // 사용자가 로그아웃했을때
@@ -48,9 +48,6 @@ export function AuthProvider({ children }: PropsWithChildren) {
           // 비밀번호 복구 이벤트
         } else if (event === "TOKEN_REFRESHED") {
           // 토큰이 갱신되었을 때 처리
-        } else if (event === "USER_UPDATED") {
-          // 사용자가 업데이트 되었을 때 처리
-          setUser(session!.user);
         }
 
         setIsInitialized(true);

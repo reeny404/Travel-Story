@@ -1,5 +1,5 @@
 "use client";
-import { useStepStore } from "@/stores/step.store";
+import { useLoginStepStore } from "@/stores/step.store";
 import clsx from "clsx";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
@@ -27,7 +27,7 @@ function AuthForm({
 }: AuthFormProps) {
   const [isInputPassword, setIsPassword] = useState<boolean>(isPassword);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { setLabelText } = useStepStore();
+  const { setLabelText } = useLoginStepStore();
 
   const textColor = clsx({
     "text-black": labelColor === "black",

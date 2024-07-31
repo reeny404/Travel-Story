@@ -1,13 +1,13 @@
 "use client";
 import useAuthFlow from "@/hooks/useAuthFlow";
 import { useAuthStore } from "@/stores/auth.store";
-import { useStepStore } from "@/stores/step.store";
+import { useLoginStepStore } from "@/stores/step.store";
 import AuthForm from "./_components/AuthForm/AuthForm";
 import AuthPage from "./_components/AuthPage/AuthPage";
 
 function Login() {
   const { submit, change } = useAuthFlow();
-  const { step, labelText, labelColor, isInputValid } = useStepStore();
+  const { step, labelText, labelColor, isInputValid } = useLoginStepStore();
   const { user } = useAuthStore();
 
   return (
