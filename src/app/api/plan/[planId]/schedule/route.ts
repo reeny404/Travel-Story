@@ -3,6 +3,24 @@ import { NextRequest, NextResponse } from "next/server";
 
 const TABLE_NAME = "schedule";
 
+type GetParameter = {
+  params: { planId: string }
+};
+
+export async function GET(request: NextRequest, { params: { planId } }: GetParameter) {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from(TABLE_NAME)
+    .select()
+    .eq("planId", planId);
+
+  return NextResponse.json({
+    data, error,
+    status: 200,
+    statusText: error ? `[${error.code}] ${error.hint} > ${error.message}` : "OK"
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const supabase = createClient();
