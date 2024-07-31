@@ -16,6 +16,7 @@ type BottomSheetProps = {
 function AddBottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
+  const [clickedPlan, setClickedPlan] = useState<number | null>(null);
   const { user } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -31,7 +32,7 @@ function AddBottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
     queryKey: ["planData", user?.id],
     queryFn: () => api.area.getPlan(user?.id!),
   });
-  console.log("planData", planData);
+
   useEffect(() => {
     setIsOpening(true);
     setTimeout(() => {
@@ -60,7 +61,15 @@ function AddBottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
         <section className="min-h-96">
           {planData &&
             planData.map((plan: any, idx: number) => {
-              return <PlanItem key={idx} plan={plan} />;
+              return (
+                <PlanItem
+                  setClickedPlan={setClickedPlan}
+                  clickedPlan={clickedPlan}
+                  key={idx}
+                  plan={plan}
+                  idx={idx}
+                />
+              );
             })}
         </section>
         <div className="grid grid-cols-2 gap-3">
