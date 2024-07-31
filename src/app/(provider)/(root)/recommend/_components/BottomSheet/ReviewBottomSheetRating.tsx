@@ -1,4 +1,4 @@
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import Image from "next/image";
 
 type ReviewBottomSheetRating = {

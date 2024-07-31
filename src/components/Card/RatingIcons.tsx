@@ -1,6 +1,6 @@
 "use client";
 
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import clsx from "clsx";
 import Image from "next/image";
 
