@@ -33,8 +33,6 @@ function SwiperTagList({ tags, onClick }: Props) {
     onClick(tag);
   };
 
-  console.log(tags);
-
   return (
     <Swiper
       slidesPerView={4}

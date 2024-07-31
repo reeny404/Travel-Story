@@ -13,7 +13,7 @@ function CategoryList() {
         label="홈"
       />
       <Category
-        href="/my-page"
+        href="/my"
         imgPath={`/icons/${ICON.home.black}.png`}
         alt="home"
         label="마이 페이지"

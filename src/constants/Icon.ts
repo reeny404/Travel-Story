@@ -78,6 +78,11 @@ export const ICON = {
       black: { name: "shop", ext: "svg" }
     },
   },
+  bookmark: {
+    on: { name: 'bookmark-on', ext: "svg" },
+    off: { name: 'bookmark-off', ext: "svg" },
+  },
+  calendar: { white: { name: "calendar", ext: "svg" } },
   time: { gray: { name: "time", ext: "svg" } },
   maker: { gray: { name: "location", ext: "svg" } }
 } as const;
