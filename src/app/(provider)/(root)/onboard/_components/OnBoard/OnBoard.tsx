@@ -5,8 +5,8 @@ import { ICON } from "@/constants/icon";
 import { useTravelType } from "@/stores/travelType.store";
 import { useRouter } from "next/navigation";
 import { MouseEvent, useEffect, useState } from "react";
+import SelectContainer from "../SelectContainer/SelectContainer";
 import SelectForm from "../SelectForm/SelectForm";
-import SelectLayout from "../SelectLayout/SelectLayout";
 
 function OnBoard() {
   const { travelType } = useTravelType();
@@ -76,21 +76,21 @@ function OnBoard() {
           <br /> 맞춤설정
         </h1>
         <form className="flex flex-col items-center">
-          <SelectLayout title="어디로 떠나시나요?">
+          <SelectContainer title="어디로 떠나시나요?">
             <SelectForm type="input"></SelectForm>
-          </SelectLayout>
-          <SelectLayout title="여행 테마가 무엇인가요?">
+          </SelectContainer>
+          <SelectContainer title="여행 테마가 무엇인가요?">
             <SelectForm buttonList={theme} category="theme"></SelectForm>
-          </SelectLayout>
-          <SelectLayout title="언제 떠나시나요?">
+          </SelectContainer>
+          <SelectContainer title="언제 떠나시나요?">
             <SelectForm buttonList={season} category="season"></SelectForm>
-          </SelectLayout>
-          <SelectLayout title="누구와 떠나시나요?">
+          </SelectContainer>
+          <SelectContainer title="누구와 떠나시나요?">
             <SelectForm
               buttonList={travelMate}
               category="travelMate"
             ></SelectForm>
-          </SelectLayout>
+          </SelectContainer>
           <SubmitButton
             theme="primary"
             size="lg"

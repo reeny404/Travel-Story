@@ -10,12 +10,11 @@ export async function middleware(request: NextRequest) {
     );
     const hasTravelType = request.cookies.get("hasTravelType");
 
-    if (!isLoggedIn) {
-      if (!hasTravelType) {
-        url.pathname = "/onboard";
-        return NextResponse.redirect(url);
-      }
+    if (!isLoggedIn && !hasTravelType) {
+      url.pathname = "/onboard";
+      return NextResponse.redirect(url);
     }
+
     return NextResponse.next();
   }
 

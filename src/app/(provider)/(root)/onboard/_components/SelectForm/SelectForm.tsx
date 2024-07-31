@@ -19,8 +19,8 @@ function SelectForm({
         <div className="flex w-full rounded-lg bg-white pr-3">
           <Icon icon="search-black" onClick={() => console.log("click Icon")} />
           <input
-            className="text-[16px] flex-grow placeholder:text-gray-300 outline-none"
-            placeholder="국가, 도시"
+            className="flex-grow placeholder:text-gray-300 outline-none"
+            placeholder="국가를 검색하세요."
           />
         </div>
       ) : category !== "country" ? (
@@ -33,9 +33,7 @@ function SelectForm({
             ></SelectButton>
           );
         })
-      ) : (
-        false
-      )}
+      ) : null}
     </div>
   );
 }

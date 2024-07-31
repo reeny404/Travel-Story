@@ -29,13 +29,9 @@ function SelectButton({ text, category }: SelectButtonProps) {
   ) => {
     e.preventDefault();
     const action = actions[category];
-
-    if (!isClicked) {
-      action.set(text);
-    } else {
-      action.clear(text);
-    }
     setIsClicked(!isClicked);
+    if (!isClicked) return action.set(text);
+    action.clear(text);
   };
 
   return (
@@ -43,9 +39,7 @@ function SelectButton({ text, category }: SelectButtonProps) {
       onClick={(e) => handleClick(e)}
       className={`${isClicked ? "bg-[#0066FF]" : "bg-white"} py-[11px] px-[16px] rounded-lg`}
     >
-      <p
-        className={`text-[16px] ${isClicked ? "text-white font-bold" : "text-black"}`}
-      >
+      <p className={`${isClicked ? "text-white font-bold" : "text-black"}`}>
         {text}
       </p>
     </button>
