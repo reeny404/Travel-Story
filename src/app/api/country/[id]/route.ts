@@ -21,7 +21,8 @@ export async function GET(
   const { data, error } = await supabase
     .from("country")
     .select("*")
-    .eq("id", id);
+    .eq("id", id)
+    .single();
   if (error) {
     return NextResponse.json({
       status: 500,
@@ -31,7 +32,7 @@ export async function GET(
     });
   }
 
-  if (!data || data.length === 0) {
+  if (!data) {
     return NextResponse.json({
       status: 404,
       message: "No Data",
@@ -43,7 +44,7 @@ export async function GET(
   return NextResponse.json({
     status: 200,
     message: "Success",
-    data: data[0],
+    data: data,
     error: null,
   });
 }

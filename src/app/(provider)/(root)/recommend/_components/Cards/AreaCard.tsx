@@ -22,6 +22,7 @@ function AreaCard({
   id,
 }: AreaCardType) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(id);
+
   return (
     <div className="w-full h-full relative">
       <ImageFrame
@@ -40,7 +41,7 @@ function AreaCard({
       <Image
         src={
           isBookmarked
-            ? "/cardImages/bookmarked.svg"
+            ? "/cardImages/bookmarked.png"
             : "/cardImages/bookmark.svg"
         }
         alt="bookmark"
