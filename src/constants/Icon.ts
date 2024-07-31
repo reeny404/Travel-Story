@@ -67,4 +67,17 @@ export const ICON = {
   microphone: {
     black: "microphone-black",
   },
+  account: {
+    memo: {
+      black: { name: "memo", ext: "svg" }
+    },
+    card: {
+      black: { name: "card", ext: "svg" }
+    },
+    shop: {
+      black: { name: "shop", ext: "svg" }
+    },
+  },
+  time: { gray: { name: "time", ext: "svg" } },
+  maker: { gray: { name: "location", ext: "svg" } }
 } as const;

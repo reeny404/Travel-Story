@@ -1,8 +1,10 @@
 "use client";
 
 import { api } from "@/apis/api";
+import Icon from "@/components/commons/Icon";
+import MainLayout from "@/components/Layout/MainLayout";
+import { ICON } from "@/constants/Icon";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Badge from "../../../../components/Badge";
 
 const scheduleId = "cff1bd2a-6a3f-4eac-9a9f-b76db923b7de";
@@ -25,16 +27,21 @@ export default function AccountBookPage() {
   // TODO 우선 READ로 페이지, 나중에 create/update 기능 추가
 
   return (
-    <div className="w-full max-w-md mx-auto border bg-white">
-      {/* TODO 나중에 헤더 삭제 START */}
-      <header className="flex items-center justify-between p-4 border-b">
-        <button className="text-lg">
-          <span className="w-6 h-6">←</span>
-        </button>
-        <h1 className="text-lg font-medium">가계부</h1>
-        <div className="w-6 h-6" />
-      </header>
-      {/* 나중에 헤더 삭제 END */}
+    <MainLayout
+      headerProps={{
+        backgroundColor: "white",
+        leftIcons: [
+          {
+            icon: ICON.arrow.back.black,
+            alt: "Back",
+            path: "/",
+            size: 20,
+          },
+        ],
+        title: "가계부",
+        titleAlign: "center",
+      }}
+    >
       <main className="p-4 space-y-8">
         <div className="text-3xl font-bold">
           <span className="text-2xl">₩</span> {account.amount}
@@ -51,21 +58,11 @@ export default function AccountBookPage() {
           <span>식당</span>
         </div>
         <div className="flex items-center space-x-6">
-          <Image
-            src="/icon/shop.svg"
-            alt="장소 아이콘"
-            width="24"
-            height="24"
-          />
+          <Icon icon={ICON.account.shop.black} alt="장소" size={24} />
           <span>La Caseta a Monti</span>
         </div>
         <div className="flex items-center space-x-6">
-          <Image
-            src="/icon/card.svg"
-            alt="결제 타입 아이콘"
-            width="24"
-            height="24"
-          />
+          <Icon icon={ICON.account.card.black} alt="결제타입" size={24} />
           <div className="flex space-x-2">
             {types.map((type, i) => (
               <Badge
@@ -78,15 +75,10 @@ export default function AccountBookPage() {
           </div>
         </div>
         <div className="flex items-center space-x-6">
-          <Image
-            src="/icon/memo.svg"
-            alt="메모 아이콘"
-            width="24"
-            height="24"
-          />
+          <Icon icon={ICON.account.memo.black} alt="메모" size={24} />
           <span>{account.desc}</span>
         </div>
       </main>
-    </div>
+    </MainLayout>
   );
 }
