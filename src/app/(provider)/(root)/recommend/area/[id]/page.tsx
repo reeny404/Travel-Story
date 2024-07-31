@@ -25,8 +25,8 @@ type AreaDetailPage = {
 function AreaDetailPage({ params }: AreaDetailPage) {
   const areaId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
-
   const supabase = createClient();
+
   const { data: userInfo } = useQuery({
     queryKey: ["user"],
     queryFn: () => supabase.auth.getUser(),
@@ -134,7 +134,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                 sectionRefs.current[2] = tabEl;
               }}
             >
-              <ReviewSummaryCard rating={rating} />
+              <ReviewSummaryCard rating={rating} areaId={areaId} />
               <Liner />
             </div>
             <div>

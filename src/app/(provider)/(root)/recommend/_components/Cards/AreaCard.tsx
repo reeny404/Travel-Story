@@ -36,7 +36,7 @@ function AreaCard({
           {title}
         </Link>
         <p className="mb-3">{description}</p>
-        {rating && <RatingIcons rating={rating} />}
+        {rating && <RatingIcons type="small" rating={rating} />}
       </div>
       <Image
         src={

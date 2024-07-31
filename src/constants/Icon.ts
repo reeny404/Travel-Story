@@ -67,4 +67,8 @@ export const ICON = {
   microphone: {
     black: "microphone-black",
   },
+  star: {
+    fill: "star-fill",
+    unfill: "star-unfill",
+  },
 } as const;
