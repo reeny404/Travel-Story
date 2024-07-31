@@ -77,15 +77,17 @@ function Home() {
         ],
       }}
     >
-      <main className="w-full h-[770px] bg-[#F8F8F8]">
-        <section className="w-full h-[222px] bg-black mb-10" />
-        <Link
-          href="/search"
-          className="fixed top-[253px] left-1/2 trasform -translate-x-1/2"
-        >
-          <SearchBar />
-        </Link>
-        <div className="w-full pl-[18px]">
+      <main
+        className="relative w-full bg-[#F8F8F8]"
+        style={{ minHeight: "calc(100vh - 52px)" }}
+      >
+        <div className="w-full h-[200px] bg-black" />
+        <div className="sticky z-10 -mt-[20px] px-4">
+          <Link href="/search" className="w-full">
+            <SearchBar />
+          </Link>
+        </div>
+        <div className="w-full pt-4 pl-[18px]">
           <CardType title="문화 탐방" type="architect" />
           <CardSlider spacing={20} slidesPerView={1.2} cards={CardMockUpData} />
         </div>

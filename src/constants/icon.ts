@@ -17,6 +17,7 @@ export const ICON = {
   },
   cancel: {
     black: "cancel-black",
+    gray: "cancel-gray",
     white: "cancel-white",
   },
   chevron: {

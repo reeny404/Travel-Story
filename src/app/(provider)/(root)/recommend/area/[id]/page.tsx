@@ -86,7 +86,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
             icon: ICON.arrow.back.black,
             alt: "Back",
             size: 20,
-            path: "/",
+            path: "back",
           },
         ],
         title: area?.krName!,
