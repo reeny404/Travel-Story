@@ -5,12 +5,12 @@ export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const pathname = url.pathname;
   if (pathname === "/") {
-    const isloggedIn = request.cookies.get(
+    const isLoggedIn = request.cookies.get(
       "sb-yqoupynehwgshtspamuf-auth-token.0"
     );
     const hasTravelType = request.cookies.get("hasTravelType");
 
-    if (!isloggedIn) {
+    if (!isLoggedIn) {
       if (!hasTravelType) {
         url.pathname = "/onboard";
         return NextResponse.redirect(url);
