@@ -1,7 +1,24 @@
 import { updateSession } from "@/supabase/middleware";
-import { type NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  const url = request.nextUrl.clone();
+  const pathname = url.pathname;
+  if (pathname === "/") {
+    const isloggedIn = request.cookies.get(
+      "sb-yqoupynehwgshtspamuf-auth-token.0"
+    );
+    const hasTravelType = request.cookies.get("hasTravelType");
+
+    if (!isloggedIn) {
+      if (!hasTravelType) {
+        url.pathname = "/onboard";
+        return NextResponse.redirect(url);
+      }
+    }
+    return NextResponse.next();
+  }
+
   return await updateSession(request);
 }
 

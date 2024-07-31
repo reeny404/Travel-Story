@@ -3,12 +3,15 @@ import Header from "@/components/commons/Header";
 import SubmitButton from "@/components/commons/SubmitButton";
 import { ICON } from "@/constants/Icon";
 import { useTravelType } from "@/stores/travelType.store";
+import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
 import SelectForm from "../SelectForm/SelectForm";
 import SelectLayout from "../SelectLayout/SelectLayout";
 
 function OnBoard() {
   const { travelType } = useTravelType();
+  const router = useRouter();
+
   const theme = [
     "힐링",
     "액티비티",
@@ -35,6 +38,8 @@ function OnBoard() {
   ) => {
     e.preventDefault();
     localStorage.setItem("userTravelType", JSON.stringify(travelType));
+    document.cookie = "hasTravelType=true; path=/";
+    router.push("/");
   };
 
   return (

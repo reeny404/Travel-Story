@@ -5,7 +5,7 @@ import { MouseEvent, useState } from "react";
 
 type SelectButtonProps = {
   text: string;
-  category: "theme" | "season" | "travelMate" | "country";
+  category: "theme" | "season" | "travelMate";
 };
 
 function SelectButton({ text, category }: SelectButtonProps) {
