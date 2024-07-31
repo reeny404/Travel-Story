@@ -76,7 +76,6 @@ export async function POST(request: NextRequest) {
       console.error("Error uploading file:", error);
       continue;
     }
-
     const { data: publicData } = await supabase.storage
       .from("review")
       .getPublicUrl(imgData.path);
@@ -103,6 +102,17 @@ export async function POST(request: NextRequest) {
     .select("*")
     .single();
 
+  const { data: ratingData, error } = await supabase
+    .from("areaReview")
+    .select("rating")
+    .eq("areaId", areaId);
+
+  const totalRating = ratingData?.reduce(
+    (acc, review) => acc + review.rating,
+    0
+  );
+  const calcedRate = Number((totalRating! / ratingData?.length!).toFixed(1));
+  await supabase.from("area").update({ rating: calcedRate }).eq("id", areaId);
   if (!reviewData) {
     return NextResponse.json({
       status: 404,

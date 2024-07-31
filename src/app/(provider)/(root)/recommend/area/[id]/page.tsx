@@ -5,8 +5,8 @@ import MainLayout from "@/components/Layout/MainLayout";
 import Tab from "@/components/Tab/Tab";
 import { ICON } from "@/constants/Icon";
 import { TABS } from "@/constants/tabs";
+import { useAuth } from "@/contexts/auth.contexts";
 import { useTab } from "@/hooks/useTab";
-import { createClient } from "@/supabase/client";
 import { Area, AreaReview, Rating, RecommendResponse } from "@/types/Recommend";
 import { calcRatings } from "@/utils/calcRatings";
 import { useQuery } from "@tanstack/react-query";
@@ -25,12 +25,8 @@ type AreaDetailPage = {
 function AreaDetailPage({ params }: AreaDetailPage) {
   const areaId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
-  const supabase = createClient();
+  const { user } = useAuth();
 
-  const { data: userInfo } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => supabase.auth.getUser(),
-  });
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
     AxiosError,
@@ -143,17 +139,19 @@ function AreaDetailPage({ params }: AreaDetailPage) {
             </div>
             <div>
               {areaReviews &&
-                areaReviews.map((review, idx) => (
-                  <AreaReviewCard
-                    key={idx}
-                    userImageUrl="/"
-                    name={userInfo?.data.user?.user_metadata.nickname}
-                    imageUrl={review.imageUrls[0]}
-                    createdAt={review.createdAt}
-                    rating={rating.rating}
-                    description={review.content!}
-                  />
-                ))}
+                areaReviews.map((review, idx) => {
+                  return (
+                    <AreaReviewCard
+                      key={idx}
+                      userImageUrl="/"
+                      name={user?.user_metadata.nickname}
+                      imageUrl={review.imageUrls[0]}
+                      createdAt={review.createdAt}
+                      rating={rating.rating}
+                      description={review.content!}
+                    />
+                  );
+                })}
             </div>
             <UnderBar areaId={areaId} />
           </section>

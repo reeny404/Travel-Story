@@ -28,13 +28,11 @@ function ReviewBottomSheetImages({
     }
     if (!files || files.length === 0) return;
     const file = files[0];
-    console.log("file", file);
     const extension = file.name.split(".").pop();
     const fileName = `${uuidv4()}.${extension}`;
     const imageFileToServer = { name: fileName, file: file };
     setImgFile((prev) => [...prev, imageFileToServer]);
   };
-  console.log("first", imgFile);
   return (
     <div className="flex w-full">
       <i className="mr-2 w-8 text-center">🖼</i>

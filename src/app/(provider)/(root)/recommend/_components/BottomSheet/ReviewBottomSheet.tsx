@@ -74,10 +74,10 @@ function BottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
     formData.append("textValue", textValue);
     formData.append("rating", rating.toString());
     formData.append("areaName", areaName);
+
     try {
       const response = await api.review.addReview(formData);
-      // console.log("response", response);
-
+      onClose();
       return response.data;
     } catch (error) {
       console.error("Error adding data:", error);
