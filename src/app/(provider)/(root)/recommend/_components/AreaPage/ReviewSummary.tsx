@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/auth.contexts";
 import { Rating } from "@/types/Recommend";
 import Image from "next/image";
 import { useState } from "react";
-import { createReviewBottomSheet } from "../BottomSheet/ReviewBottomSheet";
+import { createReviewBottomSheet } from "../BottomSheet/ReviewSheet/ReviewBottomSheet";
 
 type ReviewSummaryCardProps = {
   rating: Rating;

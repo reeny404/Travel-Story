@@ -108,6 +108,29 @@ class AreaAPI {
       throw new Error();
     }
   }
+  async getPlan(userId: string) {
+    try {
+      const path = `api/area/plan`;
+      const response = await this.axios.get(path, {
+        params: {
+          userId,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+
+  async addPlan(data: any) {
+    try {
+      const path = `api/area/plan`;
+      const response = await this.axios.post(path, data);
+      console.log("response", response);
+    } catch (error) {
+      return console.log(error);
+    }
+  }
 }
 
 export default AreaAPI;

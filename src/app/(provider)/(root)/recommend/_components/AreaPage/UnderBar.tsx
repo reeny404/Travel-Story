@@ -1,15 +1,38 @@
+"use client";
+import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
+import { useState } from "react";
+import { createAddBottomSheet } from "../BottomSheet/AddAreaSheet/AddBottomSheet";
 
 type UnderBarProps = {
   areaId: number;
   handleAddPlan?: () => void;
 };
 
-function UnderBar({ handleAddPlan, areaId }: UnderBarProps) {
+function UnderBar({ areaId }: UnderBarProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(areaId);
+  const { user } = useAuth();
+  const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+  console.log("user", user);
+  const handleOpen = () => {
+    setBottomSheetVisible(true);
+  };
+  const handleClose = () => {
+    setBottomSheetVisible(false);
+  };
+
+  const BottomSheet = createAddBottomSheet();
 
   return (
     <div className="w-full h-10 px-3 flex gap-x-2 fixed bottom-0">
+      {isBottomSheetVisible && (
+        <BottomSheet
+          areaId={areaId}
+          id={user?.id!}
+          areaName="asd"
+          onClose={handleClose}
+        />
+      )}
       {isBookmarked ? (
         <button
           onClick={() => deleteBookmark.mutate()}
@@ -26,7 +49,7 @@ function UnderBar({ handleAddPlan, areaId }: UnderBarProps) {
         </button>
       )}
       <button
-        onClick={handleAddPlan}
+        onClick={handleOpen}
         className="w-72 h-full bg-gray-300 border rounded-md"
       >
         내 여행에 추가

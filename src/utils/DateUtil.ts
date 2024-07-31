@@ -1,4 +1,4 @@
-type formatType = "yyyy. MM. dd" | "yyyy년 MM월 dd일"
+type formatType = "yyyy. MM. dd" | "yyyy년 MM월 dd일" | "yyyy.MM.dd~MM.dd";
 
 const DAY = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -16,9 +16,14 @@ function format(type: formatType, time: Date): string {
   const day = DAY[time.getDay()];
 
   switch (type) {
-    case "yyyy. MM. dd": return `${year}. ${month}. ${date} (${day})`
-    case "yyyy년 MM월 dd일": return `${year}년 ${month}월 ${date}일 (${day})`
-    default: return "";
+    case "yyyy. MM. dd":
+      return `${year}. ${month}. ${date} (${day})`;
+    case "yyyy년 MM월 dd일":
+      return `${year}년 ${month}월 ${date}일 (${day})`;
+    case "yyyy.MM.dd~MM.dd":
+      return `${year}.${month}.${date}(${day}) ~ ${month}.${date}(${day})`;
+    default:
+      return "";
   }
 }
 
@@ -31,5 +36,5 @@ function getGapDay(a: Date, b: Date): number {
 
 export const DateUtil = {
   format,
-  getGapDay
-}
+  getGapDay,
+};
