@@ -4,7 +4,7 @@ import CardType from "@/components/Card/CardType";
 import MainLayout from "@/components/Layout/MainLayout";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import CardSlider from "@/components/Slider/CardSlider";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import { SlideCardProps } from "@/types/Slider";
 import Link from "next/link";
