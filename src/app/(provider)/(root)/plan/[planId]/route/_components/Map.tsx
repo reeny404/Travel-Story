@@ -9,15 +9,26 @@ import {
 } from "@react-google-maps/api";
 import React, { useState } from "react";
 
-const KEY: string = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
+const KEY: string = process.env.NEXT_PUBLIC_MAP_API_KEY!;
 type props = { locations: LatLng[] };
 
 function Map({ locations }: props) {
   const [isInit, setIsInit] = useState<boolean>(false);
   const center: LatLng = getCenter(locations);
 
-  console.log("KEY", KEY);
   const handleOnLoad = () => setIsInit(true);
+  const markerProps = isInit
+    ? {
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "#e08181",
+          fillOpacity: 1,
+          scale: 10,
+          strokeColor: "black",
+          strokeWeight: 2,
+        },
+      }
+    : {};
 
   return (
     <LoadScript googleMapsApiKey={KEY} onLoad={handleOnLoad}>
@@ -29,25 +40,9 @@ function Map({ locations }: props) {
         center={center}
         zoom={7}
       >
-        {locations.map((location, i) =>
-          isInit ? (
-            <Marker
-              key={i}
-              position={location}
-              label={i + ""}
-              icon={{
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: "#e08181",
-                fillOpacity: 1,
-                scale: 10,
-                strokeColor: "black",
-                strokeWeight: 2,
-              }}
-            />
-          ) : (
-            <Marker key={i} position={location} label={i + ""}></Marker>
-          )
-        )}
+        {locations.map((location, i) => (
+          <Marker key={i} position={location} label={i + ""} {...markerProps} />
+        ))}
         <Polyline
           path={locations}
           options={{
