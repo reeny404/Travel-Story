@@ -6,11 +6,12 @@ import Carousel from "@/components/Carousel/Carousel";
 import Tab from "@/components/Tab/Tab";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
+import useRecommendStore from "@/stores/recommend.store";
 import { Area, City, RecommendResponse } from "@/types/Recommend";
 import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import DetailCard from "../../_components/Cards/DetailCard";
 import CarouselItem from "../../_components/Carousel/CarouselItem";
 import MainTourForm from "../../_components/MainTour/MainTourForm";
@@ -20,7 +21,11 @@ type CityDetailPageProps = {
 };
 
 function CityDetailPage({ params }: CityDetailPageProps) {
-  const cityId = parseInt(params.id);
+  const { setCityId, cityId } = useRecommendStore((state) => state);
+
+  useEffect(() => {
+    setCityId(parseInt(params.id));
+  }, []);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
 
   const { data: city } = useQuery<RecommendResponse<City>, AxiosError, City>({
@@ -46,6 +51,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
     return (
       <>
         <CarouselItem
+          id={place.id}
           description={place.description}
           imageUrl={place.imageUrl!}
           title={place.title}
@@ -60,6 +66,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
       return (
         <>
           <CarouselItem
+            id={area.id}
             description={area.description}
             imageUrl={area.imageUrl!}
             title={area.title}

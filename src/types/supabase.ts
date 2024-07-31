@@ -1,4 +1,4 @@
-export type Json =
+﻿export type Json =
   | string
   | number
   | boolean
@@ -73,7 +73,7 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       area: {
@@ -87,8 +87,10 @@ export type Database = {
           info: Json | null;
           krName: string | null;
           lat: number | null;
+          latlng: Json;
           lng: number | null;
           name: string;
+          rating: number | null;
           title: string;
           type: string | null;
         };
@@ -102,8 +104,10 @@ export type Database = {
           info?: Json | null;
           krName?: string | null;
           lat?: number | null;
+          latlng?: Json;
           lng?: number | null;
           name?: string;
+          rating?: number | null;
           title?: string;
           type?: string | null;
         };
@@ -117,8 +121,10 @@ export type Database = {
           info?: Json | null;
           krName?: string | null;
           lat?: number | null;
+          latlng?: Json;
           lng?: number | null;
           name?: string;
+          rating?: number | null;
           title?: string;
           type?: string | null;
         };
@@ -129,7 +135,7 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "city";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       areaBookmark: {
@@ -137,18 +143,24 @@ export type Database = {
           areaId: number | null;
           createdAt: string;
           id: number;
+          lat: number | null;
+          lng: number | null;
           userId: string;
         };
         Insert: {
           areaId?: number | null;
           createdAt?: string;
           id?: number;
+          lat?: number | null;
+          lng?: number | null;
           userId: string;
         };
         Update: {
           areaId?: number | null;
           createdAt?: string;
           id?: number;
+          lat?: number | null;
+          lng?: number | null;
           userId?: string;
         };
         Relationships: [
@@ -165,7 +177,7 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       areaReview: {
@@ -214,13 +226,6 @@ export type Database = {
             referencedRelation: "users";
             referencedColumns: ["id"];
           },
-          {
-            foreignKeyName: "review_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "city";
-            referencedColumns: ["id"];
-          }
         ];
       };
       city: {
@@ -267,7 +272,7 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "country";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       country: {
@@ -341,7 +346,7 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "plan";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       moveSchedule: {
@@ -382,7 +387,7 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "plan";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       plan: {
@@ -426,7 +431,7 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       schedule: {
@@ -435,6 +440,7 @@ export type Database = {
           endTime: string | null;
           id: string;
           imagesUrl: Json | null;
+          latlng: Json;
           memo: string | null;
           place: string | null;
           planId: string | null;
@@ -447,6 +453,7 @@ export type Database = {
           endTime?: string | null;
           id?: string;
           imagesUrl?: Json | null;
+          latlng?: Json;
           memo?: string | null;
           place?: string | null;
           planId?: string | null;
@@ -459,6 +466,7 @@ export type Database = {
           endTime?: string | null;
           id?: string;
           imagesUrl?: Json | null;
+          latlng?: Json;
           memo?: string | null;
           place?: string | null;
           planId?: string | null;
@@ -473,7 +481,7 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "plan";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       users: {
@@ -481,21 +489,21 @@ export type Database = {
           created_at: string;
           email: string | null;
           id: string;
-          imageUrl: string | null;
+          image_url: string | null;
           nickname: string | null;
         };
         Insert: {
           created_at?: string;
           email?: string | null;
           id?: string;
-          imageUrl?: string | null;
+          image_url?: string | null;
           nickname?: string | null;
         };
         Update: {
           created_at?: string;
           email?: string | null;
           id?: string;
-          imageUrl?: string | null;
+          image_url?: string | null;
           nickname?: string | null;
         };
         Relationships: [];
@@ -505,7 +513,12 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_total_rating: {
+        Args: {
+          area_id: number;
+        };
+        Returns: number;
+      };
     };
     Enums: {
       [_ in never]: never;
@@ -525,7 +538,7 @@ export type Tables<
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
@@ -534,14 +547,14 @@ export type Tables<
     ? R
     : never
   : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
-      PublicSchema["Views"])
-  ? (PublicSchema["Tables"] &
-      PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R;
-    }
-    ? R
-    : never
-  : never;
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+        Row: infer R;
+      }
+      ? R
+      : never
+    : never;
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -549,7 +562,7 @@ export type TablesInsert<
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I;
@@ -557,12 +570,12 @@ export type TablesInsert<
     ? I
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-  ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I;
-    }
-    ? I
-    : never
-  : never;
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Insert: infer I;
+      }
+      ? I
+      : never
+    : never;
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -570,7 +583,7 @@ export type TablesUpdate<
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U;
@@ -578,12 +591,12 @@ export type TablesUpdate<
     ? U
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-  ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U;
-    }
-    ? U
-    : never
-  : never;
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Update: infer U;
+      }
+      ? U
+      : never
+    : never;
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -591,9 +604,9 @@ export type Enums<
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
-  ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-  : never;
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never;

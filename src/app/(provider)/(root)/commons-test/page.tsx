@@ -1,4 +1,4 @@
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import MainLayout from "../../../../components/Layout/MainLayout";
 import TestComponent from "./_component/TestComponent";
 

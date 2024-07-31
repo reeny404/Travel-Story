@@ -1,11 +1,11 @@
-import { IntroQueryReturn } from "@/types/Recommend";
+import { IntroDataType } from "@/types/Recommend";
 import Link from "next/link";
 import InstroSlider from "./InstroSlider";
 
 type CounntryintroCardProps = {
   title: string;
   imageUrl: string | null;
-  cities: IntroQueryReturn["cities"];
+  cities: IntroDataType["cities"];
   countryId: number;
 };
 

@@ -33,7 +33,7 @@ function AreaDetailCard({ area, rating }: AreaDetailCardProps) {
         <div className="p-3 flex justify-between items-center font-semibold">
           <span>{convertTypeToKr(area.type!)}</span>
           <div>
-            <RatingIcons rating={rating.rating} />
+            <RatingIcons type="small" rating={rating.rating} />
           </div>
         </div>
         <p className="px-3 flex justify-between items-center font-semibold">
