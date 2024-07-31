@@ -2,7 +2,10 @@ type formatType = "yyyy. MM. dd" | "yyyy년 MM월 dd일"
 
 const DAY = ["일", "월", "화", "수", "목", "금", "토"];
 
-function parse(type: formatType, time: Date) {
+/**
+ * @returns Date 타입을 포맷에 맞는 날짜 규격으로 내려준다.
+ */
+function format(type: formatType, time: Date): string {
   if (!time) {
     return "";
   }
@@ -19,6 +22,14 @@ function parse(type: formatType, time: Date) {
   }
 }
 
+/**
+ * @returns a,b 날짜 사이 간격(며칠 차이인지)을 알려준다.
+ */
+function getGapDay(a: Date, b: Date): number {
+  return Math.abs(a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24);
+}
+
 export const DateUtil = {
-  parse
+  format,
+  getGapDay
 }
