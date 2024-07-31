@@ -4,7 +4,7 @@ import { useBookmarks } from "@/hooks/useBookmark";
 import Image from "next/image";
 import Link from "next/link";
 // area ItemsPage가 있어야 될듯????
-type AreaCardType = {
+export type AreaCardProps = {
   title: string;
   description: string;
   rating?: number;
@@ -20,7 +20,7 @@ function AreaCard({
   imageUrl,
   linkUrl,
   id,
-}: AreaCardType) {
+}: AreaCardProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(id);
 
   return (
@@ -29,13 +29,13 @@ function AreaCard({
         src={imageUrl}
         alt="detailCard"
         roundType="sm"
-        className="h-[189px] w-full"
+        className="w-[301px] h-[138px]"
       />
-      <div className="p-4">
-        <Link href={linkUrl} className="text-xl font-bold mt-3 mb-3">
+      <div className="px-4 py-3">
+        <Link href={linkUrl} className="font-bold mt-3 mb-3">
           {title}
         </Link>
-        <p className="mb-3">{description}</p>
+        <p className="text-sm">{description}</p>
         {rating && <RatingIcons rating={rating} />}
       </div>
       <Image

@@ -1,4 +1,4 @@
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import Category from "./Category";
 import MyTripPlanner from "./MyTripPlanner";
 import TripList from "./TripList";

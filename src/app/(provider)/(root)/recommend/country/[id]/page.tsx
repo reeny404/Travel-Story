@@ -2,7 +2,7 @@
 
 import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import useRecommendStore from "@/stores/recommend.store";
 import { IntroQueryFn, IntroQueryReturn } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";

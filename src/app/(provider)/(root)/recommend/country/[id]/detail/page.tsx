@@ -5,7 +5,7 @@ import CardType from "@/components/Card/CardType";
 import Carousel from "@/components/Carousel/Carousel";
 import MainLayout from "@/components/Layout/MainLayout";
 import Tab from "@/components/Tab/Tab";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
 import { Area, City, Country, RecommendResponse } from "@/types/Recommend";
