@@ -1,17 +1,18 @@
 "use client";
+import { api } from "@/apis/api";
 import PlanAPI from "@/apis/plan.api"; // 추가
-import { ICON } from "@/constants/Icon";
 import axios from "axios";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import ReviewBottomSheetImages from "./ReviewBottomSheetImages";
 import ReviewBottomSheetInput from "./ReviewBottomSheetInput";
+import ReviewBottomSheetRating from "./ReviewBottomSheetRating";
 import ReviewBottomSheetTitle from "./ReviewBottomSheetTitle";
 
 type BottomSheetProps = {
   onClose: () => void;
   areaId: number;
-  id?: string; // 추가
+  id: string; // 추가
+  areaName: string;
 };
 
 const apiClient = axios.create({
@@ -21,10 +22,10 @@ const apiClient = axios.create({
 
 const planAPI = new PlanAPI(apiClient);
 
-function BottomSheet({ onClose, areaId, id }: BottomSheetProps) {
+function BottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
-  const [images, setImages] = useState<string[]>([]);
+  const [imgFile, setImgFile] = useState<{ name: string; file: File }[]>([]);
   const [textValue, setTextValue] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
   const formRef = useRef<HTMLFormElement>(null);
@@ -53,36 +54,34 @@ function BottomSheet({ onClose, areaId, id }: BottomSheetProps) {
     }, 300);
   }, []);
 
-  const getFormData = () => {
-    const formData = new FormData(formRef.current!);
-    console.log("formData", formData);
-    const data: Record<string, any> = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
-    return data;
-  };
+  // const getFormData = () => {
+  //   const formData = new FormData(formRef.current!);
+  //   const data: Record<string, any> = {};
+  //   formData.forEach((value, key) => {
+  //     data[key] = value;
+  //   });
+  //   return data;
+  // };
 
   const handleAdd = async () => {
-    const data = getFormData();
-    data.images = JSON.stringify(images);
-    data.areaId = areaId;
-    data.textValue = textValue;
-    data.rating = rating;
+    const formData = new FormData();
+    for (let i = 0; i < imgFile.length; i++) {
+      formData.append("imgFile", imgFile[i].file);
+      formData.append("imgFileName", imgFile[i].name);
+    }
+    formData.append("userId", id);
+    formData.append("areaId", areaId.toString());
+    formData.append("textValue", textValue);
+    formData.append("rating", rating.toString());
+    formData.append("areaName", areaName);
+    try {
+      const response = await api.review.addReview(formData);
+      // console.log("response", response);
 
-    console.log(data);
-    // try {
-    //   const response = await planAPI.addPlan(areaId, data); // PlanAPI 사용
-
-    //   if (!response) {
-    //     console.error("Error adding data");
-    //     return;
-    //   }
-
-    //   console.log("데이터 추가됨", response);
-    // } catch (error) {
-    //   console.error("Error adding data:", error);
-    // }
+      return response.data;
+    } catch (error) {
+      console.error("Error adding data:", error);
+    }
   };
 
   return (
@@ -103,28 +102,16 @@ function BottomSheet({ onClose, areaId, id }: BottomSheetProps) {
         } transition-transform duration-300`}
       >
         <ReviewBottomSheetTitle />
-        <div className="w-full flex justify-center p-5 pt-4">
-          {Array.from({ length: 5 }).map((_, idx) => (
-            <Image
-              key={`filled-${idx}`}
-              src={
-                rating <= idx
-                  ? `/icons/${ICON.star.unfill}.png`
-                  : `/icons/${ICON.star.fill}.png`
-              }
-              alt="filled star"
-              width={30}
-              height={30}
-              onClick={() => handleRatingClick(rating, idx + 1)}
-              className={"object-contain mr-1"}
-            />
-          ))}
-        </div>
+        <ReviewBottomSheetRating
+          rating={rating}
+          handleRatingClick={handleRatingClick}
+        />
+
         <ReviewBottomSheetInput
           textValue={textValue}
           setTextValue={setTextValue}
         />
-        <ReviewBottomSheetImages images={images} setImages={setImages} />
+        <ReviewBottomSheetImages imgFile={imgFile} setImgFile={setImgFile} />
         <button
           className="w-full h-10 mt-2 text-center border border-gray-600 rounded-lg"
           type="button"
@@ -141,11 +128,13 @@ export function createReviewBottomSheet() {
   return function BottomSheetWrapper({
     onClose,
     areaId,
+    areaName,
     id,
     // 추가
   }: BottomSheetProps) {
     return (
       <BottomSheet
+        areaName={areaName}
         onClose={onClose}
         areaId={areaId}
         id={id} // 전달

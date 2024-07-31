@@ -9,9 +9,14 @@ import { createReviewBottomSheet } from "../BottomSheet/ReviewBottomSheet";
 type ReviewSummaryCardProps = {
   rating: Rating;
   areaId: number;
+  areaName: string;
 };
 
-function ReviewSummaryCard({ rating, areaId }: ReviewSummaryCardProps) {
+function ReviewSummaryCard({
+  rating,
+  areaId,
+  areaName,
+}: ReviewSummaryCardProps) {
   const { user } = useAuth();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   const handleOpen = () => {
@@ -27,10 +32,10 @@ function ReviewSummaryCard({ rating, areaId }: ReviewSummaryCardProps) {
     <div className="w-full">
       {isBottomSheetVisible && (
         <BottomSheet
+          areaName={areaName}
           onClose={handleClose}
           areaId={areaId}
-          id={user?.id}
-          rating={3}
+          id={user?.id!}
         />
       )}
       <div className="w-full flex justify-between p-3">

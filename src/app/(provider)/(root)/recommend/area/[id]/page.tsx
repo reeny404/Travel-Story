@@ -134,7 +134,11 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                 sectionRefs.current[2] = tabEl;
               }}
             >
-              <ReviewSummaryCard rating={rating} areaId={areaId} />
+              <ReviewSummaryCard
+                areaName={area.krName!}
+                rating={rating}
+                areaId={areaId}
+              />
               <Liner />
             </div>
             <div>

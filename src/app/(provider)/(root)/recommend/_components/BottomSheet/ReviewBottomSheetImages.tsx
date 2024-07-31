@@ -1,27 +1,40 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import PlusIcon from "./PlusIcon";
 
 type BottomSheetImagesProps = {
-  images: string[];
-  setImages: React.Dispatch<React.SetStateAction<string[]>>;
+  imgFile: { name: string; file: File }[];
+  setImgFile: React.Dispatch<
+    React.SetStateAction<{ name: string; file: File }[]>
+  >;
 };
 
 function ReviewBottomSheetImages({
-  images,
-  setImages,
+  imgFile,
+  setImgFile,
 }: BottomSheetImagesProps) {
+  const [images, setImages] = useState<string[]>([]);
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+
     if (files) {
       const fileArray = Array.from(files).map((file) =>
         URL.createObjectURL(file)
       );
       setImages((prevImages) => prevImages.concat(fileArray));
     }
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    console.log("file", file);
+    const extension = file.name.split(".").pop();
+    const fileName = `${uuidv4()}.${extension}`;
+    const imageFileToServer = { name: fileName, file: file };
+    setImgFile((prev) => [...prev, imageFileToServer]);
   };
-
+  console.log("first", imgFile);
   return (
     <div className="flex w-full">
       <i className="mr-2 w-8 text-center">🖼</i>
