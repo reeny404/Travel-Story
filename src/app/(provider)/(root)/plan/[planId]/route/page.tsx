@@ -1,5 +1,6 @@
 "use client";
 
+import SlideTagList from "@/components/commons/TagList/SlideTagList";
 import { LatLng } from "@/types/LatLng";
 import { DateUtil } from "@/utils/DateUtil";
 import { useCallback, useMemo } from "react";
@@ -7,7 +8,6 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Map from "./_components/Map";
 import RouteCard, { Route } from "./_components/RouteCard";
-import SwiperTagList, { Tag } from "./_components/SwipeTagList";
 
 const routes: LatLng[] = [
   { lat: 37.5363, lng: 126.977 },
@@ -29,14 +29,12 @@ const schedule: Route = {
 
 function PlanRoutePage() {
   // TODO schedule 의 위경도 목록을 가져오는 방식으로 변경해야 함
-  const tags: Tag[] = useMemo(() => {
+  const tags: string[] = useMemo(() => {
     const gapDays = DateUtil.getGapDay(new Date(startDate), new Date(endtDate));
-    return new Array(gapDays)
-      .fill(0)
-      .map((_, i) => ({ index: i, title: `${i + 1}일차` }));
+    return new Array(gapDays).fill(0).map((_, i) => `${i + 1}일차`);
   }, []);
 
-  const onTagClick = useCallback((tag: { index: number; title: string }) => {
+  const onTagClick = useCallback((tag: string) => {
     // 클릭할 때마다 해당 일자의 스케줄을 가져와서 다시 그려야 함
   }, []);
 
@@ -56,7 +54,7 @@ function PlanRoutePage() {
             </SwiperSlide>
           ))}
         </Swiper>
-        <SwiperTagList tags={tags} onClick={onTagClick}></SwiperTagList>
+        <SlideTagList tagList={tags} onTagClick={onTagClick} spacing={3} />
       </div>
     </section>
   );
