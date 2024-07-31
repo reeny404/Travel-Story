@@ -2,8 +2,8 @@
 
 import { BottomSheetType } from "@/types/plan";
 import { useState } from "react";
-import { createBottomSheet } from "../_components/BottomSheet";
-import DayMenu from "./../_components/DayMenu";
+import BottomSheet from "../_components/BottomSheet";
+import DayMenu from "../_components/DayMenu";
 import ScheculeList from "./ScheculeList";
 
 function PlanDetailPage({ params }: { params: { planId: string } }) {
@@ -14,6 +14,7 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
     type: "customePlace",
     status: "add",
   });
+  const [selectedDay, setSelectedDay] = useState(1);
 
   const handleOpen = (
     type: BottomSheetType["type"],
@@ -27,7 +28,9 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
     setBottomSheetVisible(false);
   };
 
-  const BottomSheet = createBottomSheet();
+  const handleDaySelect = (day: number) => {
+    setSelectedDay(day);
+  };
 
   if (!planId) {
     return <div>Loading...</div>;
@@ -36,8 +39,8 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
   return (
     <div className="min-h-screen bg-[#F8F8F8]">
       <div className="h-48 w-full bg-gray-200"></div>
-      <DayMenu />
-      {/* <p>Plan ID: {planId}</p> */}
+      <DayMenu onDaySelect={handleDaySelect} />
+      <p>Plan ID: {planId}</p>
       <ScheculeList />
       {isBottomSheetVisible && (
         <BottomSheet
@@ -45,7 +48,7 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
           status={bottomSheetConfig.status}
           onClose={handleClose}
           planId={planId}
-          id="3691e51f-aa76-40b4-a171-80a4ba0c242e"
+          day={selectedDay}
         />
       )}
       {/* 바텀 시트 예시 */}

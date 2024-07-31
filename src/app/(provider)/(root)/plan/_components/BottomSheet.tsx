@@ -1,5 +1,6 @@
 "use client";
-import PlanAPI from "@/apis/plan.api"; // 추가
+
+import PlanAPI from "@/apis/plan.api";
 import { BottomSheetType } from "@/types/plan";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
@@ -12,6 +13,7 @@ import UpdateButton from "../_components/UpdateButton";
 type BottomSheetProps = BottomSheetType & {
   onClose: () => void;
   planId: string;
+  day: number;
   id?: string;
 };
 
@@ -27,6 +29,7 @@ function BottomSheet({
   status: initialStatus,
   onClose,
   planId,
+  day,
   id,
 }: BottomSheetProps) {
   const [status, setStatus] = useState(initialStatus);
@@ -68,6 +71,7 @@ function BottomSheet({
     data.images = images;
     data.planId = planId;
     data.type = type;
+    data.day = day;
     if (type === "memo") {
       data.checkList = checkList;
     }
@@ -96,6 +100,7 @@ function BottomSheet({
     data.images = JSON.stringify(images);
     data.planId = planId;
     data.type = type;
+    data.day = day;
     if (type === "memo") {
       data.checkList = checkList;
     }
@@ -167,26 +172,6 @@ function BottomSheet({
       </form>
     </div>
   );
-}
-
-export function createBottomSheet() {
-  return function BottomSheetWrapper({
-    type,
-    status,
-    onClose,
-    planId,
-    id,
-  }: BottomSheetProps) {
-    return (
-      <BottomSheet
-        type={type}
-        status={status}
-        onClose={onClose}
-        planId={planId}
-        id={id}
-      />
-    );
-  };
 }
 
 export default BottomSheet;
