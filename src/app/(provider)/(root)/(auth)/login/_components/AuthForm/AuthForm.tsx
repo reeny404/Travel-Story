@@ -1,4 +1,5 @@
 "use client";
+import { useLoginStepStore } from "@/stores/step.store";
 import clsx from "clsx";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
@@ -26,6 +27,7 @@ function AuthForm({
 }: AuthFormProps) {
   const [isInputPassword, setIsPassword] = useState<boolean>(isPassword);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { setLabelText } = useLoginStepStore();
 
   const textColor = clsx({
     "text-black": labelColor === "black",
@@ -43,6 +45,7 @@ function AuthForm({
   // submit 될때 supabase 로직 넣는 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLabelText("");
     const value = inputRef.current?.value as string;
     onSubmit(value);
   };
