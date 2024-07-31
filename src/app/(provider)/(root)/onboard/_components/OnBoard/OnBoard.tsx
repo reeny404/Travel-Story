@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/components/commons/Header";
 import SubmitButton from "@/components/commons/SubmitButton";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import { useTravelType } from "@/stores/travelType.store";
 import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
@@ -34,7 +34,7 @@ function OnBoard() {
   ];
 
   const handleTravelTypeClick = (
-    e: MouseEvent<HTMLButtonElement, MouseEvent>
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault();
     localStorage.setItem("userTravelType", JSON.stringify(travelType));
