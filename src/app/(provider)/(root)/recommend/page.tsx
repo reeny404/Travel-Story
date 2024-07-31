@@ -2,7 +2,6 @@ import CardType from "@/components/Card/CardType";
 import Carousel from "@/components/Carousel/Carousel";
 import ImageFrame from "@/components/Frame/ImageFrame";
 import { ReactNode } from "react";
-import AreaCard from "./_components/Cards/AreaCard";
 import ReviewCard from "./_components/Cards/ReviewCard";
 
 // 상단에 띄울 4개의 나라는 하드코딩
@@ -39,12 +38,13 @@ function RecommendPage() {
     return (
       <div key={idx} className="flex-none w-full ">
         <div className="flex flex-col relative">
-          <AreaCard
+          {/* <AreaCard
+            id={idx}
             title={slide.title}
             description={slide.desc}
             linkUrl="/"
             imageUrl={slide.imageUrl}
-          />
+          /> */}
         </div>
       </div>
     );

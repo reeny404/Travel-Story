@@ -1,5 +1,5 @@
 import ImageFrame from "@/components/Frame/ImageFrame";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import { Area } from "@/types/Recommend";
 
 function NoticeForm({ area }: { area: Area }) {
@@ -23,21 +23,22 @@ function NoticeForm({ area }: { area: Area }) {
           ))}
         </div>
       </div>
-      <div className="flex w-full mt-5">
-        <ImageFrame
-          src={`/icons/${ICON.credit.euro}.png`}
-          alt="euro"
-          className="w-5 h-5"
-        />
-        {/* 추가 정보들 여기에 조건으로 달아서 출력 */}
-        {area.info.ticket_price && (
+      {area.info.ticket_price && (
+        <div className="flex w-full mt-5">
+          <ImageFrame
+            src={`/icons/${ICON.credit.euro}.png`}
+            alt="euro"
+            className="w-5 h-5"
+          />
+          {/* 추가 정보들 여기에 조건으로 달아서 출력 */}
+
           <div className="ml-5 w-72 text-sm">
             <p>성인 {area.info.ticket_price?.adult}</p>
             <p>청년 {area.info.ticket_price?.youth}</p>
             <p>어린이 {area.info.ticket_price?.child}</p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -2,7 +2,7 @@ import CountryButton from "@/components/CountryButton";
 import { CONTINENTS } from "@/constants/continents";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import PrimaryTagList from "../commons/TagList/PrimaryTagList";
+import SlideTagList from "../commons/TagList/SlideTagList";
 
 // 추후 db에서 가져올 값이라 따로 파일분리 하지 않았습니다.
 const CONTINENT_LIST = Object.keys(CONTINENTS) as Array<
@@ -20,8 +20,14 @@ function TripList() {
   };
 
   return (
-    <section className="flex flex-col gap-y-3 p-4">
-      <PrimaryTagList tagList={CONTINENT_LIST} onTagClick={handleTagClick} />
+    <section className="flex flex-col gap-y-3 px-4 py-2">
+      <div className="flex">
+        <SlideTagList
+          tagList={CONTINENT_LIST}
+          onTagClick={handleTagClick}
+          spacing={10}
+        />
+      </div>
       <h3 className="font-semibold">{selectedTag}</h3>
       <ul className="flex flex-wrap max-h-[400px] gap-y-3 overflow-y-auto no-scrollbar">
         {CONTINENTS[selectedTag].map((country) => (
@@ -32,7 +38,7 @@ function TripList() {
               imgPath="/sampleImg.jpg"
               alt={country}
               countryName={country}
-              onClick={() => router.push(`/recommend/country`)}
+              onClick={() => router.push(`/recommend/country/1`)}
             />
           </li>
         ))}

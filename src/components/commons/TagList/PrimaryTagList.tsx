@@ -1,32 +1,14 @@
-import { useState } from "react";
 import TagButton from "../TagButton";
 
 type PrimaryTagListProps<T extends string> = {
   tagList: T[];
-  onTagClick: (tag: T) => void;
 };
 
-function PrimaryTagList<T extends string>({
-  tagList,
-  onTagClick,
-}: PrimaryTagListProps<T>) {
-  const [selectedTag, setSelectedTag] = useState<T>(tagList[0]);
-
-  const handleTagClick = (tag: T) => {
-    setSelectedTag(tag);
-    onTagClick(tag);
-  };
-
+function PrimaryTagList<T extends string>({ tagList }: PrimaryTagListProps<T>) {
   return (
-    <div className="flex gap-x-3">
+    <div className="flex gap-x-2 ml-4 mb-[15px]">
       {tagList.map((tag) => (
-        <TagButton
-          key={tag}
-          theme="primary"
-          size="sm"
-          isChecked={tag === selectedTag}
-          onClick={() => handleTagClick(tag)}
-        >
+        <TagButton key={tag} theme="primary" size="xs" isChecked={false}>
           {tag}
         </TagButton>
       ))}

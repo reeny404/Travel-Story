@@ -1,6 +1,6 @@
 "use client";
 import Header from "@/components/commons/Header";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import { usePathStore } from "@/stores/path.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { createClient } from "@/supabase/client";
