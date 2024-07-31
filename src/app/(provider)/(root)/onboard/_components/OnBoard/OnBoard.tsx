@@ -63,7 +63,7 @@ function OnBoard() {
         </h1>
         <form className="flex flex-col items-center">
           <SelectLayout title="어디로 떠나시나요?">
-            <SelectForm type="input" category="country"></SelectForm>
+            <SelectForm type="input"></SelectForm>
           </SelectLayout>
           <SelectLayout title="여행 테마가 무엇인가요?">
             <SelectForm buttonList={theme} category="theme"></SelectForm>

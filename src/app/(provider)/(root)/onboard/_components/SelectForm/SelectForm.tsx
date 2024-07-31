@@ -5,13 +5,13 @@ import SelectButton from "../SelectButton/SelectButton";
 type SelectFormProps = {
   type?: string;
   buttonList?: string[];
-  category: "theme" | "season" | "travelMate" | "country";
+  category?: "theme" | "season" | "travelMate" | "country";
 };
 
 function SelectForm({
   type = "button",
   buttonList,
-  category,
+  category = "country",
 }: SelectFormProps) {
   return (
     <div className="flex flex-wrap gap-[9px] w-full h-fit mt-4">
@@ -23,7 +23,7 @@ function SelectForm({
             placeholder="국가, 도시"
           />
         </div>
-      ) : (
+      ) : category !== "country" ? (
         buttonList?.map((list, index) => {
           return (
             <SelectButton
@@ -33,6 +33,8 @@ function SelectForm({
             ></SelectButton>
           );
         })
+      ) : (
+        false
       )}
     </div>
   );
