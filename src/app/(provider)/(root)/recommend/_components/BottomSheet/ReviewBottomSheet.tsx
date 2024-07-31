@@ -1,7 +1,8 @@
 "use client";
 import PlanAPI from "@/apis/plan.api"; // 추가
-import RatingIcons from "@/components/Card/RatingIcons";
+import { ICON } from "@/constants/Icon";
 import axios from "axios";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import ReviewBottomSheetImages from "./ReviewBottomSheetImages";
 import ReviewBottomSheetInput from "./ReviewBottomSheetInput";
@@ -11,7 +12,6 @@ type BottomSheetProps = {
   onClose: () => void;
   areaId: number;
   id?: string; // 추가
-  rating: number;
 };
 
 const apiClient = axios.create({
@@ -21,10 +21,12 @@ const apiClient = axios.create({
 
 const planAPI = new PlanAPI(apiClient);
 
-function BottomSheet({ onClose, areaId, id, rating }: BottomSheetProps) {
+function BottomSheet({ onClose, areaId, id }: BottomSheetProps) {
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const [images, setImages] = useState<string[]>([]);
+  const [textValue, setTextValue] = useState<string>("");
+  const [rating, setRating] = useState<number>(0);
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -36,6 +38,14 @@ function BottomSheet({ onClose, areaId, id, rating }: BottomSheetProps) {
     }
   };
 
+  const handleRatingClick = (rating: number, idx: number) => {
+    if (rating === idx) {
+      setRating(0);
+      return;
+    }
+    setRating(idx);
+  };
+
   useEffect(() => {
     setIsOpening(true);
     setTimeout(() => {
@@ -45,6 +55,7 @@ function BottomSheet({ onClose, areaId, id, rating }: BottomSheetProps) {
 
   const getFormData = () => {
     const formData = new FormData(formRef.current!);
+    console.log("formData", formData);
     const data: Record<string, any> = {};
     formData.forEach((value, key) => {
       data[key] = value;
@@ -56,6 +67,8 @@ function BottomSheet({ onClose, areaId, id, rating }: BottomSheetProps) {
     const data = getFormData();
     data.images = JSON.stringify(images);
     data.areaId = areaId;
+    data.textValue = textValue;
+    data.rating = rating;
 
     console.log(data);
     // try {
@@ -90,10 +103,27 @@ function BottomSheet({ onClose, areaId, id, rating }: BottomSheetProps) {
         } transition-transform duration-300`}
       >
         <ReviewBottomSheetTitle />
-        <div className="w-full p-5 pt-4">
-          <RatingIcons type="big" rating={rating} />
+        <div className="w-full flex justify-center p-5 pt-4">
+          {Array.from({ length: 5 }).map((_, idx) => (
+            <Image
+              key={`filled-${idx}`}
+              src={
+                rating <= idx
+                  ? `/icons/${ICON.star.unfill}.png`
+                  : `/icons/${ICON.star.fill}.png`
+              }
+              alt="filled star"
+              width={30}
+              height={30}
+              onClick={() => handleRatingClick(rating, idx + 1)}
+              className={"object-contain mr-1"}
+            />
+          ))}
         </div>
-        <ReviewBottomSheetInput />
+        <ReviewBottomSheetInput
+          textValue={textValue}
+          setTextValue={setTextValue}
+        />
         <ReviewBottomSheetImages images={images} setImages={setImages} />
         <button
           className="w-full h-10 mt-2 text-center border border-gray-600 rounded-lg"
@@ -112,11 +142,10 @@ export function createReviewBottomSheet() {
     onClose,
     areaId,
     id,
-    rating, // 추가
+    // 추가
   }: BottomSheetProps) {
     return (
       <BottomSheet
-        rating={rating}
         onClose={onClose}
         areaId={areaId}
         id={id} // 전달

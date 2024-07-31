@@ -1,18 +1,21 @@
 "use client";
 
-import { useState } from "react";
-
-export default function ReviewBottomSheetInput({}) {
-  const [inputValue, setInputValue] = useState("");
-
+type ReviewBottomSheetInputProps = {
+  textValue: string;
+  setTextValue: React.Dispatch<React.SetStateAction<string>>;
+};
+export default function ReviewBottomSheetInput({
+  textValue,
+  setTextValue,
+}: ReviewBottomSheetInputProps) {
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(event.target.value);
+    setTextValue(event.target.value);
   };
 
   return (
     <textarea
       className="border border-gray-400 outline-none rounded-lg m-4 p-2 h-40  text-sm "
-      value={inputValue}
+      value={textValue}
       onChange={handleChange}
       placeholder={"어떤 경험을 공유하고 싶으신가요?"}
     />
