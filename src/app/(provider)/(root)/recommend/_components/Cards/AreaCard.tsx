@@ -23,7 +23,7 @@ function AreaCard({
         src={imageUrl}
         alt="detailCard"
         roundType="sm"
-        className="h-[189px]"
+        className="w-[301px] h-[138px]"
       />
       <div className="p-4">
         <Link href={linkUrl} className="font-bold mt-3 mb-3">

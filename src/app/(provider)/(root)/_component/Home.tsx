@@ -77,7 +77,7 @@ function Home() {
         >
           <SearchBar />
         </Link>
-        <div className="w-full px-4">
+        <div className="w-full pl-[18px]">
           <CardType title="문화 탐방" type="architect" />
           <CardSlider spacing={20} slidesPerView={1.2} cards={CardMockUpData} />
         </div>

@@ -1,10 +1,9 @@
-import CarouselItem from "@/app/(provider)/(root)/recommend/_components/Carousel/CarouselItem";
+import AreaCard from "@/app/(provider)/(root)/recommend/_components/Cards/AreaCard";
 import { SliderProps } from "@/types/Slider";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+// spacing: 카드 간 간격, slidesPerView: 한 화면에 보일 카드의 개수
 function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
   return (
     <Swiper
@@ -12,14 +11,14 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
       slidesPerView={slidesPerView}
       grabCursor={true}
     >
-      {cards.map((item, index) => (
+      {cards.map((card, index) => (
         <SwiperSlide key={index}>
           <div className="bg-white rounded-lg overflow-hidden">
-            <CarouselItem
-              title={item.title}
-              description={item.description}
-              imageUrl={item.imageUrl}
-              linkUrl={item.linkUrl}
+            <AreaCard
+              title={card.title}
+              description={card.description}
+              imageUrl={card.imageUrl}
+              linkUrl={card.linkUrl}
             />
           </div>
         </SwiperSlide>

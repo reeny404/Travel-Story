@@ -10,3 +10,5 @@ export type SliderProps = {
   slidesPerView: number;
   cards: SlideCardProps[];
 };
+
+export type TagSliderProps = Omit<SliderProps, "cards">;
