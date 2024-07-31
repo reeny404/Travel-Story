@@ -22,6 +22,9 @@ export const ICON = {
   chevron: {
     blue: "chevron-blue",
   },
+  credit: {
+    euro: "euro-black",
+  },
   dottedSquare: {
     blue: "dotted-square-blue",
   },
@@ -34,6 +37,9 @@ export const ICON = {
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
+  },
+  filter: {
+    black: "filter-black",
   },
   list: {
     black: "list-black",
@@ -58,7 +64,7 @@ export const ICON = {
   notice: {
     white: "notice-white",
   },
-  credit: {
-    euro: "euro-black",
+  microphone: {
+    black: "microphone-black",
   },
 } as const;

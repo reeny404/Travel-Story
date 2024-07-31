@@ -12,6 +12,7 @@ export const POST = async (request: NextRequest) => {
       options: {
         data: {
           nickname: nickname,
+          image_url: "",
         },
       },
     });
