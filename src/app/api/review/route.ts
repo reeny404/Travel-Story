@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
   const { data: reviewData } = await supabase
     .from("areaReview")
     .insert({
-      imageUrls: JSON.stringify(imageUrls),
+      imageUrls: imageUrls,
       userId,
       areaId,
       areaName,

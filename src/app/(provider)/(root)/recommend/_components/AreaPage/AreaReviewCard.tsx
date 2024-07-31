@@ -21,6 +21,7 @@ function AreaReviewCard({
   description,
 }: AreaReviewCardProps) {
   const date = createdAt.slice(0, 10).replaceAll("-", ".");
+  console.log("imageUrl", imageUrl);
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
       <div className="flex justify-around w-full">
