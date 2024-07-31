@@ -3,7 +3,9 @@
 import { api } from "@/apis/api";
 import CardType from "@/components/Card/CardType";
 import Carousel from "@/components/Carousel/Carousel";
+import MainLayout from "@/components/Layout/MainLayout";
 import Tab from "@/components/Tab/Tab";
+import { ICON } from "@/constants/Icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
 import { Area, City, Country, RecommendResponse } from "@/types/Recommend";
@@ -51,7 +53,6 @@ function CountryDetailPage({ params }: CountryDetailPage) {
       return data?.data;
     },
   });
-  console.log("places", places);
   const { data: restaurants } = useQuery<
     RecommendResponse<Area[]>,
     AxiosError,
@@ -80,6 +81,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     return (
       <>
         <CarouselItem
+          id={area.id}
           description={area.description}
           imageUrl={area.imageUrl!}
           title={area.title}
@@ -93,6 +95,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
       return (
         <>
           <CarouselItem
+            id={place.id}
             description={place.description}
             imageUrl={place.imageUrl!}
             title={place.title}
@@ -107,6 +110,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
       return (
         <>
           <CarouselItem
+            id={restaurant.id}
             description={restaurant.description}
             imageUrl={restaurant.imageUrl!}
             title={restaurant.title}
@@ -120,6 +124,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     return (
       <>
         <CarouselItem
+          id={shop.id}
           description={shop.description}
           imageUrl={shop.imageUrl!}
           title={shop.title}
@@ -139,61 +144,91 @@ function CountryDetailPage({ params }: CountryDetailPage) {
   });
 
   return (
-    <div className=" container overflow-x-hidden max-w-[375px] h-full flex-col ">
-      {country && (
-        <DetailCard
-          title={country?.data?.title!}
-          description={country?.data?.description!}
-          imageUrl={country?.data?.imageUrl!}
+    <MainLayout
+      headerProps={{
+        backgroundColor: "white",
+        leftIcons: [
+          {
+            icon: ICON.arrow.back.black,
+            alt: "Back",
+            size: 20,
+            path: "/",
+          },
+        ],
+        title: country?.data.krName!,
+        titleAlign: "center",
+        rightIcons: [
+          {
+            icon: ICON.search.black,
+            alt: "Search",
+            size: 20,
+            onClick: () => {},
+          },
+          {
+            icon: ICON.menu.burgerBlack,
+            alt: "Menu",
+            size: 20,
+            onClick: () => {},
+          },
+        ],
+      }}
+    >
+      <div className=" container overflow-x-hidden max-w-[375px] h-full flex-col ">
+        {country && (
+          <DetailCard
+            title={country?.data?.title!}
+            description={country?.data?.description!}
+            imageUrl={country?.data?.imageUrl!}
+          />
+        )}
+        <Tab
+          TABS={TABS.default}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
         />
-      )}
-      <Tab
-        TABS={TABS.default}
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-      />
-      {currentTab === "accommodation" && (
-        <div className=" mb-10">
-          <CardType
-            linkUrl={`/recommend/country/${countryId}/accommodation`}
-            title="할인하는 숙소"
-            type="home"
-          />
-          <Carousel slides={areaCarouselItems!} />
-        </div>
-      )}
-      {currentTab === "place" && (
-        <>
-          <CardType
-            linkUrl={`/recommend/country/${countryId}/place`}
-            title="문화 탐방"
-            type="architect"
-          />
-          <Carousel slides={placeCarouselItems!} />
-        </>
-      )}
-      {currentTab === "restaurant" && (
-        <>
-          <CardType
-            linkUrl={`/recommend/country/${countryId}/restaurant`}
-            title="문화 탐방"
-            type="architect"
-          />
-          <Carousel slides={restaurantCarouselItems!} />
-        </>
-      )}
-      {currentTab === "shop" && (
-        <>
-          <CardType
-            linkUrl={`/recommend/country/${countryId}/shop`}
-            title="문화 탐방"
-            type="architect"
-          />
-          <Carousel slides={shopCarouselItems!} />
-        </>
-      )}
-      <MainTourForm citiesInfo={cities!} />
-    </div>
+        {currentTab === "accommodation" && (
+          <div className=" mb-10">
+            <CardType
+              linkUrl={`/recommend/country/${countryId}/accommodation`}
+              title="할인하는 숙소"
+              type="home"
+            />
+            <Carousel slides={areaCarouselItems!} />
+          </div>
+        )}
+        {currentTab === "place" && (
+          <>
+            <CardType
+              linkUrl={`/recommend/country/${countryId}/place`}
+              title="문화 탐방"
+              type="architect"
+            />
+            <Carousel slides={placeCarouselItems!} />
+          </>
+        )}
+        {currentTab === "restaurant" && (
+          <>
+            <CardType
+              linkUrl={`/recommend/country/${countryId}/restaurant`}
+              title="문화 탐방"
+              type="architect"
+            />
+            <Carousel slides={restaurantCarouselItems!} />
+          </>
+        )}
+        {currentTab === "shop" && (
+          <>
+            <CardType
+              linkUrl={`/recommend/country/${countryId}/shop`}
+              title="문화 탐방"
+              type="architect"
+            />
+            <Carousel slides={shopCarouselItems!} />
+          </>
+        )}
+        <MainTourForm citiesInfo={cities!} />
+      </div>
+    </MainLayout>
   );
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -15,9 +15,9 @@ const Carousel = ({ slides }: CarouselProps) => {
     <section>
       <Swiper
         className="rounded-sm"
-        modules={[Pagination, Autoplay]}
+        modules={[Autoplay]}
         loop={true}
-        pagination={true}
+        slidesPerView={"auto"}
         centeredSlides={true}
         autoplay={{
           delay: 3500,
