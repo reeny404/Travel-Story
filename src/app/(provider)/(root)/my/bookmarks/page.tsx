@@ -3,7 +3,7 @@
 import { getIconPath } from "@/components/commons/Icon/getIconPath";
 import ImageFrame from "@/components/Frame/ImageFrame";
 import MainLayout from "@/components/Layout/MainLayout";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 
 export default function MyBookmarkPage() {

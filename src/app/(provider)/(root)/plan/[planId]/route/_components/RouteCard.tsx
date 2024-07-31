@@ -1,6 +1,6 @@
 import { getIconPath } from "@/components/commons/Icon/getIconPath";
 import ImageFrame from "@/components/Frame/ImageFrame";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 
 export type Route = {
   index: number;

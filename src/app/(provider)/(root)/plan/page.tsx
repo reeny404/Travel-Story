@@ -1,5 +1,5 @@
 import MainLayout from "@/components/Layout/MainLayout";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import { DateUtil } from "@/utils/DateUtil";
 import Image from "next/image";
 import Link from "next/link";

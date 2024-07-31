@@ -3,7 +3,7 @@
 import { api } from "@/apis/api";
 import Icon from "@/components/commons/Icon";
 import MainLayout from "@/components/Layout/MainLayout";
-import { ICON } from "@/constants/Icon";
+import { ICON } from "@/constants/icon";
 import { useQuery } from "@tanstack/react-query";
 import Badge from "../../../../components/Badge";
 
