@@ -3,12 +3,13 @@ export type SlideCardProps = {
   description: string;
   imageUrl: string;
   linkUrl: string;
+  tags?: string[] | undefined;
 };
 
 export type SliderProps = {
   spacing: number;
-  slidesPerView: number;
+  slidesPerView?: number;
   cards: SlideCardProps[];
 };
 
-export type TagSliderProps = Omit<SliderProps, "cards">;
+export type TagSliderProps = Pick<SliderProps, "spacing">;

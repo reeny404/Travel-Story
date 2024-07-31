@@ -13,7 +13,7 @@ type CardTypeProps = {
 function CardType({ type, title, linkUrl }: CardTypeProps) {
   return (
     <div className={`w-full h-6 mb-4 mt-4 flex items-center justify-between`}>
-      <div className="flex items-center aspect-auto">
+      <div className="flex items-center aspect-auto gap-x-[2px]">
         {type && (
           <Image
             src={`/cardImages/${type}.png`}

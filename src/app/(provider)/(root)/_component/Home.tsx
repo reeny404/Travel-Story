@@ -15,24 +15,28 @@ const CardMockUpData: SlideCardProps[] = [
     description: "고대의 역사가 살아숨쉬는 도시",
     imageUrl: "/sampleImg.jpg",
     linkUrl: "#",
+    tags: ["친구와 함께", "힐링", "식도락", "문화"],
   },
   {
     title: "파리",
     description: "낭만의 도시 파리에서의 하루",
     imageUrl: "/sampleImg.jpg",
     linkUrl: "#",
+    tags: ["예술", "로맨스", "미식", "쇼핑"],
   },
   {
     title: "뉴욕",
     description: "멈추지 않는 도시, 뉴욕의 활기찬 거리",
     imageUrl: "/sampleImg.jpg",
     linkUrl: "#",
+    tags: ["야경", "엔터테인먼트", "패션", "다양성"],
   },
   {
     title: "도쿄",
     description: "전통과 현대가 공존하는 도시, 도쿄",
     imageUrl: "/sampleImg.jpg",
     linkUrl: "#",
+    tags: ["애니메이션", "전통", "기술", "쇼핑"],
   },
 ];
 

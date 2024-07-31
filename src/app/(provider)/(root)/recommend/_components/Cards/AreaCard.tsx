@@ -25,11 +25,11 @@ function AreaCard({
         roundType="sm"
         className="w-[301px] h-[138px]"
       />
-      <div className="p-4">
+      <div className="px-4 py-3">
         <Link href={linkUrl} className="font-bold mt-3 mb-3">
           {title}
         </Link>
-        <p className="text-sm mb-3">{description}</p>
+        <p className="text-sm">{description}</p>
         {rating && <RatingIcons rating={rating} />}
       </div>
     </>
