@@ -1,0 +1,1 @@
+export type IconType = string | { name: string; ext: "png" | "svg" };
