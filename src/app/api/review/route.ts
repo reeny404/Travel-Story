@@ -60,29 +60,32 @@ export async function POST(request: NextRequest) {
   }
 
   const supabase = createClient();
+  const imageUrls: string[] = [];
   const imgFiles = data.getAll("imgFile");
   const imgFileName = data.getAll("imgFileName");
-  const imageUrls: string[] = [];
+  if (imgFiles.length === 0) {
+    imgFiles.push("");
+  } else {
+    for (let idx = 0; idx < imgFiles.length; idx++) {
+      const file = imgFiles[idx];
+      const fileName = imgFileName[idx];
 
-  for (let idx = 0; idx < imgFiles.length; idx++) {
-    const file = imgFiles[idx];
-    const fileName = imgFileName[idx];
+      const { data: imgData, error } = await supabase.storage
+        .from("review")
+        .upload(`public/${Date.now()}_${fileName}`, file);
 
-    const { data: imgData, error } = await supabase.storage
-      .from("review")
-      .upload(`public/${Date.now()}_${fileName}`, file);
+      if (error) {
+        console.error("Error uploading file:", error);
+        continue;
+      }
+      const { data: publicData } = await supabase.storage
+        .from("review")
+        .getPublicUrl(imgData.path);
 
-    if (error) {
-      console.error("Error uploading file:", error);
-      continue;
+      imageUrls.push(publicData.publicUrl);
     }
-    const { data: publicData } = await supabase.storage
-      .from("review")
-      .getPublicUrl(imgData.path);
-
-    imageUrls.push(publicData.publicUrl);
   }
-
+  console.log("imageUrls", imageUrls);
   const userId = data.get("userId") as string;
   const areaId = Number(data.get("areaId"));
   const areaName = data.get("areaName") as string;

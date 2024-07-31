@@ -22,12 +22,10 @@ function AreaCard({
   id,
 }: AreaCardProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(id);
-
   return (
     <div className="w-full h-full relative">
       <ImageFrame
         src={imageUrl}
-        alt="detailCard"
         roundType="sm"
         className="w-[301px] h-[138px]"
       />
