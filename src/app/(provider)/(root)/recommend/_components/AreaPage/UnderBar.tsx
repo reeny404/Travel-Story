@@ -15,17 +15,17 @@ type UnderBarProps = {
 
 function UnderBar({ area }: UnderBarProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(area.id);
+
   const { isLoggedIn } = useAuth();
   const { openModal } = useModalStore();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
-  console.log("isLoggedIn", isLoggedIn);
+
   const handleOpen = () => {
     if (!isLoggedIn) {
       openModal("로그인 필요", "로그인 유저만 가능합니다");
     } else {
       setBottomSheetVisible(true);
     }
-  };
   const handleClose = () => {
     setBottomSheetVisible(false);
   };
@@ -37,7 +37,6 @@ function UnderBar({ area }: UnderBarProps) {
       isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
     }
   };
-
   const BottomSheet = createAddBottomSheet();
 
   return (
