@@ -14,7 +14,7 @@ type AreaCardProps = {
 
 function BookmarkCard({ bookmark, area, onClickAddToPlan }: AreaCardProps) {
   const iconMarkderPath: string = useMemo(() => {
-    return getIconPath(ICON.calendar.white);
+    return getIconPath(ICON.maker.gray);
   }, []);
   const iconClendarPath: string = useMemo(() => {
     return getIconPath(ICON.calendar.white);
@@ -28,7 +28,7 @@ function BookmarkCard({ bookmark, area, onClickAddToPlan }: AreaCardProps) {
     };
 
     onClickAddToPlan(data);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
