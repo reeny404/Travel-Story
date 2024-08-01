@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const name = searchParams.get("name");
+  const query = searchParams.get("query");
 
-  if (!name) {
+  if (!query) {
     return NextResponse.json({
       status: 400,
       message: "Bad Request",
@@ -16,11 +16,11 @@ export async function GET(request: NextRequest) {
 
   const supabase = createClient();
 
-  // 정규식으로 영문인지 검사 후 분기 쳐야되나?
   const { data, error } = await supabase
     .from("area")
     .select("*")
-    .eq("name", name);
+    .or(`name.ilike.%${query}%, krName.ilike.%${query}%`);
+
   if (error) {
     return NextResponse.json({
       status: 500,
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     status: 200,
     message: "Success",
-    data: data[0],
+    data: data,
     error: null,
   });
 }
