@@ -3,6 +3,7 @@
 import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
+import useDrawerStore from "@/stores/drawer.store";
 import useRecommendStore from "@/stores/recommend.store";
 import { City, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +12,7 @@ import { PropsWithChildren } from "react";
 
 function CityLayout({ children }: PropsWithChildren) {
   const { cityId } = useRecommendStore((state) => state);
+  const { openDrawer } = useDrawerStore();
 
   const { data: city } = useQuery<RecommendResponse<City>, AxiosError, City>({
     queryKey: ["cityById", cityId],
@@ -26,7 +28,7 @@ function CityLayout({ children }: PropsWithChildren) {
             icon: ICON.arrow.back.black,
             alt: "Back",
             size: 20,
-            path: "/",
+            path: "back",
           },
         ],
         title: city?.krName!,
@@ -42,7 +44,7 @@ function CityLayout({ children }: PropsWithChildren) {
             icon: ICON.menu.burgerBlack,
             alt: "Menu",
             size: 20,
-            onClick: () => {},
+            onClick: openDrawer,
           },
         ],
       }}

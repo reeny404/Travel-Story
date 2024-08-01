@@ -8,6 +8,7 @@ import Tab from "@/components/Tab/Tab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
+import useDrawerStore from "@/stores/drawer.store";
 import { Area, City, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -25,6 +26,7 @@ type CountryDetailPage = {
 function CountryDetailPage({ params }: CountryDetailPage) {
   const countryId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
+  const { openDrawer } = useDrawerStore();
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
@@ -156,7 +158,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
             icon: ICON.arrow.back.black,
             alt: "Back",
             size: 20,
-            path: "/",
+            path: "back",
           },
         ],
         title: country?.data.krName!,
@@ -172,7 +174,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
             icon: ICON.menu.burgerBlack,
             alt: "Menu",
             size: 20,
-            onClick: () => {},
+            onClick: openDrawer,
           },
         ],
       }}

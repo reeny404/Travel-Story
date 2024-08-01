@@ -7,6 +7,7 @@ import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useTab } from "@/hooks/useTab";
+import useDrawerStore from "@/stores/drawer.store";
 import { Area, AreaReview, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -24,6 +25,7 @@ type AreaDetailPage = {
 function AreaDetailPage({ params }: AreaDetailPage) {
   const areaId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
+  const { openDrawer } = useDrawerStore();
   const { user } = useAuth();
 
   const { data: area, isLoading } = useQuery<
@@ -86,7 +88,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
             icon: ICON.menu.burgerBlack,
             alt: "Menu",
             size: 20,
-            onClick: () => {},
+            onClick: openDrawer,
           },
         ],
       }}
