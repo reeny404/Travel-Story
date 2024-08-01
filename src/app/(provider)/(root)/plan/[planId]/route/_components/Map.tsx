@@ -46,9 +46,9 @@ function Map({ locations }: props) {
       >
         {locations.map((location, i) => (
           <Marker
-            key={i + 1}
+            key={i}
             position={location}
-            label={i + ""}
+            label={i + 1 + ""}
             {...markerProps}
           />
         ))}
