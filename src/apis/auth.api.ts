@@ -26,12 +26,12 @@ class AuthAPI {
         nickname: nickname,
       });
       if (response.status === 200) {
-        console.log("회원가입 완료: ", response.data);
+        console.error("회원가입 완료: ", response.data);
       } else {
-        console.log("회원가입 실패:", response.data);
+        console.error("회원가입 실패:", response.data);
       }
     } catch (e) {
-      console.log("회원가입 중 오류 발생:", e);
+      console.error("회원가입 중 오류 발생:", e);
     }
   }
 
