@@ -37,16 +37,17 @@ export async function POST(request: NextRequest) {
   const { data } = await supabase
     .from("area")
     .select("country(krName)")
-    .eq("id", areaId)
-    .single();
-
-  const countryData = data?.country[0];
+    .eq("id", areaId);
+  if (!data) {
+    return;
+  }
+  const countryData = data[0]?.country?.krName;
   const { data: planData, error } = await supabase
     .from(TABLE_NAME)
     .insert({
       userId,
       title,
-      country: countryData?.krName,
+      country: countryData,
       startDate,
       endDate,
     })
