@@ -1,8 +1,9 @@
 "use client";
 
 import { BottomSheetType } from "@/types/plan";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import BottomSheet from "../_components/BottomSheet";
+import CreateButton from "../_components/CreateButton";
 import DayMenu from "../_components/DayMenu";
 import ScheculeList from "./ScheculeList";
 
@@ -32,6 +33,10 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
     setSelectedDay(day);
   };
 
+  const handleCreateSchedule = useCallback(() => {
+    handleOpen("customePlace", "add");
+  }, []);
+
   if (!planId) {
     return <div>Loading...</div>;
   }
@@ -51,14 +56,11 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
         />
       )}
       {/* 바텀 시트 예시 */}
-      <button
-        className="w-12 h-12 fixed bottom-20 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        onClick={() => handleOpen("customePlace", "add")}
-      >
-        <div className="w-full h-full flex justify-center items-center">
-          <p className="text-white">생성</p>
-        </div>
-      </button>
+      <CreateButton
+        createSchedule={handleCreateSchedule}
+        createByBookmark={handleCreateSchedule}
+        createMemo={handleCreateSchedule}
+      />
     </div>
   );
 }
