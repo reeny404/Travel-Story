@@ -7,7 +7,9 @@ import CardSlider from "@/components/Slider/CardSlider";
 import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import { SlideCardProps } from "@/types/Slider";
+import Image from "next/image";
 import Link from "next/link";
+import MyTrip from "./MyTrip";
 
 const CardMockUpData: SlideCardProps[] = [
   {
@@ -81,12 +83,20 @@ function Home() {
         className="relative w-full bg-[#F8F8F8]"
         style={{ minHeight: "calc(100vh - 52px)" }}
       >
-        <div className="w-full h-[200px] bg-black" />
-        <div className="sticky z-10 -mt-[20px] px-4">
+        <div className="relative w-full h-[222px] bg-slate-200">
+          <Image
+            src="/banners/banner1_x3.png"
+            alt="banner"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="sticky z-10 -mt-[15px] px-4">
           <Link href="/search" className="w-full">
             <SearchBar />
           </Link>
         </div>
+        <MyTrip />
         <div className="w-full pt-4 pl-[18px]">
           <CardType title="문화 탐방" type="architect" />
           <CardSlider spacing={20} slidesPerView={1.2} cards={CardMockUpData} />

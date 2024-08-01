@@ -4,6 +4,9 @@ export const ICON = {
       black: "arrow-back-black",
       white: "arrow-back-white",
     },
+    foward: {
+      lightgreen: "arrow-foward-lightgreen",
+    },
     down: {
       black: "arrow-down-black",
     },

@@ -70,7 +70,7 @@ function IntroPage({ params }: IntroPageProps) {
             icon: ICON.cancel.black,
             alt: "Cancle",
             size: 20,
-            path: "/",
+            path: "back",
           },
         ],
       }}
