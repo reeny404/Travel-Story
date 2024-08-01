@@ -7,17 +7,21 @@ import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import { Schedule } from "@/types/plan";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import BookmarkCard from "./_components/BookmarkCard";
 
 const HEADER_TAGS = ["관광", "숙소", "식사", "쇼핑"];
 const userId = "80bf108c-63c1-43ce-b463-92b9a0915f0d";
 
-export default function MyBookmarkPage() {
+type PageProps = {
+  searchParams: { planId: string; day: string };
+};
+
+export default function MyBookmarkPage({
+  searchParams: { planId, day },
+}: PageProps) {
+  const dayIndex: number = Number(day);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const planId: string = searchParams.get("planId")!;
-  const dayIndex: number = Number(searchParams.get("day"));
 
   const { openDrawer } = useDrawerStore();
   const onTagClick = (tag: string) => {};
