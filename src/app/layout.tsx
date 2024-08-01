@@ -16,7 +16,7 @@ function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} w-[375px] mx-auto`}>{children}</body>
+      <body className={`${inter.className} w-[430px] mx-auto`}>{children}</body>
     </html>
   );
 }

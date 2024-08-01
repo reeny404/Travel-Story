@@ -52,12 +52,18 @@ function CountryButton({
     >
       <div
         className={clsx(
-          "relative flex-none border border-slate-100 rounded-full cursor-pointer overflow-hidden",
+          "relative flex-none border border-slate-100 bg-slate-200 rounded-full cursor-pointer overflow-hidden",
           countryButtonVariant({ imgSize })
         )}
         onClick={onClick}
       >
-        <Image src={imgPath} alt={alt} fill={true} className="object-cover" />
+        <Image
+          src={imgPath}
+          alt={alt}
+          fill={true}
+          className="object-cover"
+          priority
+        />
       </div>
 
       <div className="ml-[10px] flex-1 min-w-0">
