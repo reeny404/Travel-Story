@@ -1,6 +1,7 @@
 "use client";
 import RatingIcons from "@/components/Card/RatingIcons";
 import { useAuth } from "@/contexts/auth.contexts";
+import { useModalStore } from "@/stores/modal.store";
 import Image from "next/image";
 import { useState } from "react";
 import { createReviewBottomSheet } from "../BottomSheet/ReviewSheet/ReviewBottomSheet";
@@ -18,10 +19,15 @@ function ReviewSummaryCard({
   areaName,
   ratingAmount,
 }: ReviewSummaryCardProps) {
-  const { user } = useAuth();
+  const { user, isLoggedIn } = useAuth();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const { openModal } = useModalStore();
   const handleOpen = () => {
-    setBottomSheetVisible(true);
+    if (!isLoggedIn) {
+      openModal("로그인 필요", "로그인 유저만 가능합니다");
+    } else {
+      setBottomSheetVisible(true);
+    }
   };
   const handleClose = () => {
     setBottomSheetVisible(false);

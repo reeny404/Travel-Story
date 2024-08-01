@@ -2,6 +2,7 @@
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
+import { useModalStore } from "@/stores/modal.store";
 import { Area } from "@/types/Recommend";
 import Image from "next/image";
 import { useState } from "react";
@@ -14,13 +15,27 @@ type UnderBarProps = {
 
 function UnderBar({ area }: UnderBarProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(area.id);
-  const { user } = useAuth();
+  const { isLoggedIn } = useAuth();
+  const { openModal } = useModalStore();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+  console.log("isLoggedIn", isLoggedIn);
   const handleOpen = () => {
-    setBottomSheetVisible(true);
+    if (!isLoggedIn) {
+      openModal("로그인 필요", "로그인 유저만 가능합니다");
+    } else {
+      setBottomSheetVisible(true);
+    }
   };
   const handleClose = () => {
     setBottomSheetVisible(false);
+  };
+
+  const toggleBookmark = () => {
+    if (!isLoggedIn) {
+      openModal("로그인 필요", "로그인 유저만 가능합니다");
+    } else {
+      isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
+    }
   };
 
   const BottomSheet = createAddBottomSheet();
@@ -44,9 +59,7 @@ function UnderBar({ area }: UnderBarProps) {
           width={30}
           height={30}
           className="hover:cursor-pointer object-contain"
-          onClick={() =>
-            isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate()
-          }
+          onClick={toggleBookmark}
         />
       </button>
 
