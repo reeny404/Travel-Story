@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // 비회원 접근 시 막아야되는 페이지
-  if (pathname === "/my-page") {
+  if (pathname === "/my") {
     if (
       !request.cookies.get(LOGIN_KEY) &&
       !request.cookies.get(`${LOGIN_KEY}.0`)
