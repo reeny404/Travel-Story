@@ -1,21 +1,36 @@
 import { updateSession } from "@/supabase/middleware";
 import { NextRequest, NextResponse } from "next/server";
 
+//cookies에 있는 로그인 확인 토큰
+const LOGIN_KEY = "sb-yqoupynehwgshtspamuf-auth-token";
+
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const pathname = url.pathname;
-  if (pathname === "/") {
-    const isLoggedIn = request.cookies.get(
-      "sb-yqoupynehwgshtspamuf-auth-token.0"
-    );
-    const hasTravelType = request.cookies.get("hasTravelType");
 
-    if (!isLoggedIn && !hasTravelType) {
+  // 쿠키 가져옴
+  const hasTravelType = request.cookies.get("hasTravelType");
+
+  // 홈 진입 시
+  if (pathname === "/") {
+    if (!hasTravelType) {
       url.pathname = "/onboard";
       return NextResponse.redirect(url);
     }
-
     return NextResponse.next();
+  }
+
+  // 마이페이지 접근 시
+  if (pathname === "/my-page") {
+    if (
+      !request.cookies.get(LOGIN_KEY) &&
+      !request.cookies.get(`${LOGIN_KEY}.0`)
+    ) {
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
+    } else {
+      return NextResponse.next();
+    }
   }
 
   return await updateSession(request);

@@ -72,7 +72,7 @@ function Home() {
             icon: ICON.avatar.black,
             alt: "Avatar",
             size: 20,
-            path: "/login",
+            path: "/my-page",
           },
         ],
       }}
