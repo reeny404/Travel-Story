@@ -28,7 +28,7 @@ function AuthPage({
       provider: "kakao",
     });
     if (error) {
-      console.log("소셜로그인 중 에러: ", error);
+      console.error("소셜로그인 중 에러: ", error);
     }
   };
 
