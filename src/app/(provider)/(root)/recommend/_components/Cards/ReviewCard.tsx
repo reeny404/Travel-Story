@@ -35,7 +35,7 @@ function ReviewCard({
           <p className="text-sm overflow-x-hidden whitespace-nowrap text-ellipsis mb-2">
             {description}
           </p>
-          <RatingIcons rating={rating} />
+          <RatingIcons type="small" rating={rating} />
         </div>
       </div>
     </>

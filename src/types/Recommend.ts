@@ -3,11 +3,11 @@ import { Tables } from "./supabase";
 
 export type Country = Tables<"country">;
 
-export type IntroQueryFn = {
+export type IntroDataTypeRes = {
   city: RecommendResponse<City[]>;
   country: RecommendResponse<Country>;
 };
-export type IntroQueryReturn = {
+export type IntroDataType = {
   cities: { name: string; id: number }[];
   country: Country;
 };
@@ -40,6 +40,14 @@ export type Rating = {
   pieces: number;
 };
 
+export type ReviewDataInsertType = {
+  areaId: number;
+  userId: string;
+  areaName: string;
+  images: { name: string; file: File };
+  rating: number;
+  textValue: string;
+};
 export type RecommendResponse<T> = {
   status: number;
   message: string;

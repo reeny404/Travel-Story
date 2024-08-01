@@ -1,14 +1,47 @@
+"use client";
 import RatingIcons from "@/components/Card/RatingIcons";
+import { useAuth } from "@/contexts/auth.contexts";
 import { Rating } from "@/types/Recommend";
 import Image from "next/image";
+import { useState } from "react";
+import { createReviewBottomSheet } from "../BottomSheet/ReviewBottomSheet";
 
-function ReviewSummaryCard({ rating }: { rating: Rating }) {
+type ReviewSummaryCardProps = {
+  rating: Rating;
+  areaId: number;
+  areaName: string;
+};
+
+function ReviewSummaryCard({
+  rating,
+  areaId,
+  areaName,
+}: ReviewSummaryCardProps) {
+  const { user } = useAuth();
+  const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const handleOpen = () => {
+    setBottomSheetVisible(true);
+  };
+  const handleClose = () => {
+    setBottomSheetVisible(false);
+  };
+
+  const BottomSheet = createReviewBottomSheet();
+
   return (
     <div className="w-full">
+      {isBottomSheetVisible && (
+        <BottomSheet
+          areaName={areaName}
+          onClose={handleClose}
+          areaId={areaId}
+          id={user?.id!}
+        />
+      )}
       <div className="w-full flex justify-between p-3">
         <span className="text-lg font-bold">리뷰</span>
         <button
-          onClick={() => console.log("리뷰 작성")}
+          onClick={() => handleOpen()}
           className="text-sm font-bold flex items-center aspect-auto"
         >
           <Image
@@ -25,7 +58,7 @@ function ReviewSummaryCard({ rating }: { rating: Rating }) {
         <div className="flex flex-col gap-y-2 items-center justify-center">
           <p className="text-3xl">{rating.rating}</p>
           <div>
-            <RatingIcons rating={rating.rating} />
+            <RatingIcons type="small" rating={rating.rating} />
           </div>
           <p className="text-xm text-[#8B8B8B]">{`(${rating.pieces})`}</p>
         </div>
