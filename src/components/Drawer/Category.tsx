@@ -57,6 +57,7 @@ function Category({
             alt={alt}
             width={16}
             height={8}
+            priority
           />
         )}
       </button>

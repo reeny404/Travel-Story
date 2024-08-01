@@ -12,7 +12,7 @@ function SearchLayout({ children }: PropsWithChildren) {
             icon: ICON.arrow.back.black,
             alt: "back",
             size: 20,
-            path: "back",
+            path: "/",
           },
         ]}
       />

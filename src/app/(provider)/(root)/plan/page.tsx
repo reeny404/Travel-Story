@@ -1,12 +1,15 @@
+import { getIconPath } from "@/components/commons/Icon/getIconPath";
+import ImageFrame from "@/components/Frame/ImageFrame";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import { DateUtil } from "@/utils/DateUtil";
-import Image from "next/image";
 import Link from "next/link";
+import { useMemo } from "react";
 import PlanList from "./_components/PlanList";
 import PlusIcon from "./_components/PlusIcon";
 
 export default function PlanListPage() {
+  const arrowIconPath = useMemo(() => getIconPath(ICON.arrow.down.black), []);
   return (
     <MainLayout
       headerProps={{
@@ -31,7 +34,7 @@ export default function PlanListPage() {
         ],
       }}
     >
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-[calc(100dvh-52px)] bg-gray-100">
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
             <span className="text-lg font-semibold">
@@ -43,12 +46,7 @@ export default function PlanListPage() {
               <button className="text-sm flex justify-center">
                 {/* TODO 정렬 미구현 */}
                 최신순
-                <Image
-                  src="/icon/arrowToExpand.svg"
-                  width="15"
-                  height="15"
-                  alt="펼치기 아이콘"
-                />
+                <ImageFrame src={arrowIconPath} className="w-4 h-4" />
               </button>
             </div>
           </div>
