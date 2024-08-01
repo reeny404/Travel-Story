@@ -1,5 +1,4 @@
 import RatingIcons from "@/components/Card/RatingIcons";
-import ImageFrame from "@/components/Frame/ImageFrame";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
@@ -35,11 +34,10 @@ function AreaCard({
   };
   return (
     <div className="w-full h-full relative ">
-      <ImageFrame
-        src={imageUrl}
-        roundType="sm"
-        className="w-[301px] h-[138px]"
-      />
+      <div className="w-full h-[220px] relative aspect-auto">
+        <Image src={imageUrl || "/"} alt={title} fill className="object-auto" />
+      </div>
+
       <div className="px-4 py-3">
         <Link href={linkUrl} className="font-bold mt-3 mb-3">
           {title}
