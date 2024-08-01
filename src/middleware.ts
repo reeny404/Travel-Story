@@ -20,13 +20,25 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 마이페이지 접근 시
+  // 비회원 접근 시 막아야되는 페이지
   if (pathname === "/my-page") {
     if (
       !request.cookies.get(LOGIN_KEY) &&
       !request.cookies.get(`${LOGIN_KEY}.0`)
     ) {
       url.pathname = "/login";
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
+  }
+
+  // 로그인한 유저가 로그인 페이지 접근 시
+  if (pathname === "/login") {
+    if (
+      request.cookies.get(LOGIN_KEY) ||
+      request.cookies.get(`${LOGIN_KEY}.0`)
+    ) {
+      url.pathname = "/";
       return NextResponse.redirect(url);
     } else {
       return NextResponse.next();
