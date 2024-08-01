@@ -21,6 +21,7 @@ function AreaReviewCard({
   description,
 }: AreaReviewCardProps) {
   const date = createdAt.slice(0, 10).replaceAll("-", ".");
+  console.log("imageUrl", imageUrl);
   return (
     <div className="w-full p-3 flex flex-col gap-y-3">
       <div className="flex justify-around w-full">
@@ -39,7 +40,7 @@ function AreaReviewCard({
         </div>
       </div>
       <div className="mt-3">
-        <RatingIcons rating={rating} />
+        <RatingIcons type="small" rating={rating} />
       </div>
       <div className="w-full text-xs text-ellipsis line-clamp-3">
         {description}

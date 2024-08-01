@@ -90,6 +90,7 @@ export type Database = {
           latlng: Json;
           lng: number | null;
           name: string;
+          rating: number | null;
           title: string;
           type: string | null;
         };
@@ -106,6 +107,7 @@ export type Database = {
           latlng?: Json;
           lng?: number | null;
           name?: string;
+          rating?: number | null;
           title?: string;
           type?: string | null;
         };
@@ -122,6 +124,7 @@ export type Database = {
           latlng?: Json;
           lng?: number | null;
           name?: string;
+          rating?: number | null;
           title?: string;
           type?: string | null;
         };

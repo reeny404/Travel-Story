@@ -18,7 +18,7 @@ export const POST = async (request: NextRequest) => {
     });
 
     if (error) {
-      console.log("signUp error message:", error);
+      console.error("signUp error message:", error);
       return NextResponse.json({ message: error.message }, { status: 400 });
     }
 
