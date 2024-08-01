@@ -13,7 +13,7 @@ function Tab({ currentTab, setCurrentTab, TABS }: TabProps) {
   return (
     <div
       className={
-        "w-full h-10 bg-white flex justify-around items-center sticky top-0 z-50"
+        "w-full h-10 bg-white flex justify-around items-center sticky top-0"
       }
     >
       {TABS.map((tab) => (

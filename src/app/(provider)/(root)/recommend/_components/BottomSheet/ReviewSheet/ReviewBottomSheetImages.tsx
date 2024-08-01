@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import PlusIcon from "./PlusIcon";
+import PlusIcon from "../PlusIcon";
 
 type BottomSheetImagesProps = {
   imgFile: { name: string; file: File }[];

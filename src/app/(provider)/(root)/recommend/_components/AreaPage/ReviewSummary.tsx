@@ -1,13 +1,13 @@
 "use client";
 import RatingIcons from "@/components/Card/RatingIcons";
 import { useAuth } from "@/contexts/auth.contexts";
-import { Rating } from "@/types/Recommend";
 import Image from "next/image";
 import { useState } from "react";
-import { createReviewBottomSheet } from "../BottomSheet/ReviewBottomSheet";
+import { createReviewBottomSheet } from "../BottomSheet/ReviewSheet/ReviewBottomSheet";
 
 type ReviewSummaryCardProps = {
-  rating: Rating;
+  rating: number;
+  ratingAmount: number;
   areaId: number;
   areaName: string;
 };
@@ -16,6 +16,7 @@ function ReviewSummaryCard({
   rating,
   areaId,
   areaName,
+  ratingAmount,
 }: ReviewSummaryCardProps) {
   const { user } = useAuth();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
@@ -56,11 +57,11 @@ function ReviewSummaryCard({
       </div>
       <div className="w-full grid grid-cols-2 p-3">
         <div className="flex flex-col gap-y-2 items-center justify-center">
-          <p className="text-3xl">{rating.rating}</p>
+          <p className="text-3xl">{rating}</p>
           <div>
-            <RatingIcons type="small" rating={rating.rating} />
+            <RatingIcons type="small" rating={rating} />
           </div>
-          <p className="text-xm text-[#8B8B8B]">{`(${rating.pieces})`}</p>
+          <p className="text-xm text-[#8B8B8B]">{`(${ratingAmount})`}</p>
         </div>
         <div className="flex flex-col gap-y-1 p-1  justify-center">
           <div className="flex gap-x-1 text-sm font-semibold relative">

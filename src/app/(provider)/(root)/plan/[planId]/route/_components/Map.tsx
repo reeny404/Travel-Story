@@ -45,7 +45,12 @@ function Map({ locations }: props) {
         zoom={7}
       >
         {locations.map((location, i) => (
-          <Marker key={i} position={location} label={i + ""} {...markerProps} />
+          <Marker
+            key={i}
+            position={location}
+            label={i + 1 + ""}
+            {...markerProps}
+          />
         ))}
         <Polyline
           path={locations}
