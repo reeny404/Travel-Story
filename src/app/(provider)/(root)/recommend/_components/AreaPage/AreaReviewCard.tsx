@@ -45,9 +45,9 @@ function AreaReviewCard({
         {description}
       </div>
       {imageUrl && (
-        <div className="w-full h-[150px] relative aspect-auto">
+        <div className="w-full h-[220px] relative aspect-auto">
           (
-          <Image src={imageUrl} alt="image" fill className="object-fill" />)
+          <Image src={imageUrl} alt="image" fill className="object-cover" />)
         </div>
       )}
       <Liner />

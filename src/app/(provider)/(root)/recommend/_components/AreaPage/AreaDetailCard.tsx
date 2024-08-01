@@ -27,8 +27,13 @@ function AreaDetailCard({ area, ratingAmount }: AreaDetailCardProps) {
     <div className="w-full h-[500px]">
       <h1 className="w-full p-3 text-xl font-bold">{area.title}</h1>
       <div className="w-full ">
-        <div className="w-full h-[207px] relative">
-          <Image src={area.imageUrl!} alt="img" fill className="rounded-sm" />
+        <div className="w-full h-[220px] relative aspect-auto">
+          <Image
+            src={area.imageUrl || "/"}
+            alt={area.title}
+            fill
+            className="object-auto"
+          />
         </div>
         <div className="p-3 flex justify-between items-center font-semibold">
           <span>{convertTypeToKr(area.type!)}</span>
