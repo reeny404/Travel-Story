@@ -5,6 +5,7 @@ const TABLE_NAME = "plan";
 type CountryData = {
   krName: string | null;
 };
+// TODO 이거 Plan쪽으로 옮겨야댐
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("userId");
@@ -14,8 +15,6 @@ export async function GET(request: NextRequest) {
     .from(TABLE_NAME)
     .select("*")
     .eq("userId", userId!);
-  // TODO 현재 로그인한 유저의 정보를 가져와서 filtering 필요
-  // .eq("user_id", userId);
 
   if (error) {
     return NextResponse.json(planData, {
@@ -33,7 +32,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const reqData = await request.json();
   const { userId, title, startDate, endDate, areaId } = reqData;
-  console.log("areaId", areaId);
   const supabase = createClient();
 
   const { data } = await supabase
@@ -42,7 +40,7 @@ export async function POST(request: NextRequest) {
     .eq("id", areaId)
     .single();
 
-  const countryData = data?.country as CountryData;
+  const countryData = data?.country[0];
   const { data: planData, error } = await supabase
     .from(TABLE_NAME)
     .insert({

@@ -1,4 +1,4 @@
-type formatType = "yyyy. MM. dd" | "yyyy년 MM월 dd일" | "yyyy.MM.dd~MM.dd";
+type formatType = "yyyy. MM. dd" | "yyyy년 MM월 dd일";
 
 const DAY = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -20,8 +20,6 @@ function format(type: formatType, time: Date): string {
       return `${year}. ${month}. ${date} (${day})`;
     case "yyyy년 MM월 dd일":
       return `${year}년 ${month}월 ${date}일 (${day})`;
-    case "yyyy.MM.dd~MM.dd":
-      return `${year}.${month}.${date}(${day}) ~ ${month}.${date}(${day})`;
     default:
       return "";
   }

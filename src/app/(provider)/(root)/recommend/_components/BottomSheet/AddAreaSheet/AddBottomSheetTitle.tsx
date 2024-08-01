@@ -16,11 +16,11 @@ function AddBottomSheetTitle({ areaId }: { areaId: number }) {
       userId: user.id,
       areaId: areaId,
       title: `${user?.user_metadata.nickname}님의 여행`,
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: new Date().toISOString(),
+      endDate: new Date().toISOString(),
     };
     try {
-      const response = await api.area.addPlan(data);
+      await api.area.addPlan(data);
     } catch (error) {
       console.error("Error adding data:", error);
     }

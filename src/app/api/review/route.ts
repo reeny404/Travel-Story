@@ -85,7 +85,6 @@ export async function POST(request: NextRequest) {
       imageUrls.push(publicData.publicUrl);
     }
   }
-  console.log("imageUrls", imageUrls);
   const userId = data.get("userId") as string;
   const areaId = Number(data.get("areaId"));
   const areaName = data.get("areaName") as string;

@@ -1,4 +1,5 @@
 import { Area, Rating, RecommendResponse } from "@/types/Recommend";
+import { Tables } from "@/types/supabase";
 import { AxiosError, AxiosInstance } from "axios";
 type RatingResponse = {
   status: number;
@@ -108,6 +109,8 @@ class AreaAPI {
       throw new Error();
     }
   }
+
+  // TODO 아래 두 메서드 Plan쪽으로 옮겨야댐
   async getPlan(userId: string) {
     try {
       const path = `api/area/plan`;
@@ -122,15 +125,15 @@ class AreaAPI {
     }
   }
 
-  async addPlan(data: any) {
+  async addPlan(data: Partial<PlanType>) {
     try {
       const path = `api/area/plan`;
-      const response = await this.axios.post(path, data);
+      const response = await this.axios.post<PlanType>(path, data);
       console.log("response", response);
     } catch (error) {
       return console.log(error);
     }
   }
 }
-
+type PlanType = Tables<"plan">;
 export default AreaAPI;
