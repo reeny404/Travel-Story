@@ -17,8 +17,9 @@ export async function GET(request: NextRequest) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("areaBookmark")
-    .select("*")
-    .eq("userId", id);
+    .select("*, area(*)")
+    .eq("userId", id)
+    ;
 
   if (error) {
     return NextResponse.json({
@@ -49,7 +50,6 @@ export async function POST(request: NextRequest) {
   const data = await request.json();
   const userId = data.userId;
   const areaId = data.areaId;
-  console.log("userId, areaId", userId, areaId);
 
   if (!userId || !areaId) {
     return NextResponse.json({
