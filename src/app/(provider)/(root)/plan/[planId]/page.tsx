@@ -37,11 +37,10 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8]">
+    <div className="min-h-screen bg-[#FCFCFC]">
       <div className="h-48 w-full bg-gray-200"></div>
-      <DayMenu onDaySelect={handleDaySelect} />
-      <p>Plan ID: {planId}</p>
-      <ScheculeList />
+      <DayMenu selectedDay={selectedDay} onDaySelect={handleDaySelect} />
+      <ScheculeList planId={planId} selectedDay={selectedDay} />
       {isBottomSheetVisible && (
         <BottomSheet
           type={bottomSheetConfig.type}

@@ -1,8 +1,10 @@
 "use client";
 
 import { api } from "@/apis/api";
+import MainLayout from "@/components/Layout/MainLayout";
+import { ICON } from "@/constants/icon";
 import useRecommendStore from "@/stores/recommend.store";
-import { IntroQueryFn, IntroQueryReturn } from "@/types/Recommend";
+import { IntroDataType, IntroDataTypeRes } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
@@ -21,9 +23,9 @@ function IntroPage({ params }: IntroPageProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { data: IntroCountry, isLoading } = useQuery<
-    IntroQueryFn,
+    IntroDataTypeRes,
     AxiosError,
-    IntroQueryReturn
+    IntroDataType
   >({
     queryKey: [QEURY_KEY],
     queryFn: async () => {
@@ -44,22 +46,52 @@ function IntroPage({ params }: IntroPageProps) {
     staleTime: 1000 * 60 * 60 * 10,
   });
   return (
-    <div className=" h-full w-full ">
-      {isLoading ? (
-        <div>loading...</div>
-      ) : (
-        <>
-          {IntroCountry && (
-            <CountryIntroCard
-              countryId={IntroCountry.country?.id}
-              cities={IntroCountry.cities}
-              imageUrl={IntroCountry.country.imageUrl}
-              title={IntroCountry.country.name}
-            />
-          )}
-        </>
-      )}
-    </div>
+    <MainLayout
+      headerProps={{
+        backgroundColor: "transparent",
+        leftIcons: [
+          {
+            icon: ICON.menu.burgerBlack,
+            alt: "Menu",
+            size: 20,
+            onClick: () => {},
+          },
+        ],
+        title: IntroCountry?.country.krName!,
+        titleAlign: "center",
+        rightIcons: [
+          {
+            icon: ICON.search.black,
+            alt: "Search",
+            size: 20,
+            onClick: () => {},
+          },
+          {
+            icon: ICON.cancel.black,
+            alt: "Cancle",
+            size: 20,
+            path: "/",
+          },
+        ],
+      }}
+    >
+      <div className=" h-full w-full ">
+        {isLoading ? (
+          <div>loading...</div>
+        ) : (
+          <>
+            {IntroCountry && (
+              <CountryIntroCard
+                countryId={IntroCountry.country?.id}
+                cities={IntroCountry.cities}
+                imageUrl={IntroCountry.country.imageUrl}
+                title={IntroCountry.country.name}
+              />
+            )}
+          </>
+        )}
+      </div>
+    </MainLayout>
   );
 }
 

@@ -43,7 +43,7 @@ function MainTourForm({ citiesInfo, areasInfo }: MainTourFormProps) {
   );
 
   return (
-    <div className="w-full flex flex-col p-4 justify-around mt-7 bg-gray-300">
+    <div className="w-full flex flex-col p-4 -mt-5 justify-around bg-gray-300">
       <CardType title="주요 관광지" type="" />
       <Carousel slides={carouselItems} />
     </div>

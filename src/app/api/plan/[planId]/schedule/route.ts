@@ -3,66 +3,85 @@ import { NextRequest, NextResponse } from "next/server";
 
 const TABLE_NAME = "schedule";
 const PLAN_TABLE_NAME = "plan";
+const MOVE_TABLE_NAME = "moveSchedule";
+const MEMO_TABLE_NAME = "memo";
+const AREA_TABLE_NAME = "area";
 
-type OrderListEntry = {
+type OrderListType = {
   type: string;
   id: string;
 };
 
 type PlanData = {
-  orderList: OrderListEntry[][] | null;
+  orderList: OrderListType[][] | null;
 };
 
-export async function POST(request: NextRequest) {
+type ScheduleType = {
+  id: string;
+  title: string | null;
+  place: string | null;
+  memo: string | null;
+  type: string;
+  startTime: string;
+  endTime: string;
+  imagesUrl: any;
+  latlng: any;
+  createdAt: string;
+  planId: string | null;
+  areaId?: string;
+  area?: AreaType;
+};
+
+type MoveType = {
+  id: string;
+  planId: string;
+  memo: string | null;
+  startTime: string;
+  endTime: string;
+  type: string;
+  imagesUrl: any;
+  createdAt: string;
+};
+
+type MemoType = {
+  id: string;
+  planId: string;
+  title: string;
+  content: string;
+  check: any;
+  imagesUrl: any;
+  createdAt: string;
+};
+
+type AreaType = {
+  id: number;
+  countryId: number;
+  cityId: number;
+  name: string;
+  type: string;
+  location: string;
+  description: string;
+  imagesUrl: string;
+  info: any;
+  lat: number;
+  lng: number;
+  createdAt: string;
+  krName: string;
+  title: string;
+  rating: number;
+};
+
+export async function GET(request: NextRequest) {
   try {
     const supabase = createClient();
-    const {
-      planId,
-      title,
-      place,
-      memo,
-      type,
-      startTime,
-      endTime,
-      images,
-      day,
-    } = await request.json();
+    const { searchParams } = new URL(request.url);
+    const planId = searchParams.get("planId");
+    const day = parseInt(searchParams.get("day") || "1", 10);
 
-    // 새로운 스케줄 삽입
-    const { data: insertData, error: insertError } = await supabase
-      .from(TABLE_NAME)
-      .insert([
-        {
-          planId,
-          title,
-          place,
-          memo,
-          type,
-          startTime,
-          endTime,
-          imagesUrl: images,
-        },
-      ])
-      .select();
-
-    if (insertError) {
-      console.error("Insert Error:", insertError);
-      return NextResponse.json(
-        {
-          error: `[${insertError.code}] ${insertError.hint} > ${insertError.message}`,
-        },
-        { status: 400 }
-      );
+    if (!planId) {
+      return NextResponse.json({ error: "Missing planId" }, { status: 400 });
     }
 
-    // 삽입된 스케줄 ID 가져오기
-    const insertedSchedule = insertData[0];
-    const newScheduleEntry: OrderListEntry = {
-      type: type,
-      id: insertedSchedule.id,
-    };
-
-    // plan 테이블의 orderList 가져오기
     const { data: planData, error: planError } = await supabase
       .from(PLAN_TABLE_NAME)
       .select("orderList")
@@ -81,32 +100,79 @@ export async function POST(request: NextRequest) {
 
     const planDataParsed = planData as PlanData;
 
-    // orderList 업데이트
-    let updatedOrderList: OrderListEntry[][] = planDataParsed.orderList || [];
-    // orderList가 빈 배열일 경우 초기화
-    while (updatedOrderList.length < day) {
-      updatedOrderList.push([]);
-    }
+    const orderListForDay = planDataParsed.orderList?.[day - 1] || [];
 
-    updatedOrderList[day - 1].push(newScheduleEntry);
+    // Schedule 데이터
+    const scheduleIds = orderListForDay
+      .filter(
+        (entry) => entry.type === "customePlace" || entry.type === "place"
+      )
+      .map((entry) => entry.id);
+    const { data: scheduleData = [] } = await supabase
+      .from(TABLE_NAME)
+      .select("*")
+      .in("id", scheduleIds);
 
-    // plan 테이블의 orderList 업데이트
-    const { error: updateError } = await supabase
-      .from(PLAN_TABLE_NAME)
-      .update({ orderList: updatedOrderList })
-      .eq("id", planId);
+    // MoveSchedule 데이터
+    const moveIds = orderListForDay
+      .filter((entry) => entry.type === "move")
+      .map((entry) => entry.id);
+    const { data: moveData = [] } = await supabase
+      .from(MOVE_TABLE_NAME)
+      .select("*")
+      .in("id", moveIds);
 
-    if (updateError) {
-      console.error("Update Error:", updateError);
-      return NextResponse.json(
-        {
-          error: `[${updateError.code}] ${updateError.hint} > ${updateError.message}`,
-        },
-        { status: 400 }
-      );
-    }
+    // Memo 데이터
+    const memoIds = orderListForDay
+      .filter((entry) => entry.type === "memo")
+      .map((entry) => entry.id);
+    const { data: memoData = [] } = await supabase
+      .from(MEMO_TABLE_NAME)
+      .select("*")
+      .in("id", memoIds);
 
-    return NextResponse.json({ data: insertData }, { status: 200 });
+    // Area 데이터
+    // const areaIds = (scheduleData || [])
+    //   .filter(
+    //     (entry: ScheduleType): entry is ScheduleType & { areaId: string } =>
+    //       entry.type === "place" && entry.areaId !== undefined
+    //   )
+    //   .map((entry) => entry.areaId);
+
+    // const { data: areaData = [] } = await supabase
+    //   .from(AREA_TABLE_NAME)
+    //   .select("*")
+    //   .in("id", areaIds);
+
+    // 결과 데이터 결합
+    const resultData = orderListForDay.map((entry) => {
+      if (entry.type === "customePlace" || entry.type === "place") {
+        const data = scheduleData?.find((d) => d.id === entry.id) as
+          | ScheduleType
+          | undefined;
+        if (data && data.type === "place") {
+          // data.area = areaData?.find((a) => a.id === data.areaId);
+        }
+        return { ...entry, data };
+      } else if (entry.type === "move") {
+        return {
+          ...entry,
+          data: moveData?.find((d) => d.id === entry.id) as
+            | MoveType
+            | undefined,
+        };
+      } else if (entry.type === "memo") {
+        return {
+          ...entry,
+          data: memoData?.find((d) => d.id === entry.id) as
+            | MemoType
+            | undefined,
+        };
+      }
+      return entry;
+    });
+
+    return NextResponse.json({ data: resultData }, { status: 200 });
   } catch (error) {
     console.error("Unexpected Error:", error);
     return NextResponse.json(

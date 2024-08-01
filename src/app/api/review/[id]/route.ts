@@ -1,10 +1,12 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
-
+export async function GET(
+  request: NextRequest,
+  route: { params: { id: string } }
+) {
+  const id = route.params.id;
+  console.log("id", id);
   if (!id) {
     return NextResponse.json({
       status: 400,
@@ -19,7 +21,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("areaReview")
     .select("*")
-    .eq("areaId", id);
+    .eq("userId", id);
 
   if (error) {
     return NextResponse.json({

@@ -21,7 +21,6 @@ const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 1000,
 });
-
 const planAPI = new PlanAPI(apiClient);
 
 function BottomSheet({
@@ -156,12 +155,14 @@ function BottomSheet({
             setCheckList={setCheckList}
           />
         )}
-        <BottomSheetImages
-          type={type}
-          status={status}
-          images={images}
-          setImages={setImages}
-        />
+        {type !== "memo" && (
+          <BottomSheetImages
+            type={type}
+            status={status}
+            images={images}
+            setImages={setImages}
+          />
+        )}
 
         <UpdateButton
           status={status}

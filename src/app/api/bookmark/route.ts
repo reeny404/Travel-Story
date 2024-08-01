@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
   }
 
   const supabase = createClient();
-
   const { data, error } = await supabase
     .from("areaBookmark")
     .select("*")
@@ -50,12 +49,45 @@ export async function POST(request: NextRequest) {
   const data = await request.json();
   const userId = data.userId;
   const areaId = data.areaId;
-  const supabase = createClient();
+  console.log("userId, areaId", userId, areaId);
 
+  if (!userId || !areaId) {
+    return NextResponse.json({
+      status: 400,
+      message: "Bad Request",
+      error: { status: 400, message: "Bad Request" },
+      data: null,
+    });
+  }
+  const supabase = createClient();
+  const { data: areaData } = await supabase
+    .from("area")
+    .select("lat,lng")
+    .eq("id", areaId)
+    .single();
+  if (!areaData) {
+    return NextResponse.json({
+      status: 404,
+      message: "No Data",
+      error: { status: 404, message: "No Data" },
+      data: null,
+    });
+  }
+  const { lat, lng } = areaData;
   const { data: insertedData } = await supabase
     .from("areaBookmark")
-    .insert({ userId, areaId })
+    .insert({ userId, areaId, lat, lng })
     .select();
+
+  if (!insertedData || insertedData.length === 0) {
+    return NextResponse.json({
+      status: 404,
+      message: "No Data",
+      error: { status: 404, message: "No Data" },
+      data: null,
+    });
+  }
+
   return NextResponse.json(insertedData);
 }
 
