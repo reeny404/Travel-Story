@@ -38,7 +38,7 @@ function AuthPage({
     setIsInputValid(true);
     switch (step) {
       case "email":
-        router.push(`${prevPath}`);
+        router.back();
         break;
       case "password":
         setStep("email");
