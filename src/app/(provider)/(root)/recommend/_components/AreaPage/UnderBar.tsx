@@ -26,6 +26,8 @@ function UnderBar({ area }: UnderBarProps) {
     } else {
       setBottomSheetVisible(true);
     }
+  };
+
   const handleClose = () => {
     setBottomSheetVisible(false);
   };
@@ -38,7 +40,6 @@ function UnderBar({ area }: UnderBarProps) {
     }
   };
   const BottomSheet = createAddBottomSheet();
-
   return (
     <div className="w-full h-10 px-3 flex gap-x-2 fixed bottom-0">
       {isBottomSheetVisible && (

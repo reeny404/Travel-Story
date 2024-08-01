@@ -24,7 +24,6 @@ type AreaDetailPage = {
 };
 function AreaDetailPage({ params }: AreaDetailPage) {
   const areaId = parseInt(params.id);
-  const { openDrawer } = useDrawerStore();
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
   const { openDrawer } = useDrawerStore();
   const { user } = useAuth();
