@@ -46,7 +46,7 @@ function CountryButton({
   return (
     <div
       className={clsx(
-        "flex justify-start items-center",
+        "flex justify-start items-center overflow-hidden",
         countryButtonVariant({ size })
       )}
     >
@@ -71,7 +71,7 @@ function CountryButton({
         </span>
         {desc && (
           <p
-            className={clsx("text-[14px] overflow-hidden text-ellipsis", {
+            className={clsx("text-sm overflow-hidden text-ellipsis", {
               "line-clamp-2": !isCountry,
               "whitespace-nowrap": isCountry,
               "text-slate-400": isCountry,
