@@ -14,7 +14,7 @@ function MyProfile() {
         className="w-[60px] h-[60px]"
       />
       <div className="flex flex-col ml-[11px]">
-        <h5>{user?.user_metadata.nickname ?? user?.user_metadata.user}</h5>
+        <h5>{user?.user_metadata.nickname ?? user?.user_metadata.name}</h5>
         <p className="text-[14px]">{user?.email}</p>
       </div>
       <button className="ml-auto">편집</button>

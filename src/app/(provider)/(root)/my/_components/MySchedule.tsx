@@ -5,7 +5,7 @@ import Image from "next/image";
 function MySchedule() {
   return (
     <section className="flex w-full items-start justify-between">
-      <div className="w-[215px] bg-white px-[17px] pt-[11px] pb-[7px] rounded-lg cursor-pointer">
+      <div className="w-[255px] bg-white px-[17px] pt-[11px] pb-[7px] rounded-lg cursor-pointer">
         <h3 className="font-semibold">밀라노 여행기</h3>
         <p className="text-[12px]">2024.07.18(목) ~ 07.24(수)</p>
       </div>

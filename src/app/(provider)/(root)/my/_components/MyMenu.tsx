@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 function MyMenu() {
   const router = useRouter();
   const pageMoveDiv =
-    "px-[26px] py-[18.5px] bg-white rounded-lg cursor-pointer";
+    "px-[32px] py-[18.5px] bg-white rounded-lg cursor-pointer";
 
   const handleBookMarkClick = () => {
     router.push("/my/bookmarks");
