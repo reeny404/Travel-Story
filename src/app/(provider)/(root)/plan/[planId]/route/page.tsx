@@ -48,7 +48,7 @@ function PlanRoutePage() {
           grabCursor={true}
           className="mb-2"
         >
-          {routes.map((route, i) => (
+          {routes.map((_, i) => (
             <SwiperSlide key={i}>
               <RouteCard route={{ ...schedule, index: i + 1 }} />
             </SwiperSlide>
