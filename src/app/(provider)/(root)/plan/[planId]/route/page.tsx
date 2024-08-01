@@ -54,7 +54,12 @@ function PlanRoutePage() {
             </SwiperSlide>
           ))}
         </Swiper>
-        <SlideTagList tagList={tags} onTagClick={onTagClick} spacing={3} />
+        <SlideTagList
+          theme="white"
+          tagList={tags}
+          onTagClick={onTagClick}
+          spacing={3}
+        />
       </div>
     </section>
   );
