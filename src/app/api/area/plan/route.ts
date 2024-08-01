@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     statusText: "OK",
   });
 }
-
+type Order = { id?: string; type?: string };
 export async function POST(request: NextRequest) {
   const reqData = await request.json();
   const { userId, title, startDate, endDate, areaId } = reqData;
@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
   if (!data) {
     return;
   }
+  const orderList: Order[][] = [[]];
   const countryData = data[0]?.country?.krName;
   const { data: planData, error } = await supabase
     .from(TABLE_NAME)
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest) {
       userId,
       title,
       country: countryData,
+      orderList,
       startDate,
       endDate,
     })

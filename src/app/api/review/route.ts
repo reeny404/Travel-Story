@@ -75,8 +75,7 @@ export async function POST(request: NextRequest) {
         .upload(`public/${Date.now()}_${fileName}`, file);
 
       if (error) {
-        console.error("Error uploading file:", error);
-        continue;
+        return console.error("Error uploading file:", error);
       }
       const { data: publicData } = await supabase.storage
         .from("review")

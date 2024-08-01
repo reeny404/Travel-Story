@@ -1,24 +1,26 @@
 "use client";
 import { api } from "@/apis/api";
 import { useAuth } from "@/contexts/auth.contexts";
+import { Area } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import AddBottomSheetTitle from "./AddBottomSheetTitle";
 import PlanItem from "./PlanItem";
 
 type BottomSheetProps = {
   onClose: () => void;
-  areaId: number;
-  id: string; // 추가
-  areaName: string;
+  area: Area;
 };
 
-function AddBottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
+function AddBottomSheet({ onClose, area }: BottomSheetProps) {
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const [clickedPlan, setClickedPlan] = useState<number | null>(null);
+  const [day, setDay] = useState<number | null>(null);
   const { user } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (formRef.current && !formRef.current.contains(e.target as Node)) {
@@ -32,7 +34,26 @@ function AddBottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
     queryKey: ["planData", user?.id],
     queryFn: () => api.area.getPlan(user?.id!),
   });
-
+  const handleAdd = async () => {
+    console.log("clickedPlan,day", clickedPlan, day);
+    if (clickedPlan !== 0 && (!clickedPlan || !day)) {
+      return console.log("여행 일정을 선택해주세요");
+    }
+    const data = planData[clickedPlan!];
+    const scheduleData = {
+      planId: data.id,
+      userId: data.userId,
+      areaId: area.id,
+      orderList: data.orderList,
+      krName: area.krName,
+      day: day,
+      type: "customePlace",
+      latlng: { lat: area.lat, lng: area.lng },
+    };
+    await api.area.addSchedule(scheduleData);
+    setDay(null);
+    onClose();
+  };
   useEffect(() => {
     setIsOpening(true);
     setTimeout(() => {
@@ -57,12 +78,13 @@ function AddBottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
               : "translate-y-0"
         }transition-transform duration-300`}
       >
-        <AddBottomSheetTitle areaId={areaId} />
+        <AddBottomSheetTitle areaId={area?.id} />
         <section className="min-h-96">
           {planData &&
             planData.map((plan: any, idx: number) => {
               return (
                 <PlanItem
+                  setDay={setDay}
                   setClickedPlan={setClickedPlan}
                   clickedPlan={clickedPlan}
                   key={idx}
@@ -83,7 +105,9 @@ function AddBottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
           <button
             className="h-10 text-center border border-gray-600 rounded-lg"
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              planData ? handleAdd() : router.push("/plan");
+            }}
           >
             {planData ? "추가하기" : "내 여행 만들기"}
           </button>
@@ -96,17 +120,14 @@ function AddBottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
 export function createAddBottomSheet() {
   return function AddBottomSheetWrapper({
     onClose,
-    areaId,
-    areaName,
-    id,
+    area,
     // 추가
   }: BottomSheetProps) {
     return (
       <AddBottomSheet
-        areaName={areaName}
         onClose={onClose}
-        areaId={areaId}
-        id={id} // 전달
+        area={area}
+        // 전달
       />
     );
   };

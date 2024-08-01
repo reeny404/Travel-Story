@@ -1,17 +1,23 @@
 import { DateUtil } from "@/utils/DateUtil";
 import clsx from "clsx";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import DateList from "./DateList";
 
 type PlanItemProps = {
   plan: any;
   clickedPlan: number | null;
   setClickedPlan: Dispatch<SetStateAction<number | null>>;
+  setDay: Dispatch<SetStateAction<number | null>>;
   idx: number;
 };
 
-function PlanItem({ plan, idx, setClickedPlan, clickedPlan }: PlanItemProps) {
-  const [isClicked, setIsClicked] = useState(false);
+function PlanItem({
+  plan,
+  idx,
+  setClickedPlan,
+  clickedPlan,
+  setDay,
+}: PlanItemProps) {
   const days =
     DateUtil.getGapDay(new Date(plan.startDate), new Date(plan.endDate)) + 1;
   return (
@@ -27,7 +33,7 @@ function PlanItem({ plan, idx, setClickedPlan, clickedPlan }: PlanItemProps) {
       <p className="text-xs">
         {plan.startDate} ~ {plan.endDate.slice(5)}
       </p>
-      {clickedPlan === idx && <DateList days={days} />}
+      {clickedPlan === idx && <DateList setDay={setDay} days={days} />}
     </div>
   );
 }

@@ -1,10 +1,18 @@
 import clsx from "clsx";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-function DateList({ days }: { days: number }) {
+type DateListProps = {
+  setDay?: Dispatch<SetStateAction<number | null>>;
+  days: number;
+};
+
+function DateList({ days, setDay }: DateListProps) {
   const [ClickedIdx, setClickedIdx] = useState<number | null>(null);
   const makeDateList = (days: number) => {
     const dateList = [];
+    if (!days) {
+      return;
+    }
     for (let i = 1; i <= days; i++) {
       dateList.push(
         <div
@@ -12,7 +20,10 @@ function DateList({ days }: { days: number }) {
           className={clsx("w-16 p-2 m-2 text-center rounded-lg", {
             "bg-black text-white": i === ClickedIdx,
           })}
-          onClick={() => setClickedIdx(i)}
+          onClick={() => {
+            setClickedIdx(i);
+            setDay?.(i);
+          }}
         >
           {i}일차
         </div>

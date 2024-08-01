@@ -36,7 +36,6 @@ function AreaDetailPage({ params }: AreaDetailPage) {
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data.data,
   });
-
   const { data: areaReviews } = useQuery<
     RecommendResponse<AreaReview[]>,
     AxiosError,
@@ -153,7 +152,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                   );
                 })}
             </div>
-            <UnderBar areaId={areaId} />
+            <UnderBar area={area} />
           </section>
         )
       )}

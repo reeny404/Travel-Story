@@ -1,19 +1,19 @@
 "use client";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
+import { Area } from "@/types/Recommend";
 import { useState } from "react";
 import { createAddBottomSheet } from "../BottomSheet/AddAreaSheet/AddBottomSheet";
 
 type UnderBarProps = {
-  areaId: number;
+  area: Area;
   handleAddPlan?: () => void;
 };
 
-function UnderBar({ areaId }: UnderBarProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(areaId);
+function UnderBar({ area }: UnderBarProps) {
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(area.id);
   const { user } = useAuth();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
-  console.log("user", user);
   const handleOpen = () => {
     setBottomSheetVisible(true);
   };
@@ -26,12 +26,7 @@ function UnderBar({ areaId }: UnderBarProps) {
   return (
     <div className="w-full h-10 px-3 flex gap-x-2 fixed bottom-0">
       {isBottomSheetVisible && (
-        <BottomSheet
-          areaId={areaId}
-          id={user?.id!}
-          areaName="asd"
-          onClose={handleClose}
-        />
+        <BottomSheet area={area} onClose={handleClose} />
       )}
       {isBookmarked ? (
         <button

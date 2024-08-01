@@ -134,6 +134,18 @@ class AreaAPI {
       return console.log(error);
     }
   }
+
+  async addSchedule(data: any) {
+    try {
+      const path = "api/area/schedule";
+      const response = await this.axios.post<Schedule>(path, data);
+      console.log(response);
+    } catch (error) {
+      return console.log(error);
+    }
+  }
 }
 type PlanType = Tables<"plan">;
+type Schedule = Tables<"schedule"> & Tables<"plan">;
+
 export default AreaAPI;
