@@ -1,28 +1,24 @@
 "use client";
 import { api } from "@/apis/api";
-import PlanAPI from "@/apis/plan.api"; // 추가
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import ReviewBottomSheetImages from "./ReviewBottomSheetImages";
 import ReviewBottomSheetInput from "./ReviewBottomSheetInput";
 import ReviewBottomSheetRating from "./ReviewBottomSheetRating";
 import ReviewBottomSheetTitle from "./ReviewBottomSheetTitle";
 
-type BottomSheetProps = {
+type ReviewBottomSheetProps = {
   onClose: () => void;
   areaId: number;
   id: string; // 추가
   areaName: string;
 };
 
-const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL, // 환경 변수로 설정된 API URL 사용
-  timeout: 1000,
-});
-
-const planAPI = new PlanAPI(apiClient);
-
-function BottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
+function ReviewBottomSheet({
+  onClose,
+  areaId,
+  id,
+  areaName,
+}: ReviewBottomSheetProps) {
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const [imgFile, setImgFile] = useState<{ name: string; file: File }[]>([]);
@@ -54,15 +50,6 @@ function BottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
     }, 300);
   }, []);
 
-  // const getFormData = () => {
-  //   const formData = new FormData(formRef.current!);
-  //   const data: Record<string, any> = {};
-  //   formData.forEach((value, key) => {
-  //     data[key] = value;
-  //   });
-  //   return data;
-  // };
-
   const handleAdd = async () => {
     const formData = new FormData();
     for (let i = 0; i < imgFile.length; i++) {
@@ -86,20 +73,20 @@ function BottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full z-50 ${
+      className={`fixed top-0 left-0 w-full h-full z-50 bg-black${
         isOpening || isClosing ? "transition-opacity duration-300" : ""
-      } ${isOpening ? "bg-opacity-0" : "bg-opacity-50"} bg-black`}
+      } ${isOpening ? "bg-opacity-0" : "bg-opacity-50"}`}
       onClick={handleClose}
     >
       <form
         ref={formRef}
-        className={`absolute bottom-0 left-0 w-full h-auto py-4 pb-8 px-4 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet bg-white transform ${
+        className={`absolute bottom-0 left-0 w-full h-auto py-4 pb-8 px-4 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet bg-white transform${
           isClosing
             ? "translate-y-full"
             : isOpening
               ? "translate-y-full"
               : "translate-y-0"
-        } transition-transform duration-300`}
+        }transition-transform duration-300`}
       >
         <ReviewBottomSheetTitle />
         <ReviewBottomSheetRating
@@ -125,15 +112,15 @@ function BottomSheet({ onClose, areaId, id, areaName }: BottomSheetProps) {
 }
 
 export function createReviewBottomSheet() {
-  return function BottomSheetWrapper({
+  return function ReviewBottomSheetWrapper({
     onClose,
     areaId,
     areaName,
     id,
     // 추가
-  }: BottomSheetProps) {
+  }: ReviewBottomSheetProps) {
     return (
-      <BottomSheet
+      <ReviewBottomSheet
         areaName={areaName}
         onClose={onClose}
         areaId={areaId}
@@ -143,4 +130,4 @@ export function createReviewBottomSheet() {
   };
 }
 
-export default BottomSheet;
+export default ReviewBottomSheet;

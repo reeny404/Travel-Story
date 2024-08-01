@@ -8,6 +8,7 @@ const MAXIMUM_RATING = 5;
 
 function RatingIcons({ rating, type }: { rating: number; type: string }) {
   const filledIcon = rating;
+  console.log("rating", rating);
   const unFilledIcon = MAXIMUM_RATING - rating;
 
   return (
