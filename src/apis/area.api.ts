@@ -76,17 +76,16 @@ class AreaAPI {
     return response.data;
   }
 
-  // TODO 한글 이름 검색 시 가능하도록 업데이트 해야함.
   /**
    *
-   * @param name {string} 영문 이름
-   * @returns
+   * @param query 검색어
+   * @returns 검색 결과
    */
-  async search(name: string): Promise<RecommendResponse<Area[]>> {
+  async search(query: string): Promise<RecommendResponse<Area[]>> {
     const path = `/api/area/search`;
     const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
       params: {
-        name,
+        query,
       },
     });
 

@@ -48,13 +48,18 @@ function PlanRoutePage() {
           grabCursor={true}
           className="mb-2"
         >
-          {routes.map((route, i) => (
+          {routes.map((_, i) => (
             <SwiperSlide key={i}>
               <RouteCard route={{ ...schedule, index: i + 1 }} />
             </SwiperSlide>
           ))}
         </Swiper>
-        <SlideTagList tagList={tags} onTagClick={onTagClick} spacing={3} />
+        <SlideTagList
+          theme="white"
+          tagList={tags}
+          onTagClick={onTagClick}
+          spacing={3}
+        />
       </div>
     </section>
   );

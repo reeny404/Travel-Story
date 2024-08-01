@@ -1,5 +1,8 @@
+"use client";
+
 import CountryButton from "@/components/CountryButton";
 import { CONTINENTS } from "@/constants/continents";
+import useDrawerStore from "@/stores/drawer.store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import SlideTagList from "../commons/TagList/SlideTagList";
@@ -11,12 +14,19 @@ const CONTINENT_LIST = Object.keys(CONTINENTS) as Array<
 
 function TripList() {
   const router = useRouter();
+  const { closeDrawer } = useDrawerStore();
   const [selectedTag, setSelectedTag] = useState<keyof typeof CONTINENTS>(
     CONTINENT_LIST[0]
   );
 
   const handleTagClick = (tag: keyof typeof CONTINENTS) => {
     setSelectedTag(tag);
+  };
+
+  const handleNavigateCountryPage = () => {
+    // 추후 경로 변경
+    router.push(`/recommend/country/1`);
+    closeDrawer();
   };
 
   return (
@@ -38,7 +48,7 @@ function TripList() {
               imgPath="/sampleImg.jpg"
               alt={country}
               countryName={country}
-              onClick={() => router.push(`/recommend/country/1`)}
+              onClick={handleNavigateCountryPage}
             />
           </li>
         ))}
