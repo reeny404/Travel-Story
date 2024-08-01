@@ -1,5 +1,5 @@
 function FooterList() {
-  const lineStyle = "mb-3";
+  const lineStyle = "mb-3 cursor-pointer";
   return (
     <section className="w-full">
       <p className={lineStyle}>고객센터</p>
