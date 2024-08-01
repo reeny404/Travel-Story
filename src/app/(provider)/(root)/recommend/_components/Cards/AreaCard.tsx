@@ -32,6 +32,7 @@ function AreaCard({
       isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
     }
   };
+
   return (
     <div className="w-full h-full relative ">
       <div className="w-full h-[220px] relative aspect-auto">
