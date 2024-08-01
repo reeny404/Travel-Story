@@ -19,7 +19,7 @@ function PlanList() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col space-y-4">
       {list.map((item) => (
         <Link key={item.id} href={`/plan/${item.id}`}>
           <Plan plan={item}></Plan>
