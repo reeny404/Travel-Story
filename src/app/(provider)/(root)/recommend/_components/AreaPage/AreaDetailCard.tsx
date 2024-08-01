@@ -1,15 +1,15 @@
 "use client";
 
 import RatingIcons from "@/components/Card/RatingIcons";
-import { Area, Rating } from "@/types/Recommend";
+import { Area } from "@/types/Recommend";
 import Image from "next/image";
 import { useCallback } from "react";
 
 type AreaDetailCardProps = {
   area: Area;
-  rating: Rating;
+  ratingAmount: number;
 };
-function AreaDetailCard({ area, rating }: AreaDetailCardProps) {
+function AreaDetailCard({ area, ratingAmount }: AreaDetailCardProps) {
   const convertTypeToKr = useCallback((type: string) => {
     if (type === "restaurant") {
       return "식당";
@@ -27,13 +27,19 @@ function AreaDetailCard({ area, rating }: AreaDetailCardProps) {
     <div className="w-full h-[500px]">
       <h1 className="w-full p-3 text-xl font-bold">{area.title}</h1>
       <div className="w-full ">
-        <div className="w-full h-[207px] relative">
-          <Image src={area.imageUrl!} alt="img" fill className="rounded-sm" />
+        <div className="w-full h-[220px] relative aspect-auto">
+          <Image
+            src={area.imageUrl || "/"}
+            alt={area.title}
+            fill
+            className="object-auto"
+          />
         </div>
         <div className="p-3 flex justify-between items-center font-semibold">
           <span>{convertTypeToKr(area.type!)}</span>
-          <div>
-            <RatingIcons type="small" rating={rating.rating} />
+          <div className="flex items-center gap-x-1">
+            <RatingIcons type="small" rating={area.rating!} />
+            <span className="text-xs">{`(${ratingAmount})`}</span>
           </div>
         </div>
         <p className="px-3 flex justify-between items-center font-semibold">

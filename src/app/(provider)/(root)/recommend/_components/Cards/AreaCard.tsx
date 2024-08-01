@@ -1,5 +1,5 @@
 import RatingIcons from "@/components/Card/RatingIcons";
-import ImageFrame from "@/components/Frame/ImageFrame";
+import { ICON } from "@/constants/icon";
 import { useBookmarks } from "@/hooks/useBookmark";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,27 +22,24 @@ function AreaCard({
   id,
 }: AreaCardProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(id);
-
   return (
-    <div className="w-full h-full relative">
-      <ImageFrame
-        src={imageUrl}
-        alt="detailCard"
-        roundType="sm"
-        className="w-[301px] h-[138px]"
-      />
+    <div className="w-full h-full relative ">
+      <div className="w-full h-[220px] relative aspect-auto">
+        <Image src={imageUrl || "/"} alt={title} fill className="object-auto" />
+      </div>
+
       <div className="px-4 py-3">
         <Link href={linkUrl} className="font-bold mt-3 mb-3">
           {title}
         </Link>
         <p className="mb-3">{description}</p>
-        {rating && <RatingIcons type="small" rating={rating} />}
+        <RatingIcons type="small" rating={rating || 0} />
       </div>
       <Image
         src={
           isBookmarked
-            ? "/cardImages/bookmarked.png"
-            : "/cardImages/bookmark.svg"
+            ? `/icons/${ICON.bookmark.on.name}.svg`
+            : `/icons/${ICON.bookmark.off.name}.svg`
         }
         alt="bookmark"
         width={10}

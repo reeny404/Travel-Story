@@ -7,8 +7,8 @@ import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useTab } from "@/hooks/useTab";
-import { Area, AreaReview, Rating, RecommendResponse } from "@/types/Recommend";
-import { calcRatings } from "@/utils/calcRatings";
+import useDrawerStore from "@/stores/drawer.store";
+import { Area, AreaReview, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
@@ -24,6 +24,7 @@ type AreaDetailPage = {
 };
 function AreaDetailPage({ params }: AreaDetailPage) {
   const areaId = parseInt(params.id);
+  const { openDrawer } = useDrawerStore();
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
   const { user } = useAuth();
 
@@ -36,7 +37,6 @@ function AreaDetailPage({ params }: AreaDetailPage) {
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data.data,
   });
-
   const { data: areaReviews } = useQuery<
     RecommendResponse<AreaReview[]>,
     AxiosError,
@@ -45,18 +45,6 @@ function AreaDetailPage({ params }: AreaDetailPage) {
     queryKey: ["areaReviews", areaId],
     queryFn: () => api.review.getReviews(areaId),
     select: (data) => data.data,
-  });
-
-  const { data: rating } = useQuery<Rating>({
-    queryKey: ["areaRating", areaId],
-    queryFn: async () => {
-      const response = await api.area.getAreaRating(areaId);
-      if (!response?.data) {
-        return { rating: 0, pieces: 0 };
-      }
-      const { rating, pieces } = calcRatings(response.data);
-      return { rating, pieces };
-    },
   });
 
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -72,7 +60,9 @@ function AreaDetailPage({ params }: AreaDetailPage) {
       });
     }
   }, [currentTab]);
-
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
   return (
     <MainLayout
       headerProps={{
@@ -98,64 +88,60 @@ function AreaDetailPage({ params }: AreaDetailPage) {
             icon: ICON.menu.burgerBlack,
             alt: "Menu",
             size: 20,
-            onClick: () => {},
+            onClick: openDrawer,
           },
         ],
       }}
     >
-      {isLoading ? (
-        <div>loading...</div>
-      ) : (
-        area &&
-        rating && (
-          <section className="relative container h-full max-w-[375px]">
-            <AreaDetailCard area={area} rating={rating} />
+      {area && (
+        <section className="relative container h-full max-w-[375px]">
+          <AreaDetailCard area={area} ratingAmount={areaReviews?.length || 0} />
+          <Liner />
+          <Tab
+            TABS={TABS.areaDetail}
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
+          />
+          <Liner />
+          <div
+            ref={(tabEl) => {
+              sectionRefs.current[0] = tabEl;
+            }}
+          >
+            <NoticeForm area={area} />
             <Liner />
-            <Tab
-              TABS={TABS.areaDetail}
-              currentTab={currentTab}
-              setCurrentTab={setCurrentTab}
+          </div>
+          <div
+            ref={(tabEl) => {
+              sectionRefs.current[2] = tabEl;
+            }}
+          >
+            <ReviewSummaryCard
+              areaName={area.krName!}
+              rating={area.rating!}
+              ratingAmount={areaReviews?.length || 0}
+              areaId={areaId}
             />
             <Liner />
-            <div
-              ref={(tabEl) => {
-                sectionRefs.current[0] = tabEl;
-              }}
-            >
-              <NoticeForm area={area} />
-              <Liner />
-            </div>
-            <div
-              ref={(tabEl) => {
-                sectionRefs.current[2] = tabEl;
-              }}
-            >
-              <ReviewSummaryCard
-                areaName={area.krName!}
-                rating={rating}
-                areaId={areaId}
-              />
-              <Liner />
-            </div>
-            <div>
-              {areaReviews &&
-                areaReviews.map((review, idx) => {
-                  return (
-                    <AreaReviewCard
-                      key={idx}
-                      userImageUrl="/"
-                      name={user?.user_metadata.nickname}
-                      imageUrl={review.imageUrls[0]}
-                      createdAt={review.createdAt}
-                      rating={rating.rating}
-                      description={review.content!}
-                    />
-                  );
-                })}
-            </div>
-            <UnderBar areaId={areaId} />
-          </section>
-        )
+          </div>
+          <div>
+            {areaReviews &&
+              areaReviews.map((review, idx) => {
+                return (
+                  <AreaReviewCard
+                    key={idx}
+                    userImageUrl="/"
+                    name={user?.user_metadata.nickname}
+                    imageUrl={review.imageUrls[0]}
+                    createdAt={review.createdAt}
+                    rating={area.rating!}
+                    description={review.content!}
+                  />
+                );
+              })}
+          </div>
+          <UnderBar area={area} />
+        </section>
       )}
     </MainLayout>
   );
