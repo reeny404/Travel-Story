@@ -1,7 +1,9 @@
 "use client";
+import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
 import { Area } from "@/types/Recommend";
+import Image from "next/image";
 import { useState } from "react";
 import { createAddBottomSheet } from "../BottomSheet/AddAreaSheet/AddBottomSheet";
 
@@ -28,21 +30,26 @@ function UnderBar({ area }: UnderBarProps) {
       {isBottomSheetVisible && (
         <BottomSheet area={area} onClose={handleClose} />
       )}
-      {isBookmarked ? (
-        <button
-          onClick={() => deleteBookmark.mutate()}
-          className="w-14 h-full bg-blue-500 border rounded-md"
-        >
-          북X
-        </button>
-      ) : (
-        <button
-          onClick={() => addBookmark.mutate()}
-          className="w-14 h-full bg-blue-500 border rounded-md"
-        >
-          북O
-        </button>
-      )}
+      <button
+        onClick={() => deleteBookmark.mutate()}
+        className="w-14 h-full p-2 relative flex justify-center items-center border border-2  bg-white rounded-md aspect-auto"
+      >
+        <Image
+          src={
+            isBookmarked
+              ? `/icons/${ICON.bookmark.on.name}.svg`
+              : `/icons/${ICON.bookmark.off.name}.svg`
+          }
+          alt="bookmark"
+          width={30}
+          height={30}
+          className="hover:cursor-pointer object-contain"
+          onClick={() =>
+            isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate()
+          }
+        />
+      </button>
+
       <button
         onClick={handleOpen}
         className="w-72 h-full bg-gray-300 border rounded-md"

@@ -1,4 +1,4 @@
-import { Area, Rating, RecommendResponse } from "@/types/Recommend";
+import { Area, RecommendResponse } from "@/types/Recommend";
 import { Tables } from "@/types/supabase";
 import { AxiosError, AxiosInstance } from "axios";
 type RatingResponse = {
@@ -93,21 +93,6 @@ class AreaAPI {
 
     const data = response.data;
     return data;
-  }
-
-  async getAreaRating(id: number): Promise<RatingResponse | undefined> {
-    try {
-      const path = `/api/area/rating`;
-      const response = await this.axios.get<RecommendResponse<Rating>>(path, {
-        params: {
-          id,
-        },
-      });
-      const data = response.data;
-      return data;
-    } catch (error) {
-      throw new Error();
-    }
   }
 
   // TODO 아래 두 메서드 Plan쪽으로 옮겨야댐

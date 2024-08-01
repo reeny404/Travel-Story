@@ -34,8 +34,8 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     queryKey: ["planData", user?.id],
     queryFn: () => api.area.getPlan(user?.id!),
   });
+
   const handleAdd = async () => {
-    console.log("clickedPlan,day", clickedPlan, day);
     if (clickedPlan !== 0 && (!clickedPlan || !day)) {
       return console.log("여행 일정을 선택해주세요");
     }
@@ -60,7 +60,9 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
       setIsOpening(false);
     }, 300);
   }, []);
-
+  if (!planData) {
+    return;
+  }
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full z-50 bg-black${
@@ -100,16 +102,16 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
             type="button"
             onClick={() => onClose()}
           >
-            취소
+            {planData.length === 0 ? "계속 둘러보기" : "취소"}
           </button>
           <button
             className="h-10 text-center border border-gray-600 rounded-lg"
             type="button"
             onClick={() => {
-              planData ? handleAdd() : router.push("/plan");
+              planData.length === 0 ? router.push("/plan") : handleAdd();
             }}
           >
-            {planData ? "추가하기" : "내 여행 만들기"}
+            {planData.length === 0 ? "내 여행 만들기" : "추가하기"}
           </button>
         </div>
       </form>

@@ -7,8 +7,7 @@ import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useTab } from "@/hooks/useTab";
-import { Area, AreaReview, Rating, RecommendResponse } from "@/types/Recommend";
-import { calcRatings } from "@/utils/calcRatings";
+import { Area, AreaReview, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
@@ -46,18 +45,6 @@ function AreaDetailPage({ params }: AreaDetailPage) {
     select: (data) => data.data,
   });
 
-  const { data: rating } = useQuery<Rating>({
-    queryKey: ["areaRating", areaId],
-    queryFn: async () => {
-      const response = await api.area.getAreaRating(areaId);
-      if (!response?.data) {
-        return { rating: 0, pieces: 0 };
-      }
-      const { rating, pieces } = calcRatings(response.data);
-      return { rating, pieces };
-    },
-  });
-
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -71,7 +58,9 @@ function AreaDetailPage({ params }: AreaDetailPage) {
       });
     }
   }, [currentTab]);
-
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
   return (
     <MainLayout
       headerProps={{
@@ -102,59 +91,55 @@ function AreaDetailPage({ params }: AreaDetailPage) {
         ],
       }}
     >
-      {isLoading ? (
-        <div>loading...</div>
-      ) : (
-        area &&
-        rating && (
-          <section className="relative container h-full max-w-[375px]">
-            <AreaDetailCard area={area} rating={rating} />
+      {area && (
+        <section className="relative container h-full max-w-[375px]">
+          <AreaDetailCard area={area} ratingAmount={areaReviews?.length || 0} />
+          <Liner />
+          <Tab
+            TABS={TABS.areaDetail}
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
+          />
+          <Liner />
+          <div
+            ref={(tabEl) => {
+              sectionRefs.current[0] = tabEl;
+            }}
+          >
+            <NoticeForm area={area} />
             <Liner />
-            <Tab
-              TABS={TABS.areaDetail}
-              currentTab={currentTab}
-              setCurrentTab={setCurrentTab}
+          </div>
+          <div
+            ref={(tabEl) => {
+              sectionRefs.current[2] = tabEl;
+            }}
+          >
+            <ReviewSummaryCard
+              areaName={area.krName!}
+              rating={area.rating!}
+              ratingAmount={areaReviews?.length || 0}
+              areaId={areaId}
             />
             <Liner />
-            <div
-              ref={(tabEl) => {
-                sectionRefs.current[0] = tabEl;
-              }}
-            >
-              <NoticeForm area={area} />
-              <Liner />
-            </div>
-            <div
-              ref={(tabEl) => {
-                sectionRefs.current[2] = tabEl;
-              }}
-            >
-              <ReviewSummaryCard
-                areaName={area.krName!}
-                rating={rating}
-                areaId={areaId}
-              />
-              <Liner />
-            </div>
-            <div>
-              {areaReviews &&
-                areaReviews.map((review, idx) => {
-                  return (
-                    <AreaReviewCard
-                      key={idx}
-                      userImageUrl="/"
-                      name={user?.user_metadata.nickname}
-                      imageUrl={review.imageUrls[0]}
-                      createdAt={review.createdAt}
-                      rating={rating.rating}
-                      description={review.content!}
-                    />
-                  );
-                })}
-            </div>
-            <UnderBar area={area} />
-          </section>
-        )
+          </div>
+          <div>
+            {areaReviews &&
+              areaReviews.map((review, idx) => {
+                return (
+                  <AreaReviewCard
+                    key={idx}
+                    userImageUrl="/"
+                    name={user?.user_metadata.nickname}
+                    imageUrl={review.imageUrls[0]}
+                    createdAt={review.createdAt}
+                    rating={area.rating!}
+                    description={review.content!}
+                  />
+                );
+              })}
+          </div>
+          <UnderBar area={area} />
+        </section>
       )}
     </MainLayout>
   );
