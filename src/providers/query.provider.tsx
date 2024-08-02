@@ -8,7 +8,10 @@ const QueryProvider = ({ children }: PropsWithChildren) => {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <ReactQueryDevtools initialIsOpen={false} />
+      <div className="hidden">
+        {/* TODO 필요하면 열어서 쓰자 + 나중에 지워야 하나? */}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </div>
     </QueryClientProvider>
   );
 };
