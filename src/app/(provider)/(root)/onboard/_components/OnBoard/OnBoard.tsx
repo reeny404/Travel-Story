@@ -51,7 +51,7 @@ function OnBoard() {
 
     localStorage.setItem("userTravelType", JSON.stringify(travelType));
     document.cookie = "hasTravelType=true; path=/";
-    router.push("/");
+    router.replace("/");
   };
 
   return (

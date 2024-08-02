@@ -54,6 +54,26 @@ class AuthAPI {
     }
   }
 
+  async userProfile(email: string) {
+    try {
+      const response = await this.axios.get("/api/auth/user", {
+        params: {
+          email: email,
+        },
+      });
+      if (response.status === 200) {
+        return response.data.data.image_url;
+      } else {
+        return console.error(
+          "유저 정보 불러오는 도중 에러 발생: ",
+          response.data
+        );
+      }
+    } catch (error) {
+      return "서버 오류 발생";
+    }
+  }
+
   async logout() {
     try {
       const response = await this.axios.post("/api/auth/logout");
