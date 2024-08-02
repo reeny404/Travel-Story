@@ -5,14 +5,14 @@ import { NextRequest, NextResponse } from "next/server";
 const ACCOUNT_BOOK = "accountBook";
 const PK_ACCOUNT_ID = "id";
 
-type parameters = { params: { accountId: number } };
+type Parameter = { params: { accountId: number } };
 
 /**
  * accountId 로 조회한 가계부 수정하기
  * 
  * @param accountId
  */
-export async function PUT(request: NextRequest, { params: { accountId } }: parameters) {
+export async function PUT(request: NextRequest, { params: { accountId } }: Parameter) {
   // TODO 세션 사용자 정보와 account 작성자 같은지 체크
   const { amount, type, payType, desc: content }: Account = await request.json();
 
@@ -32,7 +32,7 @@ export async function PUT(request: NextRequest, { params: { accountId } }: param
  * 
  * @param accountId
  */
-export async function DELETE(request: NextRequest, { params: { accountId } }: parameters) {
+export async function DELETE(request: NextRequest, { params: { accountId } }: Parameter) {
   // TODO 우선 userId를 받고 나중엔 세션 정보 쓰도록 변경 필요
   // TODO 세션 사용자 정보와 account 작성자 같은지 체크
 
