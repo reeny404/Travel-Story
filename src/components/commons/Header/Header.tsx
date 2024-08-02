@@ -1,6 +1,8 @@
 "use client";
 
 import Icon from "@/components/commons/Icon/Icon";
+import { ICON } from "@/constants/icon";
+import useDrawerStore from "@/stores/drawer.store";
 import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
@@ -23,13 +25,6 @@ const headerStyles = cva("w-full h-[52px] flex items-center justify-between", {
 
 export type HeaderProps = {
   backgroundColor?: "transparent" | "white";
-  leftIcons?: {
-    icon: string;
-    alt: string;
-    size: number;
-    path?: string;
-    onClick?: () => void;
-  }[];
   title?: string;
   titleAlign?: "left" | "center";
   rightIcons?: {
@@ -43,12 +38,12 @@ export type HeaderProps = {
 
 function Header({
   backgroundColor,
-  leftIcons,
   title = "TripStory",
   titleAlign = "center",
   rightIcons,
 }: HeaderProps) {
   const router = useRouter();
+  const { openDrawer } = useDrawerStore();
 
   const handleIconClick = (path?: string, onClick?: () => void) => {
     if (path === "back") {
@@ -69,16 +64,14 @@ function Header({
   return (
     <header className={headerStyles({ backgroundColor, titleAlign })}>
       <div className="flex items-center">
-        {leftIcons &&
-          leftIcons.map((icon, index) => (
-            <Icon
-              key={index}
-              icon={icon.icon}
-              alt={icon.alt}
-              size={icon.size}
-              onClick={() => handleIconClick(icon.path, icon.onClick)}
-            />
-          ))}
+        <div>
+          <Icon
+            icon={ICON.menu.burgerBlack}
+            alt="drawer"
+            size={20}
+            onClick={openDrawer}
+          />
+        </div>
         {titleAlign === "left" && (
           <h2 className="text-[18px] font-semibold ml-2">{title}</h2>
         )}
@@ -88,7 +81,6 @@ function Header({
           {title}
         </h2>
       )}
-
       <div className="flex items-center ml-auto">
         {rightIcons &&
           rightIcons.map((icon, index) => (
