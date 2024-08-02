@@ -18,6 +18,7 @@ function Drawer() {
             alt="cancel"
             width={16}
             height={16}
+            priority
           />
         </button>
       </div>
