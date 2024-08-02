@@ -12,15 +12,16 @@ function Tab({ currentTab, setCurrentTab, TABS }: TabProps) {
   // sticky기능을 쓸 때는 부모 요소에서 overflow를 제거해주세요
   return (
     <div
-      className={
-        "w-full h-10 bg-white flex justify-around items-center sticky top-0"
-      }
+      className={clsx(
+        "w-full h-10 bg-white flex justify-around items-center gap-x-2 z-50 my-3 sticky top-0",
+        { "bg-[#E8F97B] rounded-lg": TABS[0].en === "notice" }
+      )}
     >
       {TABS.map((tab) => (
         <button
           key={tab.en}
-          className={clsx("h-full w-1/4", {
-            "bg-blue-300": tab.en === currentTab,
+          className={clsx("h-full w-full border border-none rounded-lg", {
+            "bg-black text-white": tab.en === currentTab,
           })}
           onClick={() => setCurrentTab(tab.en)}
         >

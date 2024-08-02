@@ -17,7 +17,7 @@ import AreaReviewCard from "../../_components/AreaPage/AreaReviewCard";
 import NoticeForm from "../../_components/AreaPage/NoticeForm";
 import ReviewSummaryCard from "../../_components/AreaPage/ReviewSummary";
 import UnderBar from "../../_components/AreaPage/UnderBar";
-import Liner from "../../_components/Liner";
+import CardImgFrame from "../../_components/Cards/CardImgFrame";
 
 type AreaDetailPage = {
   params: { id: string };
@@ -94,54 +94,64 @@ function AreaDetailPage({ params }: AreaDetailPage) {
       }}
     >
       {area && (
-        <section className="relative container h-full max-w-[375px]">
-          <AreaDetailCard area={area} ratingAmount={areaReviews?.length || 0} />
-          <Liner />
-          <Tab
-            TABS={TABS.areaDetail}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
+        <main className="relative container h-full w-full">
+          <CardImgFrame
+            imageUrl={area.imageUrl}
+            alt={area.title}
+            imageClassName="object-auto"
+            framClassName="-mb-20 -z-50"
+            height="h-[580px]"
           />
-          <Liner />
-          <div
-            ref={(tabEl) => {
-              sectionRefs.current[0] = tabEl;
-            }}
-          >
-            <NoticeForm area={area} />
-            <Liner />
-          </div>
-          <div
-            ref={(tabEl) => {
-              sectionRefs.current[2] = tabEl;
-            }}
-          >
-            <ReviewSummaryCard
-              areaName={area.krName!}
-              rating={area.rating!}
-              ratingAmount={areaReviews?.length || 0}
-              areaId={areaId}
-            />
-            <Liner />
-          </div>
-          <div>
-            {areaReviews &&
-              areaReviews.map((review, idx) => {
-                return (
-                  <AreaReviewCard
-                    key={idx}
-                    userImageUrl="/"
-                    name={user?.user_metadata.nickname}
-                    imageUrl={review.imageUrls[0]}
-                    createdAt={review.createdAt}
-                    rating={area.rating!}
-                    description={review.content!}
-                  />
-                );
-              })}
-          </div>
-          <UnderBar area={area} />
-        </section>
+          <section className="w-full h-full p-4 pb-0">
+            <div className="w-full h-full bg-white px-4 pt-8 rounded-t-lg">
+              <AreaDetailCard
+                area={area}
+                ratingAmount={areaReviews?.length || 0}
+              />
+              <Tab
+                TABS={TABS.areaDetail}
+                currentTab={currentTab}
+                setCurrentTab={setCurrentTab}
+              />
+              <div
+                ref={(tabEl) => {
+                  sectionRefs.current[0] = tabEl;
+                }}
+              >
+                <NoticeForm area={area} />
+              </div>
+              <div
+                ref={(tabEl) => {
+                  sectionRefs.current[2] = tabEl;
+                }}
+              >
+                <ReviewSummaryCard
+                  areaName={area.krName!}
+                  rating={area.rating!}
+                  ratingAmount={areaReviews?.length || 0}
+                  areaId={areaId}
+                />
+              </div>
+              <div>
+                {areaReviews &&
+                  areaReviews.map((review, idx) => {
+                    return (
+                      <AreaReviewCard
+                        key={idx}
+                        userImageUrl="/"
+                        name={user?.user_metadata.nickname}
+                        imageUrl={review.imageUrls[0]}
+                        createdAt={review.createdAt}
+                        rating={area.rating!}
+                        description={review.content!}
+                      />
+                    );
+                  })}
+              </div>
+              <UnderBar area={area} />
+            </div>
+          </section>
+        </main>
       )}
     </MainLayout>
   );

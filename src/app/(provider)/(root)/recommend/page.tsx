@@ -79,7 +79,7 @@ function RecommendPage() {
     );
   };
   return (
-    <div className="container overflow-x-hidden  h-full max-w-[375px]  flex-col ">
+    <div className="container overflow-x-hidden  h-full w-full  flex-col ">
       <Carousel slides={imgSildesArr} />
       {makeCountryCircles(countries)}
       <div className="w-full h-20 bg-gray-400 flex justify-center items-center text-white mt-10">

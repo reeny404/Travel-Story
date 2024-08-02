@@ -24,34 +24,33 @@ function AreaDetailCard({ area, ratingAmount }: AreaDetailCardProps) {
   }, []);
 
   return (
-    <div className="w-full h-[500px]">
-      <h1 className="w-full p-3 text-xl font-bold">{area.title}</h1>
-      <div className="w-full ">
-        <div className="w-full h-[220px] relative aspect-auto">
-          <Image
-            src={area.imageUrl || "/"}
-            alt={area.title}
-            fill
-            className="object-auto"
-          />
-        </div>
-        <div className="p-3 flex justify-between items-center font-semibold">
-          <span>{convertTypeToKr(area.type!)}</span>
+    <section className="w-full pb-[52px]">
+      <article className="w-full ">
+        <div className="flex justify-between items-center font-semibold">
+          <div className="flex">
+            <Image
+              src={`/icons/${area.type}-color.png`}
+              alt={area.type!}
+              width={20}
+              height={10}
+              className="mr-2"
+            />
+            <p>{convertTypeToKr(area.type!)}</p>
+          </div>
           <div className="flex items-center gap-x-1">
-            <RatingIcons type="small" rating={area.rating!} />
-            <span className="text-xs">{`(${ratingAmount})`}</span>
+            <RatingIcons type="big" rating={area.rating!} />
+            <span className="text-xs text-[#949494]">{`(${ratingAmount})`}</span>
           </div>
         </div>
-        <p className="px-3 flex justify-between items-center font-semibold">
-          <span>영업중</span>
-          <span>
-            {/* {area.info?.opening_hours.open} ~
-                {area.info?.opening_hours.close} */}
+        <p className="pt-2 flex justify-between items-center font-semibold">
+          <span className="text-[#9DB408]">영업중</span>
+          <span className="font-normal">
+            {area.info.opening_hours?.open} - {area.info.opening_hours?.close}
           </span>
         </p>
-        <p className="px-3 py-6 font-semibold">{area.description}</p>
-      </div>
-    </div>
+        <p className="pt-10 font-semibold">{area.description}</p>
+      </article>
+    </section>
   );
 }
 

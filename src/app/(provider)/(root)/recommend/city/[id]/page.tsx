@@ -79,7 +79,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
     });
 
   return (
-    <div className=" container overflow-x-hidden h-full max-w-[375px] flex-col ">
+    <div className=" container overflow-x-hidden h-full w-full flex-col ">
       <DetailCard
         title={city?.title!}
         description={city?.description!}

@@ -1,17 +1,17 @@
 export const ICON = {
   account: {
     memo: {
-      black: { name: "memo", ext: "svg" }
+      black: { name: "memo", ext: "svg" },
     },
     card: {
-      black: { name: "card", ext: "svg" }
+      black: { name: "card", ext: "svg" },
     },
     shop: {
-      black: { name: "shop", ext: "svg" }
+      black: { name: "shop", ext: "svg" },
     },
   },
   add: {
-    white: { name: "add", ext: "svg" }
+    white: { name: "add", ext: "svg" },
   },
   arrow: {
     back: {
@@ -33,8 +33,8 @@ export const ICON = {
     gray: "avatar-gray",
   },
   bookmark: {
-    on: { name: 'bookmark-on', ext: "svg" },
-    off: { name: 'bookmark-off', ext: "svg" },
+    on: { name: "bookmark-on", ext: "svg" },
+    off: { name: "bookmark-off", ext: "svg" },
   },
   calendar: { white: { name: "calendar", ext: "svg" } },
   cancel: {
@@ -95,6 +95,23 @@ export const ICON = {
   star: {
     fill: "star-fill",
     unfill: "star-unfill",
+    half: "star-half",
+  },
+  accommodation: {
+    color: "accommodation-color",
+    none: "accommodation-none",
+  },
+  place: {
+    color: "place-color",
+    none: "place-none",
+  },
+  restaurant: {
+    color: "restaurant-color",
+    none: "restaurant-none",
+  },
+  shop: {
+    color: "shop-color",
+    none: "shop-none",
   },
   time: { gray: { name: "time", ext: "svg" } },
 } as const;
