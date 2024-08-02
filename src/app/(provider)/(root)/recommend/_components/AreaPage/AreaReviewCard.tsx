@@ -28,9 +28,8 @@ function AreaReviewCard({
           <Image
             src={imageUrl}
             alt="image"
-            sizes="width"
             fill
-            className="rounded-full object-cover w-auto h-auto"
+            className="rounded-full object-cover"
           />
         </div>
         <div className="flex flex-col justify-center gap-y-1 w-[300px] px-5 relation">
@@ -46,8 +45,7 @@ function AreaReviewCard({
       </div>
       {imageUrl && (
         <div className="w-full h-[220px] relative aspect-auto">
-          (
-          <Image src={imageUrl} alt="image" fill className="object-cover" />)
+          <Image src={imageUrl} alt="image" fill className="object-cover" />
         </div>
       )}
       <Liner />
