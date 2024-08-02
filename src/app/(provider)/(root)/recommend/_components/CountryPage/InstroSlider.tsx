@@ -1,6 +1,6 @@
 "use client";
 
-import ImageFrame from "@/components/Frame/ImageFrame";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,20 +14,23 @@ function InstroSlider(country: IntroSliderProps) {
   const router = useRouter();
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <Swiper
         touchRatio={0.1}
         onSlideChange={() =>
           router.push(`/recommend/country/${country.countryId}/detail`)
         }
       >
-        <SwiperSlide className="relative">
-          <ImageFrame
-            src={country.imageUrl}
-            roundType="sm"
-            alt="countryImage"
-            className="h-[400px] w-full"
-          />
+        <SwiperSlide className="w-full h-full relative">
+          <div className="w-full h-[350px] relative aspect-auto">
+            <Image
+              src={country.imageUrl || "/"}
+              alt={country.title}
+              fill
+              className="object-auto"
+            />
+          </div>
+
           <h1 className="absolute bottom-0 left-0 text-6xl font-bold">
             {country.title}
           </h1>

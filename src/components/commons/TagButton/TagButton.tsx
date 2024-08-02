@@ -1,7 +1,7 @@
 import { cva, VariantProps } from "class-variance-authority";
 import { ComponentProps, PropsWithChildren } from "react";
 
-type TagButtonTheme = "primary" | "blue";
+export type TagButtonTheme = "primary" | "blue" | "white";
 export type TagButtonSize = "xs" | "sm" | "md" | "lg";
 
 const tagVariant = cva("rounded-2xl hover:opacity-90", {
@@ -9,6 +9,7 @@ const tagVariant = cva("rounded-2xl hover:opacity-90", {
     theme: {
       primary: "bg-transparent border border-black text-black",
       blue: "bg-[#06F] text-white font-semibold",
+      white: "bg-white text-gray-700",
     },
     size: {
       xs: "px-2 py-[1px] text-xs",
@@ -17,7 +18,7 @@ const tagVariant = cva("rounded-2xl hover:opacity-90", {
       lg: "px-[30px] py-2",
     },
     isChecked: {
-      true: "!bg-blue-400 border-blue-400 text-white font-semibold",
+      true: "!bg-blue-400 border-blue-400 !text-white font-semibold",
       false: "",
     },
   },

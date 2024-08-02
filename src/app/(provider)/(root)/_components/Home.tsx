@@ -7,7 +7,9 @@ import CardSlider from "@/components/Slider/CardSlider";
 import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import { SlideCardProps } from "@/types/Slider";
+import Image from "next/image";
 import Link from "next/link";
+import MyTrip from "./MyTrip";
 
 const CardMockUpData: SlideCardProps[] = [
   {
@@ -72,20 +74,30 @@ function Home() {
             icon: ICON.avatar.black,
             alt: "Avatar",
             size: 20,
-            path: "/login",
+            path: "/my",
           },
         ],
       }}
     >
-      <main className="w-full h-[770px] bg-[#F8F8F8]">
-        <section className="w-full h-[222px] bg-black mb-10" />
-        <Link
-          href="/search"
-          className="fixed top-[253px] left-1/2 trasform -translate-x-1/2"
-        >
-          <SearchBar />
-        </Link>
-        <div className="w-full pl-[18px]">
+      <main
+        className="relative w-full bg-[#F8F8F8]"
+        style={{ minHeight: "calc(100vh - 52px)" }}
+      >
+        <div className="relative w-full h-[222px] bg-slate-200">
+          <Image
+            src="/banners/banner1_x3.png"
+            alt="banner"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="sticky z-10 -mt-[15px] px-4">
+          <Link href="/search" className="flex justify-center w-full">
+            <SearchBar />
+          </Link>
+        </div>
+        <MyTrip />
+        <div className="w-full pt-4 pl-[18px]">
           <CardType title="문화 탐방" type="architect" />
           <CardSlider spacing={20} slidesPerView={1.2} cards={CardMockUpData} />
         </div>

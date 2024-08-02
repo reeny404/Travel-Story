@@ -1,5 +1,6 @@
 "use client";
-import PlanAPI from "@/apis/plan.api"; // 추가
+
+import PlanAPI from "@/apis/plan.api";
 import { BottomSheetType } from "@/types/plan";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
@@ -12,14 +13,14 @@ import UpdateButton from "../_components/UpdateButton";
 type BottomSheetProps = BottomSheetType & {
   onClose: () => void;
   planId: string;
-  id?: string; // 추가
+  day: number;
+  id?: string;
 };
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL, // 환경 변수로 설정된 API URL 사용
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 1000,
 });
-
 const planAPI = new PlanAPI(apiClient);
 
 function BottomSheet({
@@ -27,6 +28,7 @@ function BottomSheet({
   status: initialStatus,
   onClose,
   planId,
+  day,
   id,
 }: BottomSheetProps) {
   const [status, setStatus] = useState(initialStatus);
@@ -68,13 +70,14 @@ function BottomSheet({
     data.images = images;
     data.planId = planId;
     data.type = type;
+    data.day = day;
     if (type === "memo") {
       data.checkList = checkList;
     }
-    data.id = id; // id 추가
+    data.id = id;
     console.log(data);
     try {
-      const response = await planAPI.updatePlan(planId, data); // PlanAPI 사용
+      const response = await planAPI.updatePlan(planId, data);
 
       if (!response) {
         console.error("Error updating data");
@@ -96,12 +99,13 @@ function BottomSheet({
     data.images = JSON.stringify(images);
     data.planId = planId;
     data.type = type;
+    data.day = day;
     if (type === "memo") {
       data.checkList = checkList;
     }
     console.log(data);
     try {
-      const response = await planAPI.addPlan(planId, data); // PlanAPI 사용
+      const response = await planAPI.addPlan(planId, data);
 
       if (!response) {
         console.error("Error adding data");
@@ -151,12 +155,14 @@ function BottomSheet({
             setCheckList={setCheckList}
           />
         )}
-        <BottomSheetImages
-          type={type}
-          status={status}
-          images={images}
-          setImages={setImages}
-        />
+        {type !== "memo" && (
+          <BottomSheetImages
+            type={type}
+            status={status}
+            images={images}
+            setImages={setImages}
+          />
+        )}
 
         <UpdateButton
           status={status}
@@ -167,26 +173,6 @@ function BottomSheet({
       </form>
     </div>
   );
-}
-
-export function createBottomSheet() {
-  return function BottomSheetWrapper({
-    type,
-    status,
-    onClose,
-    planId,
-    id, // 추가
-  }: BottomSheetProps) {
-    return (
-      <BottomSheet
-        type={type}
-        status={status}
-        onClose={onClose}
-        planId={planId}
-        id={id} // 전달
-      />
-    );
-  };
 }
 
 export default BottomSheet;

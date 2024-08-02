@@ -6,6 +6,7 @@ type CarouselItemType = {
   description: string;
   linkUrl: string;
   id: number;
+  rating: number;
 };
 
 function CarouselItem(item: CarouselItemType) {
@@ -14,6 +15,7 @@ function CarouselItem(item: CarouselItemType) {
       <div className="w-full">
         <AreaCard
           title={item.title}
+          rating={item.rating}
           description={item.description}
           imageUrl={item.imageUrl}
           linkUrl={item.linkUrl}

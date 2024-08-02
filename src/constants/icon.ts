@@ -1,8 +1,25 @@
 export const ICON = {
+  account: {
+    memo: {
+      black: { name: "memo", ext: "svg" }
+    },
+    card: {
+      black: { name: "card", ext: "svg" }
+    },
+    shop: {
+      black: { name: "shop", ext: "svg" }
+    },
+  },
+  add: {
+    white: { name: "add", ext: "svg" }
+  },
   arrow: {
     back: {
       black: "arrow-back-black",
       white: "arrow-back-white",
+    },
+    foward: {
+      lightgreen: "arrow-foward-lightgreen",
     },
     down: {
       black: "arrow-down-black",
@@ -15,8 +32,14 @@ export const ICON = {
     black: "avatar-black",
     gray: "avatar-gray",
   },
+  bookmark: {
+    on: { name: 'bookmark-on', ext: "svg" },
+    off: { name: 'bookmark-off', ext: "svg" },
+  },
+  calendar: { white: { name: "calendar", ext: "svg" } },
   cancel: {
     black: "cancel-black",
+    gray: "cancel-gray",
     white: "cancel-white",
   },
   chevron: {
@@ -64,6 +87,7 @@ export const ICON = {
   notice: {
     white: "notice-white",
   },
+  maker: { gray: { name: "location", ext: "svg" } },
   microphone: {
     black: "microphone-black",
   },
@@ -72,24 +96,5 @@ export const ICON = {
     fill: "star-fill",
     unfill: "star-unfill",
   },
-
-  account: {
-    memo: {
-      black: { name: "memo", ext: "svg" }
-    },
-    card: {
-      black: { name: "card", ext: "svg" }
-    },
-    shop: {
-      black: { name: "shop", ext: "svg" }
-    },
-  },
-  bookmark: {
-    on: { name: 'bookmark-on', ext: "svg" },
-    off: { name: 'bookmark-off', ext: "svg" },
-  },
-  calendar: { white: { name: "calendar", ext: "svg" } },
   time: { gray: { name: "time", ext: "svg" } },
-  maker: { gray: { name: "location", ext: "svg" } }
-
 } as const;

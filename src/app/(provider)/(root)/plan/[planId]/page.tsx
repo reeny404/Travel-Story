@@ -1,8 +1,11 @@
 "use client";
 
 import { BottomSheetType } from "@/types/plan";
-import { useState } from "react";
-import { createBottomSheet } from "../_components/BottomSheet";
+import { useCallback, useState } from "react";
+import BottomSheet from "../_components/BottomSheet";
+import CreateButton from "../_components/CreateButton";
+import DayMenu from "../_components/DayMenu";
+import ScheculeList from "./ScheculeList";
 
 function PlanDetailPage({ params }: { params: { planId: string } }) {
   const planId = params.planId;
@@ -12,6 +15,7 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
     type: "customePlace",
     status: "add",
   });
+  const [selectedDay, setSelectedDay] = useState(1);
 
   const handleOpen = (
     type: BottomSheetType["type"],
@@ -25,36 +29,38 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
     setBottomSheetVisible(false);
   };
 
-  const BottomSheet = createBottomSheet();
+  const handleDaySelect = (day: number) => {
+    setSelectedDay(day);
+  };
+
+  const handleCreateSchedule = useCallback(() => {
+    handleOpen("customePlace", "add");
+  }, []);
 
   if (!planId) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="p-4">
-        <h1 className="text-2xl font-bold">Plan Detail Page</h1>
-        <p>Plan ID: {planId}</p>
-      </div>
+    <div className="min-h-screen bg-[#FCFCFC]">
+      <div className="h-48 w-full bg-gray-200"></div>
+      <DayMenu selectedDay={selectedDay} onDaySelect={handleDaySelect} />
+      <ScheculeList planId={planId} selectedDay={selectedDay} />
       {isBottomSheetVisible && (
         <BottomSheet
           type={bottomSheetConfig.type}
           status={bottomSheetConfig.status}
           onClose={handleClose}
           planId={planId}
-          id="3691e51f-aa76-40b4-a171-80a4ba0c242e"
+          day={selectedDay}
         />
       )}
       {/* 바텀 시트 예시 */}
-      <button
-        className="w-12 h-12 fixed bottom-20 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        onClick={() => handleOpen("customePlace", "add")}
-      >
-        <div className="w-full h-full flex justify-center items-center">
-          <p className="text-white">생성</p>
-        </div>
-      </button>
+      <CreateButton
+        createSchedule={handleCreateSchedule}
+        createByBookmark={handleCreateSchedule}
+        createMemo={handleCreateSchedule}
+      />
     </div>
   );
 }
