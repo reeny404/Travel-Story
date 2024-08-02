@@ -24,7 +24,7 @@ function ReviewBottomSheetRating({
           width={30}
           height={30}
           onClick={() => handleRatingClick(rating, idx + 1)}
-          className={"object-contain mr-1"}
+          className={"object-contain mr-1 cursor-pointer"}
         />
       ))}
     </div>

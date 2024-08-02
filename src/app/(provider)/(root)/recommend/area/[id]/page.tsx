@@ -94,13 +94,12 @@ function AreaDetailPage({ params }: AreaDetailPage) {
       }}
     >
       {area && (
-        <main className="relative container h-full w-full">
+        <main className="h-full w-full relative container">
           <CardImgFrame
             imageUrl={area.imageUrl}
             alt={area.title}
-            imageClassName="object-auto"
-            framClassName="-mb-20 -z-50"
-            height="h-[580px]"
+            frameClassName="-z-50 -mb-12 aspect-4/3"
+            imageClassName="object-cover"
           />
           <section className="w-full h-full p-4 pb-0">
             <div className="w-full h-full bg-white px-4 pt-8 rounded-t-lg">
@@ -138,7 +137,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                     return (
                       <AreaReviewCard
                         key={idx}
-                        userImageUrl="/"
+                        userImageUrl={user?.user_metadata.profileImg}
                         name={user?.user_metadata.nickname}
                         imageUrl={review.imageUrls[0]}
                         createdAt={review.createdAt}
@@ -148,9 +147,9 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                     );
                   })}
               </div>
-              <UnderBar area={area} />
             </div>
           </section>
+          <UnderBar area={area} />
         </main>
       )}
     </MainLayout>

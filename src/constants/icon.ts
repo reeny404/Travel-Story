@@ -33,8 +33,14 @@ export const ICON = {
     gray: "avatar-gray",
   },
   bookmark: {
-    on: { name: "bookmark-on", ext: "svg" },
-    off: { name: "bookmark-off", ext: "svg" },
+    big: {
+      on: "lgBookmark-on",
+      off: "lgBookmark-off",
+    },
+    small: {
+      on: "smBookmark-on",
+      off: "smBookmark-off",
+    },
   },
   calendar: { white: { name: "calendar", ext: "svg" } },
   cancel: {
@@ -57,6 +63,7 @@ export const ICON = {
   edit: {
     black: "edit-black",
     blue: "edit-blue",
+    color: "edit-color",
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",

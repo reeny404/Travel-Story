@@ -27,13 +27,13 @@ function AreaDetailCard({ area, ratingAmount }: AreaDetailCardProps) {
     <section className="w-full pb-[52px]">
       <article className="w-full ">
         <div className="flex justify-between items-center font-semibold">
-          <div className="flex">
+          <div className="flex relative aspect-auto">
             <Image
               src={`/icons/${area.type}-color.png`}
               alt={area.type!}
               width={20}
               height={10}
-              className="mr-2"
+              className="mr-2 object-contain"
             />
             <p>{convertTypeToKr(area.type!)}</p>
           </div>

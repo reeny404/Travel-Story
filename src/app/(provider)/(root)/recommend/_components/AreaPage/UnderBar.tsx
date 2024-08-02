@@ -41,23 +41,23 @@ function UnderBar({ area }: UnderBarProps) {
   };
   const BottomSheet = createAddBottomSheet();
   return (
-    <div className="w-full h-10 px-3 flex gap-x-2 fixed bottom-0">
+    <article className="h-11 w-full flex gap-x-2 sticky bottom-5 z-[9999]">
       {isBottomSheetVisible && (
         <BottomSheet area={area} onClose={handleClose} />
       )}
       <button
         onClick={() => deleteBookmark.mutate()}
-        className="w-14 h-full p-2 relative flex justify-center items-center border border-2  bg-white rounded-md aspect-auto"
+        className="w-11 h-full p-[10px] ml-4 relative flex justify-center items-center border-2 bg-white rounded-lg aspect-auto"
       >
         <Image
           src={
             isBookmarked
-              ? `/icons/${ICON.bookmark.on.name}.svg`
-              : `/icons/${ICON.bookmark.off.name}.svg`
+              ? `/icons/${ICON.bookmark.big.on}.png`
+              : `/icons/${ICON.bookmark.big.off}.png`
           }
           alt="bookmark"
-          width={30}
-          height={30}
+          width={16}
+          height={16}
           className="hover:cursor-pointer object-contain"
           onClick={toggleBookmark}
         />
@@ -65,11 +65,11 @@ function UnderBar({ area }: UnderBarProps) {
 
       <button
         onClick={handleOpen}
-        className="w-72 h-full bg-gray-300 border rounded-md"
+        className=" bg-gray-300 w-full border rounded-md mr-4"
       >
         내 여행에 추가
       </button>
-    </div>
+    </article>
   );
 }
 

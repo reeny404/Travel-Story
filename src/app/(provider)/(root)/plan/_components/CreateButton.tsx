@@ -24,7 +24,7 @@ function CreateButton({ createSchedule, createMemo, createByBookmark }: Props) {
           isShowButtons ? "h-[200px]" : "h-0"
         )}
       >
-        <Button icon={ICON.bookmark.off} onClick={createByBookmark} />
+        <Button icon={ICON.bookmark.big.off} onClick={createByBookmark} />
         <Button icon={ICON.maker.gray} onClick={createSchedule} />
         <Button icon={ICON.calendar.white} onClick={createMemo} />
       </div>

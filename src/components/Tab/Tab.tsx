@@ -13,16 +13,20 @@ function Tab({ currentTab, setCurrentTab, TABS }: TabProps) {
   return (
     <div
       className={clsx(
-        "w-full h-10 bg-white flex justify-around items-center gap-x-2 z-50 my-3 sticky top-0",
-        { "bg-[#E8F97B] rounded-lg": TABS[0].en === "notice" }
+        "w-full h-9 flex justify-around items-center gap-x-2 z-50 my-3 sticky top-0",
+        { "rounded-lg": TABS[0].en === "notice" }
       )}
     >
       {TABS.map((tab) => (
         <button
           key={tab.en}
-          className={clsx("h-full w-full border border-none rounded-lg", {
-            "bg-black text-white": tab.en === currentTab,
-          })}
+          className={clsx(
+            "h-full w-full flex justify-center items-center border border-none rounded-lg font-bold",
+            {
+              "bg-black text-white": tab.en === currentTab,
+              "bg-white text-black": tab.en !== currentTab,
+            }
+          )}
           onClick={() => setCurrentTab(tab.en)}
         >
           {tab.kr}

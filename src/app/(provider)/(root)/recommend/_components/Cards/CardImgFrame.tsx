@@ -3,20 +3,18 @@ import Image from "next/image";
 type CardImgFrameProps = {
   imageUrl: string | null;
   alt: string;
-  height: string;
   imageClassName?: string;
-  framClassName?: string;
+  frameClassName?: string;
 };
 
 function CardImgFrame({
   imageUrl,
   alt,
-  height,
   imageClassName,
-  framClassName,
+  frameClassName,
 }: CardImgFrameProps) {
   return (
-    <div className={`w-full relative aspect-auto ${height} ${framClassName}`}>
+    <div className={`w-full relative ${frameClassName}`}>
       <Image
         src={imageUrl || "/"}
         alt={alt}

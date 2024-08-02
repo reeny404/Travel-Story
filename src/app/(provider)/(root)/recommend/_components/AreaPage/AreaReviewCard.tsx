@@ -1,12 +1,11 @@
 import RatingIcons from "@/components/Card/RatingIcons";
-import Image from "next/image";
-import Liner from "../Liner";
+import VanilaImgFrame from "../VanilaImgFram";
 
 // props로 유저정보, 리뷰정보를 받아야함.
 type AreaReviewCardProps = {
   name: string;
   createdAt: string;
-  userImageUrl: string;
+  userImageUrl: string | null;
   imageUrl: string;
   rating: number;
   description: string;
@@ -22,34 +21,49 @@ function AreaReviewCard({
 }: AreaReviewCardProps) {
   const date = createdAt.slice(0, 10).replaceAll("-", ".");
   return (
-    <div className="w-full p-3 flex flex-col gap-y-3">
-      <div className="flex justify-around w-full">
-        <div className="w-16 h-16 bg-white opacity-70 rounded-full relative aspect-auto">
-          <Image
-            src={imageUrl}
-            alt="image"
-            fill
-            className="rounded-full object-cover"
+    <section className="w-full flex flex-col">
+      <article className="flex justify-between items-center w-full">
+        <div className="flex items-center">
+          <VanilaImgFrame
+            imageUrl={userImageUrl || "/icons/avatar-black.png"}
+            alt="icon"
+            width="w-11"
+            height="h-11"
+            frameClassName="bg-white rounded-full relative aspect-auto"
+            imageClassName="rounded-full object-contain"
           />
+
+          <div className="flex flex-col justify-center gap-y-1 pl-4 relation">
+            <h1 className="text-sm font-bold">{name}</h1>
+            <p className="text-xs font-semibold">{date}</p>
+          </div>
         </div>
-        <div className="flex flex-col justify-center gap-y-1 w-[300px] px-5 relation">
-          <h1 className="text-sm font-bold">{name}</h1>
-          <p className="text-xs font-semibold">{date}</p>
-        </div>
-      </div>
-      <div className="mt-3">
+        <VanilaImgFrame
+          imageUrl={"/icons/bars-black.png"}
+          alt="icon"
+          width="w-5"
+          height="h-5"
+          frameClassName="bg-white rounded-full relative aspect-auto"
+          imageClassName="object-contain"
+        />
+      </article>
+      <div className="mt-7">
         <RatingIcons type="small" rating={rating} />
       </div>
-      <div className="w-full text-xs text-ellipsis line-clamp-3">
+      <p className="w-full mt-3 text-xs text-ellipsis line-clamp-3 ">
         {description}
-      </div>
+      </p>
       {imageUrl && (
-        <div className="w-full h-[220px] relative aspect-auto">
-          <Image src={imageUrl} alt="image" fill className="object-cover" />
-        </div>
+        <VanilaImgFrame
+          imageUrl={imageUrl}
+          alt="reviewImg"
+          width="w-full"
+          height="h-[220px]"
+          frameClassName="relative aspect-auto mt-3 mb-12 hover:cursor-pointer"
+          imageClassName="object-cover"
+        />
       )}
-      <Liner />
-    </div>
+    </section>
   );
 }
 
