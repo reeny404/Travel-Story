@@ -5,18 +5,17 @@ import { BottomSheetType } from "@/types/plan";
 import { Tables } from "@/types/supabase";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import BottomSheet from "../_components/BottomSheet";
-import CreateButton from "../_components/CreateButton";
+import CreateScheduleButton from "../_components/CreateScheduleButton";
 import DayMenu from "../_components/DayMenu";
 import ScheculeList from "./ScheculeList";
 
-// PlanAPI 인스턴스를 컴포넌트 바깥으로 이동
 const api = new PlanAPI(axios);
 
-function PlanDetailPage({ params }: { params: { planId: string } }) {
-  const planId = params.planId;
-
+function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
+  const router = useRouter();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [bottomSheetConfig, setBottomSheetConfig] = useState<BottomSheetType>({
     type: "customePlace",
@@ -73,6 +72,11 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
     []
   );
 
+  const createByBookmark = useCallback(() => {
+    router.push(`/my/bookmarks?planId=${planId}&day=${selectedDay}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDay, planId]);
+
   if (!planId) {
     return <div>Loading...</div>;
   }
@@ -105,10 +109,13 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
         />
       )}
 
-      <CreateButton
+      {/* 바텀 시트 예시 */}
+      {/* TODO 각 버튼의 연결 제대로 */}
+      <CreateScheduleButton
         createSchedule={() => handleCreateSchedule("customePlace", "add")}
-        createByBookmark={() => handleCreateSchedule("place", "add")}
+        createByBookmark={createByBookmark}
         createMemo={() => handleCreateSchedule("memo", "add")}
+        createMoveSchedule={() => handleCreateSchedule("move", "add")}
       />
     </div>
   );

@@ -14,7 +14,7 @@ type AreaCardProps = {
 
 function BookmarkCard({ bookmark, area, onClickAddToPlan }: AreaCardProps) {
   const iconMarkderPath: string = useMemo(() => {
-    return getIconPath(ICON.maker.gray);
+    return getIconPath(ICON.location.gray);
   }, []);
   const iconClendarPath: string = useMemo(() => {
     return getIconPath(ICON.calendar.white);
