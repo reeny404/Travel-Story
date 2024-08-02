@@ -131,8 +131,8 @@ function BottomSheet({
           isClosing
             ? "translate-y-full"
             : isOpening
-            ? "translate-y-full"
-            : "translate-y-0"
+              ? "translate-y-full"
+              : "translate-y-0"
         } transition-transform duration-300`}
       >
         <BottomSheetTitle type={type} status={status} />
