@@ -13,6 +13,7 @@ import DayMenu from "../_components/DayMenu";
 import ScheculeList from "./ScheculeList";
 
 const api = new PlanAPI(axios);
+type PlanDetailPageProps = { params: { planId: string } };
 
 function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
   const router = useRouter();
