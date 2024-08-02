@@ -53,6 +53,17 @@ class AuthAPI {
       return "서버 오류 발생";
     }
   }
+
+  async logout() {
+    try {
+      const response = await this.axios.post("/api/auth/logout");
+      if (response.status === 200) {
+        return response;
+      }
+    } catch (error) {
+      console.error("logout 중 오류 발생: ", error);
+    }
+  }
 }
 
 export default AuthAPI;
