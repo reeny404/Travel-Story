@@ -98,7 +98,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
           <CardImgFrame
             imageUrl={area.imageUrl}
             alt={area.title}
-            frameClassName="-z-50 -mb-12 aspect-4/3"
+            frameClassName="-z-50 -mb-12 aspect-4/5"
             imageClassName="object-cover"
           />
           <section className="w-full h-full p-4 pb-0">
