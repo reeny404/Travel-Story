@@ -24,14 +24,14 @@ export default function PlanListPage() {
         ],
         title: "내 여행",
         titleAlign: "center",
-        rightIcons: [
-          {
-            icon: ICON.search.black,
-            alt: "Search",
-            path: "/",
-            size: 20,
-          },
-        ],
+        // rightIcons: [
+        //   {
+        //     icon: ICON.search.black,
+        //     alt: "Search",
+        //     path: "/",
+        //     size: 20,
+        //   },
+        // ],
       }}
     >
       <div className="min-h-[calc(100dvh-52px)] bg-gray-100">
