@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       maxWidth: {
-        xs: "375px",
+        xs: "450px",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -18,7 +18,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       screens: {
-        xs: "375px",
+        xs: "450px",
         sm: "640px",
         md: "768px",
         lg: "1024px",
@@ -26,6 +26,7 @@ const config: Config = {
       },
       boxShadow: {
         "bottom-sheet": "0px -4px 20px 0px rgba(0, 0, 0, 0.25)",
+        "schecule-list": "0px 4px 20px 0px #00000014",
       },
     },
   },

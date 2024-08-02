@@ -19,7 +19,7 @@ function ImageFrame({
   return (
     <div className={`relative ${className}`}>
       {src && (
-        <Image className={`round-[${roundType}]`} src={src} alt={alt} fill />
+        <Image className={`round-[${roundType}] object-cover`} src={src} alt={alt} fill />
       )}
     </div>
   );

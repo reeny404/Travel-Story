@@ -25,6 +25,7 @@ export type Area = Tables<"area"> & {
 };
 
 export type AreaBookmark = Tables<"areaBookmark">;
+export type AreaBookmarkWithArea = AreaBookmark & { area: Area };
 
 export type BookmarkType = {
   userId: string;

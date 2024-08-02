@@ -92,7 +92,7 @@ function Home() {
           />
         </div>
         <div className="sticky z-10 -mt-[15px] px-4">
-          <Link href="/search" className="w-full">
+          <Link href="/search" className="flex justify-center w-full">
             <SearchBar />
           </Link>
         </div>

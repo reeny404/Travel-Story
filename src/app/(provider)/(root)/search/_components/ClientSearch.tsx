@@ -45,7 +45,9 @@ function ClientSearch() {
 
   return (
     <>
-      <SearchBar onSearch={handleSearch} />
+      <div className="flex justify-center items-center">
+        <SearchBar onSearch={handleSearch} />
+      </div>
       <section className="w-full mt-4">
         {searchTerm ? (
           <SearchResultView

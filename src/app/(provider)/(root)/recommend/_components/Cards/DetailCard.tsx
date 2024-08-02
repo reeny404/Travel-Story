@@ -1,4 +1,4 @@
-import ImageFrame from "@/components/Frame/ImageFrame";
+import Image from "next/image";
 
 type DetailCardProps = {
   title: string;
@@ -9,12 +9,10 @@ type DetailCardProps = {
 function DetailCard({ title, description, imageUrl }: DetailCardProps) {
   return (
     <>
-      <ImageFrame
-        src={imageUrl}
-        alt="detailCard"
-        roundType="sm"
-        className="h-[353px]"
-      />
+      <div className="w-full h-[340px] relative aspect-auto">
+        <Image src={imageUrl || "/"} alt={title} fill className="object-fill" />
+      </div>
+
       <div className="p-4">
         <p className="text-xl font-bold mt-2 mb-2">{title}</p>
         <p className="">{description}</p>
