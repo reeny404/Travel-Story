@@ -5,8 +5,8 @@ import { ICON } from "@/constants/icon";
 import { DateUtil } from "@/utils/DateUtil";
 import Link from "next/link";
 import { useMemo } from "react";
+import CreatePlanButton from "./_components/CreatePlanButton";
 import PlanList from "./_components/PlanList";
-import PlusIcon from "./_components/PlusIcon";
 
 export default function PlanListPage() {
   const arrowIconPath = useMemo(() => getIconPath(ICON.arrow.down.black), []);
@@ -52,13 +52,8 @@ export default function PlanListPage() {
           </div>
           <PlanList />
         </div>
-        <Link
-          href="/plan/create" // TODO 클릭 링크 현재는 flow 미정이라, url 점검 필요
-          className="w-12 h-12 fixed bottom-8 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        >
-          <div className="w-full h-full flex justify-center items-center">
-            <PlusIcon className="text-white" />
-          </div>
+        <Link href="/plan/create">
+          <CreatePlanButton />
         </Link>
       </div>
     </MainLayout>

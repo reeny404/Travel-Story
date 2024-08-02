@@ -4,7 +4,7 @@ import { IconType } from "@/types/Icon";
 
 type Props = {
   icon?: IconType;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 function CreateButton({ icon = ICON.add.white, onClick }: Props) {

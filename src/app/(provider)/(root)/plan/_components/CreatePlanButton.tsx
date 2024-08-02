@@ -2,7 +2,7 @@ import { ICON } from "@/constants/icon";
 import CreateButton from "./CreateButton";
 
 type Props = {
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 function CreatePlanButton({ onClick }: Props) {
