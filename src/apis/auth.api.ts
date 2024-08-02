@@ -62,7 +62,7 @@ class AuthAPI {
         },
       });
       if (response.status === 200) {
-        return response.data.data.image_url;
+        return response.data.data;
       } else {
         return console.error(
           "유저 정보 불러오는 도중 에러 발생: ",
@@ -82,6 +82,20 @@ class AuthAPI {
       }
     } catch (error) {
       console.error("logout 중 오류 발생: ", error);
+    }
+  }
+
+  async updateUser(email: string, nickname: string) {
+    try {
+      const response = await this.axios.patch("/api/auth/update", {
+        email: email,
+        nickname: nickname,
+      });
+      if (response.status === 200) {
+        console.log("업데이트 성공: ", response.data);
+      }
+    } catch (error) {
+      console.error("프로필 업데이트 중 오류: ", error);
     }
   }
 }
