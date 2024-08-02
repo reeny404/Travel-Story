@@ -72,7 +72,10 @@ function AuthPage({
           },
         ]}
       />
-      <div className="w-full flex-grow px-4 pt-12 bg-[#F8F8F8]">
+      <div
+        className="w-full px-4 pt-12 bg-[#F8F8F8]"
+        style={{ minHeight: "calc(100vh - 52px)" }}
+      >
         {/* title */}
         <h1 className="text-[24px] font-semibold mb-[68px] whitespace-pre-wrap">
           {title}
