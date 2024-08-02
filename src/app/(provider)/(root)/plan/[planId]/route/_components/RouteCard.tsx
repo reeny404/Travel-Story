@@ -14,7 +14,7 @@ type Props = {
   route: Route;
 };
 
-const iconMaker = getIconPath(ICON.maker.gray);
+const iconMaker = getIconPath(ICON.location.gray);
 const iconTime = getIconPath(ICON.time.gray);
 
 function RouteCard({ route }: Props) {

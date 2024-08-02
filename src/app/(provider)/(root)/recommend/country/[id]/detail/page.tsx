@@ -179,7 +179,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         ],
       }}
     >
-      <div className=" container overflow-x-hidden max-w-[375px] h-full flex-col ">
+      <div className=" container overflow-x-hidden h-full flex-col ">
         {country && (
           <DetailCard
             title={country?.data?.title!}
