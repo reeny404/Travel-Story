@@ -6,13 +6,17 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MouseEvent, useRef, useState } from "react";
 
+type SupabaseUser = {
+  image_url: string;
+  nickname: string;
+};
 function MyProfile() {
   const { user } = useAuth();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const { data: supabaseUser, isPending } = useQuery({
+  const { data: supabaseUser, isPending } = useQuery<SupabaseUser>({
     queryKey: ["users"],
     queryFn: () => api.auth.userProfile(user?.email as string),
   });
@@ -21,8 +25,8 @@ function MyProfile() {
     router.replace("/");
   }
 
-  const profileUrl = supabaseUser.image_url;
-  const nickname = supabaseUser.nickname;
+  const profileUrl = supabaseUser?.image_url;
+  const nickname = supabaseUser?.nickname;
 
   // 편집버튼 누를 때
   const handleClickEdit = (
