@@ -8,7 +8,7 @@ function MyTrip() {
   const router = useRouter();
 
   const handleNavigatePlan = () => {
-    router.push("/plan");
+    router.push("/plan/create");
   };
 
   return (
