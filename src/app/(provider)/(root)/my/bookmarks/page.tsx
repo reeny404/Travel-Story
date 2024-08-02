@@ -54,14 +54,14 @@ export default function MyBookmarkPage({
         ],
         title: "북마크",
         titleAlign: "center",
-        rightIcons: [
-          {
-            icon: ICON.search.black,
-            alt: "Search",
-            size: 20,
-            path: "/",
-          },
-        ],
+        // rightIcons: [
+        //   {
+        //     icon: ICON.search.black,
+        //     alt: "Search",
+        //     size: 20,
+        //     path: "/",
+        //   },
+        // ],
       }}
     >
       <div className="w-full min-h-[calc(100dvh-52px)] mx-auto pb-4 bg-[#F8F8F8]">
