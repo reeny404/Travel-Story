@@ -1,9 +1,10 @@
 import RatingIcons from "@/components/Card/RatingIcons";
-import ImageFrame from "@/components/Frame/ImageFrame";
+import { ICON } from "@/constants/icon";
+import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
+import { useModalStore } from "@/stores/modal.store";
 import Image from "next/image";
 import Link from "next/link";
-// area ItemsPage가 있어야 될듯????
 export type AreaCardProps = {
   title: string;
   description: string;
@@ -22,35 +23,40 @@ function AreaCard({
   id,
 }: AreaCardProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(id);
+  const { openModal } = useModalStore();
+  const { isLoggedIn } = useAuth();
+  const toggleBookmark = () => {
+    if (!isLoggedIn) {
+      openModal("로그인 필요", "로그인 유저만 가능합니다");
+    } else {
+      isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
+    }
+  };
 
   return (
-    <div className="w-full h-full relative">
-      <ImageFrame
-        src={imageUrl}
-        alt="detailCard"
-        roundType="sm"
-        className="w-[301px] h-[138px]"
-      />
+    <div className="w-full h-full relative ">
+      <div className="w-full h-[220px] relative aspect-auto">
+        <Image src={imageUrl || "/"} alt={title} fill className="object-auto" />
+      </div>
+
       <div className="px-4 py-3">
         <Link href={linkUrl} className="font-bold mt-3 mb-3">
           {title}
         </Link>
         <p className="mb-3">{description}</p>
-        {rating && <RatingIcons type="small" rating={rating} />}
+        <RatingIcons type="small" rating={rating || 0} />
       </div>
       <Image
         src={
           isBookmarked
-            ? "/cardImages/bookmarked.png"
-            : "/cardImages/bookmark.svg"
+            ? `/icons/${ICON.bookmark.on.name}.svg`
+            : `/icons/${ICON.bookmark.off.name}.svg`
         }
         alt="bookmark"
         width={10}
         height={10}
-        className="h-5 w-5 z-10 absolute top-2 right-3 hover:cursor-pointer"
-        onClick={() =>
-          isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate()
-        }
+        className="h-5 w-5 absolute top-2 right-3 hover:cursor-pointer"
+        onClick={toggleBookmark}
       />
     </div>
   );

@@ -8,7 +8,6 @@ type SearchBarProps = {
   onSearch?: (term: string) => void;
 };
 
-// 추후 input width 조정 필요
 function SearchBar({ onSearch }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState("");
 
@@ -36,22 +35,25 @@ function SearchBar({ onSearch }: SearchBarProps) {
 
   return (
     <form
-      className="flex justify-between w-[335px] h-10 p-[10px] bg-white rounded-lg shadow-md text-sm"
+      className="flex justify-between w-11/12 h-10 p-[10px] bg-white rounded-lg shadow-md text-sm"
       onSubmit={handleSearch}
     >
-      <Image
-        src={`/icons/${ICON.search.black}.png`}
-        alt="search"
-        width={20}
-        height={20}
-        className="mr-2 cursor-pointer"
-      />
-      <input
-        className="w-[250px] bg-transparent outline-none"
-        placeholder={`'판테온'으로 떠나보실래요?`}
-        value={searchValue}
-        onChange={handleInputChange}
-      />
+      <div className="flex">
+        <Image
+          src={`/icons/${ICON.search.black}.png`}
+          alt="search"
+          width={20}
+          height={20}
+          className="mr-2 cursor-pointer"
+          priority
+        />
+        <input
+          className="w-[250px] bg-transparent outline-none"
+          placeholder={`'판테온'으로 떠나보실래요?`}
+          value={searchValue}
+          onChange={handleInputChange}
+        />
+      </div>
       <Image
         src={`/icons/${ICON.cancel.gray}.png`}
         alt="microphone"

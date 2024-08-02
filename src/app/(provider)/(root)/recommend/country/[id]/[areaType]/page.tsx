@@ -3,6 +3,7 @@
 import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
+import useDrawerStore from "@/stores/drawer.store";
 import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -14,6 +15,7 @@ type AreaTypePageProps = {
 function AreaTypePage({ params }: AreaTypePageProps) {
   const areaType = params.areaType;
   const countryId = parseInt(params.id);
+  const { openDrawer } = useDrawerStore();
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
@@ -37,7 +39,7 @@ function AreaTypePage({ params }: AreaTypePageProps) {
             icon: ICON.arrow.back.black,
             alt: "Back",
             size: 20,
-            path: "/",
+            path: "back",
           },
         ],
         title: country?.data.krName!,
@@ -53,7 +55,7 @@ function AreaTypePage({ params }: AreaTypePageProps) {
             icon: ICON.menu.burgerBlack,
             alt: "Menu",
             size: 20,
-            onClick: () => {},
+            onClick: openDrawer,
           },
         ],
       }}

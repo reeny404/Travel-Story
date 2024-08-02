@@ -11,7 +11,7 @@ type ProfileProps = {
 function Profile({ src, className }: ProfileProps) {
   return (
     <ImageFrame
-      src={src ?? "/icon/avatar.svg"}
+      src={src ?? "/icons/avatar.svg"}
       alt="프로필이미지"
       roundType="full"
       className={className}

@@ -1,11 +1,13 @@
 "use client";
 
-import PlanAPI from "@/apis/plan.api"; // 디폴트 익스포트로 가져옴
+import PlanAPI from "@/apis/plan.api";
 import { BottomSheetType } from "@/types/plan";
 import { Tables } from "@/types/supabase";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
 import BottomSheet from "../_components/BottomSheet";
+import CreateButton from "../_components/CreateButton";
 import DayMenu from "../_components/DayMenu";
 import ScheculeList from "./ScheculeList";
 
@@ -64,13 +66,29 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
     setSelectedDay(day);
   };
 
+  const handleCreateSchedule = useCallback(
+    (type: BottomSheetType["type"], status: BottomSheetType["status"]) => {
+      handleOpen(type, status);
+    },
+    []
+  );
+
   if (!planId) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-[#FCFCFC]">
-      <div className="h-48 w-full bg-gray-200"></div>
+    <div className="min-h-screen w-full bg-[#FCFCFC]">
+      <div className="h-48 w-full bg-gray-200">
+        <div className="relative w-full h-full">
+          <Image
+            src="/plan/planBanner.png"
+            alt="planBanner"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
+      </div>
       <DayMenu
         days={days}
         selectedDay={selectedDay}
@@ -86,31 +104,12 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
           day={selectedDay}
         />
       )}
-      {/* 바텀 시트 예시 */}
-      <button
-        className="w-12 h-12 fixed bottom-20 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        onClick={() => handleOpen("customePlace", "add")}
-      >
-        <div className="w-full h-full flex justify-center items-center">
-          <p className="text-white">생성</p>
-        </div>
-      </button>
-      <button
-        className="w-12 h-12 fixed bottom-32 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        onClick={() => handleOpen("memo", "add")}
-      >
-        <div className="w-full h-full flex justify-center items-center">
-          <p className="text-white">생성</p>
-        </div>
-      </button>
-      <button
-        className="w-12 h-12 fixed bottom-48 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        onClick={() => handleOpen("move", "add")}
-      >
-        <div className="w-full h-full flex justify-center items-center">
-          <p className="text-white">생성</p>
-        </div>
-      </button>
+
+      <CreateButton
+        createSchedule={() => handleCreateSchedule("customePlace", "add")}
+        createByBookmark={() => handleCreateSchedule("place", "add")}
+        createMemo={() => handleCreateSchedule("memo", "add")}
+      />
     </div>
   );
 }

@@ -1,7 +1,5 @@
 "use client";
-import Header from "@/components/commons/Header";
 import SubmitButton from "@/components/commons/SubmitButton";
-import { ICON } from "@/constants/icon";
 import { useTravelType } from "@/stores/travelType.store";
 import { useRouter } from "next/navigation";
 import { MouseEvent, useEffect, useState } from "react";
@@ -57,28 +55,13 @@ function OnBoard() {
   };
 
   return (
-    <div className="flex flex-col bg-[#f5f5f5] h-screen">
-      <Header
-        backgroundColor="transparent"
-        title=""
-        leftIcons={[
-          {
-            icon: ICON.arrow.back.black,
-            alt: "back",
-            size: 20,
-            path: "back",
-          },
-        ]}
-      />
-      <div className="flex flex-col px-[13px] flex-grow">
+    <div className="flex bg-[#f5f5f5] w-full min-h-dvh py-10">
+      <div className="flex flex-col w-[375px] px-[13px] mx-auto">
         <h1 className="text-[24px] font-bold mb-4">
           나한테 딱 맞춘 여행
           <br /> 맞춤설정
         </h1>
         <form className="flex flex-col items-center">
-          <SelectContainer title="어디로 떠나시나요?">
-            <SelectForm type="input"></SelectForm>
-          </SelectContainer>
           <SelectContainer title="여행 테마가 무엇인가요?">
             <SelectForm buttonList={theme} category="theme"></SelectForm>
           </SelectContainer>

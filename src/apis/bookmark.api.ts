@@ -1,5 +1,6 @@
 import {
   AreaBookmark,
+  AreaBookmarkWithArea,
   BookmarkType,
   RecommendResponse,
 } from "@/types/Recommend";
@@ -12,9 +13,9 @@ class BookmarkAPI {
     this.axios = axios;
   }
   // 유저 정보에 따른 북마크들을 가져옵니다.
-  async getBookmarks(id: string): Promise<RecommendResponse<AreaBookmark[]>> {
+  async getBookmarks(id: string): Promise<RecommendResponse<AreaBookmarkWithArea[]>> {
     const path = "/api/bookmark";
-    const response = await this.axios.get<RecommendResponse<AreaBookmark[]>>(
+    const response = await this.axios.get<RecommendResponse<AreaBookmarkWithArea[]>>(
       path,
       { params: { id } }
     );
@@ -31,7 +32,6 @@ class BookmarkAPI {
       path,
       { userId, areaId }
     );
-    console.log("response", response);
     return response.data;
   }
 

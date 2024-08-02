@@ -1,5 +1,6 @@
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
+import MyPageSection from "./_components/MyPageSection";
 
 function MyPage() {
   return (
@@ -18,7 +19,7 @@ function MyPage() {
         titleAlign: "center",
       }}
     >
-      <div>마이페이지</div>
+      <MyPageSection />
     </MainLayout>
   );
 }

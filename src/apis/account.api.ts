@@ -12,6 +12,6 @@ export class AccountAPI {
     return await this.axios
       .get<Tables<"accountBook">>(`/api/account?scheduleId=${scheduleId}`)
       .then(({ data }) => data)
-      .catch(e => console.error(e));
+      .catch((e) => console.error(e));
   }
 }

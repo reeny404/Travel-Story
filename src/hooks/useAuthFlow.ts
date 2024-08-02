@@ -6,7 +6,6 @@ import { emailValidCheck } from "@/utils/emailCheck";
 import { useRouter } from "next/navigation";
 
 function useAuthFlow() {
-  // const [isInputValid, setIsInputValid] = useState<boolean>(true);
   const { setStep, setLabelColor, setLabelText, setIsInputValid } =
     useLoginStepStore();
   const { user, putEmail, putPassword, putNickname } = useAuthStore();

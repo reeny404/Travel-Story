@@ -66,10 +66,13 @@ function ScheculeList({
           color = backgroundColor;
 
           return (
-            <li key={item.id} className="flex items-center ">
-              <div className="w-[9%] min-h-40 mr-[3%]  relative">
+            <li
+              key={item.id}
+              className="flex items-center justify-between h-full"
+            >
+              <div className="w-7 min-h-40 mr-[3%] h-full  relative">
                 <div
-                  className="absolute top-0 z-10 w-[100%] aspect-[1/1] text-white rounded-full flex items-center justify-center"
+                  className="absolute w-7 h-7 top-0 z-10 text-white rounded-full flex items-center justify-center"
                   style={{ backgroundColor }}
                 >
                   {countText}
@@ -87,7 +90,7 @@ function ScheculeList({
                 </div>
                 <div className="w-full min-h-20 py-2 px-3 bg-white text-sm shadow-schecule-list rounded-lg">
                   {item.data.startTime && item.data.endTime && (
-                    <div className="flex items-center h-5 justify-between">
+                    <div className="flex items-center h-5">
                       <div className="flex items-center">
                         <i className="mr-2">시간</i>
                         <p>
@@ -95,7 +98,7 @@ function ScheculeList({
                           {formatTime(item.data.endTime)}
                         </p>
                       </div>
-                      <p className="pl-4 h-full text-sm text-[#828282] border-l leading-5 border-[#828282]">
+                      <p className="pl-4 h-full m-5 text-sm text-[#828282]  leading-5 ">
                         {calculateDuration(
                           item.data.startTime,
                           item.data.endTime

@@ -40,8 +40,13 @@ function BottomSheet({
   );
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (formRef.current && !formRef.current.contains(e.target as Node)) {
+  const handleClose = (e?: React.MouseEvent<HTMLDivElement>) => {
+    if (e && formRef.current && !formRef.current.contains(e.target as Node)) {
+      setIsClosing(true);
+      setTimeout(() => {
+        onClose();
+      }, 300);
+    } else if (!e) {
       setIsClosing(true);
       setTimeout(() => {
         onClose();
@@ -88,6 +93,7 @@ function BottomSheet({
     } catch (error) {
       console.error("Error updating data:", error);
     }
+    handleClose();
   };
 
   const handleRead = () => {
@@ -116,6 +122,7 @@ function BottomSheet({
     } catch (error) {
       console.error("Error adding data:", error);
     }
+    handleClose();
   };
 
   return (
@@ -143,10 +150,9 @@ function BottomSheet({
         {type !== "memo" && (
           <BottomSheetInput type="spend" isDisabled={status === "read"} />
         )}
-        {type === "place" ||
-          (type === "customePlace" && (
-            <BottomSheetInput type="place" isDisabled={status === "read"} />
-          ))}
+        {(type === "place" || type === "customePlace") && (
+          <BottomSheetInput type="place" isDisabled={status === "read"} />
+        )}
         {type === "memo" && (
           <BottomSheetCheckList
             type={type}
