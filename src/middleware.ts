@@ -45,6 +45,14 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // 온보딩에 url 접근 막기
+  if (pathname === "/onboard") {
+    if (request.cookies.get("hasTravelType")) {
+      url.pathname = "/";
+      return NextResponse.redirect(url);
+    }
+  }
+
   return await updateSession(request);
 }
 

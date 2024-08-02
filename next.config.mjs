@@ -4,6 +4,7 @@ const nextConfig = {
     remotePatterns: [
       { hostname: "yqoupynehwgshtspamuf.supabase.co" },
       { hostname: "t1.kakaocdn.net" },
+      { hostname: "k.kakaocdn.net" },
     ],
   },
 };

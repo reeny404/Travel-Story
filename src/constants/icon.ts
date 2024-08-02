@@ -36,6 +36,7 @@ export const ICON = {
     big: {
       on: "lgBookmark-on",
       off: "lgBookmark-off",
+      white: { name: "fi-sr-bookmark", ext: "svg" },
     },
     small: {
       on: "smBookmark-on",
@@ -47,6 +48,10 @@ export const ICON = {
     black: "cancel-black",
     gray: "cancel-gray",
     white: "cancel-white",
+  },
+  car: { white: { name: "fi-sr-car", ext: "svg" } },
+  checkmark: {
+    white: { name: "checkmark-done", ext: "svg" },
   },
   chevron: {
     blue: "chevron-blue",
@@ -91,14 +96,16 @@ export const ICON = {
   settings: {
     black: "settings-black",
   },
+  location: {
+    gray: { name: "location", ext: "svg" },
+    white: { name: "location-white", ext: "svg" },
+  },
   notice: {
     white: "notice-white",
   },
-  maker: { gray: { name: "location", ext: "svg" } },
   microphone: {
     black: "microphone-black",
   },
-
   star: {
     fill: "star-fill",
     unfill: "star-unfill",
