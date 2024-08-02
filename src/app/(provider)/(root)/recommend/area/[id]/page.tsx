@@ -94,7 +94,7 @@ function AreaDetailPage({ params }: AreaDetailPage) {
       }}
     >
       {area && (
-        <section className="relative container h-full max-w-[375px]">
+        <section className="relative container h-full">
           <AreaDetailCard area={area} ratingAmount={areaReviews?.length || 0} />
           <Liner />
           <Tab
