@@ -5,15 +5,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import PrimaryTagList from "../commons/TagList/PrimaryTagList";
 
 // spacing: 카드 간 간격, slidesPerView: 한 화면에 보일 카드의 개수
-function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
+function MainTourSlider({ cards }: SliderProps) {
   return (
-    <Swiper
-      spaceBetween={spacing}
-      slidesPerView={slidesPerView}
-      grabCursor={true}
-    >
+    <Swiper grabCursor={true}>
       {cards.map((card, index) => (
-        <SwiperSlide key={index} className={`${index === 0 ? "ml-4" : ""}`}>
+        <SwiperSlide key={index}>
           <div className="bg-white rounded-lg shadow-area-card">
             <AreaCard
               title={card.title}
@@ -33,4 +29,4 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
   );
 }
 
-export default CardSlider;
+export default MainTourSlider;
