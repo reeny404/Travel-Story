@@ -12,7 +12,7 @@ export async function GET() {
 
   try {
     const { data, error } = await supabase.from("plan")
-      .select().eq("userId", user.id)
+      .select("*, schedule(*)").eq("userId", user.id)
       .order("createdAt", { ascending: false })
       .range(0, 0)
       .maybeSingle();
