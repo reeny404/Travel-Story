@@ -2,7 +2,6 @@ import FooterList from "./FooterList";
 import MyMenu from "./MyMenu";
 import MyProfile from "./MyProfile";
 import MySchedule from "./MySchedule";
-import RecentView from "./RecentView";
 
 function MyPageSection() {
   return (
@@ -16,7 +15,6 @@ function MyPageSection() {
         공지사항
       </section>
       <MyMenu />
-      <RecentView />
       <FooterList />
     </main>
   );

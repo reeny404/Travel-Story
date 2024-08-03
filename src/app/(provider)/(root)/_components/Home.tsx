@@ -5,10 +5,12 @@ import MainLayout from "@/components/Layout/MainLayout";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import CardSlider from "@/components/Slider/CardSlider";
 import { ICON } from "@/constants/icon";
+import { useAuth } from "@/contexts/auth.contexts";
 import useDrawerStore from "@/stores/drawer.store";
 import { SlideCardProps } from "@/types/Slider";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import MyTrip from "./MyTrip";
 
 const CardMockUpData: SlideCardProps[] = [
@@ -48,6 +50,13 @@ const CardMockUpData: SlideCardProps[] = [
 
 function Home() {
   const { openDrawer } = useDrawerStore();
+  const { isInitialized } = useAuth();
+  const router = useRouter();
+  const handleAvatarClick = () => {
+    if (isInitialized) {
+      return router.push("/my");
+    }
+  };
 
   return (
     <MainLayout
@@ -74,7 +83,7 @@ function Home() {
             icon: ICON.avatar.black,
             alt: "Avatar",
             size: 20,
-            path: "/my",
+            onClick: handleAvatarClick,
           },
         ],
       }}

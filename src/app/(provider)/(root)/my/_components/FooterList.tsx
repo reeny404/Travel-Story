@@ -17,7 +17,7 @@ function FooterList() {
   };
 
   return (
-    <section className="w-full">
+    <section className="w-full mt-[30px]">
       <p className={lineStyle}>고객센터</p>
       <p className={lineStyle}>이용약관</p>
       <p className={lineStyle}>개인정보처리방침</p>
