@@ -17,8 +17,6 @@ const Carousel = ({ slides }: CarouselProps) => {
         className="rounded-sm"
         modules={[Autoplay]}
         loop={true}
-        spaceBetween={20}
-        slidesPerView={1.2}
         grabCursor={true}
         autoplay={{
           delay: 3500,
@@ -27,7 +25,7 @@ const Carousel = ({ slides }: CarouselProps) => {
         {slides?.map((slide, idx) => {
           return (
             <SwiperSlide key={idx}>
-              <div className="bg-white rounded-lg overflow-hidden">{slide}</div>
+              <div className="px-4">{slide}</div>
             </SwiperSlide>
           );
         })}

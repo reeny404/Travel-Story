@@ -1,5 +1,3 @@
-import PrimaryTagList from "@/components/commons/TagList/PrimaryTagList";
-import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
 import { useModalStore } from "@/stores/modal.store";
@@ -39,41 +37,40 @@ function AreaCard({
       isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
     }
   };
-  const mockTags = ["친구와 함께", "문화체험", "도심"];
 
   return (
     <>
-      <Link href={linkUrl} className="w-full relative ">
+      <Link href={linkUrl} className="w-full relative">
         <CardImgFrame
           imageUrl={imageUrl}
           alt={title}
           frameClassName="aspect-square"
-          imageClassName="object-cover"
+          imageClassName="object-cover rounded-lg"
           city={city}
           country={country}
           areaName={areaName}
         />
       </Link>
       {/* TODO areaCardShadow 해결해야댐 일단 넘김 */}
-      <div className="pb-5 shadow-area-card ">
+      <div className="pb-5">
         <p className="px-4 pt-4 mb-3 text-sm text-ellipsis line-clamp-2 leading-5">
           {description}
         </p>
 
-        <PrimaryTagList tagList={mockTags} />
+        {/* <PrimaryTagList tagList={mockTags} /> */}
       </div>
       {/* bookmark 쉐도우 해결해야댐 */}
-      <div className="absolute  p-[10px] top-2 right-2  hover:cursor-pointer">
+      <div className="absolute p-[10px] top-2 right-2 hover:cursor-pointer">
         <div className="relative w-6 h-6 aspect-square">
           <Image
             src={
               isBookmarked
-                ? `/icons/${ICON.bookmark.big.on.name}.svg`
+                ? `/icons/whiteBookmark-on.svg`
                 : `/icons/whiteBookmark-off.svg`
             }
             alt="bookmark"
             fill
-            className="object-contain "
+            className="object-contain drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]"
             onClick={toggleBookmark}
           />
         </div>

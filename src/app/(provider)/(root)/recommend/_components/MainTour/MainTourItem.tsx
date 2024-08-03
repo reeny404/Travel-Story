@@ -21,10 +21,15 @@ function MainTourItem({ item, itemType }: MainTourItemProps) {
         />
       </div>
       <div className="flex flex-col w-3/4">
-        <Link href={`${linkUrl}${item.id}`} className="text-[15px] font-bold">
+        <Link
+          href={`${linkUrl}${item.id}`}
+          className="text-[15px] font-bold text-ellipsis overflow-x-hidden whitespace-nowrap line-clamp-1"
+        >
           {item.krName}
         </Link>
-        <p className="text-sm text-ellipsis line-clamp-2">{item.description}</p>
+        <p className="text-sm mb-2 text-ellipsis line-clamp-2">
+          {item.description}
+        </p>
         <RatingIcons rating={item.rating!} type="small" />
       </div>
     </section>

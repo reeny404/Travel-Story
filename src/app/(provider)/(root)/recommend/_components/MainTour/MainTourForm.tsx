@@ -42,7 +42,7 @@ function MainTourForm({ citiesInfo, areasInfo }: MainTourFormProps) {
   );
 
   return (
-    <div className="w-full flex flex-col py-4 px-4">
+    <div className="w-full bg-[#F5F5F5] flex flex-col py-4">
       <CardType title="주요 관광지" type="fire" />
       <Carousel slides={carouselItems} />
     </div>

@@ -2,8 +2,8 @@
 
 import { api } from "@/apis/api";
 import CardType from "@/components/Card/CardType";
-import Carousel from "@/components/Carousel/Carousel";
 import MainLayout from "@/components/Layout/MainLayout";
+import CardSlider from "@/components/Slider/CardSlider";
 import Tab from "@/components/Tab/Tab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
@@ -12,9 +12,7 @@ import useDrawerStore from "@/stores/drawer.store";
 import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { ReactNode } from "react";
 import DetailCard from "../../../_components/Cards/DetailCard";
-import CarouselItem from "../../../_components/Carousel/CarouselItem";
 import MainTourForm from "../../../_components/MainTour/MainTourForm";
 // 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
 // 이 페이지는 SSR이여야함
@@ -78,80 +76,60 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     },
   });
 
-  const areaCarouselItems: ReactNode[] | undefined = accommodations?.map(
-    (accommodation, idx) => {
-      return (
-        <>
-          <CarouselItem
-            id={accommodation.id}
-            rating={accommodation.rating!}
-            description={accommodation.description}
-            imageUrl={accommodation.imageUrl!}
-            title={accommodation.title}
-            linkUrl={`/recommend/area/${accommodation.id}`}
-            city={accommodation.info.location[1]}
-            country={accommodation.info.location[0]}
-            areaName={accommodation.krName!}
-          />
-        </>
-      );
-    }
-  );
-  const placeCarouselItems: ReactNode[] | undefined = places?.map(
-    (place, idx) => {
-      return (
-        <>
-          <CarouselItem
-            id={place.id}
-            rating={place.rating!}
-            description={place.description}
-            imageUrl={place.imageUrl!}
-            title={place.title}
-            linkUrl={`/recommend/area/${place.id}`}
-            city={place.info.location[1]}
-            country={place.info.location[0]}
-            areaName={place.krName!}
-          />
-        </>
-      );
-    }
-  );
-  const restaurantCarouselItems: ReactNode[] | undefined = restaurants?.map(
-    (restaurant, idx) => {
-      return (
-        <>
-          <CarouselItem
-            id={restaurant.id}
-            rating={restaurant.rating!}
-            description={restaurant.description}
-            imageUrl={restaurant.imageUrl!}
-            title={restaurant.title}
-            linkUrl={`/recommend/area/${restaurant.id}`}
-            city={restaurant.info.location[1]}
-            country={restaurant.info.location[0]}
-            areaName={restaurant.krName!}
-          />
-        </>
-      );
-    }
-  );
-  const shopCarouselItems: ReactNode[] | undefined = shops?.map((shop, idx) => {
-    return (
-      <>
-        <CarouselItem
-          id={shop.id}
-          rating={shop.rating!}
-          description={shop.description}
-          imageUrl={shop.imageUrl!}
-          title={shop.title}
-          linkUrl={`/recommend/area/${shop.id}`}
-          city={shop.info.location[1]}
-          country={shop.info.location[0]}
-          areaName={shop.krName!}
-        />
-      </>
-    );
+  const placeSliderProps = places?.map((place, idx) => {
+    return {
+      title: place.title,
+      description: place.description,
+      imageUrl: place.imageUrl!,
+      linkUrl: `/recommend/area${place.id}`,
+      tags: ["친구와 함께", "문화체험", "도심"],
+      id: place.id,
+      city: place.info.location[1],
+      country: place.info.location[0],
+      areaName: place.krName!,
+    };
   });
+  const restaurantsSliderProps = restaurants?.map((restaurant, idx) => {
+    return {
+      title: restaurant.title,
+      description: restaurant.description,
+      imageUrl: restaurant.imageUrl!,
+      linkUrl: `/recommend/area${restaurant.id}`,
+      tags: ["친구와 함께", "문화체험", "도심"],
+      id: restaurant.id,
+      city: restaurant.info.location[1],
+      country: restaurant.info.location[0],
+      areaName: restaurant.krName!,
+    };
+  });
+  const shopsSliderProps = shops?.map((shop, idx) => {
+    return {
+      title: shop.title,
+      description: shop.description,
+      imageUrl: shop.imageUrl!,
+      linkUrl: `/recommend/area${shop.id}`,
+      tags: ["친구와 함께", "문화체험", "도심"],
+      id: shop.id,
+      city: shop.info.location[1],
+      country: shop.info.location[0],
+      areaName: shop.krName!,
+    };
+  });
+  const accommodationsSliderProps = accommodations?.map(
+    (accommodation, idx) => {
+      return {
+        title: accommodation.title,
+        description: accommodation.description,
+        imageUrl: accommodation.imageUrl!,
+        linkUrl: `/recommend/area${accommodation.id}`,
+        tags: ["친구와 함께", "문화체험", "도심"],
+        id: accommodation.id,
+        city: accommodation.info.location[1],
+        country: accommodation.info.location[0],
+        areaName: accommodation.krName!,
+      };
+    }
+  );
 
   return (
     <MainLayout
@@ -198,57 +176,87 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         </div>
         <div className="pt-5 pb-10">
           {currentTab === "place" && (
-            <div className="w-full">
+            <>
               <CardType
                 linkUrl={`/recommend/country/${countryId}/place`}
                 title="문화 탐방"
                 type="architect"
               />
-              <Carousel slides={placeCarouselItems!} />
-            </div>
+              {placeSliderProps && (
+                <CardSlider
+                  spacing={20}
+                  slidesPerView={1.2}
+                  cards={placeSliderProps!}
+                />
+              )}
+            </>
           )}
           {currentTab === "accommodation" && (
-            <div className="w-full">
+            <>
               <CardType
                 linkUrl={`/recommend/country/${countryId}/accommodation`}
                 title="할인하는 숙소"
                 type="house"
               />
-              <Carousel slides={areaCarouselItems!} />
-            </div>
+              {accommodationsSliderProps && (
+                <CardSlider
+                  spacing={20}
+                  slidesPerView={1.2}
+                  cards={accommodationsSliderProps!}
+                />
+              )}
+            </>
           )}
 
           {currentTab === "restaurant" && (
-            <div className="w-full">
+            <>
               <CardType
                 linkUrl={`/recommend/country/${countryId}/restaurant`}
                 title="식도락"
                 type="taco"
               />
-              <Carousel slides={restaurantCarouselItems!} />
-            </div>
+              {restaurantsSliderProps && (
+                <CardSlider
+                  spacing={20}
+                  slidesPerView={1.2}
+                  cards={restaurantsSliderProps!}
+                />
+              )}
+            </>
           )}
           {currentTab === "shop" && (
-            <div className="w-full">
+            <>
               <CardType
                 linkUrl={`/recommend/country/${countryId}/shop`}
                 title="쇼핑"
                 type="friends"
               />
-              <Carousel slides={shopCarouselItems!} />
-            </div>
+              {shopsSliderProps && (
+                <CardSlider
+                  spacing={20}
+                  slidesPerView={1.2}
+                  cards={shopsSliderProps!}
+                />
+              )}
+            </>
           )}
         </div>
         <div className="pb-10">
           <MainTourForm areasInfo={accommodations!} />
         </div>
-        <div className="w-full pb-10">
+        <div className="pb-10">
           <CardType
-            linkUrl={`/recommend/country/${countryId}/place`}
+            linkUrl={`/recommend/country/${countryId}/shop`}
             title="친구와 함꼐"
             type="friends"
           />
-          <Carousel slides={shopCarouselItems!} />
+          {shopsSliderProps && (
+            <CardSlider
+              spacing={20}
+              slidesPerView={1.2}
+              cards={shopsSliderProps!}
+            />
+          )}
         </div>
       </div>
     </MainLayout>
