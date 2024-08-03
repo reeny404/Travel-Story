@@ -1,8 +1,9 @@
 "use client";
 
 import MainLayout from "@/components/Layout/MainLayout";
+import TabPage from "@/components/TabPage";
+import { Tabs } from "@/components/TabPage/TabPage";
 import { useMemo } from "react";
-import TabPage, { Tabs } from "../../../../../components/TabPage";
 import MyPlanDefault from "./_components/MyPlanDefault";
 import MyPlanStyle from "./_components/MyPlanStyle";
 
