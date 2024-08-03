@@ -1,17 +1,17 @@
 export const ICON = {
   account: {
     memo: {
-      black: { name: "memo", ext: "svg" }
+      black: { name: "memo", ext: "svg" },
     },
     card: {
-      black: { name: "card", ext: "svg" }
+      black: { name: "card", ext: "svg" },
     },
     shop: {
-      black: { name: "shop", ext: "svg" }
+      black: { name: "shop", ext: "svg" },
     },
   },
   add: {
-    white: { name: "add", ext: "svg" }
+    white: { name: "add", ext: "svg" },
   },
   arrow: {
     back: {
@@ -33,9 +33,15 @@ export const ICON = {
     gray: "avatar-gray",
   },
   bookmark: {
-    fat: { name: 'fi-sr-bookmark', ext: "svg" },
-    on: { name: 'bookmark-on', ext: "svg" },
-    off: { name: 'bookmark-off', ext: "svg" },
+    big: {
+      on: { name: "lgBookmark-on", ext: "svg" },
+      off: { name: "lgBookmark-off", ext: "svg" },
+      white: { name: "fi-sr-bookmark", ext: "svg" },
+    },
+    small: {
+      on: { name: "smBookmark-on", ext: "svg" },
+      off: { name: "smBookmark-off", ext: "svg" },
+    },
   },
   calendar: { white: { name: "calendar", ext: "svg" } },
   cancel: {
@@ -45,13 +51,13 @@ export const ICON = {
   },
   car: { white: { name: "fi-sr-car", ext: "svg" } },
   checkmark: {
-    white: { name: 'checkmark-done', ext: "svg" },
+    white: { name: "checkmark-done", ext: "svg" },
   },
   chevron: {
     blue: "chevron-blue",
   },
-  credit: {
-    euro: "euro-black",
+  bill: {
+    white: "bill-white",
   },
   dottedSquare: {
     blue: "dotted-square-blue",
@@ -62,6 +68,7 @@ export const ICON = {
   edit: {
     black: "edit-black",
     blue: "edit-blue",
+    color: "edit-color",
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
@@ -91,7 +98,8 @@ export const ICON = {
   },
   location: {
     gray: { name: "location", ext: "svg" },
-    white: { name: "location-white", ext: "svg" }
+    white: { name: "location-white", ext: "svg" },
+    black: { name: "location-black", ext: "svg" },
   },
   notice: {
     white: "notice-white",
@@ -102,6 +110,37 @@ export const ICON = {
   star: {
     fill: "star-fill",
     unfill: "star-unfill",
+    half: "star-half",
+  },
+  accommodation: {
+    color: "accommodation-color",
+    none: "accommodation-none",
+  },
+  place: {
+    color: "place-color",
+    none: "place-none",
+  },
+  restaurant: {
+    color: "restaurant-color",
+    none: "restaurant-none",
+  },
+  shop: {
+    color: "shop-color",
+    none: "shop-none",
+  },
+  areaCalender: {
+    big: {
+      black: "lgCalender-black",
+      white: "lgCalender-white",
+      area: "calender-area",
+    },
+    small: {
+      black: "smCalender-black",
+      white: "smCalender-white",
+    },
+  },
+  call: {
+    black: "call-black",
   },
   time: { gray: { name: "time", ext: "svg" } },
 } as const;

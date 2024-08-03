@@ -34,8 +34,7 @@ function ReviewBottomSheetImages({
     setImgFile((prev) => [...prev, imageFileToServer]);
   };
   return (
-    <div className="flex w-full">
-      <i className="mr-2 w-8 text-center">🖼</i>
+    <div className="flex w-full px-4">
       <ul className="flex gap-2 flex-wrap">
         {images.map((imageSrc, index) => (
           <li
