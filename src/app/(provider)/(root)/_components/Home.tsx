@@ -6,7 +6,6 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import CardSlider from "@/components/Slider/CardSlider";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
-import useDrawerStore from "@/stores/drawer.store";
 import { SlideCardProps } from "@/types/Slider";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,7 +48,6 @@ const CardMockUpData: SlideCardProps[] = [
 ];
 
 function Home() {
-  const { openDrawer } = useDrawerStore();
   const { isInitialized } = useAuth();
   const router = useRouter();
   const handleAvatarClick = () => {
@@ -57,19 +55,10 @@ function Home() {
       return router.push("/my");
     }
   };
-
   return (
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.menu.burgerBlack,
-            alt: "Back",
-            size: 20,
-            onClick: openDrawer,
-          },
-        ],
         title: "TripStory",
         titleAlign: "left" as const,
         rightIcons: [
@@ -93,12 +82,14 @@ function Home() {
         style={{ minHeight: "calc(100vh - 52px)" }}
       >
         <div className="relative w-full h-[222px] bg-slate-200">
-          <Image
-            src="/banners/banner1_x3.png"
-            alt="banner"
-            fill
-            className="object-cover"
-          />
+          <Link href="/recommend/country/1/detail">
+            <Image
+              src="/banners/banner1_x3.png"
+              alt="banner"
+              fill
+              className="object-cover"
+            />
+          </Link>
         </div>
         <div className="sticky z-10 -mt-[15px] px-4">
           <Link href="/search" className="flex justify-center w-full">

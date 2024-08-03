@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = localFont({
+  src: [{ path: "../fonts/Pretendard_Variable.woff2" }],
+});
 
 export const metadata: Metadata = {
   title: "TripStory",
@@ -16,7 +18,11 @@ function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} w-[430px] mx-auto`}>{children}</body>
+      <body
+        className={`${font.className} w-full min-h-svh max-w-[430px] mx-auto`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

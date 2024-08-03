@@ -51,14 +51,6 @@ function IntroPage({ params }: IntroPageProps) {
     <MainLayout
       headerProps={{
         backgroundColor: "transparent",
-        leftIcons: [
-          {
-            icon: ICON.menu.burgerBlack,
-            alt: "Menu",
-            size: 20,
-            onClick: openDrawer,
-          },
-        ],
         title: IntroCountry?.country.krName!,
         titleAlign: "center",
         rightIcons: [

@@ -49,8 +49,8 @@ function AreaCard({
       <Image
         src={
           isBookmarked
-            ? `/icons/${ICON.bookmark.on.name}.svg`
-            : `/icons/${ICON.bookmark.off.name}.svg`
+            ? `/icons/${ICON.bookmark.small.on.name}.svg`
+            : `/icons/${ICON.bookmark.small.off.name}.svg`
         }
         alt="bookmark"
         width={10}

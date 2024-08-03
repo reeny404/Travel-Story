@@ -3,8 +3,6 @@
 import { api } from "@/apis/api";
 import SlideTagList from "@/components/commons/TagList/SlideTagList";
 import MainLayout from "@/components/Layout/MainLayout";
-import { ICON } from "@/constants/icon";
-import useDrawerStore from "@/stores/drawer.store";
 import { Schedule } from "@/types/plan";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -22,8 +20,6 @@ export default function MyBookmarkPage({
 }: PageProps) {
   const dayIndex: number = Number(day);
   const router = useRouter();
-
-  const { openDrawer } = useDrawerStore();
   const onTagClick = (tag: string) => {};
 
   const { data: bookmarks, isPending } = useQuery({
@@ -44,24 +40,16 @@ export default function MyBookmarkPage({
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.menu.burgerBlack,
-            alt: "open drawer",
-            size: 20,
-            onClick: openDrawer,
-          },
-        ],
         title: "북마크",
         titleAlign: "center",
-        rightIcons: [
-          {
-            icon: ICON.search.black,
-            alt: "Search",
-            size: 20,
-            path: "/",
-          },
-        ],
+        // rightIcons: [
+        //   {
+        //     icon: ICON.search.black,
+        //     alt: "Search",
+        //     size: 20,
+        //     path: "/",
+        //   },
+        // ],
       }}
     >
       <div className="w-full min-h-[calc(100dvh-52px)] mx-auto pb-4 bg-[#F8F8F8]">
