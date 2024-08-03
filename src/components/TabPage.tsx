@@ -30,7 +30,7 @@ function TabPage({ tabs }: TabProps) {
           </button>
         ))}
       </section>
-      <section>{tabs[selectedTab]}</section>
+      <section className="py-4">{tabs[selectedTab]}</section>
     </>
   );
 }
