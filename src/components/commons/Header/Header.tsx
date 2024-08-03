@@ -46,11 +46,6 @@ function Header({
   const { openDrawer } = useDrawerStore();
 
   const handleIconClick = (path?: string, onClick?: () => void) => {
-    if (path === "back") {
-      router.back();
-      return;
-    }
-
     if (path) {
       router.push(path);
       return;
