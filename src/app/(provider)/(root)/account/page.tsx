@@ -30,14 +30,6 @@ export default function AccountBookPage() {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            path: "/",
-            size: 20,
-          },
-        ],
         title: "가계부",
         titleAlign: "center",
       }}
