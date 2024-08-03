@@ -5,9 +5,11 @@ import MainLayout from "@/components/Layout/MainLayout";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import CardSlider from "@/components/Slider/CardSlider";
 import { ICON } from "@/constants/icon";
+import { useAuth } from "@/contexts/auth.contexts";
 import { SlideCardProps } from "@/types/Slider";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import MyTrip from "./MyTrip";
 
 const CardMockUpData: SlideCardProps[] = [
@@ -46,6 +48,15 @@ const CardMockUpData: SlideCardProps[] = [
 ];
 
 function Home() {
+  const { user } = useAuth();
+  const router = useRouter();
+  console.log(user);
+  const handleAvatarClick = () => {
+    if (user) {
+      return router.push("/my");
+    }
+    return router.push("/login");
+  };
   return (
     <MainLayout
       headerProps={{
@@ -63,7 +74,7 @@ function Home() {
             icon: ICON.avatar.black,
             alt: "Avatar",
             size: 20,
-            path: "/my",
+            onClick: handleAvatarClick,
           },
         ],
       }}

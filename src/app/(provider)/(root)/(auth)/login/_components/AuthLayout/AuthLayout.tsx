@@ -1,5 +1,5 @@
 "use client";
-import Header from "@/components/commons/Header";
+import MainLayout from "@/components/Layout/MainLayout";
 import { usePathStore } from "@/stores/path.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { createClient } from "@/supabase/client";
@@ -11,7 +11,7 @@ type AuthPageProps = {
   isSocialHidden?: boolean;
 };
 
-function AuthPage({
+function AuthLayout({
   title,
   isSocialHidden = false,
   children,
@@ -59,10 +59,9 @@ function AuthPage({
   };
 
   return (
-    <>
-      <Header title="로그인" />
+    <MainLayout headerProps={{ title: "로그인" }}>
       <div
-        className="w-full px-4 pt-12 bg-[#F8F8F8]"
+        className="w-full px-4 pt-12 bg-white"
         style={{ minHeight: "calc(100vh - 52px)" }}
       >
         {/* title */}
@@ -90,8 +89,8 @@ function AuthPage({
           </div>
         )}
       </div>
-    </>
+    </MainLayout>
   );
 }
 
-export default AuthPage;
+export default AuthLayout;

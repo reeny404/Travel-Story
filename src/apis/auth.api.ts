@@ -12,8 +12,9 @@ class AuthAPI {
         email: email,
         password: password,
       });
-      return response;
+      return response.data;
     } catch (error) {
+      console.error(error);
       return false;
     }
   }
@@ -26,7 +27,7 @@ class AuthAPI {
         nickname: nickname,
       });
       if (response.status === 200) {
-        console.error("회원가입 완료: ", response.data);
+        return response.data;
       } else {
         console.error("회원가입 실패:", response.data);
       }
