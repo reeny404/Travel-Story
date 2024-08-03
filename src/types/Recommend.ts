@@ -16,7 +16,7 @@ export type City = Tables<"city">;
 
 export type Area = Tables<"area"> & {
   info: {
-    location: string;
+    location: string[];
     name: string;
     notes: string;
     opening_hours?: { close: string; open: string };
@@ -26,6 +26,8 @@ export type Area = Tables<"area"> & {
       youth?: "string";
       average_meal_cost?: string;
     };
+    phoneNumber: string;
+    address: string;
   };
 };
 

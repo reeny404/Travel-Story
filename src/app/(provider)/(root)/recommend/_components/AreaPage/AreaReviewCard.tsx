@@ -21,7 +21,7 @@ function AreaReviewCard({
 }: AreaReviewCardProps) {
   const date = createdAt.slice(0, 10).replaceAll("-", ".");
   return (
-    <section className="w-full flex flex-col">
+    <section className="w-full flex flex-col px-4">
       <article className="flex justify-between items-center w-full">
         <div className="flex items-center">
           <VanilaImgFrame
@@ -39,7 +39,7 @@ function AreaReviewCard({
           </div>
         </div>
         <VanilaImgFrame
-          imageUrl={"/icons/bars-black.png"}
+          imageUrl={"/icons/bars-black.svg"}
           alt="icon"
           width="w-5"
           height="h-5"

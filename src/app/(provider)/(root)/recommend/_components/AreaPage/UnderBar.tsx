@@ -47,13 +47,13 @@ function UnderBar({ area }: UnderBarProps) {
       )}
       <button
         onClick={() => deleteBookmark.mutate()}
-        className="w-11 h-full p-[10px] ml-4 relative flex justify-center items-center border-2 bg-white rounded-lg aspect-auto"
+        className="w-11 h-full p-3 relative flex justify-center items-center border border-black bg-white rounded-lg aspect-auto"
       >
         <Image
           src={
             isBookmarked
-              ? `/icons/${ICON.bookmark.big.on}.png`
-              : `/icons/${ICON.bookmark.big.off}.png`
+              ? `/icons/${ICON.bookmark.big.on.name}.svg`
+              : `/icons/${ICON.bookmark.big.off.name}.svg`
           }
           alt="bookmark"
           width={16}
@@ -65,9 +65,16 @@ function UnderBar({ area }: UnderBarProps) {
 
       <button
         onClick={handleOpen}
-        className=" bg-gray-300 w-full border rounded-md mr-4"
+        className="bg-[#383838] text-white w-full flex justify-center gap-x-2 items-center border border-black rounded-lg py-[11px]"
       >
-        내 여행에 추가
+        <Image
+          src={`/icons/${ICON.areaCalender.big.area}.svg`}
+          alt="calender"
+          width={20}
+          height={20}
+          className="hover:cursor-pointer object-contain"
+        />
+        <p>내 여행에 추가</p>
       </button>
     </article>
   );

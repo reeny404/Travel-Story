@@ -24,12 +24,12 @@ function AreaDetailCard({ area, ratingAmount }: AreaDetailCardProps) {
   }, []);
 
   return (
-    <section className="w-full pb-[52px]">
+    <section className="w-full pb-[52px] px-4">
       <article className="w-full ">
         <div className="flex justify-between items-center font-semibold">
           <div className="flex relative aspect-auto">
             <Image
-              src={`/icons/${area.type}-color.png`}
+              src={`/icons/${area.type}-color.svg`}
               alt={area.type!}
               width={20}
               height={10}

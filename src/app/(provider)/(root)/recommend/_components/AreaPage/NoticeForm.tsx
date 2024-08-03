@@ -14,7 +14,7 @@ function NoticeForm({ area }: NiticeFormProps) {
       <h1 className="font-bold my-5 min-w-20">이용안내</h1>
       <article className="flex w-full">
         <ImageFrame
-          src={`/icons/${ICON.notice.white}.png`}
+          src={`/icons/${ICON.notice.white}.svg`}
           alt="notice"
           className="w-5 h-5"
         />
@@ -29,7 +29,7 @@ function NoticeForm({ area }: NiticeFormProps) {
       </article>
       <article className="flex w-full mt-5">
         <ImageFrame
-          src={`/icons/${ICON.credit.euro}.png`}
+          src={`/icons/${ICON.bill.white}.svg`}
           alt="euro"
           className="w-5 h-5"
         />

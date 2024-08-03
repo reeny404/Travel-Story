@@ -46,14 +46,14 @@ function ReviewSummaryCard({
           id={user?.id!}
         />
       )}
-      <header className="w-full flex justify-between mb-7 relative aspect-auto">
+      <header className="w-full flex justify-between mb-5 pt-6 relative aspect-auto">
         <span className="text-lg font-bold">리뷰</span>
         <button
           onClick={() => handleOpen()}
           className="text-sm font-bold flex items-center aspect-auto"
         >
           <Image
-            src={`/icons/${ICON.edit.color}.png`}
+            src={`/icons/${ICON.edit.color}.svg`}
             alt="edit"
             width={16}
             height={16}
@@ -73,7 +73,7 @@ function ReviewSummaryCard({
         <div className="w-full h-full flex flex-col gap-y-3 py-5 px-4">
           <div className="w-full flex text-sm font-semibold relative">
             <Image
-              src="/icon/delicious.png"
+              src="/icons/emoji-dinner.svg"
               alt="image"
               width={16}
               height={16}
@@ -84,7 +84,7 @@ function ReviewSummaryCard({
           <div className="w-full flex text-sm font-semibold relative">
             {" "}
             <Image
-              src="/icon/clean.png"
+              src="/icons/emoji-sparkles.svg"
               alt="image"
               width={16}
               height={16}
@@ -95,7 +95,7 @@ function ReviewSummaryCard({
           <div className="flex text-sm font-semibold relative">
             {" "}
             <Image
-              src="/icon/cool.png"
+              src="/icons/emoji-window.svg"
               alt="image"
               width={16}
               height={16}

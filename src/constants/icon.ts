@@ -34,13 +34,13 @@ export const ICON = {
   },
   bookmark: {
     big: {
-      on: "lgBookmark-on",
-      off: "lgBookmark-off",
+      on: { name: "lgBookmark-on", ext: "svg" },
+      off: { name: "lgBookmark-off", ext: "svg" },
       white: { name: "fi-sr-bookmark", ext: "svg" },
     },
     small: {
-      on: "smBookmark-on",
-      off: "smBookmark-off",
+      on: { name: "smBookmark-on", ext: "svg" },
+      off: { name: "smBookmark-off", ext: "svg" },
     },
   },
   calendar: { white: { name: "calendar", ext: "svg" } },
@@ -56,8 +56,8 @@ export const ICON = {
   chevron: {
     blue: "chevron-blue",
   },
-  credit: {
-    euro: "euro-black",
+  bill: {
+    white: "bill-white",
   },
   dottedSquare: {
     blue: "dotted-square-blue",
@@ -99,6 +99,7 @@ export const ICON = {
   location: {
     gray: { name: "location", ext: "svg" },
     white: { name: "location-white", ext: "svg" },
+    black: { name: "location-black", ext: "svg" },
   },
   notice: {
     white: "notice-white",
@@ -126,6 +127,20 @@ export const ICON = {
   shop: {
     color: "shop-color",
     none: "shop-none",
+  },
+  areaCalender: {
+    big: {
+      black: "lgCalender-black",
+      white: "lgCalender-white",
+      area: "calender-area",
+    },
+    small: {
+      black: "smCalender-black",
+      white: "smCalender-white",
+    },
+  },
+  call: {
+    black: "call-black",
   },
   time: { gray: { name: "time", ext: "svg" } },
 } as const;

@@ -17,8 +17,8 @@ function ReviewBottomSheetRating({
           key={`filled-${idx}`}
           src={
             rating <= idx
-              ? `/icons/${ICON.star.unfill}.png`
-              : `/icons/${ICON.star.fill}.png`
+              ? `/icons/${ICON.star.unfill}.svg`
+              : `/icons/${ICON.star.fill}.svg`
           }
           alt="filled star"
           width={30}

@@ -14,6 +14,7 @@ import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
 import AreaDetailCard from "../../_components/AreaPage/AreaDetailCard";
 import AreaReviewCard from "../../_components/AreaPage/AreaReviewCard";
+import LocationForm from "../../_components/AreaPage/LocationForm";
 import NoticeForm from "../../_components/AreaPage/NoticeForm";
 import ReviewSummaryCard from "../../_components/AreaPage/ReviewSummary";
 import UnderBar from "../../_components/AreaPage/UnderBar";
@@ -95,14 +96,19 @@ function AreaDetailPage({ params }: AreaDetailPage) {
     >
       {area && (
         <main className="h-full w-full relative container">
+          {/* 이 부분 그라데이션 mb 맞추는게 쉽지가 않다 팁이 있는지 여쭙자 */}
           <CardImgFrame
             imageUrl={area.imageUrl}
             alt={area.title}
-            frameClassName="-z-50 -mb-12 aspect-4/5"
+            frameClassName="-z-50 -mb-11 aspect-4/5"
             imageClassName="object-cover"
+            isTop={true}
+            country={area.info.location[0]}
+            city={area.info.location[1]}
+            areaName={area.name}
           />
           <section className="w-full h-full p-4 pb-0">
-            <div className="w-full h-full bg-white px-4 pt-8 rounded-t-lg">
+            <div className="w-full h-full bg-white pt-8 rounded-t-lg">
               <AreaDetailCard
                 area={area}
                 ratingAmount={areaReviews?.length || 0}
@@ -118,6 +124,13 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                 }}
               >
                 <NoticeForm area={area} />
+              </div>
+              <div
+                ref={(tabEl) => {
+                  sectionRefs.current[1] = tabEl;
+                }}
+              >
+                <LocationForm area={area} />
               </div>
               <div
                 ref={(tabEl) => {
@@ -148,8 +161,8 @@ function AreaDetailPage({ params }: AreaDetailPage) {
                   })}
               </div>
             </div>
+            <UnderBar area={area} />
           </section>
-          <UnderBar area={area} />
         </main>
       )}
     </MainLayout>

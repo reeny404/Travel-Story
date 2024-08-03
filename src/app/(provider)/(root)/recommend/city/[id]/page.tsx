@@ -95,7 +95,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
           <CardType
             linkUrl={`/recommend/city/${cityId}/accommodation`}
             title="할인하는 숙소"
-            type="home"
+            type="house"
           />
           <Carousel slides={accommodationAreasCarouselItems} />
         </>

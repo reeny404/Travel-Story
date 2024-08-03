@@ -197,7 +197,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
             <CardType
               linkUrl={`/recommend/country/${countryId}/accommodation`}
               title="할인하는 숙소"
-              type="home"
+              type="house"
             />
             <Carousel slides={areaCarouselItems!} />
           </div>
@@ -216,8 +216,8 @@ function CountryDetailPage({ params }: CountryDetailPage) {
           <>
             <CardType
               linkUrl={`/recommend/country/${countryId}/restaurant`}
-              title="문화 탐방"
-              type="architect"
+              title="식도락"
+              type="taco"
             />
             <Carousel slides={restaurantCarouselItems!} />
           </>
@@ -226,8 +226,8 @@ function CountryDetailPage({ params }: CountryDetailPage) {
           <>
             <CardType
               linkUrl={`/recommend/country/${countryId}/shop`}
-              title="문화 탐방"
-              type="architect"
+              title="쇼핑"
+              type="friends"
             />
             <Carousel slides={shopCarouselItems!} />
           </>
