@@ -42,19 +42,32 @@ function MyProfile() {
     setIsEdit(!isEdit);
   };
 
+  // 프로필 이미지 변경
+  const handleProfileEdit = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.preventDefault();
+  };
+
   if (isPending) return <p>Loading...</p>;
 
   return (
     <section className="flex items-center mt-[21px] mb-[29px]">
       {isEdit ? (
         <>
-          <Image
-            src={profileUrl ? profileUrl : "/icons/avatar-gray.png"}
-            alt="프로필"
-            width={60}
-            height={60}
-            className="rounded-full"
-          />
+          <div className="relative w-[60px] h-[60px]">
+            <button
+              onClick={(e) => handleProfileEdit(e)}
+              className="absolute w-8 h-8 top-1/2 left-1/2 bg-slate-200 -translate-x-4 -translate-y-4 cursor-pointer"
+            ></button>
+            <Image
+              src={profileUrl ? profileUrl : "/icons/avatar-gray.png"}
+              alt="프로필"
+              width={60}
+              height={60}
+              className="rounded-full"
+            />
+          </div>
           <div className="flex flex-col ml-[11px]">
             <input
               ref={inputRef}
