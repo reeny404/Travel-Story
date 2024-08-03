@@ -49,6 +49,9 @@ function AreaTypePage({ params }: AreaTypePageProps) {
           return (
             <AreaCard
               key={idx}
+              city={area.info.location[1]}
+              country={area.info.location[0]}
+              areaName={area.krName!}
               title={area.title}
               description={area.description}
               rating={4}
