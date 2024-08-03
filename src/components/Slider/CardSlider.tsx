@@ -13,7 +13,7 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
       grabCursor={true}
     >
       {cards.map((card, index) => (
-        <SwiperSlide key={index}>
+        <SwiperSlide key={index} className={index === 0 ? "pl-5" : "pl-0"}>
           <div className="bg-white rounded-lg overflow-hidden">
             <AreaCard
               title={card.title}

@@ -9,6 +9,7 @@ import useDrawerStore from "@/stores/drawer.store";
 import { SlideCardProps } from "@/types/Slider";
 import Image from "next/image";
 import Link from "next/link";
+import CategorySection from "./CategorySection";
 import MyTrip from "./MyTrip";
 
 const CardMockUpData: SlideCardProps[] = [
@@ -80,7 +81,7 @@ function Home() {
       }}
     >
       <main
-        className="relative w-full bg-[#F8F8F8]"
+        className="relative w-full bg-gray"
         style={{ minHeight: "calc(100vh - 52px)" }}
       >
         <div className="relative w-full h-[222px] bg-slate-200">
@@ -97,10 +98,11 @@ function Home() {
           </Link>
         </div>
         <MyTrip />
-        <div className="w-full pt-4 pl-[18px]">
+        <div className="w-full pt-4 pl-5">
           <CardType title="문화 탐방" type="architect" />
-          <CardSlider spacing={20} slidesPerView={1.2} cards={CardMockUpData} />
         </div>
+        <CardSlider spacing={20} slidesPerView={1.2} cards={CardMockUpData} />
+        <CategorySection direction="right" />
       </main>
     </MainLayout>
   );
