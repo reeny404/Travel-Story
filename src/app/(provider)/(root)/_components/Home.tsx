@@ -48,12 +48,14 @@ const CardMockUpData: SlideCardProps[] = [
 ];
 
 function Home() {
-  const { isInitialized } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
+  console.log(user);
   const handleAvatarClick = () => {
-    if (isInitialized) {
+    if (user) {
       return router.push("/my");
     }
+    return router.push("/login");
   };
   return (
     <MainLayout

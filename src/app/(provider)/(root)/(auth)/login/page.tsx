@@ -37,7 +37,7 @@ function Login() {
         </AuthPage>
       )}
       {step === "add-user" && (
-        <AuthPage title={"회원정보가 없습니다.\n이계정으로 가입하시겠어요?"}>
+        <AuthPage title={"회원정보가 없습니다.\n이 이메일로 가입하시겠어요?"}>
           <AuthForm
             label={labelText ? labelText : "이메일을 입력해주세요."}
             labelColor={labelColor}

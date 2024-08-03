@@ -3,7 +3,6 @@ import { api } from "@/apis/api";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { MouseEvent, useRef, useState } from "react";
 
 type SupabaseUser = {
@@ -14,16 +13,10 @@ function MyProfile() {
   const { user } = useAuth();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
-
   const { data: supabaseUser, isPending } = useQuery<SupabaseUser>({
     queryKey: ["users"],
     queryFn: () => api.auth.userProfile(user?.email as string),
   });
-
-  if (!user) {
-    router.replace("/");
-  }
 
   const profileUrl = supabaseUser?.image_url;
   const nickname = supabaseUser?.nickname;

@@ -1,5 +1,6 @@
 "use client";
 import { api } from "@/apis/api";
+import { useAuth } from "@/contexts/auth.contexts";
 import { useAuthStore } from "@/stores/auth.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { emailValidCheck } from "@/utils/emailCheck";
@@ -11,6 +12,7 @@ function useAuthFlow() {
     useLoginStepStore();
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
   const router = useRouter();
+  const { setUser } = useAuth();
   const isTypeExist = getCookie("hasTravelType");
 
   /** Change 관련 handle */
@@ -74,8 +76,11 @@ function useAuthFlow() {
     const response = await api.auth.login(user.email, password);
     if (!response) {
       setLabelColor("red");
-      setLabelText("비밀번호가 일치하지 않습니다.");
+      return setLabelText("비밀번호가 일치하지 않습니다.");
     }
+    setUser(response.data.session.user);
+    setStep("email");
+    setLabelColor("black");
     if (isTypeExist) {
       return router.push("/");
     }
@@ -110,7 +115,10 @@ function useAuthFlow() {
       setLabelColor("red");
       return setLabelText("오류가 발생했습니다. 다시 시도해주세요.");
     }
-    await api.auth.signUp(user.email, user.password, nickname);
+    const response = await api.auth.signUp(user.email, user.password, nickname);
+    setUser(response.data.session.user);
+    setStep("email");
+    setLabelColor("black");
     if (isTypeExist) {
       return router.push("/");
     }
