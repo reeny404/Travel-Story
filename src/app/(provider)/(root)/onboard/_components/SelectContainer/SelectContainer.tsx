@@ -10,7 +10,7 @@ function SelectContainer({
 }: PropsWithChildren<SelectFormProps>) {
   return (
     <div className="w-full mb-10">
-      <p>{title}</p>
+      <h3 className="font-semibold">{title}</h3>
       {children}
     </div>
   );
