@@ -122,6 +122,7 @@ export const ICON = {
   place: {
     color: "place-color",
     none: "place-none",
+    white: "place-white",
   },
   restaurant: {
     color: "restaurant-color",

@@ -5,6 +5,9 @@ export type SlideCardProps = {
   linkUrl: string;
   tags?: string[] | undefined;
   id: number;
+  city: string;
+  country: string;
+  areaName: string;
 };
 
 export type SliderProps = {

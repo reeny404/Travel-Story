@@ -1,8 +1,10 @@
 "use client";
 import { api } from "@/apis/api";
+import { useAuth } from "@/contexts/auth.contexts";
 import { useAuthStore } from "@/stores/auth.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { emailValidCheck } from "@/utils/emailCheck";
+import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 function useAuthFlow() {
@@ -10,6 +12,8 @@ function useAuthFlow() {
     useLoginStepStore();
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
   const router = useRouter();
+  const { setUser } = useAuth();
+  const isTypeExist = getCookie("hasTravelType");
 
   /** Change 관련 handle */
   // 로그인 email 유효성 검사
@@ -72,10 +76,36 @@ function useAuthFlow() {
     const response = await api.auth.login(user.email, password);
     if (!response) {
       setLabelColor("red");
-      setLabelText("비밀번호가 일치하지 않습니다.");
-    } else {
-      router.replace("/");
+      return setLabelText("비밀번호가 일치하지 않습니다.");
     }
+    setUser(response.data.session.user);
+    setStep("email");
+    setLabelColor("black");
+    if (isTypeExist) {
+      return router.push("/");
+    }
+    return router.push("/onboard");
+  };
+
+  // 회원가입 email 버튼 누를 시
+  const handleSignupSubmit = () => {
+    setIsInputValid(true);
+    setStep("new-password");
+  };
+
+  // 회원가입 password 버튼 누를 시
+  const handleNewPasswordSubmit = (password: string) => {
+    setIsInputValid(true);
+    putPassword(password);
+    setLabelColor("black");
+    setStep("check-password");
+  };
+
+  // 회원가입 password check 버튼 누를 시
+  const handleCheckPasswordSubmit = () => {
+    setIsInputValid(true);
+    setLabelColor("black");
+    setStep("nickname");
   };
 
   // 회원가입 nickname 버튼 누를 시
@@ -85,28 +115,14 @@ function useAuthFlow() {
       setLabelColor("red");
       return setLabelText("오류가 발생했습니다. 다시 시도해주세요.");
     }
-    await api.auth.signUp(user.email, user.password, nickname);
-    router.push("/");
-  };
-
-  //회원가입 email 버튼 누를 시
-  const handleSignupSubmit = () => {
-    setIsInputValid(true);
-    setStep("new-password");
-  };
-
-  //회원가입 password 버튼 누를 시
-  const handleNewPasswordSubmit = (password: string) => {
-    setIsInputValid(true);
-    putPassword(password);
+    const response = await api.auth.signUp(user.email, user.password, nickname);
+    setUser(response.data.session.user);
+    setStep("email");
     setLabelColor("black");
-    setStep("check-password");
-  };
-
-  const handleCheckPasswordSubmit = () => {
-    setIsInputValid(true);
-    setLabelColor("black");
-    setStep("nickname");
+    if (isTypeExist) {
+      return router.push("/");
+    }
+    return router.push("/onboard");
   };
 
   return {

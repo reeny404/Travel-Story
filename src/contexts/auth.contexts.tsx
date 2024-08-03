@@ -14,17 +14,18 @@ type AuthContextValue = {
   isInitialized: boolean;
   isLoggedIn: boolean;
   user: User | null;
+  setUser: (user: User | null) => void;
 };
 
-const initialValue: AuthContextValue = {
-  isInitialized: false,
-  isLoggedIn: false,
-  user: null,
+const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
-
-const AuthContext = createContext<AuthContextValue>(initialValue);
-
-export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const supabase = createClient();
@@ -55,7 +56,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     );
   }, []);
 
-  const value = { isInitialized, isLoggedIn, user };
+  const value = { isInitialized, isLoggedIn, user, setUser };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

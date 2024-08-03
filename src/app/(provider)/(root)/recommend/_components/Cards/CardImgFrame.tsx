@@ -37,11 +37,11 @@ function CardImgFrame({
           </span>
         </div>
       ) : (
-        <div className="absolute w-full bottom-0 px-4 pt-9 pb-2">
+        <div className="absolute w-full bottom-0 px-4 pt-9 pb-2 bg-gradient-areaCard">
           <span className="text-sm font-medium text-white ">
             {city}, {country}
           </span>
-          <h1 className="text-[28px] font-semibold">{areaName}</h1>
+          <h1 className="text-[28px] font-semibold text-white">{areaName}</h1>
         </div>
       )}
     </div>
