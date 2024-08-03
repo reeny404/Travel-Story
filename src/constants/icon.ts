@@ -1,8 +1,25 @@
 export const ICON = {
+  account: {
+    memo: {
+      black: { name: "memo", ext: "svg" },
+    },
+    card: {
+      black: { name: "card", ext: "svg" },
+    },
+    shop: {
+      black: { name: "shop", ext: "svg" },
+    },
+  },
+  add: {
+    white: { name: "add", ext: "svg" },
+  },
   arrow: {
     back: {
       black: "arrow-back-black",
       white: "arrow-back-white",
+    },
+    right: {
+      black: "arrow-right-short-sm-black",
     },
     foward: {
       lightgreen: "arrow-foward-lightgreen",
@@ -18,16 +35,32 @@ export const ICON = {
     black: "avatar-black",
     gray: "avatar-gray",
   },
+  bookmark: {
+    big: {
+      on: { name: "lgBookmark-on", ext: "svg" },
+      off: { name: "lgBookmark-off", ext: "svg" },
+      white: { name: "fi-sr-bookmark", ext: "svg" },
+    },
+    small: {
+      on: { name: "smBookmark-on", ext: "svg" },
+      off: { name: "smBookmark-off", ext: "svg" },
+    },
+  },
+  calendar: { white: { name: "calendar", ext: "svg" } },
   cancel: {
     black: "cancel-black",
     gray: "cancel-gray",
     white: "cancel-white",
   },
+  car: { white: { name: "fi-sr-car", ext: "svg" } },
+  checkmark: {
+    white: { name: "checkmark-done", ext: "svg" },
+  },
   chevron: {
     blue: "chevron-blue",
   },
-  credit: {
-    euro: "euro-black",
+  bill: {
+    white: "bill-white",
   },
   dottedSquare: {
     blue: "dotted-square-blue",
@@ -38,6 +71,7 @@ export const ICON = {
   edit: {
     black: "edit-black",
     blue: "edit-blue",
+    color: "edit-color",
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
@@ -65,35 +99,51 @@ export const ICON = {
   settings: {
     black: "settings-black",
   },
+  location: {
+    gray: { name: "location", ext: "svg" },
+    white: { name: "location-white", ext: "svg" },
+    black: { name: "location-black", ext: "svg" },
+  },
   notice: {
     white: "notice-white",
   },
   microphone: {
     black: "microphone-black",
   },
-
   star: {
     fill: "star-fill",
     unfill: "star-unfill",
+    half: "star-half",
   },
-
-  account: {
-    memo: {
-      black: { name: "memo", ext: "svg" }
+  accommodation: {
+    color: "accommodation-color",
+    none: "accommodation-none",
+  },
+  place: {
+    color: "place-color",
+    none: "place-none",
+  },
+  restaurant: {
+    color: "restaurant-color",
+    none: "restaurant-none",
+  },
+  shop: {
+    color: "shop-color",
+    none: "shop-none",
+  },
+  areaCalender: {
+    big: {
+      black: "lgCalender-black",
+      white: "lgCalender-white",
+      area: "calender-area",
     },
-    card: {
-      black: { name: "card", ext: "svg" }
-    },
-    shop: {
-      black: { name: "shop", ext: "svg" }
+    small: {
+      black: "smCalender-black",
+      white: "smCalender-white",
     },
   },
-  bookmark: {
-    on: { name: 'bookmark-on', ext: "svg" },
-    off: { name: 'bookmark-off', ext: "svg" },
+  call: {
+    black: "call-black",
   },
-  calendar: { white: { name: "calendar", ext: "svg" } },
   time: { gray: { name: "time", ext: "svg" } },
-  maker: { gray: { name: "location", ext: "svg" } }
-
 } as const;

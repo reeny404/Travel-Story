@@ -18,7 +18,8 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
   const [isOpening, setIsOpening] = useState(true);
   const [clickedPlan, setClickedPlan] = useState<number | null>(null);
   const [day, setDay] = useState<number | null>(null);
-  const { user } = useAuth();
+  const { user, isLoggedIn } = useAuth();
+
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
 
@@ -34,6 +35,7 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     queryKey: ["planData", user?.id],
     queryFn: () => api.area.getPlan(user?.id!),
   });
+
 
   const handleAdd = async () => {
     if (clickedPlan !== 0 && (!clickedPlan || !day)) {
@@ -60,9 +62,11 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
       setIsOpening(false);
     }, 300);
   }, []);
+
   if (!planData) {
     return;
   }
+
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full z-50 bg-black${
@@ -102,16 +106,19 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
             type="button"
             onClick={() => onClose()}
           >
-            {planData.length === 0 ? "계속 둘러보기" : "취소"}
+
+            {!planData ? "계속 둘러보기" : "취소"}
+
           </button>
           <button
             className="h-10 text-center border border-gray-600 rounded-lg"
             type="button"
             onClick={() => {
-              planData.length === 0 ? router.push("/plan") : handleAdd();
+              !planData ? router.push("/plan") : handleAdd();
             }}
           >
-            {planData.length === 0 ? "내 여행 만들기" : "추가하기"}
+            {!planData ? "내 여행 만들기" : "추가하기"}
+
           </button>
         </div>
       </form>

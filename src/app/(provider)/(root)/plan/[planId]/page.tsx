@@ -1,14 +1,17 @@
 "use client";
 
 import { BottomSheetType } from "@/types/plan";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
 import BottomSheet from "../_components/BottomSheet";
+import CreateScheduleButton from "../_components/CreateScheduleButton";
 import DayMenu from "../_components/DayMenu";
 import ScheculeList from "./ScheculeList";
 
-function PlanDetailPage({ params }: { params: { planId: string } }) {
-  const planId = params.planId;
+type PlanDetailPageProps = { params: { planId: string } };
 
+function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
+  const router = useRouter();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [bottomSheetConfig, setBottomSheetConfig] = useState<BottomSheetType>({
     type: "customePlace",
@@ -32,6 +35,15 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
     setSelectedDay(day);
   };
 
+  const handleCreateSchedule = useCallback(() => {
+    handleOpen("customePlace", "add");
+  }, []);
+
+  const createByBookmark = useCallback(() => {
+    router.push(`/my/bookmarks?planId=${planId}&day=${selectedDay}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDay, planId]);
+
   if (!planId) {
     return <div>Loading...</div>;
   }
@@ -51,14 +63,13 @@ function PlanDetailPage({ params }: { params: { planId: string } }) {
         />
       )}
       {/* 바텀 시트 예시 */}
-      <button
-        className="w-12 h-12 fixed bottom-20 right-8 bg-blue-500 rounded-full hover:brightness-110"
-        onClick={() => handleOpen("customePlace", "add")}
-      >
-        <div className="w-full h-full flex justify-center items-center">
-          <p className="text-white">생성</p>
-        </div>
-      </button>
+      {/* TODO 각 버튼의 연결 제대로 */}
+      <CreateScheduleButton
+        createSchedule={handleCreateSchedule}
+        createByBookmark={createByBookmark}
+        createMemo={() => {}}
+        createMoveSchedule={() => {}}
+      />
     </div>
   );
 }

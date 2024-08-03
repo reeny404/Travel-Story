@@ -1,6 +1,8 @@
 "use client";
 import RatingIcons from "@/components/Card/RatingIcons";
+import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
+import { useModalStore } from "@/stores/modal.store";
 import Image from "next/image";
 import { useState } from "react";
 import { createReviewBottomSheet } from "../BottomSheet/ReviewSheet/ReviewBottomSheet";
@@ -18,10 +20,15 @@ function ReviewSummaryCard({
   areaName,
   ratingAmount,
 }: ReviewSummaryCardProps) {
-  const { user } = useAuth();
+  const { user, isLoggedIn } = useAuth();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const { openModal } = useModalStore();
   const handleOpen = () => {
-    setBottomSheetVisible(true);
+    if (!isLoggedIn) {
+      openModal("로그인 필요", "로그인 유저만 가능합니다");
+    } else {
+      setBottomSheetVisible(true);
+    }
   };
   const handleClose = () => {
     setBottomSheetVisible(false);
@@ -30,7 +37,7 @@ function ReviewSummaryCard({
   const BottomSheet = createReviewBottomSheet();
 
   return (
-    <div className="w-full">
+    <section className="w-full h-full pb-8 px-4">
       {isBottomSheetVisible && (
         <BottomSheet
           areaName={areaName}
@@ -39,66 +46,66 @@ function ReviewSummaryCard({
           id={user?.id!}
         />
       )}
-      <div className="w-full flex justify-between p-3">
+      <header className="w-full flex justify-between mb-5 pt-6 relative aspect-auto">
         <span className="text-lg font-bold">리뷰</span>
         <button
           onClick={() => handleOpen()}
           className="text-sm font-bold flex items-center aspect-auto"
         >
           <Image
-            src="/icon/edit.svg"
+            src={`/icons/${ICON.edit.color}.svg`}
             alt="edit"
-            width={12}
-            height={12}
-            className="mr-1 object-contain w-auto h-auto"
+            width={16}
+            height={16}
+            className="mr-1 object-contain"
           />
-          <span>리뷰작성</span>
+          <span className="text-[#C4E00B]">리뷰작성</span>
         </button>
-      </div>
-      <div className="w-full grid grid-cols-2 p-3">
-        <div className="flex flex-col gap-y-2 items-center justify-center">
-          <p className="text-3xl">{rating}</p>
-          <div>
+      </header>
+      <article className="w-full grid grid-cols-2">
+        <div className="w-full h-full flex flex-col p-6 items-center justify-center">
+          <p className="text-[32px] mb-4">{rating}</p>
+          <div className="mb-1">
             <RatingIcons type="small" rating={rating} />
           </div>
-          <p className="text-xm text-[#8B8B8B]">{`(${ratingAmount})`}</p>
+          <p className="text-xs text-[#8B8B8B]">{`(${ratingAmount})`}</p>
         </div>
-        <div className="flex flex-col gap-y-1 p-1  justify-center">
-          <div className="flex gap-x-1 text-sm font-semibold relative">
+        <div className="w-full h-full flex flex-col gap-y-3 py-5 px-4">
+          <div className="w-full flex text-sm font-semibold relative">
             <Image
-              src="/icon/delicious.png"
+              src="/icons/emoji-dinner.svg"
               alt="image"
-              width={15}
-              height={15}
+              width={16}
+              height={16}
               className="object-contain"
             />
-            <span>음식이 맛있어요</span>
+            <span className="pl-[2px]">음식이 맛있어요</span>
           </div>
-          <div className="flex gap-x-1 text-sm font-semibold">
+          <div className="w-full flex text-sm font-semibold relative">
             {" "}
             <Image
-              src="/icon/clean.png"
+              src="/icons/emoji-sparkles.svg"
               alt="image"
-              width={15}
-              height={15}
+              width={16}
+              height={16}
               className="object-contain"
             />
-            <span>시설이 청결해요</span>
+            <span className="pl-[2px]">시설이 청결해요</span>
           </div>
-          <div className="flex gap-x-1 text-sm font-semibold">
+          <div className="flex text-sm font-semibold relative">
             {" "}
             <Image
-              src="/icon/cool.png"
+              src="/icons/emoji-window.svg"
               alt="image"
-              width={15}
-              height={15}
+              width={16}
+              height={16}
               className="object-contain"
             />
-            <span>인테리어가 멋져요</span>
+            <span className="pl-[2px]">인테리어가 멋져요</span>
           </div>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
   );
 }
 

@@ -1,6 +1,5 @@
 "use client";
 import Header from "@/components/commons/Header";
-import { ICON } from "@/constants/icon";
 import { usePathStore } from "@/stores/path.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { createClient } from "@/supabase/client";
@@ -61,18 +60,11 @@ function AuthPage({
 
   return (
     <>
-      <Header
-        title="로그인"
-        leftIcons={[
-          {
-            icon: ICON.arrow.back.black,
-            alt: "back",
-            size: 20,
-            onClick: handleStepBack,
-          },
-        ]}
-      />
-      <div className="w-full flex-grow px-4 pt-12 bg-[#F8F8F8]">
+      <Header title="로그인" />
+      <div
+        className="w-full px-4 pt-12 bg-[#F8F8F8]"
+        style={{ minHeight: "calc(100vh - 52px)" }}
+      >
         {/* title */}
         <h1 className="text-[24px] font-semibold mb-[68px] whitespace-pre-wrap">
           {title}

@@ -21,26 +21,12 @@ function CityLayout({ children }: PropsWithChildren) {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            size: 20,
-            path: "/",
-          },
-        ],
         title: city?.krName!,
         titleAlign: "center",
         rightIcons: [
           {
             icon: ICON.search.black,
             alt: "Search",
-            size: 20,
-            onClick: () => {},
-          },
-          {
-            icon: ICON.menu.burgerBlack,
-            alt: "Menu",
             size: 20,
             onClick: () => {},
           },

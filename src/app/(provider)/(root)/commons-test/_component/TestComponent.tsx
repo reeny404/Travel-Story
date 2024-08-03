@@ -16,14 +16,6 @@ function TestComponent() {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            size: 20,
-            path: "back",
-          },
-        ],
         title: "Test Header",
         titleAlign: "center",
         rightIcons: [

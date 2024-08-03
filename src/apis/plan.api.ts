@@ -1,5 +1,8 @@
+import { PlanChildType, Schedule } from "@/types/plan";
 import { Tables } from "@/types/supabase";
 import { AxiosInstance } from "axios";
+
+type ChildData = Schedule;
 
 export default class PlanAPI {
   private axios: AxiosInstance;
@@ -36,5 +39,12 @@ export default class PlanAPI {
         console.error(e);
         return null;
       });
+  }
+
+  async addChild(planId: string, dayIndex: number, type: PlanChildType, newData: ChildData) {
+    return await this.axios
+      .post(`/api/plan/${planId}`, { type, dayIndex, data: newData })
+      .then(({ data }) => data)
+      .catch((e) => console.error(e));
   }
 }

@@ -16,15 +16,23 @@ export type City = Tables<"city">;
 
 export type Area = Tables<"area"> & {
   info: {
-    location: string;
+    location: string[];
     name: string;
     notes: string;
     opening_hours?: { close: string; open: string };
-    ticket_price?: { adult?: string; child?: string; youth?: "string" };
+    ticket_price?: {
+      adult?: string;
+      child?: string;
+      youth?: "string";
+      average_meal_cost?: string;
+    };
+    phoneNumber: string;
+    address: string;
   };
 };
 
 export type AreaBookmark = Tables<"areaBookmark">;
+export type AreaBookmarkWithArea = AreaBookmark & { area: Area };
 
 export type BookmarkType = {
   userId: string;

@@ -32,14 +32,6 @@ function AreaTypePage({ params }: AreaTypePageProps) {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            size: 20,
-            path: "/",
-          },
-        ],
         title: country?.data.krName!,
         titleAlign: "center",
         rightIcons: [
@@ -49,16 +41,10 @@ function AreaTypePage({ params }: AreaTypePageProps) {
             size: 20,
             onClick: () => {},
           },
-          {
-            icon: ICON.menu.burgerBlack,
-            alt: "Menu",
-            size: 20,
-            onClick: () => {},
-          },
         ],
       }}
     >
-      <div className="container overflow-x-hidden h-full max-w-[375px] flex-col">
+      <div className="container overflow-x-hidden h-full w-full flex-col">
         {areas?.map((area, idx) => {
           return (
             <AreaCard
