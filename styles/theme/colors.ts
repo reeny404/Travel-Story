@@ -1,0 +1,82 @@
+import { COLOR } from "./../../src/constants/color";
+
+export const colors = {
+  // text
+  primary: COLOR.gray[750],
+  secondary: COLOR.olive[300],
+  caption: COLOR.gray[400],
+
+  // background
+  white: COLOR.white,
+  gray: COLOR.gray[150],
+
+  "button-active": COLOR.olive[300],
+  "button-disable": COLOR.gray[200],
+
+  "brand-50": COLOR.olive[50],
+  "brand-100": COLOR.olive[100],
+  "brand-200": COLOR.olive[200],
+  "brand-300": COLOR.olive[300], // primary-color
+  "brand-400": COLOR.olive[400],
+  "brand-500": COLOR.olive[500],
+  "brand-600": COLOR.olive[600],
+  "brand-700": COLOR.olive[700],
+  "brand-800": COLOR.olive[800],
+  "brand-900": COLOR.olive[900],
+  "brand-950": COLOR.olive[950],
+
+  "info-50": COLOR.blue[50],
+  "info-100": COLOR.blue[100],
+  "info-200": COLOR.blue[200],
+  "info-300": COLOR.blue[300],
+  "info-400": COLOR.blue[400],
+  "info-500": COLOR.blue[500],
+  "info-600": COLOR.blue[600],
+  "info-700": COLOR.blue[700],
+  "info-800": COLOR.blue[800],
+  "info-900": COLOR.blue[900],
+  "info-950": COLOR.blue[950],
+
+  "success-50": COLOR.green[50],
+  "success-100": COLOR.green[100],
+  "success-200": COLOR.green[200],
+  "success-300": COLOR.green[300],
+  "success-400": COLOR.green[400],
+  "success-500": COLOR.green[500],
+  "success-600": COLOR.green[600],
+  "success-700": COLOR.green[700],
+  "success-800": COLOR.green[800],
+  "success-900": COLOR.green[900],
+  "success-950": COLOR.green[950],
+
+  "danger-50": COLOR.red[50],
+  "danger-100": COLOR.red[100],
+  "danger-200": COLOR.red[200],
+  "danger-300": COLOR.red[300],
+  "danger-400": COLOR.red[400],
+  "danger-500": COLOR.red[500],
+  "danger-600": COLOR.red[600],
+  "danger-700": COLOR.red[700],
+  "danger-800": COLOR.red[800],
+  "danger-900": COLOR.red[900],
+  "danger-950": COLOR.red[950],
+
+  "neutral-50": COLOR.gray[50],
+  "neutral-100": COLOR.gray[100],
+  "neutral-150": COLOR.gray[150],
+  "neutral-200": COLOR.gray[200],
+  "neutral-250": COLOR.gray[250],
+  "neutral-300": COLOR.gray[300],
+  "neutral-350": COLOR.gray[350],
+  "neutral-400": COLOR.gray[400],
+  "neutral-450": COLOR.gray[450],
+  "neutral-500": COLOR.gray[500],
+  "neutral-550": COLOR.gray[550],
+  "neutral-600": COLOR.gray[600],
+  "neutral-650": COLOR.gray[650],
+  "neutral-700": COLOR.gray[700],
+  "neutral-750": COLOR.gray[750], // secondary-color
+  "neutral-800": COLOR.gray[800],
+  "neutral-850": COLOR.gray[850],
+  "neutral-900": COLOR.gray[900],
+};

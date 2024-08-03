@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import { COLOR } from "./src/constants/color";
+import { colors } from "./styles/theme/colors";
 
 const config: Config = {
   content: [
@@ -9,6 +11,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        ...colors,
+        ...COLOR,
+      },
       maxWidth: {
         xs: "450px",
       },

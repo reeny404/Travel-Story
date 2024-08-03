@@ -18,6 +18,9 @@ export const ICON = {
       black: "arrow-back-black",
       white: "arrow-back-white",
     },
+    right: {
+      black: "arrow-right-short-sm-black",
+    },
     foward: {
       lightgreen: "arrow-foward-lightgreen",
     },

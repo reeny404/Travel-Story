@@ -1,9 +1,7 @@
 "use client";
 
-import CardType from "@/components/Card/CardType";
 import MainLayout from "@/components/Layout/MainLayout";
 import SearchBar from "@/components/SearchBar/SearchBar";
-import CardSlider from "@/components/Slider/CardSlider";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { SlideCardProps } from "@/types/Slider";
@@ -92,7 +90,7 @@ function Home() {
       }}
     >
       <main
-        className="relative w-full bg-[#F8F8F8]"
+        className="relative w-full bg-gray"
         style={{ minHeight: "calc(100vh - 52px)" }}
       >
         <div className="relative w-full h-[222px] bg-slate-200">
@@ -111,10 +109,6 @@ function Home() {
           </Link>
         </div>
         <MyTrip />
-        <div className="w-full pt-4 pl-[18px]">
-          <CardType title="문화 탐방" type="architect" />
-          <CardSlider spacing={20} slidesPerView={1.2} cards={CardMockUpData} />
-        </div>
       </main>
     </MainLayout>
   );
