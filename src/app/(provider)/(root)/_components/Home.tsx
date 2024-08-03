@@ -5,7 +5,6 @@ import MainLayout from "@/components/Layout/MainLayout";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import CardSlider from "@/components/Slider/CardSlider";
 import { ICON } from "@/constants/icon";
-import useDrawerStore from "@/stores/drawer.store";
 import { SlideCardProps } from "@/types/Slider";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,20 +58,10 @@ const CardMockUpData: SlideCardProps[] = [
 ];
 
 function Home() {
-  const { openDrawer } = useDrawerStore();
-
   return (
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.menu.burgerBlack,
-            alt: "Back",
-            size: 20,
-            onClick: openDrawer,
-          },
-        ],
         title: "TripStory",
         titleAlign: "left" as const,
         rightIcons: [
