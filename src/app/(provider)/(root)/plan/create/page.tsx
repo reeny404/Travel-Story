@@ -1,20 +1,25 @@
 "use client";
 
+import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
-import TabPage from "@/components/TabPage";
-import { Tabs } from "@/components/TabPage/TabPage";
-import { useMemo } from "react";
-import MyPlanDefault from "./_components/MyPlanDefault";
-import MyPlanStyle from "./_components/MyPlanStyle";
+import { PlanInsertType } from "@/types/plan";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import NewPlanBase from "./_components/NewPlanBase";
+import NewPlanStyle from "./_components/NewPlanStyle";
 
 function CreatePlanIntroPage() {
-  const tabs: Tabs = useMemo(
-    () => ({
-      "기본 정보": <MyPlanDefault />,
-      "여행 성격": <MyPlanStyle />,
-    }),
-    []
-  );
+  const router = useRouter();
+  const titles: string[] = useMemo(() => ["기본 정보", "여행 성격"], []);
+  const [selectedTab, setSelectedTab] = useState<string>(titles[0]);
+  const [planData, setPlanData] = useState<PlanInsertType>({});
+
+  const onClickToCreatePlan = () => {
+    api.plan.create(planData).then(() => {
+      router.push("/plan");
+    });
+  };
 
   return (
     <MainLayout
@@ -23,7 +28,32 @@ function CreatePlanIntroPage() {
         title: "내 여행 정보",
       }}
     >
-      <TabPage tabs={tabs} />
+      <section className="w-full py-4 flex justify-center items-center space">
+        {titles.map((title) => (
+          <button
+            key={title}
+            className={clsx("h-full px-8 py-1 text-sm", {
+              "bg-gray-200": selectedTab === title,
+            })}
+            onClick={() => setSelectedTab(title)}
+          >
+            {title}
+          </button>
+        ))}
+      </section>
+      <section className="py-4">
+        {selectedTab === titles[0] ? (
+          <NewPlanBase data={planData} setData={setPlanData} />
+        ) : (
+          <NewPlanStyle data={planData} setData={setPlanData} />
+        )}
+      </section>
+      <button
+        className="w-full mt-10 py-2 rounded border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
+        onClick={onClickToCreatePlan}
+      >
+        일정 생성하기
+      </button>
     </MainLayout>
   );
 }

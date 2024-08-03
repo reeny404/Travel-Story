@@ -1,9 +1,10 @@
 import { createClient } from "@/supabase/server";
+import { TablesInsert } from "@/types/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
 const TABLE_NAME = "plan";
 
-export async function GET(_: NextRequest) {
+export async function GET() {
   const supabase = createClient();
   const { data, error } = await supabase
     .from(TABLE_NAME)
@@ -22,4 +23,16 @@ export async function GET(_: NextRequest) {
     status: 200,
     statusText: "OK",
   })
+}
+
+export async function POST(request: NextRequest) {
+  const plan = (await request.json()) as TablesInsert<"plan">;
+
+  const supabase = createClient();
+  const { data } = await supabase
+    .from(TABLE_NAME)
+    .insert(plan)
+    .select();
+
+  return NextResponse.json(data);
 }

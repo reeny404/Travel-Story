@@ -1,6 +1,13 @@
 import TravelStyle from "@/components/TravelStyle";
+import { PlanInsertType } from "@/types/plan";
 
-function MyPlanStyle() {
+type NewPlanStyleProps = {
+  data: PlanInsertType;
+  setData: (data: PlanInsertType) => void;
+};
+
+function NewPlanStyle({ data: plan, setData }: NewPlanStyleProps) {
+  // TODO 아직 DB 셋팅을 안해서 props 미사용한 채로 냅둠
   return (
     <section className="px-4">
       <TravelStyle title="여행 테마가 무엇인가요?" category="theme" />
@@ -10,4 +17,4 @@ function MyPlanStyle() {
   );
 }
 
-export default MyPlanStyle;
+export default NewPlanStyle;
