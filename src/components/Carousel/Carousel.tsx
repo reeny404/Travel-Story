@@ -17,16 +17,19 @@ const Carousel = ({ slides }: CarouselProps) => {
         className="rounded-sm"
         modules={[Autoplay]}
         loop={true}
-        slidesPerView={"auto"}
-        centeredSlides={true}
+        spaceBetween={20}
+        slidesPerView={1.2}
+        grabCursor={true}
         autoplay={{
           delay: 3500,
-          disableOnInteraction: false,
         }}
-        spaceBetween={30}
       >
         {slides?.map((slide, idx) => {
-          return <SwiperSlide key={idx}>{slide}</SwiperSlide>;
+          return (
+            <SwiperSlide key={idx}>
+              <div className="bg-white rounded-lg overflow-hidden">{slide}</div>
+            </SwiperSlide>
+          );
         })}
       </Swiper>
     </section>

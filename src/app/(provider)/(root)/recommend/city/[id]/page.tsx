@@ -79,7 +79,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
     });
 
   return (
-    <div className=" container overflow-x-hidden h-full max-w-[375px] flex-col ">
+    <div className=" container overflow-x-hidden h-full w-full flex-col ">
       <DetailCard
         title={city?.title!}
         description={city?.description!}
@@ -95,7 +95,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
           <CardType
             linkUrl={`/recommend/city/${cityId}/accommodation`}
             title="할인하는 숙소"
-            type="home"
+            type="house"
           />
           <Carousel slides={accommodationAreasCarouselItems} />
         </>

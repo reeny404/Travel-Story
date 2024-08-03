@@ -84,12 +84,14 @@ function Home() {
         style={{ minHeight: "calc(100vh - 52px)" }}
       >
         <div className="relative w-full h-[222px] bg-slate-200">
-          <Image
-            src="/banners/banner1_x3.png"
-            alt="banner"
-            fill
-            className="object-cover"
-          />
+          <Link href="/recommend/country/1/detail">
+            <Image
+              src="/banners/banner1_x3.png"
+              alt="banner"
+              fill
+              className="object-cover"
+            />
+          </Link>
         </div>
         <div className="sticky z-10 -mt-[15px] px-4">
           <Link href="/search" className="flex justify-center w-full">

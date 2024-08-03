@@ -41,23 +41,23 @@ function UnderBar({ area }: UnderBarProps) {
   };
   const BottomSheet = createAddBottomSheet();
   return (
-    <div className="w-full h-10 px-3 flex gap-x-2 fixed bottom-0">
+    <article className="h-11 w-full flex gap-x-2 sticky bottom-5 z-[9999]">
       {isBottomSheetVisible && (
         <BottomSheet area={area} onClose={handleClose} />
       )}
       <button
         onClick={() => deleteBookmark.mutate()}
-        className="w-14 h-full p-2 relative flex justify-center items-center border border-2  bg-white rounded-md aspect-auto"
+        className="w-11 h-full p-3 relative flex justify-center items-center border border-black bg-white rounded-lg aspect-auto"
       >
         <Image
           src={
             isBookmarked
-              ? `/icons/${ICON.bookmark.on.name}.svg`
-              : `/icons/${ICON.bookmark.off.name}.svg`
+              ? `/icons/${ICON.bookmark.big.on.name}.svg`
+              : `/icons/${ICON.bookmark.big.off.name}.svg`
           }
           alt="bookmark"
-          width={30}
-          height={30}
+          width={16}
+          height={16}
           className="hover:cursor-pointer object-contain"
           onClick={toggleBookmark}
         />
@@ -65,11 +65,18 @@ function UnderBar({ area }: UnderBarProps) {
 
       <button
         onClick={handleOpen}
-        className="w-72 h-full bg-gray-300 border rounded-md"
+        className="bg-[#383838] text-white w-full flex justify-center gap-x-2 items-center border border-black rounded-lg py-[11px]"
       >
-        내 여행에 추가
+        <Image
+          src={`/icons/${ICON.areaCalender.big.area}.svg`}
+          alt="calender"
+          width={20}
+          height={20}
+          className="hover:cursor-pointer object-contain"
+        />
+        <p>내 여행에 추가</p>
       </button>
-    </div>
+    </article>
   );
 }
 

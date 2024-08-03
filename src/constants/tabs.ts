@@ -9,6 +9,6 @@ export const TABS = {
     { kr: "이용안내", en: "notice" },
     { kr: "위치", en: "location" },
     { kr: "리뷰", en: "review" },
-    { kr: "비슷한 장소", en: "relatedArea" },
+    { kr: "추천장소", en: "relatedArea" },
   ],
 };

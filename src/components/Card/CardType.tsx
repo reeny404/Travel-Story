@@ -12,29 +12,34 @@ type CardTypeProps = {
 
 function CardType({ type, title, linkUrl }: CardTypeProps) {
   return (
-    <div className={`w-full h-6 mb-4 mt-4 flex items-center justify-between`}>
-      <div className="flex items-center aspect-auto gap-x-[2px]">
+    <div
+      className={`h-full py-[10px] px-4 mb-2 flex items-center justify-between`}
+    >
+      <div className="flex items-center">
         {type && (
-          <Image
-            src={`/cardImages/${type}.png`}
-            alt="type"
-            width={16}
-            height={16}
-            className="object-cover"
-          />
+          <div className="flex mr-1 h-full w-4 items-center">
+            <Image
+              src={`/icons/emoji-${type}.svg`}
+              alt="type"
+              width={16}
+              height={16}
+            />
+          </div>
         )}
-        <h1 className="font-semibold ">{title}</h1>
+        <div className="font-semibold items-center">{title}</div>
       </div>
       {linkUrl && (
-        <Link href={linkUrl} className="flex text-xs text-[#828282]">
-          자세히 보기
-          <Image
-            src={`/cardImages/right-arrow.svg`}
-            alt="right-arrow"
-            width={12}
-            height={12}
-            className="object-cover"
-          />
+        <Link href={linkUrl} className="h-full flex items-center ">
+          <p className="text-xs text-[#616161]">더보기</p>
+
+          <div className="flex items-center justify-center">
+            <Image
+              src={`/icons/lgAngle-right.svg`}
+              alt="right-arrow"
+              width={12}
+              height={12}
+            />
+          </div>
         </Link>
       )}
     </div>

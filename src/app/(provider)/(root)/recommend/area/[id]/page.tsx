@@ -14,10 +14,11 @@ import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
 import AreaDetailCard from "../../_components/AreaPage/AreaDetailCard";
 import AreaReviewCard from "../../_components/AreaPage/AreaReviewCard";
+import LocationForm from "../../_components/AreaPage/LocationForm";
 import NoticeForm from "../../_components/AreaPage/NoticeForm";
 import ReviewSummaryCard from "../../_components/AreaPage/ReviewSummary";
 import UnderBar from "../../_components/AreaPage/UnderBar";
-import Liner from "../../_components/Liner";
+import CardImgFrame from "../../_components/Cards/CardImgFrame";
 
 type AreaDetailPage = {
   params: { id: string };
@@ -94,54 +95,75 @@ function AreaDetailPage({ params }: AreaDetailPage) {
       }}
     >
       {area && (
-        <section className="relative container h-full max-w-[375px]">
-          <AreaDetailCard area={area} ratingAmount={areaReviews?.length || 0} />
-          <Liner />
-          <Tab
-            TABS={TABS.areaDetail}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
+        <main className="h-full w-full relative container">
+          {/* 이 부분 그라데이션 mb 맞추는게 쉽지가 않다 팁이 있는지 여쭙자 */}
+          <CardImgFrame
+            imageUrl={area.imageUrl}
+            alt={area.title}
+            frameClassName="-z-50 -mb-11 aspect-4/5"
+            imageClassName="object-cover"
+            isTop={true}
+            country={area.info.location[0]}
+            city={area.info.location[1]}
+            areaName={area.name}
           />
-          <Liner />
-          <div
-            ref={(tabEl) => {
-              sectionRefs.current[0] = tabEl;
-            }}
-          >
-            <NoticeForm area={area} />
-            <Liner />
-          </div>
-          <div
-            ref={(tabEl) => {
-              sectionRefs.current[2] = tabEl;
-            }}
-          >
-            <ReviewSummaryCard
-              areaName={area.krName!}
-              rating={area.rating!}
-              ratingAmount={areaReviews?.length || 0}
-              areaId={areaId}
-            />
-            <Liner />
-          </div>
-          <div>
-            {areaReviews &&
-              areaReviews.map((review, idx) => {
-                return (
-                  <AreaReviewCard
-                    key={idx}
-                    userImageUrl="/"
-                    name={user?.user_metadata.nickname}
-                    imageUrl={review.imageUrls[0]}
-                    createdAt={review.createdAt}
-                    rating={area.rating!}
-                    description={review.content!}
-                  />
-                );
-              })}
-          </div>
-          <UnderBar area={area} />
-        </section>
+          <section className="w-full h-full p-4 pb-0">
+            <div className="w-full h-full bg-white pt-8 rounded-t-lg">
+              <AreaDetailCard
+                area={area}
+                ratingAmount={areaReviews?.length || 0}
+              />
+              <Tab
+                TABS={TABS.areaDetail}
+                currentTab={currentTab}
+                setCurrentTab={setCurrentTab}
+              />
+              <div
+                ref={(tabEl) => {
+                  sectionRefs.current[0] = tabEl;
+                }}
+              >
+                <NoticeForm area={area} />
+              </div>
+              <div
+                ref={(tabEl) => {
+                  sectionRefs.current[1] = tabEl;
+                }}
+              >
+                <LocationForm area={area} />
+              </div>
+              <div
+                ref={(tabEl) => {
+                  sectionRefs.current[2] = tabEl;
+                }}
+              >
+                <ReviewSummaryCard
+                  areaName={area.krName!}
+                  rating={area.rating!}
+                  ratingAmount={areaReviews?.length || 0}
+                  areaId={areaId}
+                />
+              </div>
+              <div>
+                {areaReviews &&
+                  areaReviews.map((review, idx) => {
+                    return (
+                      <AreaReviewCard
+                        key={idx}
+                        userImageUrl={user?.user_metadata.profileImg}
+                        name={user?.user_metadata.nickname}
+                        imageUrl={review.imageUrls[0]}
+                        createdAt={review.createdAt}
+                        rating={area.rating!}
+                        description={review.content!}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+            <UnderBar area={area} />
+          </section>
+        </main>
       )}
     </MainLayout>
   );

@@ -21,6 +21,9 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
               imageUrl={card.imageUrl}
               linkUrl={card.linkUrl}
               id={card.id}
+              city="도시"
+              country="나라"
+              areaName="장소이름"
             />
             {card.tags && <PrimaryTagList tagList={card.tags} />}
           </div>
