@@ -16,7 +16,7 @@ function CardType({ type, title, linkUrl }: CardTypeProps) {
       <div className="flex items-center aspect-auto gap-x-[2px]">
         {type && (
           <Image
-            src={`/cardImages/${type}.png`}
+            src={`/cardImages/emoji-${type}.svg`}
             alt="type"
             width={16}
             height={16}

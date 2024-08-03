@@ -14,14 +14,6 @@ export default function PlanListPage() {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            path: "/",
-            size: 20,
-          },
-        ],
         title: "내 여행",
         titleAlign: "center",
         // rightIcons: [

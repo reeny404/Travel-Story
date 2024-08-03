@@ -29,7 +29,10 @@ function CreateScheduleButton({
           isShowButtons ? "h-[260px]" : "h-0"
         )}
       >
-        <CreateButton icon={ICON.bookmark.fat} onClick={createByBookmark} />
+        <CreateButton
+          icon={ICON.bookmark.big.white}
+          onClick={createByBookmark}
+        />
         <CreateButton icon={ICON.location.white} onClick={createSchedule} />
         <CreateButton icon={ICON.car.white} onClick={createMoveSchedule} />
         <CreateButton icon={ICON.checkmark.white} onClick={createMemo} />

@@ -5,7 +5,6 @@ export async function GET(
   request: NextRequest,
   route: { params: { id: string } }
 ) {
-  const { searchParams } = request.nextUrl;
   const id = route.params.id;
   if (!id) {
     return NextResponse.json({

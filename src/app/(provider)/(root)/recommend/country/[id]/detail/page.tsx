@@ -8,7 +8,6 @@ import Tab from "@/components/Tab/Tab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
-import useDrawerStore from "@/stores/drawer.store";
 import { Area, City, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -26,7 +25,6 @@ type CountryDetailPage = {
 function CountryDetailPage({ params }: CountryDetailPage) {
   const countryId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
-  const { openDrawer } = useDrawerStore();
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
@@ -153,14 +151,6 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            size: 20,
-            path: "back",
-          },
-        ],
         title: country?.data.krName!,
         titleAlign: "center",
         rightIcons: [
@@ -170,16 +160,10 @@ function CountryDetailPage({ params }: CountryDetailPage) {
             size: 20,
             onClick: () => {},
           },
-          {
-            icon: ICON.menu.burgerBlack,
-            alt: "Menu",
-            size: 20,
-            onClick: openDrawer,
-          },
         ],
       }}
     >
-      <div className=" container overflow-x-hidden h-full flex-col ">
+      <div className=" container overflow-x-hidden w-full h-full flex-col ">
         {country && (
           <DetailCard
             title={country?.data?.title!}
@@ -197,7 +181,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
             <CardType
               linkUrl={`/recommend/country/${countryId}/accommodation`}
               title="할인하는 숙소"
-              type="home"
+              type="house"
             />
             <Carousel slides={areaCarouselItems!} />
           </div>
@@ -216,8 +200,8 @@ function CountryDetailPage({ params }: CountryDetailPage) {
           <>
             <CardType
               linkUrl={`/recommend/country/${countryId}/restaurant`}
-              title="문화 탐방"
-              type="architect"
+              title="식도락"
+              type="taco"
             />
             <Carousel slides={restaurantCarouselItems!} />
           </>
@@ -226,8 +210,8 @@ function CountryDetailPage({ params }: CountryDetailPage) {
           <>
             <CardType
               linkUrl={`/recommend/country/${countryId}/shop`}
-              title="문화 탐방"
-              type="architect"
+              title="쇼핑"
+              type="friends"
             />
             <Carousel slides={shopCarouselItems!} />
           </>
