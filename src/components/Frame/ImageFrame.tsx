@@ -12,14 +12,20 @@ type props = {
  */
 function ImageFrame({
   src,
-  alt = "이미지",
+  alt = "img",
   className,
   roundType = "none",
 }: props) {
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative aspect-auto ${className}`}>
       {src && (
-        <Image className={`round-[${roundType}] object-cover`} src={src} alt={alt} fill />
+        <Image
+          className={`round-[${roundType}] object-cover`}
+          src={src}
+          alt={alt}
+          sizes="with: auto, height: auto"
+          fill
+        />
       )}
     </div>
   );
