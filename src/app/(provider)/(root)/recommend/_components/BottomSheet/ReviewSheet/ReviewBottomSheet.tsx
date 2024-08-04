@@ -51,8 +51,9 @@ function ReviewBottomSheet({
       setIsOpening(false);
     }, 300);
   }, []);
+
   const { mutate: addReview } = useMutation({
-    mutationFn: async (formData: any) => {
+    mutationFn: async (formData: FormData) => {
       const response = await api.review.addReview(formData);
       return response.data;
     },
