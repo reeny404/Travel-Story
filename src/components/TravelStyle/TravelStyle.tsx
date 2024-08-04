@@ -46,11 +46,7 @@ function TravelStyle({ title, category }: SelectFormProps) {
           </div>
         ) : (
           buttonMap[category]?.map((list, index) => (
-            <SelectButton
-              key={index}
-              text={list}
-              category={category}
-            ></SelectButton>
+            <SelectButton key={index} text={list} category={category} />
           ))
         )}
       </div>

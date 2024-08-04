@@ -28,7 +28,7 @@ function CreatePlanIntroPage() {
         title: "내 여행 정보",
       }}
     >
-      <section className="w-full py-4 flex justify-center items-center space">
+      <section className="w-full py-4 flex justify-center items-center">
         {titles.map((title) => (
           <button
             key={title}
