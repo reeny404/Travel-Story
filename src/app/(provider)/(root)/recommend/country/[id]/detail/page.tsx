@@ -132,8 +132,8 @@ function CountryDetailPage({ params }: CountryDetailPage) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: "white",
-        title: country?.data.krName!,
+        backgroundColor: "transparent",
+        title: "",
         titleAlign: "center",
         rightIcons: [
           {
@@ -150,14 +150,13 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         description={country?.data?.description!}
         imageUrl={country?.data?.imageUrl!}
       />
-      <div className=" container overflow-auto w-full h-full flex-col pt-1 ">
-        <div className=" px-4">
-          <Tab
-            TABS={TABS.default}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
-          />
-        </div>
+      <div className=" container w-full h-full flex-col pt-1 ">
+        <Tab
+          TABS={TABS.default}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          frameClassName="px-4"
+        />
         <div className="pt-5 pb-4">
           {currentTab === "place" && (
             <>
