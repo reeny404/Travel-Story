@@ -23,6 +23,7 @@ function CardType({ type, title, linkUrl }: CardTypeProps) {
               alt="type"
               width={16}
               height={16}
+              className="w-4 h-4"
             />
           </div>
         )}

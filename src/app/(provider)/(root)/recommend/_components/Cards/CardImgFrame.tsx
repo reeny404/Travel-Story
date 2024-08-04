@@ -27,6 +27,7 @@ function CardImgFrame({
         src={imageUrl || "/"}
         alt={alt}
         fill
+        sizes="width:auto, height:auto"
         className={`${imageClassName} `}
       />
       {isTop ? (

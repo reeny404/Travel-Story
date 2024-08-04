@@ -2,9 +2,10 @@ import Image from "next/image";
 
 type props = {
   src: string | null;
+  alt?: string;
+  priority?: boolean;
   className: string;
   roundType?: "none" | "sm" | "full";
-  alt?: string;
 };
 
 /**
@@ -14,6 +15,7 @@ function ImageFrame({
   src,
   alt = "img",
   className,
+  priority = false,
   roundType = "none",
 }: props) {
   return (
@@ -23,8 +25,9 @@ function ImageFrame({
           className={`round-[${roundType}] object-cover`}
           src={src}
           alt={alt}
-          sizes="with: auto, height: auto"
           fill
+          sizes="with: auto, height: auto"
+          priority={priority}
         />
       )}
     </div>

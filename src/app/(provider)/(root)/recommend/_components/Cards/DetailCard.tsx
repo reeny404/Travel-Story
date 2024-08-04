@@ -12,6 +12,7 @@ function DetailCard({ title, description, imageUrl }: DetailCardProps) {
       <ImageFrame
         src={imageUrl}
         alt={title}
+        priority
         className="w-full min-h-[538px] object-cover"
       />
 

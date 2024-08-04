@@ -17,6 +17,7 @@ function MainTourItem({ item, itemType }: MainTourItemProps) {
           src={item.imageUrl!}
           alt="recomendPlace"
           fill
+          sizes="width:auto, height:auto"
           className="object-cover rounded-lg"
         />
       </div>

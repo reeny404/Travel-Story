@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Image from "next/image";
 
 type VanilaImgFrameProps = {
@@ -19,7 +20,13 @@ function VanilaImgFrame({
 }: VanilaImgFrameProps) {
   return (
     <div className={`${width} ${height} ${frameClassName}`}>
-      <Image src={imageUrl} alt={alt} fill className={`${imageClassName}`} />
+      <Image
+        src={imageUrl}
+        alt={alt}
+        fill
+        sizes="width:auto, height:auto"
+        className={clsx(imageClassName)}
+      />
     </div>
   );
 }
