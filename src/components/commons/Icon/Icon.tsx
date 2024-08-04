@@ -17,7 +17,13 @@ function Icon({ icon, alt = "icon", size = 20, onClick }: IconProps) {
       className="flex justify-center items-center w-11 h-11"
       onClick={onClick}
     >
-      <Image src={iconPath} alt={alt} width={size} height={size} />
+      <Image
+        src={iconPath}
+        alt={alt}
+        width={size}
+        height={size}
+        className="w-auto h-auto"
+      />
     </button>
   );
 }
