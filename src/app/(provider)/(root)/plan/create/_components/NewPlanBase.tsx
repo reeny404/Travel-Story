@@ -40,9 +40,9 @@ function NewPlanBase({ data: plan, setData }: MyPlanDefaultProps) {
       <div className="px-4 space-y-4">
         <label className="font-semibold">여행 기간</label>
         <div className="flex justify-between items-center">
-          <span>{DateUtil.format("yyyy년 MM월 dd일", startDate)}</span>
+          <span>{DateUtil.format("yyyy년 MM월 dd일 (E)", startDate)}</span>
           <span>-</span>
-          <span>{DateUtil.format("yyyy년 MM월 dd일", endDate)}</span>
+          <span>{DateUtil.format("yyyy년 MM월 dd일 (E)", endDate)}</span>
         </div>
       </div>
       {/* <div className="w-full h-96 bg-gray-200"> */}

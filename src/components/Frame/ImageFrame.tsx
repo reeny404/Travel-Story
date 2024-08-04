@@ -2,9 +2,10 @@ import Image from "next/image";
 
 type props = {
   src: string | null;
-  className: string;
-  roundType?: "none" | "sm" | "full";
   alt?: string;
+  priority?: boolean;
+  className: string;
+  round?: "none" | "sm" | "lg" | "full";
 };
 
 /**
@@ -12,14 +13,22 @@ type props = {
  */
 function ImageFrame({
   src,
-  alt = "이미지",
+  alt = "img",
   className,
-  roundType = "none",
+  priority = false,
+  round: roundType = "none",
 }: props) {
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative aspect-auto ${className}`}>
       {src && (
-        <Image className={`round-[${roundType}] object-cover`} src={src} alt={alt} fill />
+        <Image
+          className={`rounded-${roundType} object-cover`}
+          src={src}
+          alt={alt}
+          fill
+          sizes="with: auto, height: auto"
+          priority={priority}
+        />
       )}
     </div>
   );

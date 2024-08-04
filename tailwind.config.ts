@@ -39,6 +39,8 @@ const config: Config = {
         "schecule-list": "0px 4px 20px 0px #00000014",
         "area-card": "0px 4px 12px 0px rgba(0, 0, 0, 0.12)",
         "inner-bookmark": "inset 0px 0px 8px rgba(0, 0, 0, 0.25)",
+        "plan": "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
+        "header": "0px 4px 20px 0px rgba(0, 0, 0, 0.04)",
       },
       aspectRatio: {
         "4/5": "4 / 5",

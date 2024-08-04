@@ -28,7 +28,7 @@ function RouteCard({ route }: Props) {
           src={route.imageUrl}
           alt="schedule 사진"
           className="w-1/3 h-32 rounded-sm bg-gray-100"
-          roundType="sm"
+          round="sm"
         />
         <div className="flex flex-col space-y-4">
           <div className="text-lg font-bold">{route.title}</div>

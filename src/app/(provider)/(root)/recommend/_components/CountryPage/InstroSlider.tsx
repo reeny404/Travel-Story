@@ -27,6 +27,7 @@ function InstroSlider(country: IntroSliderProps) {
               src={country.imageUrl || "/"}
               alt={country.title}
               fill
+              sizes="width:auto, height:auto"
               className="object-auto"
             />
           </div>
