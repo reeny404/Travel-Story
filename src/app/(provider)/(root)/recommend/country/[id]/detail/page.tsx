@@ -150,7 +150,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         description={country?.data?.description!}
         imageUrl={country?.data?.imageUrl!}
       />
-      <div className=" container w-full h-full flex-col pt-1 ">
+      <div className=" container overflow-auto w-full h-full flex-col pt-1 ">
         <div className=" px-4">
           <Tab
             TABS={TABS.default}
@@ -158,7 +158,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
             setCurrentTab={setCurrentTab}
           />
         </div>
-        <div className="pt-5 pb-10">
+        <div className="pt-5 pb-4">
           {currentTab === "place" && (
             <>
               <CardType
@@ -228,7 +228,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         <div className="pb-10">
           <MainTourForm areasInfo={accommodations!} />
         </div>
-        <div className="pb-10">
+        <div className="pb-4">
           <CardType
             linkUrl={`/recommend/country/${countryId}/shop`}
             title="친구와 함꼐"
