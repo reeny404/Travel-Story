@@ -38,7 +38,7 @@ export type HeaderProps = {
 
 function Header({
   backgroundColor,
-  title = "TripStory",
+  title = "TravelStory",
   titleAlign = "center",
   rightIcons,
 }: HeaderProps) {
