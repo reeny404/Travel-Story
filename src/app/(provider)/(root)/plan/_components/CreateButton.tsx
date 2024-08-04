@@ -1,16 +1,24 @@
-import Icon from "@/components/commons/Icon";
-import { ICON } from "@/constants/icon";
-import { IconType } from "@/types/Icon";
+import clsx from "clsx";
+import { JSXElementConstructor } from "react";
 
 type Props = {
-  icon?: IconType;
+  Icon: JSXElementConstructor<{ className: string; onClick: () => void }>;
   onClick?: () => void;
+  color?: { bg: string; icon: string };
 };
 
-function CreateButton({ icon = ICON.add.white, onClick }: Props) {
+function CreateButton({ Icon, onClick, color }: Props) {
   return (
-    <div className="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full hover:brightness-110">
-      <Icon icon={icon} size={20} onClick={onClick} />
+    <div
+      className={clsx(
+        "w-12 h-12 flex items-center justify-center bg-lime-300 shadow-lg rounded-full group hover:bg-gray-750",
+        color?.bg
+      )}
+    >
+      <Icon
+        className={clsx("text-black group-hover:text-white", color?.icon)}
+        onClick={onClick ?? (() => {})}
+      />
     </div>
   );
 }

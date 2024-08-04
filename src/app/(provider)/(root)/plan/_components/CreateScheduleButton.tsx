@@ -1,9 +1,13 @@
 "use client";
 
-import { ICON } from "@/constants/icon";
 import clsx from "clsx";
 import { useState } from "react";
 import CreateButton from "./CreateButton";
+import IconAdd from "./icons/IconAdd";
+import IconBookmark from "./icons/IconBookmark";
+import IconCar from "./icons/IconCar";
+import IconCheck from "./icons/IconCheck";
+import IconPin from "./icons/IconPin";
 
 type Props = {
   createSchedule: () => void;
@@ -20,6 +24,7 @@ function CreateScheduleButton({
 }: Props) {
   const [isShowButtons, setIsShowButtons] = useState<Boolean>(false);
   const onClick = () => setIsShowButtons((isShow) => !isShow);
+  const buttonHoverColor = { bg: "hover:!bg-white", icon: "" };
 
   return (
     <div className="w-full relative flex justify-end pr-4">
@@ -30,15 +35,39 @@ function CreateScheduleButton({
         )}
       >
         <CreateButton
-          icon={ICON.bookmark.big.white}
+          Icon={IconBookmark}
           onClick={createByBookmark}
+          color={buttonHoverColor}
         />
-        <CreateButton icon={ICON.location.white} onClick={createSchedule} />
-        <CreateButton icon={ICON.car.white} onClick={createMoveSchedule} />
-        <CreateButton icon={ICON.checkmark.white} onClick={createMemo} />
+        <CreateButton
+          Icon={IconPin}
+          onClick={createSchedule}
+          color={buttonHoverColor}
+        />
+        <CreateButton
+          Icon={IconCar}
+          onClick={createMoveSchedule}
+          color={buttonHoverColor}
+        />
+        <CreateButton
+          Icon={IconCheck}
+          onClick={createMemo}
+          color={buttonHoverColor}
+        />
       </div>
       <div className="fixed bottom-4">
-        <CreateButton onClick={onClick} />
+        <CreateButton
+          Icon={IconAdd}
+          onClick={onClick}
+          color={
+            isShowButtons
+              ? {
+                  bg: "!bg-white hover:brightness-95",
+                  icon: "group-hover:!text-black",
+                }
+              : undefined
+          }
+        />
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ export const ICON = {
     big: {
       on: { name: "lgBookmark-on", ext: "svg" },
       off: { name: "lgBookmark-off", ext: "svg" },
-      white: { name: "fi-sr-bookmark", ext: "svg" },
+      white: { name: "bookmark", ext: "svg" },
     },
     small: {
       on: { name: "smBookmark-on", ext: "svg" },
@@ -52,7 +52,7 @@ export const ICON = {
     gray: "cancel-gray",
     white: "cancel-white",
   },
-  car: { white: { name: "fi-sr-car", ext: "svg" } },
+  car: { white: { name: "car", ext: "svg" } },
   checkmark: {
     white: { name: "checkmark-done", ext: "svg" },
   },
