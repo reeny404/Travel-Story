@@ -27,11 +27,14 @@ function AreaTypePage({ params }: AreaTypePageProps) {
   const filteredArea = filterByAreaType(areas!, areaType);
 
   return (
-    <div className="container overflow-x-hidden h-full w-full flex-col">
+    <div className="container overflow-x-hidden h-full w-full flex-col gap-y-6 p-4">
       {filteredArea?.map((area, idx) => {
         return (
           <AreaCard
             key={idx}
+            city={area.info.location[1]}
+            country={area.info.location[0]}
+            areaName={area.krName!}
             title={area.title}
             description={area.description}
             rating={4}

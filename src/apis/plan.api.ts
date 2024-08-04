@@ -1,4 +1,4 @@
-import { PlanChildType, Schedule } from "@/types/plan";
+import { PlanChildType, PlanInsertType, Schedule } from "@/types/plan";
 import { Tables } from "@/types/supabase";
 import { AxiosInstance } from "axios";
 
@@ -9,6 +9,14 @@ export default class PlanAPI {
 
   constructor(axios: AxiosInstance) {
     this.axios = axios;
+  }
+
+  async create(plan: PlanInsertType) {
+    console.log("createPlan", plan);
+    return await this.axios
+      .post("/api/plan", plan)
+      .then(({ data }) => data)
+      .catch((e) => console.error(e));
   }
 
   async getMyPlans() {

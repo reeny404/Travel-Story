@@ -22,7 +22,10 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ message: error.message }, { status: 400 });
     }
 
-    return NextResponse.json({ message: "회원가입 완료" }, { status: 200 });
+    return NextResponse.json(
+      { message: "회원가입 완료", data },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json({ message: "서버 오류", error }, { status: 500 });
   }
