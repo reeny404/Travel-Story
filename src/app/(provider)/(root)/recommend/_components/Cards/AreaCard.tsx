@@ -72,6 +72,7 @@ function AreaCard({
             }
             alt="bookmark"
             fill
+            sizes="width:auto, height:auto"
             className="object-contain drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]"
             onClick={toggleBookmark}
           />

@@ -13,7 +13,7 @@ function Profile({ src, className }: ProfileProps) {
     <ImageFrame
       src={src ?? "/icons/avatar.svg"}
       alt="프로필이미지"
-      roundType="full"
+      round="full"
       className={className}
     />
   );

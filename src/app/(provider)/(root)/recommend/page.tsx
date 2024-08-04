@@ -57,7 +57,7 @@ function RecommendPage() {
           src={slide.imageUrl}
           alt="img"
           className="h-full"
-          roundType="sm"
+          round="sm"
         />
       </div>
     );
