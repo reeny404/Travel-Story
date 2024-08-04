@@ -5,7 +5,7 @@ type props = {
   alt?: string;
   priority?: boolean;
   className: string;
-  roundType?: "none" | "sm" | "full";
+  round?: "none" | "sm" | "lg" | "full";
 };
 
 /**
@@ -16,13 +16,13 @@ function ImageFrame({
   alt = "img",
   className,
   priority = false,
-  roundType = "none",
+  round: roundType = "none",
 }: props) {
   return (
     <div className={`relative aspect-auto ${className}`}>
       {src && (
         <Image
-          className={`round-[${roundType}] object-cover`}
+          className={`rounded-${roundType} object-cover`}
           src={src}
           alt={alt}
           fill

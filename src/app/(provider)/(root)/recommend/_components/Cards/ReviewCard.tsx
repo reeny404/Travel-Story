@@ -25,7 +25,7 @@ function ReviewCard({
         <ImageFrame
           src={imageUrl}
           alt="detailCard"
-          roundType="sm"
+          round="sm"
           className="h-full w-[120px]"
         />
         <div className="ml-4">
