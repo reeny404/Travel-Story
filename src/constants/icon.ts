@@ -13,8 +13,8 @@ export const ICON = {
   add: {
     white: { name: "add", ext: "svg" },
     person: {
-      black: { name: "person-add", ext: "svg" }
-    }
+      black: { name: "person-add", ext: "svg" },
+    },
   },
   arrow: {
     back: {
@@ -33,6 +33,9 @@ export const ICON = {
     up: {
       black: "arrow-up-black",
     },
+  },
+  share: {
+    black: { name: "share-black", ext: "svg" },
   },
   avatar: {
     black: "avatar-black",

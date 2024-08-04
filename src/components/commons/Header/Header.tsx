@@ -3,6 +3,7 @@
 import Icon from "@/components/commons/Icon/Icon";
 import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
+import { IconType } from "@/types/Icon";
 import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
@@ -10,7 +11,7 @@ const headerStyles = cva("w-full h-[52px] flex items-center justify-between", {
   variants: {
     backgroundColor: {
       transparent: "bg-transparent fixed top-0 z-[900] ",
-      white: "bg-white sticky top-0 h-[52px] z-[900]",
+      white: "bg-white shadow-area-card sticky top-0 h-[52px] z-[900]",
     },
     titleAlign: {
       left: "justify-start",
@@ -28,7 +29,7 @@ export type HeaderProps = {
   title?: string;
   titleAlign?: "left" | "center";
   rightIcons?: {
-    icon: string;
+    icon: IconType;
     alt: string;
     size: number;
     path?: string;
@@ -68,7 +69,7 @@ function Header({
           />
         </div>
         {titleAlign === "left" && (
-          <h2 className="text-[18px] font-semibold ml-2">{title}</h2>
+          <h2 className="text-[18px] font-semibold ml-2 ">{title}</h2>
         )}
       </div>
       {titleAlign === "center" && (

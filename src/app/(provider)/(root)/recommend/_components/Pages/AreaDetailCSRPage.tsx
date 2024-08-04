@@ -69,8 +69,8 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.black,
-            alt: "Search",
+            icon: ICON.share.black,
+            alt: "share",
             size: 20,
             onClick: () => {},
           },

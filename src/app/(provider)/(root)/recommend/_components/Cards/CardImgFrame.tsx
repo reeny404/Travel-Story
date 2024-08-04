@@ -21,14 +21,17 @@ function CardImgFrame({
   country,
   city,
 }: CardImgFrameProps) {
+  const loaderProp = ({ src }: { src: string }) => {
+    return src;
+  };
   return (
     <div className={`w-full relative  ${frameClassName}`}>
       <Image
         src={imageUrl || "/"}
         alt={alt}
         fill
-        sizes="width:auto, height:auto"
         className={`${imageClassName} `}
+        loader={loaderProp}
       />
       {isTop ? (
         <div className="absolute w-full bottom-0 px-4 pt-20 pb-10 bg-gradient-white">
@@ -38,12 +41,14 @@ function CardImgFrame({
           </span>
         </div>
       ) : (
-        <div className="absolute w-full bottom-0 px-4 pt-9 pb-2 bg-gradient-areaCard">
-          <span className="text-sm font-medium text-white ">
-            {city}, {country}
-          </span>
-          <h1 className="text-[28px] font-semibold text-white">{areaName}</h1>
-        </div>
+        city && (
+          <div className="absolute w-full bottom-0 px-4 pt-9 pb-2 bg-gradient-areaCard">
+            <span className="text-sm font-medium text-white ">
+              {city}, {country}
+            </span>
+            <h1 className="text-[28px] font-semibold text-white">{areaName}</h1>
+          </div>
+        )
       )}
     </div>
   );

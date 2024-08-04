@@ -137,7 +137,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.black,
+            icon: ICON.search.white,
             alt: "Search",
             size: 20,
             onClick: () => {},
@@ -147,7 +147,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     >
       <DetailCard
         title={country?.data?.title!}
-        description={country?.data?.description!}
+        // description={country?.data?.description!}
         imageUrl={country?.data?.imageUrl!}
       />
       <div className=" container w-full h-full flex-col pt-1 ">

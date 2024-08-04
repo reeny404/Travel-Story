@@ -112,6 +112,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
   if (isPending) {
     return <div>loading...</div>;
   }
+  console.log("city.imageUrl", city?.imageUrl);
   return (
     <MainLayout
       headerProps={{
@@ -120,7 +121,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.black,
+            icon: ICON.search.white,
             alt: "Search",
             size: 20,
             onClick: () => {},

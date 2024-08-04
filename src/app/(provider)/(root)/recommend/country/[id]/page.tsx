@@ -55,7 +55,7 @@ function IntroPage({ params }: IntroPageProps) {
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.black,
+            icon: ICON.search.white,
             alt: "Search",
             size: 20,
             onClick: () => {},
@@ -71,8 +71,8 @@ function IntroPage({ params }: IntroPageProps) {
             <CountryIntroCard
               countryId={IntroCountry.country?.id}
               cities={IntroCountry.cities}
-              imageUrl={IntroCountry.country.imageUrl}
-              title={IntroCountry.country.name}
+              imageUrl={IntroCountry.country?.imageUrl}
+              title={IntroCountry.country?.name}
             />
           )}
         </>
