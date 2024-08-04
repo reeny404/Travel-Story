@@ -30,7 +30,7 @@ function CreateScheduleButton({
     <div className="w-full relative flex justify-end pr-4">
       <div
         className={clsx(
-          "fixed bottom-11 flex flex-col space-y-3 transition-[height] overflow-hidden",
+          "fixed bottom-10 flex flex-col space-y-3 transition-[height] overflow-hidden",
           isShowButtons ? "h-[260px]" : "h-0"
         )}
       >
@@ -55,7 +55,7 @@ function CreateScheduleButton({
           color={buttonHoverColor}
         />
       </div>
-      <div className="fixed bottom-4">
+      <div className="fixed bottom-3">
         <CreateButton
           Icon={IconAdd}
           onClick={onClick}
