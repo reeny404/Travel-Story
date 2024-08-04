@@ -33,7 +33,10 @@ function Plan({ plan }: props) {
         </p>
         <div className="flex items-center space-x-2">
           {/* TODO 현재 로그인한 사용자 profile 이미지 넣어주기 */}
-          <Profile src={null} className="w-9 h-9" />
+          <Profile
+            src="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/plan/profileSample.jpg"
+            className="w-9 h-9"
+          />
         </div>
       </div>
     </div>
