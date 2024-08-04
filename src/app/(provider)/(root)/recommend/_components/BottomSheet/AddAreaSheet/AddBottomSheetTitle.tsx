@@ -2,11 +2,26 @@
 
 import { api } from "@/apis/api";
 import { useAuth } from "@/contexts/auth.contexts";
-
-type AddBottomSheetTitleProps = {};
+import { PlanData } from "@/types/plan";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function AddBottomSheetTitle({ areaId }: { areaId: number }) {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  const { mutate: addPlan } = useMutation({
+    mutationFn: async (data: PlanData) => {
+      const response = await api.area.addPlan(data);
+      return response;
+    },
+    onError: (error) => {
+      console.error("Error adding data:", error);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["planData"] });
+      return data;
+    },
+  });
 
   const handleAddPlan = async () => {
     if (!user) {
@@ -19,11 +34,7 @@ function AddBottomSheetTitle({ areaId }: { areaId: number }) {
       startDate: new Date().toISOString(),
       endDate: new Date().toISOString(),
     };
-    try {
-      await api.area.addPlan(data);
-    } catch (error) {
-      console.error("Error adding data:", error);
-    }
+    addPlan(data);
   };
   return (
     <div className="w-full h-full flex justify-between items-center p-1">

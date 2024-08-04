@@ -1,5 +1,6 @@
 "use client";
 import { api } from "@/apis/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import ReviewBottomSheetImages from "./ReviewBottomSheetImages";
 import ReviewBottomSheetInput from "./ReviewBottomSheetInput";
@@ -25,6 +26,7 @@ function ReviewBottomSheet({
   const [textValue, setTextValue] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
   const formRef = useRef<HTMLFormElement>(null);
+  const queryClient = useQueryClient();
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (formRef.current && !formRef.current.contains(e.target as Node)) {
@@ -50,6 +52,21 @@ function ReviewBottomSheet({
     }, 300);
   }, []);
 
+  const { mutate: addReview } = useMutation({
+    mutationFn: async (formData: FormData) => {
+      const response = await api.review.addReview(formData);
+      return response.data;
+    },
+    onError: (error) => {
+      console.error("Error adding data:", error);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["areaReviews"] });
+      onClose();
+      return data;
+    },
+  });
+
   const handleAdd = async () => {
     const formData = new FormData();
     for (let i = 0; i < imgFile.length; i++) {
@@ -63,9 +80,7 @@ function ReviewBottomSheet({
     formData.append("areaName", areaName);
 
     try {
-      const response = await api.review.addReview(formData);
-      onClose();
-      return response.data;
+      addReview(formData);
     } catch (error) {
       console.error("Error adding data:", error);
     }

@@ -15,7 +15,7 @@ function Tab({ currentTab, setCurrentTab, TABS }: TabProps) {
   return (
     <div
       className={clsx(
-        "w-full h-9 flex justify-around items-center gap-x-2 z-50 my-3 sticky top-0",
+        "w-full h-9 flex justify-around items-center gap-x-2 z-30 my-3 sticky top-0",
         { "rounded-lg": TABS[0].en === "notice" }
       )}
     >

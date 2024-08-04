@@ -44,7 +44,7 @@ function AreaTypePage({ params }: AreaTypePageProps) {
         ],
       }}
     >
-      <div className="container overflow-x-hidden h-full w-full flex-col">
+      <div className="container overflow-x-hidden h-full w-full flex-col gap-y-6 p-4">
         {areas?.map((area, idx) => {
           return (
             <AreaCard
