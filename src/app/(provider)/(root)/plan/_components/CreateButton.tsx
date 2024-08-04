@@ -1,8 +1,10 @@
+"use client";
+
 import clsx from "clsx";
 import { JSXElementConstructor } from "react";
 
 type Props = {
-  Icon: JSXElementConstructor<{ className: string; onClick: () => void }>;
+  Icon: JSXElementConstructor<{ className: string; onClick?: () => void }>;
   onClick?: () => void;
   color?: { bg: string; icon: string };
 };
@@ -17,7 +19,7 @@ function CreateButton({ Icon, onClick, color }: Props) {
     >
       <Icon
         className={clsx("text-black group-hover:text-white", color?.icon)}
-        onClick={onClick ?? (() => {})}
+        onClick={onClick}
       />
     </div>
   );
