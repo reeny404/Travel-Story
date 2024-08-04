@@ -6,24 +6,26 @@ import { useState } from "react";
 
 type SearchBarProps = {
   onSearch?: (term: string) => void;
+  initialValue?: string;
 };
 
-function SearchBar({ onSearch }: SearchBarProps) {
-  const [searchValue, setSearchValue] = useState("");
+function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
+  const [searchValue, setSearchValue] = useState(initialValue);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (onSearch) {
-      onSearch(searchValue.trim());
+    const trimmedValue = searchValue.trim();
+    if (trimmedValue && onSearch) {
+      onSearch(trimmedValue);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchValue(value);
-    if (value.trim() === "" && onSearch) {
-      onSearch("");
-    }
+    // if (value.trim() === "" && onSearch) {
+    //   onSearch("");
+    // }
   };
 
   const handleEmpty = () => {
@@ -54,14 +56,16 @@ function SearchBar({ onSearch }: SearchBarProps) {
           onChange={handleInputChange}
         />
       </div>
-      <Image
-        src={`/icons/${ICON.cancel.gray}.png`}
-        alt="microphone"
-        width={18}
-        height={18}
-        className="mr-2 cursor-pointer"
-        onClick={handleEmpty}
-      />
+      {searchValue && (
+        <Image
+          src={`/icons/${ICON.cancel.gray}.png`}
+          alt="microphone"
+          width={18}
+          height={18}
+          className="mr-2 cursor-pointer transition-transform duration-300 ease-in-out"
+          onClick={handleEmpty}
+        />
+      )}
     </form>
   );
 }

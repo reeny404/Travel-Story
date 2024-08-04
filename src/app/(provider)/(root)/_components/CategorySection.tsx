@@ -1,4 +1,5 @@
 import CardSlider from "@/components/Slider/CardSlider";
+import { dmSerifDisplayFont } from "@/constants/fonts";
 import { ICON } from "@/constants/icon";
 import { SlideCardProps } from "@/types/Slider";
 import Image from "next/image";
@@ -51,25 +52,37 @@ const CardMockUpData: SlideCardProps[] = [
 ];
 
 type CategorySectionProps = {
+  title?: string;
+  subTitle?: string;
   theme: string;
-  category: string;
+  category?: string;
+  krCategory: string;
 };
 
-function CategorySection({ theme, category }: CategorySectionProps) {
+function CategorySection({ theme, krCategory }: CategorySectionProps) {
   return (
     <section className="w-full">
       <div
-        className={`w-[96%] h-[704px] rounded-tr-3xl rounded-br-3xl ${theme}`}
+        className={`w-[calc(100%-16px)] h-[704px] my-12 ml-4 pt-[26px] rounded-tl-3xl rounded-bl-3xl ${theme}`}
       >
-        <CardSlider spacing={20} slidesPerView={1.2} cards={CardMockUpData} />
-
-        <p>더 많은 {category} 보러가기</p>
-        <Image
-          src={`/icons/${ICON.arrow.right.black}.svg`}
-          alt="arrow"
-          width={16}
-          height={16}
-        />
+        <h2
+          className={`${dmSerifDisplayFont.className} text-[44px] text-center`}
+        >
+          Tourist spot
+        </h2>
+        <h3 className="font-medium text-center mb-[64px]">
+          그 나라만의 특별한 여행지
+        </h3>
+        <CardSlider spacing={20} slidesPerView={1.3} cards={CardMockUpData} />
+        <div className="flex justify-end items-center px-4 pb-3 mt-[68px]">
+          <p className="text-sm">더 많은 {krCategory} 보러가기</p>
+          <Image
+            src={`/icons/${ICON.arrow.right.black}.svg`}
+            alt="arrow"
+            width={16}
+            height={16}
+          />
+        </div>
       </div>
     </section>
   );

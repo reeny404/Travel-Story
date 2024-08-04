@@ -17,3 +17,12 @@ export type SliderProps = {
 };
 
 export type TagSliderProps = Pick<SliderProps, "spacing">;
+
+export type ArchSliderProps = {
+  spacing: number;
+  slidesPerView: number;
+  cards: {
+    imageUrl: string;
+    title: string;
+  }[];
+};

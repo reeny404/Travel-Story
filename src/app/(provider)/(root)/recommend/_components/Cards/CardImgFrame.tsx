@@ -22,7 +22,7 @@ function CardImgFrame({
   city,
 }: CardImgFrameProps) {
   return (
-    <div className={`w-full relative  ${frameClassName}`}>
+    <div className={`w-full relative ${frameClassName}`}>
       <Image
         src={imageUrl || "/"}
         alt={alt}

@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { pretendardFont } from "./../constants/fonts";
 import "./globals.css";
-
-const font = localFont({
-  src: [{ path: "../fonts/Pretendard_Variable.woff2" }],
-});
 
 export const metadata: Metadata = {
   title: "TripStory",
@@ -19,7 +15,7 @@ function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${font.className} w-full min-h-svh max-w-[430px] mx-auto`}
+        className={`${pretendardFont.className} w-full min-h-svh max-w-[430px] mx-auto`}
       >
         {children}
       </body>

@@ -1,13 +1,16 @@
 "use client";
 
+import CardType from "@/components/Card/CardType";
 import MainLayout from "@/components/Layout/MainLayout";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { SlideCardProps } from "@/types/Slider";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import CategorySection from "./CategorySection";
 import MyTrip from "./MyTrip";
 
 const CardMockUpData: SlideCardProps[] = [
@@ -57,16 +60,30 @@ const CardMockUpData: SlideCardProps[] = [
   },
 ];
 
+const cardData = [
+  { imageUrl: "/sampleImg.jpg", title: "이탈리아" },
+  { imageUrl: "/sampleImg.jpg", title: "프랑스" },
+  { imageUrl: "/sampleImg.jpg", title: "스페인" },
+  { imageUrl: "/sampleImg.jpg", title: "스페인" },
+  { imageUrl: "/sampleImg.jpg", title: "스페인" },
+  { imageUrl: "/sampleImg.jpg", title: "스페인" },
+  // 추가 이미지와 제목
+];
+
 function Home() {
   const { user } = useAuth();
   const router = useRouter();
-  console.log(user);
   const handleAvatarClick = () => {
     if (user) {
       return router.push("/my");
     }
     return router.push("/login");
   };
+
+  const handleSearch = (term: string) => {
+    router.push(`/search?query=${term}`);
+  };
+
   return (
     <MainLayout
       headerProps={{
@@ -104,11 +121,17 @@ function Home() {
           </Link>
         </div>
         <div className="sticky z-10 -mt-[15px] px-4">
-          <Link href="/search" className="flex justify-center w-full">
-            <SearchBar />
-          </Link>
+          <div className="flex justify-center w-full">
+            <SearchBar onSearch={handleSearch} />
+          </div>
         </div>
         <MyTrip />
+        <div className="mt-7 ml-4">
+          <CardType title="인기 여행지" type="fire" />
+          <ArchCardSlider spacing={12} slidesPerView={3.8} cards={cardData} />
+        </div>
+        <CategorySection theme="bg-lime-300" krCategory="관광지" />
+        <CategorySection theme="bg-danger-400" krCategory="식당" />
       </main>
     </MainLayout>
   );

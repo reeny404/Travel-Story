@@ -18,6 +18,9 @@ const config: Config = {
       maxWidth: {
         xs: "450px",
       },
+      zIndex: {
+        drawer: "1000",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

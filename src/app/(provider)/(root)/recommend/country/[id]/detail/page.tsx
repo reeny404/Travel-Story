@@ -231,7 +231,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         <div className="pb-10">
           <CardType
             linkUrl={`/recommend/country/${countryId}/shop`}
-            title="친구와 함꼐"
+            title="친구와 함께"
             type="friends"
           />
           {shopsSliderProps && (
