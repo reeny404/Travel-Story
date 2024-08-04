@@ -19,7 +19,7 @@ function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${font.className} w-full min-h-svh max-w-[430px] mx-auto`}
+        className={`${font.className} w-full min-h-svh max-w-[430px] mx-auto text-primary`}
       >
         {children}
       </body>
