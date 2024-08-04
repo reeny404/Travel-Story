@@ -60,12 +60,6 @@ function IntroPage({ params }: IntroPageProps) {
             size: 20,
             onClick: () => {},
           },
-          {
-            icon: ICON.cancel.black,
-            alt: "Cancle",
-            size: 20,
-            path: "/",
-          },
         ],
       }}
     >

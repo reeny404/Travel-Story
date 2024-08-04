@@ -25,7 +25,7 @@ function AreaReviewCard({
       <article className="flex justify-between items-center w-full">
         <div className="flex items-center">
           <VanilaImgFrame
-            imageUrl={userImageUrl || "/icons/avatar-black.png"}
+            imageUrl={userImageUrl || "/icons/avatar-black.svg"}
             alt="icon"
             width="w-11"
             height="h-11"
@@ -59,8 +59,8 @@ function AreaReviewCard({
           alt="reviewImg"
           width="w-full"
           height="h-[220px]"
-          frameClassName="relative aspect-auto mt-3 mb-12 hover:cursor-pointer"
-          imageClassName="object-cover"
+          frameClassName="relative aspect-auto mt-3 mb-12 hover:cursor-pointer "
+          imageClassName="object-cover rounded-lg"
         />
       )}
     </section>

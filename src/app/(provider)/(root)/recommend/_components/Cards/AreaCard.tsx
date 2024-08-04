@@ -1,3 +1,4 @@
+import PrimaryTagList from "@/components/commons/TagList/PrimaryTagList";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
 import { useModalStore } from "@/stores/modal.store";
@@ -37,9 +38,9 @@ function AreaCard({
       isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
     }
   };
-
+  const mockTags = ["친구와 함께", "문화 체험", "도심"];
   return (
-    <>
+    <div className="relative w-full shadow-area-card rounded-lg mb-6">
       <Link href={linkUrl} className="w-full relative">
         <CardImgFrame
           imageUrl={imageUrl}
@@ -53,9 +54,10 @@ function AreaCard({
       </Link>
       {/* TODO areaCardShadow 해결해야댐 일단 넘김 */}
       <div className="pb-5">
-        <p className="px-4 pt-4 mb-3 text-sm text-ellipsis line-clamp-2 leading-5">
+        <p className="px-4 pt-4 mb-2 text-sm text-ellipsis line-clamp-2 leading-5">
           {description}
         </p>
+        <PrimaryTagList tagList={mockTags} />
 
         {/* <PrimaryTagList tagList={mockTags} /> */}
       </div>
@@ -76,7 +78,7 @@ function AreaCard({
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

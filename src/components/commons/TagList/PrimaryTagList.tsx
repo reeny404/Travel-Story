@@ -6,7 +6,7 @@ type PrimaryTagListProps<T extends string> = {
 
 function PrimaryTagList<T extends string>({ tagList }: PrimaryTagListProps<T>) {
   return (
-    <div className="flex gap-x-1 ml-4 pb-4">
+    <div className="flex gap-x-1 ml-4">
       {tagList.map((tag) => (
         <TagButton key={tag} theme="primary" size="xs" isChecked={false}>
           {tag}
