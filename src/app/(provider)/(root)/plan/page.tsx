@@ -30,7 +30,7 @@ export default function PlanListPage() {
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
             <span className="text-lg leading-6">
-              {DateUtil.format("yyyy년 MM월 dd일", new Date(), true)}
+              {DateUtil.format("yyyy년 MM월 dd일", new Date())}
             </span>
             <div className="flex items-center space-x-2">
               <button className="px-3 py-0.5 flex justify-center text-sm rounded-full bg-gray-150">
