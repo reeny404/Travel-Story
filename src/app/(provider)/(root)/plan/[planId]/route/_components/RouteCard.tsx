@@ -86,6 +86,8 @@ function RouteCard({ route }: Props) {
             <span className={clsx(IconType[route.type].color, "leading-5")}>
               {route.type}
             </span>
+            <span className="text-gray-400"> | </span>
+            <span className="text-olive-800">영업중</span>
           </span>
           <span className="flex space-x-2 items-start">
             <span>
