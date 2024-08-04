@@ -22,7 +22,7 @@ function Icon({ icon, alt = "icon", size = 20, onClick }: IconProps) {
         alt={alt}
         width={size}
         height={size}
-        style={{ width: "auto" }}
+        className="w-auto h-auto"
       />
     </button>
   );
