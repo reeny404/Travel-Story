@@ -128,7 +128,9 @@ function CountryDetailPage({ params }: CountryDetailPage) {
       };
     }
   );
-
+  if (!country) {
+    return <div>loading....</div>;
+  }
   return (
     <MainLayout
       headerProps={{

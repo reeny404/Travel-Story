@@ -62,7 +62,11 @@ function Header({
       <div className="flex items-center">
         <div>
           <Icon
-            icon={ICON.menu.burgerBlack}
+            icon={
+              backgroundColor === "transparent"
+                ? ICON.menu.burgerWhite
+                : ICON.menu.burgerBlack
+            }
             alt="drawer"
             size={20}
             onClick={openDrawer}

@@ -30,6 +30,7 @@ function CardImgFrame({
         src={imageUrl || "/"}
         alt={alt}
         fill
+        priority={true}
         className={`${imageClassName} `}
         loader={loaderProp}
       />
