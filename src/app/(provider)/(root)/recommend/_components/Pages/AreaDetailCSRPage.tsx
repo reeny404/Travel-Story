@@ -31,7 +31,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
     AxiosError,
     Area
   >({
-    queryKey: ["areasById", areaId],
+    queryKey: ["area", areaId],
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data.data,
   });
