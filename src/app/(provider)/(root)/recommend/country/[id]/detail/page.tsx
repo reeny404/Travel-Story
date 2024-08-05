@@ -128,16 +128,18 @@ function CountryDetailPage({ params }: CountryDetailPage) {
       };
     }
   );
-
+  if (!country) {
+    return <div>loading....</div>;
+  }
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: "white",
-        title: country?.data.krName!,
+        backgroundColor: "transparent",
+        title: "",
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.black,
+            icon: ICON.search.white,
             alt: "Search",
             size: 20,
             onClick: () => {},
@@ -147,18 +149,17 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     >
       <DetailCard
         title={country?.data?.title!}
-        description={country?.data?.description!}
+        // description={country?.data?.description!}
         imageUrl={country?.data?.imageUrl!}
       />
       <div className=" container w-full h-full flex-col pt-1 ">
-        <div className=" px-4">
-          <Tab
-            TABS={TABS.default}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
-          />
-        </div>
-        <div className="pt-5 pb-10">
+        <Tab
+          TABS={TABS.default}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          frameClassName="px-4"
+        />
+        <div className="pt-5 pb-4">
           {currentTab === "place" && (
             <>
               <CardType
@@ -228,7 +229,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         <div className="pb-10">
           <MainTourForm areasInfo={accommodations!} />
         </div>
-        <div className="pb-10">
+        <div className="pb-4">
           <CardType
             linkUrl={`/recommend/country/${countryId}/shop`}
             title="친구와 함께"

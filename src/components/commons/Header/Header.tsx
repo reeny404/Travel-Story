@@ -3,14 +3,15 @@
 import Icon from "@/components/commons/Icon/Icon";
 import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
+import { IconType } from "@/types/Icon";
 import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
 const headerStyles = cva("w-full h-[52px] flex items-center justify-between", {
   variants: {
     backgroundColor: {
-      transparent: "bg-transparent",
-      white: "bg-white",
+      transparent: "bg-transparent fixed top-0 z-[900] ",
+      white: "bg-white shadow-area-card sticky top-0 h-[52px] z-[900]",
     },
     titleAlign: {
       left: "justify-start",
@@ -28,7 +29,7 @@ export type HeaderProps = {
   title?: string;
   titleAlign?: "left" | "center";
   rightIcons?: {
-    icon: string;
+    icon: IconType;
     alt: string;
     size: number;
     path?: string;
@@ -38,7 +39,7 @@ export type HeaderProps = {
 
 function Header({
   backgroundColor,
-  title = "TripStory",
+  title = "TravelStory",
   titleAlign = "center",
   rightIcons,
 }: HeaderProps) {
@@ -58,25 +59,27 @@ function Header({
 
   return (
     <header className={headerStyles({ backgroundColor, titleAlign })}>
-      <div className="flex items-center">
-        <div>
-          <Icon
-            icon={ICON.menu.burgerBlack}
-            alt="drawer"
-            size={20}
-            onClick={openDrawer}
-          />
-        </div>
+      <div className="flex items-center pl-[5px]">
+        <Icon
+          icon={
+            backgroundColor === "transparent"
+              ? ICON.menu.burgerWhite
+              : ICON.menu.burgerBlack
+          }
+          alt="drawer"
+          size={20}
+          onClick={openDrawer}
+        />
         {titleAlign === "left" && (
-          <h2 className="text-[18px] font-semibold ml-2">{title}</h2>
+          <h2 className="text-[18px] font-semibold ml-2 ">{title}</h2>
         )}
       </div>
       {titleAlign === "center" && (
-        <h2 className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap overflow-hidden text-ellipsis sm:max-w-[170px]">
+        <h2 className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap overflow-hidden text-ellipsis font-medium sm:max-w-[170px]">
           {title}
         </h2>
       )}
-      <div className="flex items-center ml-auto">
+      <div className="flex items-center ml-auto pr-[5px]">
         {rightIcons &&
           rightIcons.map((icon, index) => (
             <Icon

@@ -7,15 +7,16 @@ type TabProps = {
   currentTab: string;
   setCurrentTab: (currentTab: string) => void;
   TABS: { kr: string; en: string }[];
+  frameClassName?: string;
 };
 
 // TODO 텝을 누를 때  이전 이미지가 나오는 경우가 있어 일단은 아래 로직으로 진행 후에 고쳐야함
 
-function Tab({ currentTab, setCurrentTab, TABS }: TabProps) {
+function Tab({ currentTab, setCurrentTab, TABS, frameClassName }: TabProps) {
   return (
     <div
       className={clsx(
-        "w-full h-9 flex justify-around items-center gap-x-2 z-50 my-3 sticky top-0",
+        `w-full h-9 flex justify-around items-center gap-x-2 z-30 my-3 sticky top-[56px] ${frameClassName}`,
         { "rounded-lg": TABS[0].en === "notice" }
       )}
     >

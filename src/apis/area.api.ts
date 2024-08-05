@@ -125,7 +125,6 @@ class AreaAPI {
     try {
       const path = `api/area/plan`;
       const response = await this.axios.post<PlanType>(path, data);
-      console.log("response", response);
     } catch (error) {
       return console.log(error);
     }
@@ -135,7 +134,6 @@ class AreaAPI {
     try {
       const path = "api/area/schedule";
       const response = await this.axios.post<Schedule>(path, data);
-      console.log(response);
     } catch (error) {
       return console.log(error);
     }

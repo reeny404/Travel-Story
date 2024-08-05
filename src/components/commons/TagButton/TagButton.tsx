@@ -9,7 +9,7 @@ const tagVariant = cva("rounded-2xl hover:opacity-90", {
     theme: {
       primary: "bg-transparent border border-black text-black",
       blue: "bg-[#06F] text-white font-semibold",
-      white: "bg-white text-gray-700",
+      white: "bg-white  ml-2.5",
     },
     size: {
       xs: "px-2 py-[1px] text-xs",
@@ -22,6 +22,9 @@ const tagVariant = cva("rounded-2xl hover:opacity-90", {
       false: "",
     },
   },
+  compoundVariants: [
+    { theme: "white", isChecked: true, className: "!bg-gray-650 " },
+  ],
   defaultVariants: {
     theme: "primary",
     size: "sm",

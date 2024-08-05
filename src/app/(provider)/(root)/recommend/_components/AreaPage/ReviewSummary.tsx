@@ -62,15 +62,15 @@ function ReviewSummaryCard({
           <span className="text-[#C4E00B]">리뷰작성</span>
         </button>
       </header>
-      <article className="w-full grid grid-cols-2">
-        <div className="w-full h-full flex flex-col p-6 items-center justify-center">
+      <article className="grid grid-cols-2 gap-3 ">
+        <div className="flex flex-col p-6 items-center justify-center rounded-lg bg-[#F6F6F6]">
           <p className="text-[32px] mb-4">{rating}</p>
           <div className="mb-1">
             <RatingIcons type="small" rating={rating} />
           </div>
-          <p className="text-xs text-[#8B8B8B]">{`(${ratingAmount})`}</p>
+          <p className="text-xs ">{`(${ratingAmount})`}</p>
         </div>
-        <div className="w-full h-full flex flex-col gap-y-3 py-5 px-4">
+        <div className="w-full flex flex-col gap-y-1 justify-center  py-5 px-4 border-[0.6px] border-[#DFDFDF] rounded-lg">
           <div className="w-full flex text-sm font-semibold relative">
             <Image
               src="/icons/emoji-dinner.svg"
@@ -82,7 +82,6 @@ function ReviewSummaryCard({
             <span className="pl-[2px]">음식이 맛있어요</span>
           </div>
           <div className="w-full flex text-sm font-semibold relative">
-            {" "}
             <Image
               src="/icons/emoji-sparkles.svg"
               alt="image"

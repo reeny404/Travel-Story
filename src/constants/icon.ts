@@ -12,6 +12,9 @@ export const ICON = {
   },
   add: {
     white: { name: "add", ext: "svg" },
+    person: {
+      black: { name: "person-add", ext: "svg" },
+    },
   },
   arrow: {
     back: {
@@ -31,6 +34,7 @@ export const ICON = {
       black: "arrow-up-black",
     },
   },
+
   avatar: {
     black: "avatar-black",
     gray: "avatar-gray",
@@ -39,7 +43,7 @@ export const ICON = {
     big: {
       on: { name: "lgBookmark-on", ext: "svg" },
       off: { name: "lgBookmark-off", ext: "svg" },
-      white: { name: "fi-sr-bookmark", ext: "svg" },
+      white: { name: "bookmark", ext: "svg" },
     },
     small: {
       on: { name: "smBookmark-on", ext: "svg" },
@@ -52,7 +56,7 @@ export const ICON = {
     gray: "cancel-gray",
     white: "cancel-white",
   },
-  car: { white: { name: "fi-sr-car", ext: "svg" } },
+  car: { white: { name: "car", ext: "svg" } },
   checkmark: {
     white: { name: "checkmark-done", ext: "svg" },
   },
@@ -92,6 +96,12 @@ export const ICON = {
   notification: {
     black: "notification-black",
   },
+  share: {
+    black: { name: "share", ext: "svg" },
+  },
+  shareArea: {
+    black: { name: "share-black", ext: "svg" },
+  },
   search: {
     black: "search-black",
     white: "search-white",
@@ -116,21 +126,21 @@ export const ICON = {
     half: "star-half",
   },
   accommodation: {
-    color: "accommodation-color",
-    none: "accommodation-none",
+    color: { name: "accommodation-color", ext: "svg" },
+    none: { name: "accommodation-none", ext: "svg" },
   },
   place: {
-    color: "place-color",
-    none: "place-none",
-    white: "place-white",
+    color: { name: "place-color", ext: "svg" },
+    none: { name: "place-none", ext: "svg" },
+    white: { name: "place-white", ext: "svg" },
   },
   restaurant: {
-    color: "restaurant-color",
-    none: "restaurant-none",
+    color: { name: "restaurant-color", ext: "svg" },
+    none: { name: "restaurant-none", ext: "svg" },
   },
   shop: {
-    color: "shop-color",
-    none: "shop-none",
+    color: { name: "shop-color", ext: "svg" },
+    none: { name: "shop-none", ext: "svg" },
   },
   areaCalender: {
     big: {

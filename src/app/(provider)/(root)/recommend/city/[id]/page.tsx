@@ -2,8 +2,10 @@
 
 import { api } from "@/apis/api";
 import CardType from "@/components/Card/CardType";
+import MainLayout from "@/components/Layout/MainLayout";
 import CardSlider from "@/components/Slider/CardSlider";
 import Tab from "@/components/Tab/Tab";
+import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
 import useRecommendStore from "@/stores/recommend.store";
@@ -110,8 +112,23 @@ function CityDetailPage({ params }: CityDetailPageProps) {
   if (isPending) {
     return <div>loading...</div>;
   }
+  console.log("city.imageUrl", city?.imageUrl);
   return (
-    <>
+    <MainLayout
+      headerProps={{
+        backgroundColor: "transparent",
+        title: "",
+        titleAlign: "center",
+        rightIcons: [
+          {
+            icon: ICON.search.white,
+            alt: "Search",
+            size: 20,
+            onClick: () => {},
+          },
+        ],
+      }}
+    >
       <DetailCard
         title={city?.title!}
         description={city?.description!}
@@ -210,7 +227,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
           )}
         </div>
       </div>
-    </>
+    </MainLayout>
   );
 }
 

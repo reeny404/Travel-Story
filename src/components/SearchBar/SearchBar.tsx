@@ -48,7 +48,7 @@ function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
         />
         <input
           className="w-[250px] bg-transparent outline-none"
-          placeholder={`'판테온'으로 떠나보실래요?`}
+          placeholder={`'파리'로 떠나보실래요?`}
           value={searchValue}
           onChange={handleInputChange}
         />

@@ -2,7 +2,8 @@
 import { api } from "@/apis/api";
 import { useAuth } from "@/contexts/auth.contexts";
 import { Area } from "@/types/Recommend";
-import { useQuery } from "@tanstack/react-query";
+import { ScheduleData } from "@/types/plan";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import AddBottomSheetTitle from "./AddBottomSheetTitle";
@@ -36,26 +37,39 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     queryFn: () => api.area.getPlan(user?.id!),
   });
 
+  const { mutate: addSchedule } = useMutation({
+    mutationFn: async (data: ScheduleData) => {
+      const response = await api.area.addSchedule(data);
+      return response;
+    },
+    onError: (error) => {
+      console.error("Error adding data:", error);
+    },
+    onSuccess: (data) => {
+      return data;
+    },
+  });
 
   const handleAdd = async () => {
     if (clickedPlan !== 0 && (!clickedPlan || !day)) {
       return console.log("여행 일정을 선택해주세요");
     }
     const data = planData[clickedPlan!];
-    const scheduleData = {
-      planId: data.id,
-      userId: data.userId,
-      areaId: area.id,
-      orderList: data.orderList,
-      krName: area.krName,
+    const scheduleData: ScheduleData = {
+      planId: data?.id,
+      userId: data?.userId,
+      areaId: area?.id,
+      orderList: data?.orderList,
+      krName: area?.krName!,
       day: day,
-      type: "customePlace",
-      latlng: { lat: area.lat, lng: area.lng },
+      type: "place",
+      latlng: { lat: area.lat!, lng: area.lng! },
     };
-    await api.area.addSchedule(scheduleData);
+    addSchedule(scheduleData);
     setDay(null);
     onClose();
   };
+
   useEffect(() => {
     setIsOpening(true);
     setTimeout(() => {
@@ -106,9 +120,7 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
             type="button"
             onClick={() => onClose()}
           >
-
             {!planData ? "계속 둘러보기" : "취소"}
-
           </button>
           <button
             className="h-10 text-center border border-gray-600 rounded-lg"
@@ -118,7 +130,6 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
             }}
           >
             {!planData ? "내 여행 만들기" : "추가하기"}
-
           </button>
         </div>
       </form>

@@ -45,7 +45,7 @@ function Home() {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        title: "TripStory",
+        title: "TravelStory",
         titleAlign: "left" as const,
         rightIcons: [
           {
