@@ -24,7 +24,7 @@ function AreaDetailCard({ area, ratingAmount }: AreaDetailCardProps) {
   }, []);
 
   return (
-    <section className="w-full pb-[52px] px-4">
+    <section className="w-full pt-8 pb-[52px] px-4 shadow-area-section rounded-lg">
       <article className="w-full ">
         <div className="flex justify-between items-center font-semibold">
           <div className="flex relative aspect-auto">

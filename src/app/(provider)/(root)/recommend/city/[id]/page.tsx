@@ -112,7 +112,6 @@ function CityDetailPage({ params }: CityDetailPageProps) {
   if (isPending) {
     return <div>loading...</div>;
   }
-  console.log("city.imageUrl", city?.imageUrl);
   return (
     <MainLayout
       headerProps={{
