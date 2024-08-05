@@ -99,6 +99,9 @@ export const ICON = {
   share: {
     black: { name: "share", ext: "svg" },
   },
+  shareArea: {
+    black: { name: "share-black", ext: "svg" },
+  },
   search: {
     black: "search-black",
     white: "search-white",
