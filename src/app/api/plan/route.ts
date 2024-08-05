@@ -6,11 +6,18 @@ const TABLE_NAME = "plan";
 
 export async function GET() {
   const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return NextResponse.json({ data: [] }, {
+      status: 200,
+      statusText: "permission denied, need login"
+    });
+  }
+
   const { data, error } = await supabase
     .from(TABLE_NAME)
     .select()
-  // TODO 현재 로그인한 유저의 정보를 가져와서 filtering 필요
-  // .eq("user_id", userId);
+    .eq("userId", user.id);
 
   if (error) {
     return NextResponse.json(data, {
@@ -27,12 +34,21 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const plan = (await request.json()) as TablesInsert<"plan">;
-
   const supabase = createClient();
-  const { data } = await supabase
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  let title = plan.title;
+  if (!title) {
+    const nickname = user?.user_metadata.name;
+    title = `${nickname ? nickname + "님의 " : "나만의 "} 여행`
+  }
+
+  const { data, error } = await supabase
     .from(TABLE_NAME)
-    .insert(plan)
+    .insert({ ...plan, title, userId: user?.id })
     .select();
+  console.error(error);
 
   return NextResponse.json(data);
 }

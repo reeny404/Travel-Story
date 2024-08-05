@@ -16,7 +16,8 @@ const schedules: Route[] = [
     type: "식당",
     address: "Via Madonna Dei Monti 62, 00184 R oma casa Rome",
     openTime: "10:30am - 12:30pm",
-    latlng: { lat: 37.5363, lng: 126.977 },
+    // latlng: { lat: 37.5363, lng: 126.977 },
+    latlng: { lat: 48.8557305, lng: 2.3307723 },
     imageUrl:
       "https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/plan/routeSample.png",
   },
@@ -26,7 +27,8 @@ const schedules: Route[] = [
     type: "관광지",
     address: "112 Rue du Faubourg Saint-Honoré, 75008 Paris, France",
     openTime: "10:30am - 12:30pm",
-    latlng: { lat: 37.3993, lng: 125.977 },
+    // latlng: { lat: 37.3993, lng: 125.977 },
+    latlng: { lat: 48.8262206, lng: 2.1754027 },
     imageUrl:
       "https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/plan/unsplash_WBp_-NFQvEQ.png",
   },
@@ -36,7 +38,8 @@ const schedules: Route[] = [
     type: "호텔",
     address: "23 Rue Georges Bonnac, 33000 Bordeaux, France",
     openTime: "10:30am - 12:30pm",
-    latlng: { lat: 36.3143, lng: 128.977 },
+    // latlng: { lat: 36.3143, lng: 128.977 },
+    latlng: { lat: 48.7514291, lng: 2.200225 },
     imageUrl:
       "https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/plan/Component%2063.png",
   },
@@ -46,9 +49,21 @@ const schedules: Route[] = [
     type: "쇼핑",
     address: "Tour Eiffel, Avenue Gustave Eiffel, 75007 Paris, France",
     openTime: "10:30am - 12:30pm",
-    latlng: { lat: 35.3393, lng: 126.977 },
+    // latlng: { lat: 35.3393, lng: 126.977 },
+    latlng: { lat: 48.8195563, lng: 2.5268488 },
     imageUrl:
       "https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/plan/routeSample.png",
+  },
+  {
+    index: 5,
+    title: "쎄나흐 산림 공원",
+    type: "관광지",
+    address: "Forêt domaniale de Sénart",
+    openTime: "10:30am - 12:30pm",
+    // latlng: { lat: 35.3393, lng: 126.977 },
+    latlng: { lat: 48.6674541, lng: 2.477182 },
+    imageUrl:
+      "https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/plan/AF1QipPBX1o6pF5Qw558E6sR2Wyb2dKin9x9jUV6X1iI=s512.jpg",
   },
 ];
 

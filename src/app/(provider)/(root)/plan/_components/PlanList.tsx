@@ -16,7 +16,7 @@ function PlanList() {
     return <p className="mx-auto pt-10 text-center">로딩 중...</p>;
   }
 
-  if (!list) {
+  if (!list || !list.length) {
     return <Suggestion />;
   }
 
