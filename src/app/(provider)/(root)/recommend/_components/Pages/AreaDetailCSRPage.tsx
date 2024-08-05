@@ -99,11 +99,13 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 TABS={TABS.areaDetail}
                 currentTab={currentTab}
                 setCurrentTab={setCurrentTab}
+                frameClassName="top-[56px]"
               />
               <div
                 ref={(tabEl) => {
                   sectionRefs.current[0] = tabEl;
                 }}
+                className="mb-3 w-full h-full rounded-lg shadow-area-card"
               >
                 <NoticeForm area={area} />
               </div>
@@ -111,6 +113,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 ref={(tabEl) => {
                   sectionRefs.current[1] = tabEl;
                 }}
+                className="mb-3 w-full h-full rounded-lg shadow-area-card"
               >
                 <LocationForm area={area} />
               </div>
@@ -118,6 +121,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 ref={(tabEl) => {
                   sectionRefs.current[2] = tabEl;
                 }}
+                className="mb-3 w-full h-full rounded-lg shadow-area-card"
               >
                 <ReviewSummaryCard
                   areaName={area.krName!}
@@ -125,8 +129,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ratingAmount={areaReviews?.length || 0}
                   areaId={areaId}
                 />
-              </div>
-              <div>
                 {areaReviews &&
                   areaReviews.map((review, idx) => {
                     return (
@@ -136,7 +138,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                         name={user?.user_metadata.nickname}
                         imageUrl={review.imageUrls[0]}
                         createdAt={review.createdAt}
-                        rating={area.rating!}
+                        rating={review.rating!}
                         description={review.content!}
                       />
                     );

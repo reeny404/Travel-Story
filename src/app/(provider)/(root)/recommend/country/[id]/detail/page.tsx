@@ -152,7 +152,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         // description={country?.data?.description!}
         imageUrl={country?.data?.imageUrl!}
       />
-      <div className=" container w-full h-full flex-col pt-1 ">
+      <div className=" container overflow-auto w-full h-full flex-col pt-1 ">
         <Tab
           TABS={TABS.default}
           currentTab={currentTab}
