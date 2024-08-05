@@ -31,6 +31,18 @@ export type Area = Tables<"area"> & {
   };
 };
 
+export type extendArea = Tables<"area"> & {
+  city: {
+    krName: string;
+    countryId: number;
+  };
+  country: {
+    krName: string;
+  };
+  tags?: string[];
+  krName?: string;
+};
+
 export type AreaBookmark = Tables<"areaBookmark">;
 export type AreaBookmarkWithArea = AreaBookmark & { area: Area };
 
@@ -56,9 +68,14 @@ export type ReviewDataInsertType = {
   rating: number;
   textValue: string;
 };
+
 export type RecommendResponse<T> = {
   status: number;
   message: string;
   data: T;
   error: null | AxiosError;
+};
+
+export type CardResponseType = {
+  [key: string]: extendArea[];
 };

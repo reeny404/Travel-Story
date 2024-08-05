@@ -1,6 +1,8 @@
 "use client";
-
 import PlanAPI from "@/apis/plan.api";
+import Icon from "@/components/commons/Icon";
+import Profile from "@/components/Frame/Profile";
+import { ICON } from "@/constants/icon";
 import { BottomSheetType } from "@/types/plan";
 import { Tables } from "@/types/supabase";
 import axios from "axios";
@@ -10,6 +12,8 @@ import { useCallback, useEffect, useState } from "react";
 import BottomSheet from "../_components/BottomSheet";
 import CreateScheduleButton from "../_components/CreateScheduleButton";
 import DayMenu from "../_components/DayMenu";
+import BarIcon from "../_components/icons/BarIcon";
+import MapIcon from "../_components/icons/MapIcon";
 import ScheculeList from "./ScheculeList";
 
 const api = new PlanAPI(axios);
@@ -24,6 +28,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
   });
   const [selectedDay, setSelectedDay] = useState(1);
   const [days, setDays] = useState<number[]>([]);
+  const [title, setTitle] = useState<string | null>();
   const [formattedDates, setFormattedDates] = useState<string>("");
 
   useEffect(() => {
@@ -42,6 +47,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
 
           const daysArray = Array.from({ length: daysCount }, (_, i) => i + 1);
           setDays(daysArray);
+          setTitle(plan.title);
 
           // 날짜 형식 변환
           const formatDate = (date: Date) => {
@@ -94,6 +100,8 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
     return <div>Loading...</div>;
   }
 
+  // const { openDrawer } = useDrawerStore();
+
   return (
     <div className="min-h-screen w-full bg-[#FCFCFC]">
       <div className="h-72 w-full bg-gray-200">
@@ -104,9 +112,31 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
             layout="fill"
             objectFit="cover"
           />
+          <div className="absolute items-center px-4 flex justify-between left-0 top-0 h-11 w-full text-white">
+            <Icon
+              icon={ICON.menu.burgerWhite}
+              alt="drawer"
+              size={20}
+              // onClick={openDrawer}
+            />
+            <h2 className="text-[18px] font-semibold ml-2">{title}</h2>
+            <div className="flex items-center ml-auto">
+              <MapIcon
+                className="w-6 h-6"
+                onClick={() => router.push(`/plan/${planId}/route`)}
+              />
+              <BarIcon className="w-6 h-6 ml-6" />
+            </div>
+          </div>
           <p className="absolute left-4 bottom-3 rounded-2xl py-[2px] px-4 border border-white text-white">
             {formattedDates}
           </p>
+          <div className="absolute right-4 bottom-3">
+            <Profile
+              src="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/plan/profileSample.jpg"
+              className="w-9 h-9"
+            />
+          </div>
         </div>
       </div>
       <DayMenu

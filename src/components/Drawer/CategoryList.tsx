@@ -8,18 +8,18 @@ function CategoryList() {
     <nav className="flex flex-col">
       <Category
         href="/"
-        imgPath={`/icons/${ICON.home.black}.png`}
+        imgPath={`/drawer/${ICON.drawer.home}.png`}
         alt="home"
         label="홈"
       />
       <Category
         href="/my"
-        imgPath={`/icons/${ICON.home.black}.png`}
+        imgPath={`/drawer/${ICON.drawer.mypage}.png`}
         alt="home"
         label="마이 페이지"
       />
       <Category
-        imgPath={`/icons/${ICON.home.black}.png`}
+        imgPath={`/drawer/${ICON.drawer.planner}.png`}
         alt="home"
         label="내 여행 플래너"
         hasSubCategory
@@ -27,7 +27,7 @@ function CategoryList() {
         <MyTripPlanner />
       </Category>
       <Category
-        imgPath={`/icons/${ICON.home.black}.png`}
+        imgPath={`/drawer/${ICON.drawer.tour}.png`}
         alt="home"
         label="여행지"
         hasSubCategory

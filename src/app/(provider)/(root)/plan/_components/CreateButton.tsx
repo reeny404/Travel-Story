@@ -13,7 +13,7 @@ function CreateButton({ Icon, onClick, color }: Props) {
   return (
     <div
       className={clsx(
-        "w-12 h-12 flex items-center justify-center bg-lime-300 shadow-lg rounded-full group hover:bg-gray-750",
+        "w-12 h-12 flex items-center justify-center bg-lime-300 shadow-lg rounded-full cursor-pointer group hover:bg-gray-750",
         color?.bg
       )}
     >

@@ -90,7 +90,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             areaName={area.name}
           />
           <section className="w-full h-full p-4 pb-0">
-            <div className="w-full h-full bg-white pt-8 rounded-t-lg">
+            <div className="w-full h-full bg-white rounded-t-lg">
               <AreaDetailCard
                 area={area}
                 ratingAmount={areaReviews?.length || 0}
@@ -99,11 +99,13 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 TABS={TABS.areaDetail}
                 currentTab={currentTab}
                 setCurrentTab={setCurrentTab}
+                frameClassName="top-[56px] shadow-area-section"
               />
               <div
                 ref={(tabEl) => {
                   sectionRefs.current[0] = tabEl;
                 }}
+                className="mb-3 w-full h-full rounded-lg shadow-area-section"
               >
                 <NoticeForm area={area} />
               </div>
@@ -111,6 +113,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 ref={(tabEl) => {
                   sectionRefs.current[1] = tabEl;
                 }}
+                className="mb-3 w-full h-full rounded-lg shadow-area-section"
               >
                 <LocationForm area={area} />
               </div>
@@ -118,6 +121,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 ref={(tabEl) => {
                   sectionRefs.current[2] = tabEl;
                 }}
+                className="mb-3 w-full h-full rounded-lg shadow-area-section"
               >
                 <ReviewSummaryCard
                   areaName={area.krName!}
@@ -125,8 +129,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ratingAmount={areaReviews?.length || 0}
                   areaId={areaId}
                 />
-              </div>
-              <div>
                 {areaReviews &&
                   areaReviews.map((review, idx) => {
                     return (
@@ -136,7 +138,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                         name={user?.user_metadata.nickname}
                         imageUrl={review.imageUrls[0]}
                         createdAt={review.createdAt}
-                        rating={area.rating!}
+                        rating={review.rating!}
                         description={review.content!}
                       />
                     );

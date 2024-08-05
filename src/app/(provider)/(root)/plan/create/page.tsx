@@ -2,6 +2,7 @@
 
 import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
+import { useAuth } from "@/contexts/auth.contexts";
 import { PlanInsertType } from "@/types/plan";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
@@ -14,6 +15,12 @@ function CreatePlanIntroPage() {
   const titles: string[] = useMemo(() => ["기본 정보", "여행 성격"], []);
   const [selectedTab, setSelectedTab] = useState<string>(titles[0]);
   const [planData, setPlanData] = useState<PlanInsertType>({});
+
+  const { user } = useAuth();
+  if (!user) {
+    router.replace("/login?nextUrl=" + encodeURI("/plan/create"));
+    return;
+  }
 
   const onClickToCreatePlan = () => {
     api.plan.create(planData).then(() => {

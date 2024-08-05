@@ -36,10 +36,10 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
   return (
     <>
       {results.map((result) => (
-        <div key={result.id} className="flex items-center p-3 border-b">
+        <div key={result.id} className="flex items-center py-3 px-8 border-b">
           <CountryButton
             size="md"
-            imgPath="/sampleImg.jpg"
+            imgPath={result.imageUrl || "/sampleImg.jpg"}
             alt={result.name}
             imgSize="md"
             countryName={result.krName ?? ""}
