@@ -8,20 +8,8 @@ export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const pathname = url.pathname;
 
-  // 쿠키 가져옴
-  const hasTravelType = request.cookies.get("hasTravelType");
-
-  // 홈 진입 시
-  if (pathname === "/") {
-    if (!hasTravelType) {
-      url.pathname = "/onboard";
-      return NextResponse.redirect(url);
-    }
-    return NextResponse.next();
-  }
-
   // 비회원 접근 시 막아야되는 페이지
-  if (pathname === "/my") {
+  if (pathname === "/my" || pathname === "/plan/recent") {
     if (
       !request.cookies.get(LOGIN_KEY) &&
       !request.cookies.get(`${LOGIN_KEY}.0`)

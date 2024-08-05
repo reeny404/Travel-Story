@@ -14,15 +14,7 @@ export default function PlanListPage() {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            path: "/",
-            size: 20,
-          },
-        ],
-        title: "내 여행",
+        title: "내 여행 리스트",
         titleAlign: "center",
         // rightIcons: [
         //   {
@@ -34,19 +26,17 @@ export default function PlanListPage() {
         // ],
       }}
     >
-      <div className="min-h-[calc(100dvh-52px)] bg-gray-100">
+      <div className="min-h-[calc(100dvh-52px)]">
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-lg font-semibold">
+            <span className="text-lg leading-6">
               {DateUtil.format("yyyy년 MM월 dd일", new Date())}
             </span>
             <div className="flex items-center space-x-2">
-              {/* TODO 필터 미구현 */}
-              <button className="text-sm">필터</button>
-              <button className="text-sm flex justify-center">
+              <button className="px-3 py-0.5 flex justify-center text-sm rounded-full bg-gray-150">
                 {/* TODO 정렬 미구현 */}
                 최신순
-                <ImageFrame src={arrowIconPath} className="w-4 h-4" />
+                <ImageFrame src={arrowIconPath} className="w-4 h-4 ml-1 " />
               </button>
             </div>
           </div>

@@ -1,14 +1,13 @@
 "use client";
 
-import CardType from "@/components/Card/CardType";
 import MainLayout from "@/components/Layout/MainLayout";
 import SearchBar from "@/components/SearchBar/SearchBar";
-import CardSlider from "@/components/Slider/CardSlider";
 import { ICON } from "@/constants/icon";
-import useDrawerStore from "@/stores/drawer.store";
+import { useAuth } from "@/contexts/auth.contexts";
 import { SlideCardProps } from "@/types/Slider";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import MyTrip from "./MyTrip";
 
 const CardMockUpData: SlideCardProps[] = [
@@ -19,6 +18,9 @@ const CardMockUpData: SlideCardProps[] = [
     linkUrl: "#",
     tags: ["친구와 함께", "힐링", "식도락", "문화"],
     id: 100,
+    city: "도시",
+    country: "나라",
+    areaName: "장소 이름",
   },
   {
     title: "파리",
@@ -27,6 +29,9 @@ const CardMockUpData: SlideCardProps[] = [
     linkUrl: "#",
     tags: ["예술", "로맨스", "미식", "쇼핑"],
     id: 100001,
+    city: "도시",
+    country: "나라",
+    areaName: "장소 이름",
   },
   {
     title: "뉴욕",
@@ -35,6 +40,9 @@ const CardMockUpData: SlideCardProps[] = [
     linkUrl: "#",
     tags: ["야경", "엔터테인먼트", "패션", "다양성"],
     id: 100002,
+    city: "도시",
+    country: "나라",
+    areaName: "장소 이름",
   },
   {
     title: "도쿄",
@@ -43,25 +51,27 @@ const CardMockUpData: SlideCardProps[] = [
     linkUrl: "#",
     tags: ["애니메이션", "전통", "기술", "쇼핑"],
     id: 100003,
+    city: "도시",
+    country: "나라",
+    areaName: "장소 이름",
   },
 ];
 
 function Home() {
-  const { openDrawer } = useDrawerStore();
-
+  const { user } = useAuth();
+  const router = useRouter();
+  console.log(user);
+  const handleAvatarClick = () => {
+    if (user) {
+      return router.push("/my");
+    }
+    return router.push("/login");
+  };
   return (
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.menu.burgerBlack,
-            alt: "Back",
-            size: 20,
-            onClick: openDrawer,
-          },
-        ],
-        title: "TripStory",
+        title: "TravelStory",
         titleAlign: "left" as const,
         rightIcons: [
           {
@@ -74,13 +84,13 @@ function Home() {
             icon: ICON.avatar.black,
             alt: "Avatar",
             size: 20,
-            path: "/my",
+            onClick: handleAvatarClick,
           },
         ],
       }}
     >
       <main
-        className="relative w-full bg-[#F8F8F8]"
+        className="relative w-full bg-gray"
         style={{ minHeight: "calc(100vh - 52px)" }}
       >
         <div className="relative w-full h-[222px] bg-slate-200">
@@ -99,10 +109,6 @@ function Home() {
           </Link>
         </div>
         <MyTrip />
-        <div className="w-full pt-4 pl-[18px]">
-          <CardType title="문화 탐방" type="architect" />
-          <CardSlider spacing={20} slidesPerView={1.2} cards={CardMockUpData} />
-        </div>
       </main>
     </MainLayout>
   );

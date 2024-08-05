@@ -51,14 +51,6 @@ function IntroPage({ params }: IntroPageProps) {
     <MainLayout
       headerProps={{
         backgroundColor: "transparent",
-        leftIcons: [
-          {
-            icon: ICON.menu.burgerBlack,
-            alt: "Menu",
-            size: 20,
-            onClick: openDrawer,
-          },
-        ],
         title: IntroCountry?.country.krName!,
         titleAlign: "center",
         rightIcons: [
@@ -67,12 +59,6 @@ function IntroPage({ params }: IntroPageProps) {
             alt: "Search",
             size: 20,
             onClick: () => {},
-          },
-          {
-            icon: ICON.cancel.black,
-            alt: "Cancle",
-            size: 20,
-            path: "/",
           },
         ],
       }}

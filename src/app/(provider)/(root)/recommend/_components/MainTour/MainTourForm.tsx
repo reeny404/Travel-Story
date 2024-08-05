@@ -20,11 +20,10 @@ function MainTourForm({ citiesInfo, areasInfo }: MainTourFormProps) {
   const seperatedInfo = citiesInfo
     ? seperateArr(citiesInfo, 3)
     : seperateArr(areasInfo!, 3);
-
-  const generateItems = (info: City[] | Area[]) => {
+  const generateItems = (info: City[] & Area[]) => {
     return (
       <div key={v4()} className="w-full">
-        {info?.map((item, idx) => {
+        {info?.map((item: any, idx) => {
           return (
             <MainTourItem
               key={idx}
@@ -37,14 +36,14 @@ function MainTourForm({ citiesInfo, areasInfo }: MainTourFormProps) {
     );
   };
   const carouselItems: ReactNode[] = seperatedInfo.map(
-    (info: City[] | Area[]) => {
+    (info: City[] & Area[]) => {
       return generateItems(info);
     }
   );
 
   return (
-    <div className="w-full flex flex-col p-4 -mt-5 justify-around bg-gray-300">
-      <CardType title="주요 관광지" type="" />
+    <div className="w-full bg-[#F5F5F5] flex flex-col py-4">
+      <CardType title="주요 관광지" type="fire" />
       <Carousel slides={carouselItems} />
     </div>
   );

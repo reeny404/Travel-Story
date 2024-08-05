@@ -1,23 +1,25 @@
 "use client";
 import { api } from "@/apis/api";
+import { useAuth } from "@/contexts/auth.contexts";
 import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
 
 function FooterList() {
   const lineStyle = "mb-3 cursor-pointer";
   const router = useRouter();
+  const { setUser } = useAuth();
 
   const handleLogoutClick = async (
     e: MouseEvent<HTMLParagraphElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault();
     const result = await api.auth.logout();
-    console.log(result);
+    setUser(null);
     router.push("/");
   };
 
   return (
-    <section className="w-full">
+    <section className="w-full mt-[30px]">
       <p className={lineStyle}>고객센터</p>
       <p className={lineStyle}>이용약관</p>
       <p className={lineStyle}>개인정보처리방침</p>

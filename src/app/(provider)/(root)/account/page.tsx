@@ -5,7 +5,7 @@ import Icon from "@/components/commons/Icon";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import { useQuery } from "@tanstack/react-query";
-import Badge from "../../../../components/Badge";
+import Badge from "./_components/Badge";
 
 const scheduleId = "cff1bd2a-6a3f-4eac-9a9f-b76db923b7de";
 const types = ["현금", "이체", "체크", "신용"];
@@ -30,14 +30,6 @@ export default function AccountBookPage() {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            path: "/",
-            size: 20,
-          },
-        ],
         title: "가계부",
         titleAlign: "center",
       }}

@@ -37,7 +37,7 @@ function SelectButton({ text, category }: SelectButtonProps) {
   return (
     <button
       onClick={(e) => handleClick(e)}
-      className={`${isClicked ? "bg-[#0066FF]" : "bg-white"} py-[11px] px-[16px] rounded-lg`}
+      className={`${isClicked ? "bg-[#4394ED]" : "bg-white"} px-4 py-2.5 rounded-lg`}
     >
       <p className={`${isClicked ? "text-white font-bold" : "text-black"}`}>
         {text}

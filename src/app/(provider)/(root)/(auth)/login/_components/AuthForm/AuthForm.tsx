@@ -32,7 +32,7 @@ function AuthForm({
   const textColor = clsx({
     "text-black": labelColor === "black",
     "text-[#FF0000]": labelColor === "red",
-    "text-[#00B53C]": labelColor === "green",
+    "text-[#007AFF]": labelColor === "green",
   });
 
   // input change마다 상태가 바뀌게하는 함수
@@ -68,7 +68,7 @@ function AuthForm({
             autoComplete="new-password"
             defaultValue={value}
             readOnly={value ? true : false}
-            className="w-full h-[48px] text-[20px] text-black border-b border-black bg-transparent focus:outline-none focus:border-[#007AFF] placeholder:text-gray-300"
+            className="w-full h-[48px] text-[20px] text-black border-b border-black bg-transparent focus:outline-none focus:border-[#D5EF2D] placeholder:text-gray-300"
           />
           {isPassword && (
             <Image
@@ -86,7 +86,7 @@ function AuthForm({
       </label>
       <button
         disabled={isInputValid}
-        className="w-full h-[48px] bg-black text-white text-center rounded-md mt-[96px] disabled:bg-[#CECECE]"
+        className="w-full h-[48px] bg-black text-white text-center text-[18px] rounded-md mt-[96px] disabled:bg-[#CECECE]"
       >
         계속하기
       </button>
