@@ -99,7 +99,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 TABS={TABS.areaDetail}
                 currentTab={currentTab}
                 setCurrentTab={setCurrentTab}
-                frameClassName="top-[56px]"
+                frameClassName="top-[56px] shadow-area-section"
               />
               <div
                 ref={(tabEl) => {
