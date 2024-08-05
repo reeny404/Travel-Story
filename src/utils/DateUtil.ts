@@ -31,7 +31,8 @@ function format(type: formatType, time: Date): string {
  * @returns a,b 날짜 사이 간격(며칠 차이인지)을 알려준다.
  */
 function getGapDay(a: Date, b: Date): number {
-  return Math.abs(a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24);
+  const day = Math.abs(a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24);
+  return Math.ceil(day);
 }
 
 export const DateUtil = {
