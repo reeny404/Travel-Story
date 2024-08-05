@@ -14,7 +14,7 @@ function MyTripPlanner() {
   return (
     <ul className="flex flex-col gap-3 ml-12 mb-4">
       {SUB_CATEGORY.map((item, index) => (
-        <li key={index} className="flex items-center h-10">
+        <li key={index} className="flex items-center text-sm h-10">
           <Link href={item.path} onClick={handleCloseDrawer}>
             {item.title}
           </Link>

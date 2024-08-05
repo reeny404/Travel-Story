@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer utilities {
+  body {
+    @apply text-primary;
+  }
 }
 
 .no-scrollbar::-webkit-scrollbar {

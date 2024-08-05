@@ -38,7 +38,6 @@ class ReviewAPI {
   }
 
   async addReview(data: any) {
-    console.log("data", data);
     const path = "api/review";
     const response = await this.axios.post(path, data);
     return response.data;

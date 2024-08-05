@@ -2,15 +2,20 @@
 
 import CountryButton from "@/components/CountryButton";
 import { CONTINENTS } from "@/constants/continents";
+import { COUNTRY_LIST } from "@/constants/country";
 import useDrawerStore from "@/stores/drawer.store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import SlideTagList from "../commons/TagList/SlideTagList";
 
-// 추후 db에서 가져올 값이라 따로 파일분리 하지 않았습니다.
-const CONTINENT_LIST = Object.keys(CONTINENTS) as Array<
-  keyof typeof CONTINENTS
->;
+const CONTINENT_LIST: Array<keyof typeof CONTINENTS> = [
+  "아시아",
+  "유럽",
+  "남아메리카",
+  "오세아니아",
+  "북아메리카",
+  "아프리카",
+];
 
 function TripList() {
   const router = useRouter();
@@ -23,9 +28,8 @@ function TripList() {
     setSelectedTag(tag);
   };
 
-  const handleNavigateCountryPage = () => {
-    // 추후 경로 변경
-    router.push(`/recommend/country/1`);
+  const handleNavigateCountryPage = (id: number) => {
+    router.push(`/recommend/country/${id}`);
     closeDrawer();
   };
 
@@ -40,15 +44,17 @@ function TripList() {
       </div>
       <h3 className="font-semibold">{selectedTag}</h3>
       <ul className="flex flex-wrap max-h-[400px] gap-y-3 overflow-y-auto no-scrollbar">
-        {CONTINENTS[selectedTag].map((country) => (
-          <li key={country}>
+        {COUNTRY_LIST.filter(
+          (country) => country.continent === selectedTag
+        ).map((country) => (
+          <li key={country.id}>
             <CountryButton
               size="sm"
               imgSize="sm"
-              imgPath="/sampleImg.jpg"
-              alt={country}
-              countryName={country}
-              onClick={handleNavigateCountryPage}
+              imgPath={country.imageUrl}
+              alt={country.krName}
+              countryName={country.krName}
+              onClick={() => handleNavigateCountryPage(country.id)}
             />
           </li>
         ))}
