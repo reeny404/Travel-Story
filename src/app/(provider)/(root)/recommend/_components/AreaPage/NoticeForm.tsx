@@ -13,12 +13,14 @@ function NoticeForm({ area }: NiticeFormProps) {
     <section className="px-4 py-8 w-full">
       <h1 className="font-bold my-5 min-w-20">이용안내</h1>
       <article className="flex w-full">
-        <ImageFrame
-          src={`/icons/${ICON.notice.white}.svg`}
-          alt="notice"
-          className="w-5 h-5"
-        />
         <div>
+          <ImageFrame
+            src={`/icons/${ICON.notice.white}.svg`}
+            alt="notice"
+            className="w-5 h-5"
+          />
+        </div>
+        <div className="flex flex-col">
           {splitNotes.map((part, index) => (
             <p key={index} className="ml-5 w-72 text-sm">
               {part}

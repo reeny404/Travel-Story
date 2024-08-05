@@ -1,25 +1,28 @@
-import ImageFrame from "@/components/Frame/ImageFrame";
+import CardImgFrame from "./CardImgFrame";
 
 type DetailCardProps = {
   title: string;
-  description: string;
+  description?: string;
   imageUrl: string;
 };
 
 function DetailCard({ title, description, imageUrl }: DetailCardProps) {
   return (
-    <div className="w-full relative aspect-4/5">
-      <ImageFrame
-        src={imageUrl}
-        alt={title}
-        priority
-        className="w-full min-h-[538px] object-cover"
-      />
+    <div className="w-full relative flex justify-center">
+      {/* <div className="absolute w-full -z-20 inset-0 bg-black opacity-30"></div> */}
+      {description && (
+        <p className=" absolute text-white bottom-3 font-semibold z-10 ">
+          {title}
+        </p>
+      )}
 
-      {/* <div className="p-4">
-        <p className="text-xl font-bold mt-2 mb-2">{title}</p>
-        <p className="">{description}</p>
-      </div> */}
+      <CardImgFrame
+        imageUrl={imageUrl}
+        alt={title}
+        frameClassName="aspect-4/5 h-[512px]"
+        priority={true}
+        imageClassName="object-fill"
+      />
     </div>
   );
 }
