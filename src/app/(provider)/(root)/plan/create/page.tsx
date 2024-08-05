@@ -48,12 +48,14 @@ function CreatePlanIntroPage() {
           <NewPlanStyle data={planData} setData={setPlanData} />
         )}
       </section>
-      <button
-        className="w-full mt-10 py-2 rounded border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
-        onClick={onClickToCreatePlan}
-      >
-        일정 생성하기
-      </button>
+      <div className="w-full mt-10 flex justify-center">
+        <button
+          className="w-11/12 py-2 rounded border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
+          onClick={onClickToCreatePlan}
+        >
+          일정 생성하기
+        </button>
+      </div>
     </MainLayout>
   );
 }

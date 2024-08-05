@@ -12,7 +12,6 @@ export default class PlanAPI {
   }
 
   async create(plan: PlanInsertType) {
-    console.log("createPlan", plan);
     return await this.axios
       .post("/api/plan", plan)
       .then(({ data }) => data)
