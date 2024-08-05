@@ -100,7 +100,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
         title: accommodation.title,
         description: accommodation.description,
         imageUrl: accommodation.imageUrl!,
-        linkUrl: `/recommend/area${accommodation.id}`,
+        linkUrl: `/recommend/area/${accommodation.id}`,
         tags: ["친구와 함께", "문화체험", "도심"],
         id: accommodation.id,
         city: accommodation.info.location[1],
@@ -112,7 +112,6 @@ function CityDetailPage({ params }: CityDetailPageProps) {
   if (isPending) {
     return <div>loading...</div>;
   }
-  console.log("city.imageUrl", city?.imageUrl);
   return (
     <MainLayout
       headerProps={{

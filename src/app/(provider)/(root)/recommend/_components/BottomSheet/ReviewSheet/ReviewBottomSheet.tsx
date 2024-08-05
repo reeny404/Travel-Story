@@ -55,6 +55,7 @@ function ReviewBottomSheet({
   const { mutate: addReview } = useMutation({
     mutationFn: async (formData: FormData) => {
       const response = await api.review.addReview(formData);
+      onClose();
       return response.data;
     },
     onError: (error) => {
@@ -62,7 +63,6 @@ function ReviewBottomSheet({
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["areaReviews"] });
-      onClose();
       return data;
     },
   });
@@ -88,7 +88,7 @@ function ReviewBottomSheet({
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full z-50 bg-black${
+      className={`fixed top-0 left-0 w-full h-full z-[950] bg-black${
         isOpening || isClosing ? "transition-opacity duration-300" : ""
       } ${isOpening ? "bg-opacity-0" : "bg-opacity-50"}`}
       onClick={handleClose}

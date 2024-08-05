@@ -8,15 +8,16 @@ import Suggestion from "./Suggestion";
 
 function PlanList() {
   const { data: list, isPending } = useQuery({
-    queryKey: ["plan"],
+    queryKey: ["plan", "my"],
     queryFn: () => api.plan.getMyPlans(),
+    staleTime: Infinity,
   });
 
   if (isPending) {
     return <p className="mx-auto pt-10 text-center">로딩 중...</p>;
   }
 
-  if (!list) {
+  if (!list || !list.length) {
     return <Suggestion />;
   }
 

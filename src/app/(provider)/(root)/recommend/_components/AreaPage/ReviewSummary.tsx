@@ -46,7 +46,7 @@ function ReviewSummaryCard({
           id={user?.id!}
         />
       )}
-      <header className="w-full flex justify-between mb-5 pt-6 relative aspect-auto">
+      <header className="w-full flex justify-between mb-7 pt-8 relative aspect-auto">
         <span className="text-lg font-bold">리뷰</span>
         <button
           onClick={() => handleOpen()}
@@ -62,16 +62,16 @@ function ReviewSummaryCard({
           <span className="text-[#C4E00B]">리뷰작성</span>
         </button>
       </header>
-      <article className="grid grid-cols-2 gap-3 ">
-        <div className="flex flex-col p-6 items-center justify-center rounded-lg bg-[#F6F6F6]">
+      <article className="flex h-[126px]  gap-x-3 ">
+        <div className="flex flex-col p-6 min-w-[132px] items-center justify-center rounded-lg bg-[#F6F6F6]">
           <p className="text-[32px] mb-4">{rating}</p>
           <div className="mb-1">
             <RatingIcons type="small" rating={rating} />
           </div>
           <p className="text-xs ">{`(${ratingAmount})`}</p>
         </div>
-        <div className="w-full flex flex-col gap-y-1 justify-center  py-5 px-4 border-[0.6px] border-[#DFDFDF] rounded-lg">
-          <div className="w-full flex text-sm font-semibold relative">
+        <div className="w-full flex flex-col gap-y-1 justify-center py-5 px-4 border-[0.6px] border-[#DFDFDF] rounded-lg">
+          <div className=" min-w-[135px] flex text-sm font-semibold relative">
             <Image
               src="/icons/emoji-dinner.svg"
               alt="image"
@@ -79,9 +79,9 @@ function ReviewSummaryCard({
               height={16}
               className="object-contain"
             />
-            <span className="pl-[2px]">음식이 맛있어요</span>
+            <span className="pl-3">음식이 맛있어요</span>
           </div>
-          <div className="w-full flex text-sm font-semibold relative">
+          <div className="flex text-sm font-semibold relative">
             <Image
               src="/icons/emoji-sparkles.svg"
               alt="image"
@@ -89,10 +89,9 @@ function ReviewSummaryCard({
               height={16}
               className="object-contain"
             />
-            <span className="pl-[2px]">시설이 청결해요</span>
+            <span className="pl-3">시설이 청결해요</span>
           </div>
           <div className="flex text-sm font-semibold relative">
-            {" "}
             <Image
               src="/icons/emoji-window.svg"
               alt="image"
@@ -100,7 +99,7 @@ function ReviewSummaryCard({
               height={16}
               className="object-contain"
             />
-            <span className="pl-[2px]">인테리어가 멋져요</span>
+            <span className="pl-3">인테리어가 멋져요</span>
           </div>
         </div>
       </article>
