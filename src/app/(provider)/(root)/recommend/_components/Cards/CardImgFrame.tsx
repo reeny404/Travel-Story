@@ -26,7 +26,6 @@ function CardImgFrame({
   const loaderProp = ({ src }: { src: string }) => {
     return src;
   };
-  console.log("priority", priority);
   return (
     <div className={`w-full relative  ${frameClassName}`}>
       <Image
