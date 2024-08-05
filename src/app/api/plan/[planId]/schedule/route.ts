@@ -210,7 +210,7 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const supabase = createClient();
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = request.nextUrl;
     const planId = searchParams.get("planId");
     const day = parseInt(searchParams.get("day") || "1", 10);
 
