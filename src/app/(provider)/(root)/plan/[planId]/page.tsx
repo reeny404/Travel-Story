@@ -3,7 +3,6 @@ import PlanAPI from "@/apis/plan.api";
 import Icon from "@/components/commons/Icon";
 import Profile from "@/components/Frame/Profile";
 import { ICON } from "@/constants/icon";
-import useDrawerStore from "@/stores/drawer.store";
 import { BottomSheetType } from "@/types/plan";
 import { Tables } from "@/types/supabase";
 import axios from "axios";
@@ -101,7 +100,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
     return <div>Loading...</div>;
   }
 
-  const { openDrawer } = useDrawerStore();
+  // const { openDrawer } = useDrawerStore();
 
   return (
     <div className="min-h-screen w-full bg-[#FCFCFC]">
@@ -118,7 +117,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
               icon={ICON.menu.burgerWhite}
               alt="drawer"
               size={20}
-              onClick={openDrawer}
+              // onClick={openDrawer}
             />
             <h2 className="text-[18px] font-semibold ml-2">{title}</h2>
             <div className="flex items-center ml-auto">
