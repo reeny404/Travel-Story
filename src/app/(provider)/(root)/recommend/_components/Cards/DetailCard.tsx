@@ -7,9 +7,6 @@ type DetailCardProps = {
 };
 
 function DetailCard({ title, description, imageUrl }: DetailCardProps) {
-  if (!imageUrl) {
-    return <div>loading....</div>;
-  }
   return (
     <div className="w-full relative flex justify-center">
       {/* <div className="absolute w-full -z-20 inset-0 bg-black opacity-30"></div> */}
@@ -23,6 +20,7 @@ function DetailCard({ title, description, imageUrl }: DetailCardProps) {
         imageUrl={imageUrl}
         alt={title}
         frameClassName="aspect-4/5 h-[512px]"
+        priority={true}
         imageClassName="object-fill"
       />
     </div>

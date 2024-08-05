@@ -9,6 +9,7 @@ type CardImgFrameProps = {
   country?: string;
   city?: string;
   isTop?: boolean;
+  priority?: boolean;
 };
 
 function CardImgFrame({
@@ -19,11 +20,13 @@ function CardImgFrame({
   isTop = false,
   areaName,
   country,
+  priority,
   city,
 }: CardImgFrameProps) {
   const loaderProp = ({ src }: { src: string }) => {
     return src;
   };
+  console.log("priority", priority);
   return (
     <div className={`w-full relative  ${frameClassName}`}>
       <Image
