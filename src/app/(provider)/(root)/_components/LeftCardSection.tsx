@@ -66,8 +66,7 @@ function LeftCardSection({
                       src={card.imageUrl || "/sampleImg.jpg"}
                       alt={card.title}
                       layout="fill"
-                      objectFit="cover"
-                      className="rounded-lg"
+                      className="rounded-lg object-cover"
                     />
                   </div>
                   <div className="flex-1">

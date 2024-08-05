@@ -18,7 +18,7 @@ function Plan({ plan }: props) {
         />
       </div>
       <div className="flex flex-col flex-1 py-3">
-        <p className="flex justify-between items-center">
+        <div className="flex justify-between items-center">
           <h2 className="pb-1 text-lg font-semibold leading-6">{title}</h2>
           <button className="ml-auto mb-auto">
             <ImageFrame
@@ -27,7 +27,7 @@ function Plan({ plan }: props) {
               className="w-4 h-4"
             />
           </button>
-        </p>
+        </div>
         <p className="mb-6 text-sm text-gray-500 leading-5">
           {startDate} - {endDate}
         </p>
