@@ -75,7 +75,6 @@ function BottomSheet({
       data.checkList = checkList;
     }
     data.id = id;
-    console.log(data);
     try {
       const response = await planAPI.updatePlan(planId, data);
 
@@ -83,8 +82,6 @@ function BottomSheet({
         console.error("Error updating data");
         return;
       }
-
-      console.log("데이터 업데이트됨", response);
     } catch (error) {
       console.error("Error updating data:", error);
     }
@@ -103,7 +100,6 @@ function BottomSheet({
     if (type === "memo") {
       data.checkList = checkList;
     }
-    console.log(data);
     try {
       const response = await planAPI.addPlan(planId, data);
 
@@ -111,8 +107,6 @@ function BottomSheet({
         console.error("Error adding data");
         return;
       }
-
-      console.log("데이터 추가됨", response);
     } catch (error) {
       console.error("Error adding data:", error);
     }
@@ -131,8 +125,8 @@ function BottomSheet({
           isClosing
             ? "translate-y-full"
             : isOpening
-            ? "translate-y-full"
-            : "translate-y-0"
+              ? "translate-y-full"
+              : "translate-y-0"
         } transition-transform duration-300`}
       >
         <BottomSheetTitle type={type} status={status} />

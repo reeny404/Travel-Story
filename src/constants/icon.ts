@@ -147,4 +147,10 @@ export const ICON = {
     black: "call-black",
   },
   time: { gray: { name: "time", ext: "svg" } },
+  drawer: {
+    home: "drawer-home",
+    mypage: "drawer-mypage",
+    planner: "drawer-planner",
+    tour: "drawer-tour",
+  },
 } as const;

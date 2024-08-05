@@ -6,7 +6,6 @@ export async function GET(
   route: { params: { id: string } }
 ) {
   const id = route.params.id;
-  console.log("id", id);
   if (!id) {
     return NextResponse.json({
       status: 400,

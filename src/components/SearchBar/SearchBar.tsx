@@ -23,14 +23,11 @@ function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchValue(value);
-    // if (value.trim() === "" && onSearch) {
-    //   onSearch("");
-    // }
   };
 
   const handleEmpty = () => {
     setSearchValue("");
-    if (onSearch) {
+    if (onSearch && window.location.pathname.includes("search")) {
       onSearch("");
     }
   };
