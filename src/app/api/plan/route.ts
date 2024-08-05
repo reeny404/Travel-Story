@@ -7,7 +7,6 @@ const TABLE_NAME = "plan";
 export async function GET() {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  console.log("get", user);
   if (!user) {
     return NextResponse.json({ data: [] }, {
       status: 200,
