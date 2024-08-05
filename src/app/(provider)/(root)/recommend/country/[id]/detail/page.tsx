@@ -11,6 +11,7 @@ import { useTab } from "@/hooks/useTab";
 import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useMemo } from "react";
 import DetailCard from "../../../_components/Cards/DetailCard";
 import MainTourForm from "../../../_components/MainTour/MainTourForm";
 // 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
@@ -38,6 +39,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     select: (data) => {
       return data?.data;
     },
+    staleTime: 1000 * 60 * 60,
   });
   const { data: places } = useQuery<
     RecommendResponse<Area[]>,
@@ -49,6 +51,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     select: (data) => {
       return data?.data;
     },
+    staleTime: 1000 * 60 * 60,
   });
   const { data: restaurants } = useQuery<
     RecommendResponse<Area[]>,
@@ -60,6 +63,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     select: (data) => {
       return data?.data;
     },
+    staleTime: 1000 * 60 * 60,
   });
 
   const { data: shops } = useQuery<
@@ -72,49 +76,58 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     select: (data) => {
       return data?.data;
     },
+    staleTime: 1000 * 60 * 60,
   });
 
-  const placeSliderProps = places?.map((place, idx) => {
-    return {
-      title: place.title,
-      description: place.description,
-      imageUrl: place.imageUrl!,
-      linkUrl: `/recommend/area${place.id}`,
-      tags: ["친구와 함께", "문화체험", "도심"],
-      id: place.id,
-      city: place.info.location[1],
-      country: place.info.location[0],
-      areaName: place.krName!,
-    };
-  });
-  const restaurantsSliderProps = restaurants?.map((restaurant, idx) => {
-    return {
-      title: restaurant.title,
-      description: restaurant.description,
-      imageUrl: restaurant.imageUrl!,
-      linkUrl: `/recommend/area${restaurant.id}`,
-      tags: ["친구와 함께", "문화체험", "도심"],
-      id: restaurant.id,
-      city: restaurant.info.location[1],
-      country: restaurant.info.location[0],
-      areaName: restaurant.krName!,
-    };
-  });
-  const shopsSliderProps = shops?.map((shop, idx) => {
-    return {
-      title: shop.title,
-      description: shop.description,
-      imageUrl: shop.imageUrl!,
-      linkUrl: `/recommend/area${shop.id}`,
-      tags: ["친구와 함께", "문화체험", "도심"],
-      id: shop.id,
-      city: shop.info.location[1],
-      country: shop.info.location[0],
-      areaName: shop.krName!,
-    };
-  });
-  const accommodationsSliderProps = accommodations?.map(
-    (accommodation, idx) => {
+  const placeSliderProps = useMemo(() => {
+    return places?.map((place, idx) => {
+      return {
+        title: place.title,
+        description: place.description,
+        imageUrl: place.imageUrl!,
+        linkUrl: `/recommend/area${place.id}`,
+        tags: ["친구와 함께", "문화체험", "도심"],
+        id: place.id,
+        city: place.info.location[1],
+        country: place.info.location[0],
+        areaName: place.krName!,
+      };
+    });
+  }, [places]);
+  const restaurantsSliderProps = useMemo(() => {
+    return restaurants?.map((restaurant, idx) => {
+      return {
+        title: restaurant.title,
+        description: restaurant.description,
+        imageUrl: restaurant.imageUrl!,
+        linkUrl: `/recommend/area${restaurant.id}`,
+        tags: ["친구와 함께", "문화체험", "도심"],
+        id: restaurant.id,
+        city: restaurant.info.location[1],
+        country: restaurant.info.location[0],
+        areaName: restaurant.krName!,
+      };
+    });
+  }, [restaurants]);
+
+  const shopsSliderProps = useMemo(() => {
+    return shops?.map((shop, idx) => {
+      return {
+        title: shop.title,
+        description: shop.description,
+        imageUrl: shop.imageUrl!,
+        linkUrl: `/recommend/area${shop.id}`,
+        tags: ["친구와 함께", "문화체험", "도심"],
+        id: shop.id,
+        city: shop.info.location[1],
+        country: shop.info.location[0],
+        areaName: shop.krName!,
+      };
+    });
+  }, [shops]);
+
+  const accommodationsSliderProps = useMemo(() => {
+    return accommodations?.map((accommodation, idx) => {
       return {
         title: accommodation.title,
         description: accommodation.description,
@@ -126,8 +139,8 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         country: accommodation.info.location[0],
         areaName: accommodation.krName!,
       };
-    }
-  );
+    });
+  }, [accommodations]);
   if (!country) {
     return <div>loading....</div>;
   }
