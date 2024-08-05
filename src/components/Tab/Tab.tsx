@@ -27,7 +27,8 @@ function Tab({ currentTab, setCurrentTab, TABS, frameClassName }: TabProps) {
             "h-full w-full flex justify-center items-center border border-none rounded-lg",
             {
               "bg-black text-white font-semibold": tab.en === currentTab,
-              "bg-[#F5F5F5] text-black": tab.en !== currentTab,
+              "bg-[#F5F5F5] text-black": TABS[0].en !== "notice",
+              "bg-whie text-blatck": tab.en !== currentTab,
             }
           )}
           onClick={() => setCurrentTab(tab.en)}
