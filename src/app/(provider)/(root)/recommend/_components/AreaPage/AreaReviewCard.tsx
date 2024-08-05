@@ -25,7 +25,7 @@ function AreaReviewCard({
       <article className="flex justify-between items-center w-full">
         <div className="flex items-center">
           <VanilaImgFrame
-            imageUrl={userImageUrl || "/icons/avatar-black.svg"}
+            imageUrl={userImageUrl || "/icons/avatar.svg"}
             alt="icon"
             width="w-11"
             height="h-11"

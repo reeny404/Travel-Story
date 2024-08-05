@@ -59,7 +59,7 @@ function BookMarkCard({
             </p>
           </div>
         </Link>
-        <div className="absolute top-2 right-2 p-1 rounded-full shadow-md hover:cursor-pointer">
+        <div className="absolute top-2 right-2 p-1 rounded-full hover:cursor-pointer">
           <div className="relative w-6 h-6 aspect-square">
             <Image
               src={
