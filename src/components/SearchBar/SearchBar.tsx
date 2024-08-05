@@ -6,29 +6,28 @@ import { useState } from "react";
 
 type SearchBarProps = {
   onSearch?: (term: string) => void;
+  initialValue?: string;
 };
 
-function SearchBar({ onSearch }: SearchBarProps) {
-  const [searchValue, setSearchValue] = useState("");
+function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
+  const [searchValue, setSearchValue] = useState(initialValue);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (onSearch) {
-      onSearch(searchValue.trim());
+    const trimmedValue = searchValue.trim();
+    if (trimmedValue && onSearch) {
+      onSearch(trimmedValue);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchValue(value);
-    if (value.trim() === "" && onSearch) {
-      onSearch("");
-    }
   };
 
   const handleEmpty = () => {
     setSearchValue("");
-    if (onSearch) {
+    if (onSearch && window.location.pathname.includes("search")) {
       onSearch("");
     }
   };
@@ -49,19 +48,21 @@ function SearchBar({ onSearch }: SearchBarProps) {
         />
         <input
           className="w-[250px] bg-transparent outline-none"
-          placeholder={`'판테온'으로 떠나보실래요?`}
+          placeholder={`'파리'로 떠나보실래요?`}
           value={searchValue}
           onChange={handleInputChange}
         />
       </div>
-      <Image
-        src={`/icons/${ICON.cancel.gray}.png`}
-        alt="microphone"
-        width={18}
-        height={18}
-        className="mr-2 cursor-pointer"
-        onClick={handleEmpty}
-      />
+      {searchValue && (
+        <Image
+          src={`/icons/${ICON.cancel.gray}.png`}
+          alt="microphone"
+          width={18}
+          height={18}
+          className="mr-2 cursor-pointer transition-transform duration-300 ease-in-out"
+          onClick={handleEmpty}
+        />
+      )}
     </form>
   );
 }

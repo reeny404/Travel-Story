@@ -4,7 +4,7 @@ import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type CategoryProps = {
   href?: string;
@@ -26,6 +26,7 @@ function Category({
   const router = useRouter();
   const { closeDrawer } = useDrawerStore();
   const [isOpen, setIsOpen] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -40,6 +41,14 @@ function Category({
       setIsOpen(!isOpen);
     }
   };
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.style.height = isOpen
+        ? `${contentRef.current.scrollHeight}px`
+        : "0px";
+    }
+  }, [isOpen]);
 
   return (
     <>
@@ -61,7 +70,12 @@ function Category({
           />
         )}
       </button>
-      {isOpen && children}
+      <div
+        ref={contentRef}
+        className="overflow-hidden transition-height duration-300 ease-in-out"
+      >
+        {isOpen && children}
+      </div>
     </>
   );
 }

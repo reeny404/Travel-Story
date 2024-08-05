@@ -27,7 +27,7 @@ function CardImgFrame({
     return src;
   };
   return (
-    <div className={`w-full relative  ${frameClassName}`}>
+    <div className={`w-full relative ${frameClassName}`}>
       <Image
         src={imageUrl || "/"}
         alt={alt}
