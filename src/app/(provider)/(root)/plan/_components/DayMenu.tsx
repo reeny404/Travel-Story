@@ -8,7 +8,7 @@ function DayMenu({
   onDaySelect: (day: number) => void;
 }) {
   return (
-    <ul className="h-12 min-w-full overflow-x-auto flex items-center bg-white">
+    <ul className="h-12 min-w-full overflow-x-auto flex items-center bg-white no-scrollbar">
       {days.map((day) => (
         <li
           key={day}

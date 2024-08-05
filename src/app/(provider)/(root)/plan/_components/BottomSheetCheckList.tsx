@@ -2,6 +2,8 @@
 import { BottomSheetType } from "@/types/plan";
 import PlusIcon from "./PlusIcon";
 
+import CheckIcon from "./icons/CheckIcon";
+
 type CheckListProps = {
   type: BottomSheetType["type"];
   status: BottomSheetType["status"];
@@ -73,7 +75,7 @@ function BottomSheetCheckList({
                   }`}
                   onClick={() => handleCheck(index)}
                 >
-                  ✔
+                  <CheckIcon />
                 </button>
               </>
             )}

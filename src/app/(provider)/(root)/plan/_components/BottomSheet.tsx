@@ -127,14 +127,14 @@ function BottomSheet({
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full z-50 ${
+      className={`fixed top-0 left-0 w-full h-full z-50  ${
         isOpening || isClosing ? "transition-opacity duration-300" : ""
       } ${isOpening ? "bg-opacity-0" : "bg-opacity-50"} bg-black`}
       onClick={handleClose}
     >
       <form
         ref={formRef}
-        className={`absolute bottom-0 left-0 w-full h-auto py-4 pb-8 px-4 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet bg-white transform ${
+        className={`absolute bottom-0 left-0 w-full min-h-[34rem] h-auto py-7 px-5 flex flex-col gap-6 rounded-t-3xl shadow-bottom-sheet bg-white transform ${
           isClosing
             ? "translate-y-full"
             : isOpening
@@ -147,7 +147,7 @@ function BottomSheet({
           <BottomSheetInput type="time" isDisabled={status === "read"} />
         )}
         <BottomSheetInput type="memo" isDisabled={status === "read"} />
-        {type !== "memo" && (
+        {type !== "memo" && type !== "move" && (
           <BottomSheetInput type="spend" isDisabled={status === "read"} />
         )}
         {(type === "place" || type === "customePlace") && (

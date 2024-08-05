@@ -41,7 +41,7 @@ const UpdateButton = ({
 
   return (
     <button
-      className="w-[80%] mx-auto my-2 py-2 text-center border border-gray-600 rounded-lg"
+      className="w-full mx-auto mt-auto my-2 py-2 text-center bg-[#242424] text-white  rounded-lg"
       type="button"
       onClick={handleClick}
     >

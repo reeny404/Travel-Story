@@ -24,6 +24,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
   });
   const [selectedDay, setSelectedDay] = useState(1);
   const [days, setDays] = useState<number[]>([]);
+  const [formattedDates, setFormattedDates] = useState<string>("");
 
   useEffect(() => {
     const fetchPlanData = async () => {
@@ -41,6 +42,18 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
 
           const daysArray = Array.from({ length: daysCount }, (_, i) => i + 1);
           setDays(daysArray);
+
+          // 날짜 형식 변환
+          const formatDate = (date: Date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+            return `${year}.${month}.${day}`;
+          };
+
+          const formattedStartDate = formatDate(startDate);
+          const formattedEndDate = formatDate(endDate);
+          setFormattedDates(`${formattedStartDate} - ${formattedEndDate}`);
         }
       } catch (error) {
         console.error("Error fetching plan data:", error);
@@ -75,7 +88,6 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
 
   const createByBookmark = useCallback(() => {
     router.push(`/my/bookmarks?planId=${planId}&day=${selectedDay}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDay, planId]);
 
   if (!planId) {
@@ -84,14 +96,17 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
 
   return (
     <div className="min-h-screen w-full bg-[#FCFCFC]">
-      <div className="h-48 w-full bg-gray-200">
-        <div className="relative w-full h-full">
+      <div className="h-72 w-full bg-gray-200">
+        <div className="relative w-full h-full px-4 py-3">
           <Image
             src="/plan/planBanner.png"
             alt="planBanner"
             layout="fill"
             objectFit="cover"
           />
+          <p className="absolute left-4 bottom-3 rounded-2xl py-[2px] px-4 border border-white text-white">
+            {formattedDates}
+          </p>
         </div>
       </div>
       <DayMenu
@@ -110,8 +125,6 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
         />
       )}
 
-      {/* 바텀 시트 예시 */}
-      {/* TODO 각 버튼의 연결 제대로 */}
       <CreateScheduleButton
         createSchedule={() => handleCreateSchedule("customePlace", "add")}
         createByBookmark={createByBookmark}

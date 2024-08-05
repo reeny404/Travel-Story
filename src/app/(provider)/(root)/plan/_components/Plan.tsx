@@ -9,11 +9,11 @@ function Plan({ plan }: props) {
 
   return (
     <div className="flex items-center p-4 bg-white shadow hover:shadow-md">
-      <div className="w-20 h-20 bg-gray-200 flex items-center justify-center">
+      <div className="w-20 h-20 bg-gray-200 flex items-center justify-center3">
         <ImageFrame
           src={imagesUrl}
           alt="일정 대표 사진"
-          className="w-16 h-16 object-cover"
+          className="w-16 h-16"
         />
         {/* TODO 여기에 일정 사진?? 들어가는 건가? */}
       </div>
