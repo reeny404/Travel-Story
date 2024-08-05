@@ -34,9 +34,7 @@ export const ICON = {
       black: "arrow-up-black",
     },
   },
-  share: {
-    black: { name: "share-black", ext: "svg" },
-  },
+
   avatar: {
     black: "avatar-black",
     gray: "avatar-gray",
@@ -99,7 +97,7 @@ export const ICON = {
     black: "notification-black",
   },
   share: {
-    black: { name: "share", ext: "svg" }
+    black: { name: "share", ext: "svg" },
   },
   search: {
     black: "search-black",
