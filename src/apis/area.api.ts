@@ -94,6 +94,18 @@ class AreaAPI {
     return data;
   }
 
+  // 메인 페이지에서 사용되는 카테고리 별 관광지 정보
+  async getAreasByCategory(): Promise<
+    RecommendResponse<{ [key: string]: Area[] }>
+  > {
+    const path = "/api/area/category";
+    const response =
+      await this.axios.get<RecommendResponse<{ [key: string]: Area[] }>>(path);
+    const data = response.data;
+
+    return data;
+  }
+
   // TODO 아래 두 메서드 Plan쪽으로 옮겨야댐
   async getPlan(userId: string) {
     try {
