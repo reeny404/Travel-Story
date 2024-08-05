@@ -18,7 +18,9 @@ function Map({ locations }: props) {
   const [isInit, setIsInit] = useState<boolean>(false);
   const center: LatLng = useMemo(() => {
     const latLng = LatLngUtil.calculateCenter(locations);
-    latLng.lat -= 1; // 하단에 슬라이드 영역이 있어서 조정
+    // 하단에 슬라이드 영역이 있어서 조정
+    latLng.lat -= 0.05;
+    // latLng.lng += 0.05;
     return latLng;
   }, [locations]);
 
@@ -53,7 +55,7 @@ function Map({ locations }: props) {
           height: "100vh",
         }}
         center={center}
-        zoom={6}
+        zoom={10}
       >
         {locations.map((location, i) => {
           const props = getMarkerProps(i);
