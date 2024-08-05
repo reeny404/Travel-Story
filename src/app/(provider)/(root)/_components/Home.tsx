@@ -1,72 +1,46 @@
 "use client";
 
+import CardType from "@/components/Card/CardType";
 import MainLayout from "@/components/Layout/MainLayout";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
-import { SlideCardProps } from "@/types/Slider";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import useGetData from "../_hook/useGetData";
+import Footer from "./Footer";
+import LeftCardSection from "./LeftCardSection";
 import MyTrip from "./MyTrip";
-
-const CardMockUpData: SlideCardProps[] = [
-  {
-    title: "로마",
-    description: "고대의 역사가 살아숨쉬는 도시",
-    imageUrl: "/sampleImg.jpg",
-    linkUrl: "#",
-    tags: ["친구와 함께", "힐링", "식도락", "문화"],
-    id: 100,
-    city: "도시",
-    country: "나라",
-    areaName: "장소 이름",
-  },
-  {
-    title: "파리",
-    description: "낭만의 도시 파리에서의 하루",
-    imageUrl: "/sampleImg.jpg",
-    linkUrl: "#",
-    tags: ["예술", "로맨스", "미식", "쇼핑"],
-    id: 100001,
-    city: "도시",
-    country: "나라",
-    areaName: "장소 이름",
-  },
-  {
-    title: "뉴욕",
-    description: "멈추지 않는 도시, 뉴욕의 활기찬 거리",
-    imageUrl: "/sampleImg.jpg",
-    linkUrl: "#",
-    tags: ["야경", "엔터테인먼트", "패션", "다양성"],
-    id: 100002,
-    city: "도시",
-    country: "나라",
-    areaName: "장소 이름",
-  },
-  {
-    title: "도쿄",
-    description: "전통과 현대가 공존하는 도시, 도쿄",
-    imageUrl: "/sampleImg.jpg",
-    linkUrl: "#",
-    tags: ["애니메이션", "전통", "기술", "쇼핑"],
-    id: 100003,
-    city: "도시",
-    country: "나라",
-    areaName: "장소 이름",
-  },
-];
+import RightCardSection from "./RightCardSection";
 
 function Home() {
   const { user } = useAuth();
   const router = useRouter();
-  console.log(user);
+  const cardData = useGetData();
+  // 중간발표 이후 추가기능 부분
+  // const {
+  //   data: popularCountries,
+  //   isPending,
+  //   error,
+  // } = useQuery<RecommendResponse<Country[]>, AxiosError>({
+  //   queryKey: ["popularCountries"],
+  //   queryFn: () => api.country.getCountries(),
+  //   staleTime: 1000 * 60 * 3,
+  // });
+
   const handleAvatarClick = () => {
     if (user) {
       return router.push("/my");
     }
     return router.push("/login");
   };
+
+  const handleSearch = (term: string) => {
+    router.push(`/search?query=${term}`);
+  };
+
   return (
     <MainLayout
       headerProps={{
@@ -74,12 +48,6 @@ function Home() {
         title: "TravelStory",
         titleAlign: "left" as const,
         rightIcons: [
-          {
-            icon: ICON.notification.black,
-            alt: "Notifications",
-            size: 20,
-            path: "/commons-test",
-          },
           {
             icon: ICON.avatar.black,
             alt: "Avatar",
@@ -104,11 +72,45 @@ function Home() {
           </Link>
         </div>
         <div className="sticky z-10 -mt-[15px] px-4">
-          <Link href="/search" className="flex justify-center w-full">
-            <SearchBar />
-          </Link>
+          <div className="flex justify-center w-full">
+            <SearchBar onSearch={handleSearch} />
+          </div>
         </div>
         <MyTrip />
+        <div className="mt-7">
+          <CardType title="인기 여행지" type="fire" />
+          <ArchCardSlider spacing={12} slidesPerView={3.8} />
+        </div>
+        <RightCardSection
+          title="Tourist spot"
+          subTitle="그 나라만의 특별한 여행지"
+          textColor="black"
+          theme="bg-lime-300"
+          krCategory="관광지"
+          cardData={cardData.place}
+        />
+        <LeftCardSection
+          title="Hotel"
+          subTitle="관광지 근처의 숙소를 구경해보세요!"
+          theme="bg-info-500"
+          krCategory="숙소"
+          cardData={cardData.accommodation}
+        />
+        <RightCardSection
+          title="Restaruant"
+          subTitle="여행지에는 어떤 맛집이 있을까?"
+          theme="bg-danger-400"
+          krCategory="식당"
+          cardData={cardData.restaurant}
+        />
+        <LeftCardSection
+          title="Shopping"
+          subTitle="여행지의 추억을 불러일으키는 기념품"
+          theme="bg-purple-400"
+          krCategory="관광지"
+          cardData={cardData.shop}
+        />
+        <Footer />
       </main>
     </MainLayout>
   );

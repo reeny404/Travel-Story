@@ -59,19 +59,17 @@ function Header({
 
   return (
     <header className={headerStyles({ backgroundColor, titleAlign })}>
-      <div className="flex items-center">
-        <div>
-          <Icon
-            icon={
-              backgroundColor === "transparent"
-                ? ICON.menu.burgerWhite
-                : ICON.menu.burgerBlack
-            }
-            alt="drawer"
-            size={20}
-            onClick={openDrawer}
-          />
-        </div>
+      <div className="flex items-center pl-[5px]">
+        <Icon
+          icon={
+            backgroundColor === "transparent"
+              ? ICON.menu.burgerWhite
+              : ICON.menu.burgerBlack
+          }
+          alt="drawer"
+          size={20}
+          onClick={openDrawer}
+        />
         {titleAlign === "left" && (
           <h2 className="text-[18px] font-semibold ml-2 ">{title}</h2>
         )}
@@ -81,7 +79,7 @@ function Header({
           {title}
         </h2>
       )}
-      <div className="flex items-center ml-auto">
+      <div className="flex items-center ml-auto pr-[5px]">
         {rightIcons &&
           rightIcons.map((icon, index) => (
             <Icon

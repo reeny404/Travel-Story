@@ -18,6 +18,9 @@ const config: Config = {
       maxWidth: {
         xs: "450px",
       },
+      zIndex: {
+        drawer: "1000",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -39,6 +42,7 @@ const config: Config = {
         "schecule-list": "0px 4px 20px 0px #00000014",
         "area-card": "0px 4px 12px 0px rgba(0, 0, 0, 0.12)",
         "area-section": "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
+        "bookmark-card": "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
         "inner-bookmark": "inset 0px 0px 8px rgba(0, 0, 0, 0.25)",
         plan: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
         header: "0px 4px 20px 0px rgba(0, 0, 0, 0.04)",
