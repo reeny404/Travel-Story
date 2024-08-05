@@ -19,7 +19,7 @@ function DetailCard({ title, description, imageUrl }: DetailCardProps) {
       <CardImgFrame
         imageUrl={imageUrl}
         alt={title}
-        frameClassName="aspect-4/5 h-[472px]"
+        frameClassName="aspect-4/5 h-[516px]"
         imageClassName="object-fill"
       />
     </div>
