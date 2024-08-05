@@ -18,7 +18,6 @@ const ArchCard = ({ id, imageUrl, title, cityNames }: ArchCardProps) => {
               src={imageUrl}
               alt={title}
               layout="fill"
-              objectFit="cover"
               className="object-cover"
             />
             <div className="absolute inset-0 bg-black opacity-40 rounded-t-full rounded-b-[800px]" />

@@ -70,8 +70,8 @@ function ReviewSummaryCard({
           </div>
           <p className="text-xs ">{`(${ratingAmount})`}</p>
         </div>
-        <div className="w-full flex flex-col gap-y-1 justify-center  py-5 px-4 border-[0.6px] border-[#DFDFDF] rounded-lg">
-          <div className="w-full min-w-[135px] flex text-sm font-semibold relative">
+        <div className="w-full flex flex-col gap-y-1 justify-center py-5 px-4 border-[0.6px] border-[#DFDFDF] rounded-lg">
+          <div className=" min-w-[135px] flex text-sm font-semibold relative">
             <Image
               src="/icons/emoji-dinner.svg"
               alt="image"
@@ -79,9 +79,9 @@ function ReviewSummaryCard({
               height={16}
               className="object-contain"
             />
-            <span className="pl-[2px]">음식이 맛있어요</span>
+            <span className="pl-3">음식이 맛있어요</span>
           </div>
-          <div className="w-full flex text-sm font-semibold relative">
+          <div className="flex text-sm font-semibold relative">
             <Image
               src="/icons/emoji-sparkles.svg"
               alt="image"
@@ -89,7 +89,7 @@ function ReviewSummaryCard({
               height={16}
               className="object-contain"
             />
-            <span className="pl-[2px]">시설이 청결해요</span>
+            <span className="pl-3">시설이 청결해요</span>
           </div>
           <div className="flex text-sm font-semibold relative">
             <Image
@@ -99,7 +99,7 @@ function ReviewSummaryCard({
               height={16}
               className="object-contain"
             />
-            <span className="pl-[2px]">인테리어가 멋져요</span>
+            <span className="pl-3">인테리어가 멋져요</span>
           </div>
         </div>
       </article>

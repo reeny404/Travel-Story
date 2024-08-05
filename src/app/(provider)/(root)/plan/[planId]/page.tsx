@@ -14,7 +14,7 @@ import CreateScheduleButton from "../_components/CreateScheduleButton";
 import DayMenu from "../_components/DayMenu";
 import BarIcon from "../_components/icons/BarIcon";
 import MapIcon from "../_components/icons/MapIcon";
-import ScheculeList from "./ScheculeList";
+import ScheduleList from "./ScheduleList";
 
 const api = new PlanAPI(axios);
 type PlanDetailPageProps = { params: { planId: string } };
@@ -109,8 +109,8 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           <Image
             src="/plan/planBanner.png"
             alt="planBanner"
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
           />
           <div className="absolute items-center px-4 flex justify-between left-0 top-0 h-11 w-full text-white">
             <Icon
@@ -144,7 +144,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
         selectedDay={selectedDay}
         onDaySelect={handleDaySelect}
       />
-      <ScheculeList planId={planId} selectedDay={selectedDay} />
+      <ScheduleList planId={planId} selectedDay={selectedDay} />
       {isBottomSheetVisible && (
         <BottomSheet
           type={bottomSheetConfig.type}
