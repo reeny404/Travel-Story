@@ -128,16 +128,18 @@ function CountryDetailPage({ params }: CountryDetailPage) {
       };
     }
   );
-
+  if (!country) {
+    return <div>loading....</div>;
+  }
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: "white",
-        title: country?.data.krName!,
+        backgroundColor: "transparent",
+        title: "",
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.black,
+            icon: ICON.search.white,
             alt: "Search",
             size: 20,
             onClick: () => {},
@@ -147,17 +149,16 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     >
       <DetailCard
         title={country?.data?.title!}
-        description={country?.data?.description!}
+        // description={country?.data?.description!}
         imageUrl={country?.data?.imageUrl!}
       />
-      <div className=" container overflow-auto w-full h-full flex-col pt-1 ">
-        <div className=" px-4">
-          <Tab
-            TABS={TABS.default}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
-          />
-        </div>
+      <div className=" container w-full h-full flex-col pt-1 ">
+        <Tab
+          TABS={TABS.default}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          frameClassName="px-4"
+        />
         <div className="pt-5 pb-4">
           {currentTab === "place" && (
             <>

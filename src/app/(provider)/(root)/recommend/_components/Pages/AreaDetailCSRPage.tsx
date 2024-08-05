@@ -69,8 +69,8 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.black,
-            alt: "Search",
+            icon: ICON.shareArea.black,
+            alt: "share",
             size: 20,
             onClick: () => {},
           },
@@ -79,7 +79,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
     >
       {area && (
         <main className="h-full w-full relative container">
-          {/* 이 부분 그라데이션 mb 맞추는게 쉽지가 않다 팁이 있는지 여쭙자 */}
           <CardImgFrame
             imageUrl={area.imageUrl}
             alt={area.title}
