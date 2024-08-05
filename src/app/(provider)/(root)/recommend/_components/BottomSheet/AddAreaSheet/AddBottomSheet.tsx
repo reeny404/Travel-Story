@@ -83,9 +83,9 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full z-50 bg-black${
+      className={`fixed top-0 left-0 w-full h-full z-[950] bg-black${
         isOpening || isClosing ? "transition-opacity duration-300" : ""
-      } ${isOpening ? "bg-opacity-0" : "bg-opacity-50"}`}
+      } ${isOpening ? "bg-opacity-0" : "bg-opacity-50"} `}
       onClick={handleClose}
     >
       <form

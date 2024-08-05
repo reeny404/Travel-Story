@@ -16,7 +16,7 @@ function Tab({ currentTab, setCurrentTab, TABS, frameClassName }: TabProps) {
   return (
     <div
       className={clsx(
-        `w-full h-9 flex justify-around items-center gap-x-2 z-30 my-3 sticky top-[56px] ${frameClassName}`,
+        `w-full h-9 flex justify-around items-center gap-x-2 z-30 my-3 sticky ${frameClassName}`,
         { "rounded-lg": TABS[0].en === "notice" }
       )}
     >
@@ -24,10 +24,11 @@ function Tab({ currentTab, setCurrentTab, TABS, frameClassName }: TabProps) {
         <button
           key={tab.en}
           className={clsx(
-            "h-full w-full flex justify-center items-center border border-none rounded-lg font-bold",
+            "h-full w-full flex justify-center items-center border border-none rounded-lg",
             {
-              "bg-black text-white": tab.en === currentTab,
-              "bg-white text-black": tab.en !== currentTab,
+              "bg-black text-white font-semibold": tab.en === currentTab,
+              "bg-[#F5F5F5] text-black": TABS[0].en !== "notice",
+              "bg-whie text-blatck": tab.en !== currentTab,
             }
           )}
           onClick={() => setCurrentTab(tab.en)}
