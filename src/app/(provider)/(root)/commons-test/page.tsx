@@ -10,14 +10,6 @@ export default function TestPage() {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            size: 20,
-            path: "/",
-          },
-        ],
         title: "Test Header",
         titleAlign: "center",
         rightIcons: [

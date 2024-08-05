@@ -7,6 +7,9 @@ type CarouselItemType = {
   linkUrl: string;
   id: number;
   rating: number;
+  city: string;
+  country: string;
+  areaName: string;
 };
 
 function CarouselItem(item: CarouselItemType) {
@@ -20,6 +23,9 @@ function CarouselItem(item: CarouselItemType) {
           imageUrl={item.imageUrl}
           linkUrl={item.linkUrl}
           id={item.id}
+          city={item.city}
+          country={item.country}
+          areaName={item.areaName}
         />
       </div>
     </>

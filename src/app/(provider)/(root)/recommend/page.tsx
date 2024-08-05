@@ -57,7 +57,7 @@ function RecommendPage() {
           src={slide.imageUrl}
           alt="img"
           className="h-full"
-          roundType="sm"
+          round="sm"
         />
       </div>
     );
@@ -79,14 +79,14 @@ function RecommendPage() {
     );
   };
   return (
-    <div className="container overflow-x-hidden  h-full  flex-col ">
+    <div className="container overflow-x-hidden  h-full w-full  flex-col ">
       <Carousel slides={imgSildesArr} />
       {makeCountryCircles(countries)}
       <div className="w-full h-20 bg-gray-400 flex justify-center items-center text-white mt-10">
         광고배너
       </div>
       <div className=" mb-10">
-        <CardType title="할인하는 숙소" type="home" innerClassName="mt-5" />
+        <CardType title="할인하는 숙소" type="house" innerClassName="mt-5" />
       </div>
       <Carousel slides={slidesArr} />
       {/* <MainCityTemplate /> */}
