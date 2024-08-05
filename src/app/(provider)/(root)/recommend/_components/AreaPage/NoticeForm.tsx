@@ -9,6 +9,7 @@ type NiticeFormProps = {
 
 function NoticeForm({ area }: NiticeFormProps) {
   const splitNotes = area?.info.notes!.split(".");
+
   return (
     <section className="px-4 py-8 w-full">
       <h1 className="font-bold my-5 min-w-20">이용안내</h1>
