@@ -8,8 +8,9 @@ import Suggestion from "./Suggestion";
 
 function PlanList() {
   const { data: list, isPending } = useQuery({
-    queryKey: ["plan"],
+    queryKey: ["plan", "my"],
     queryFn: () => api.plan.getMyPlans(),
+    staleTime: Infinity,
   });
 
   if (isPending) {
