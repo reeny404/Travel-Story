@@ -109,8 +109,8 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           <Image
             src="/plan/planBanner.png"
             alt="planBanner"
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
           />
           <div className="absolute items-center px-4 flex justify-between left-0 top-0 h-11 w-full text-white">
             <Icon

@@ -2,30 +2,28 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import AirplaneIcon from "../_components/icons/AirplaneIcon";
-import BicycleIcon from "../_components/icons/BicycleIcon";
 import CarIcon from "../_components/icons/CarIcon";
 import CheckIcon from "../_components/icons/CheckIcon";
 import ClipIcon from "../_components/icons/ClipIcon";
 import FillLocationIcon from "../_components/icons/FillLocationIcon";
 import FillMemoIcon from "../_components/icons/FillMemoIcon";
-import PublicTransportIcon from "../_components/icons/PublicTransportIcon";
-import ShipIcon from "../_components/icons/ShipIcon";
 import TimeIcon from "../_components/icons/TimeIcon";
-import WalkingIcon from "../_components/icons/WalkingIcon";
 
 const colors = ["#E8F97B", "#4394ED", "#ED795A", "#29C273", "#AA82E2"];
 
-const transportIcons = {
-  도보: WalkingIcon,
-  자전거: BicycleIcon,
-  렌트카: CarIcon,
-  대중교통: PublicTransportIcon,
-  선박: ShipIcon,
-  항공: AirplaneIcon,
-} as const;
+// const transportIcons: Record<
+//   string,
+//   JSXElementConstructor<{ className: string }>
+// > = {
+//   도보: WalkingIcon,
+//   자전거: BicycleIcon,
+//   렌트카: CarIcon,
+//   대중교통: PublicTransportIcon,
+//   선박: ShipIcon,
+//   항공: AirplaneIcon,
+// } as const;
 
-type TransportType = keyof typeof transportIcons;
+// type TransportType = keyof typeof transportIcons;
 
 type CheckItemType = {
   text: string;
@@ -187,13 +185,14 @@ function ScheduleList({
         }
 
         if (item.type === "move") {
-          const TransportIcon = transportIcons[item.data.type as TransportType];
+          // const TransportIcon = transportIcons[item.data.type as TransportType];
           return (
             <li key={item.id} className="flex flex-col w-full">
               <div className="flex items-center w-full h-10 rounded-l-3xl rounded-r-lg bg-[#3F3F3F]">
                 <div className="w-[9%] mr-[3%] flex items-center justify-center">
                   <div className="w-7 h-7 bg-[#E8F97B] ml-1 text-white rounded-full flex items-center justify-center">
-                    <TransportIcon className="w-4 h-4" />
+                    <CarIcon className="w-4 h-4" />
+                    {/* TODO 아이콘 정상적오르 보이도록 */}
                   </div>
                 </div>
                 <div className="w-[87%] h-full leading-full flex items-center justify-between">
