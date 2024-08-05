@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import LocationIcon from "./icons/LocationIcon";
+import MemoIcon from "./icons/MemoIcon";
+import SpendIcon from "./icons/SpendIcon";
+import TimeIcon from "./icons/TimeIcon";
 
 type BottomSheetInputType = {
   isDisabled?: boolean;
@@ -15,29 +19,31 @@ export default function BottomSheetInput({
 }: BottomSheetInputType) {
   const [inputValue, setInputValue] = useState(value);
   const [placeholder, setPlaceholder] = useState("");
-  const [icon, setIcon] = useState("");
+  const [IconComponent, setIconComponent] = useState<React.FC<{
+    className?: string;
+  }> | null>(null);
 
   useEffect(() => {
     switch (type) {
       case "memo":
         setPlaceholder("메모하기");
-        setIcon("📝"); // 예시 메모 아이콘
+        setIconComponent(() => MemoIcon);
         break;
       case "spend":
         setPlaceholder("지출한 비용");
-        setIcon("💸"); // 예시 지출 아이콘
+        setIconComponent(() => SpendIcon);
         break;
       case "place":
         setPlaceholder("위치 추가하기");
-        setIcon("📍"); // 예시 위치 아이콘
+        setIconComponent(() => LocationIcon);
         break;
       case "time":
         setPlaceholder("시간 선택");
-        setIcon("⏰"); // 예시 시간 아이콘
+        setIconComponent(() => TimeIcon);
         break;
       default:
         setPlaceholder("");
-        setIcon("❓"); // 예시 기본 아이콘
+        setIconComponent(null);
     }
   }, [type]);
 
@@ -81,7 +87,7 @@ export default function BottomSheetInput({
   if (type === "time") {
     return (
       <div className="flex items-center">
-        <i className="mr-2 w-8 text-center">{icon}</i>
+        {IconComponent && <IconComponent className="mr-2 w-8 text-center" />}
         <input
           className="outline-0 w-22 border-[1px] text-sm border-gray appearance-none"
           type="time"
@@ -110,7 +116,7 @@ export default function BottomSheetInput({
 
   return (
     <div className="flex items-center">
-      <i className="mr-2 w-8 text-center">{icon}</i>
+      {IconComponent && <IconComponent className="mr-2 w-8 text-center" />}
       <input
         className="border-0 outline-0 w-[90%] border-b-[1px] text-sm border-white"
         type={type === "spend" ? "number" : "text"}

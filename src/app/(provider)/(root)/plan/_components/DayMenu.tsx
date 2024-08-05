@@ -1,14 +1,14 @@
 function DayMenu({
+  days,
   selectedDay,
   onDaySelect,
 }: {
+  days: number[];
   selectedDay: number;
   onDaySelect: (day: number) => void;
 }) {
-  const days = [1, 2, 3, 4, 5, 6, 7];
-
   return (
-    <ul className="h-10 min-w-full overflow-x-auto flex items-center bg-white">
+    <ul className="h-12 min-w-full overflow-x-auto flex items-center bg-white no-scrollbar">
       {days.map((day) => (
         <li
           key={day}
