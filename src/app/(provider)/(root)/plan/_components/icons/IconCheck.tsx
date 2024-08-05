@@ -4,23 +4,18 @@ function IconCheck(props: HTMLAttributes<HTMLOrSVGElement>) {
   return (
     <svg
       {...props}
-      className="text-lime-500 group-hover:text-white" // svg 가 이상함 black 넣으면 요상한 부분 생김
-      width="16"
-      height="12"
-      viewBox="0 0 16 12"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g id="Frame 1707482373">
-        <path
-          id="Vector 6"
-          d="M1.8457 6.49951L5.1386 9.79241C5.52912 10.1829 6.16229 10.1829 6.55281 9.7924L14.8457 1.49951"
-          stroke="#2A2A2A"
-          strokeWidth="2.1"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M17.7425 5.25773C18.1525 5.66778 18.1525 6.33261 17.7425 6.74266L9.44957 15.0356C8.64899 15.8361 7.351 15.8361 6.55043 15.0356L3.25753 11.7427C2.84748 11.3326 2.84748 10.6678 3.25753 10.2577C3.66759 9.84768 4.33241 9.84768 4.74246 10.2577L8 13.5153L16.2575 5.25773C16.6676 4.84768 17.3324 4.84768 17.7425 5.25773Z"
+        fill="#2A2A2A"
+      />
     </svg>
   );
 }

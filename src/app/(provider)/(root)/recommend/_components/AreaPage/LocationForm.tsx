@@ -13,7 +13,6 @@ type LocationForm = {
 
 function LocationForm({ area }: LocationForm) {
   const [isInit, setIsInit] = useState<boolean>(false);
-  console.log("area.lat, area.lng", area.lat, area.lng);
   const handleOnLoad = useCallback(() => setIsInit(true), []);
 
   const markerProps = isInit
