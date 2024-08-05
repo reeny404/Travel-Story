@@ -51,11 +51,11 @@ function IntroPage({ params }: IntroPageProps) {
     <MainLayout
       headerProps={{
         backgroundColor: "transparent",
-        title: IntroCountry?.country.krName!,
+        title: "",
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.black,
+            icon: ICON.search.white,
             alt: "Search",
             size: 20,
             onClick: () => {},
@@ -63,22 +63,20 @@ function IntroPage({ params }: IntroPageProps) {
         ],
       }}
     >
-      <div className=" h-full w-full ">
-        {isLoading ? (
-          <div>loading...</div>
-        ) : (
-          <>
-            {IntroCountry && (
-              <CountryIntroCard
-                countryId={IntroCountry.country?.id}
-                cities={IntroCountry.cities}
-                imageUrl={IntroCountry.country.imageUrl}
-                title={IntroCountry.country.name}
-              />
-            )}
-          </>
-        )}
-      </div>
+      {isLoading ? (
+        <div>loading...</div>
+      ) : (
+        <>
+          {IntroCountry && (
+            <CountryIntroCard
+              countryId={IntroCountry.country?.id}
+              cities={IntroCountry.cities}
+              imageUrl={IntroCountry.country?.imageUrl}
+              title={IntroCountry.country?.name}
+            />
+          )}
+        </>
+      )}
     </MainLayout>
   );
 }

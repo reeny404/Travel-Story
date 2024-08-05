@@ -3,35 +3,33 @@
 import Icon from "@/components/commons/Icon/Icon";
 import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
+import { IconType } from "@/types/Icon";
 import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
-const headerStyles = cva(
-  "w-full h-[52px] flex items-center justify-between shadow-header",
-  {
-    variants: {
-      backgroundColor: {
-        transparent: "bg-transparent",
-        white: "bg-white",
-      },
-      titleAlign: {
-        left: "justify-start",
-        center: "justify-center",
-      },
+const headerStyles = cva("w-full h-[52px] flex items-center justify-between", {
+  variants: {
+    backgroundColor: {
+      transparent: "bg-transparent fixed top-0 z-[900] ",
+      white: "bg-white shadow-area-card sticky top-0 h-[52px] z-[900]",
     },
-    defaultVariants: {
-      backgroundColor: "white",
-      titleAlign: "center",
+    titleAlign: {
+      left: "justify-start",
+      center: "justify-center",
     },
-  }
-);
+  },
+  defaultVariants: {
+    backgroundColor: "white",
+    titleAlign: "center",
+  },
+});
 
 export type HeaderProps = {
   backgroundColor?: "transparent" | "white";
   title?: string;
   titleAlign?: "left" | "center";
   rightIcons?: {
-    icon: string;
+    icon: IconType;
     alt: string;
     size: number;
     path?: string;
@@ -64,14 +62,18 @@ function Header({
       <div className="flex items-center">
         <div>
           <Icon
-            icon={ICON.menu.burgerBlack}
+            icon={
+              backgroundColor === "transparent"
+                ? ICON.menu.burgerWhite
+                : ICON.menu.burgerBlack
+            }
             alt="drawer"
             size={20}
             onClick={openDrawer}
           />
         </div>
         {titleAlign === "left" && (
-          <h2 className="text-[18px] font-semibold ml-2">{title}</h2>
+          <h2 className="text-[18px] font-semibold ml-2 ">{title}</h2>
         )}
       </div>
       {titleAlign === "center" && (
