@@ -14,7 +14,7 @@ import CreateScheduleButton from "../_components/CreateScheduleButton";
 import DayMenu from "../_components/DayMenu";
 import BarIcon from "../_components/icons/BarIcon";
 import MapIcon from "../_components/icons/MapIcon";
-import ScheculeList from "./ScheduleList";
+import ScheduleList from "./ScheduleList";
 
 const api = new PlanAPI(axios);
 type PlanDetailPageProps = { params: { planId: string } };
@@ -144,7 +144,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
         selectedDay={selectedDay}
         onDaySelect={handleDaySelect}
       />
-      <ScheculeList planId={planId} selectedDay={selectedDay} />
+      <ScheduleList planId={planId} selectedDay={selectedDay} />
       {isBottomSheetVisible && (
         <BottomSheet
           type={bottomSheetConfig.type}
