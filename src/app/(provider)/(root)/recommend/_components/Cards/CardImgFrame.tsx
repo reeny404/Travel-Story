@@ -20,21 +20,17 @@ function CardImgFrame({
   isTop = false,
   areaName,
   country,
-  priority,
+  priority = false,
   city,
 }: CardImgFrameProps) {
-  const loaderProp = ({ src }: { src: string }) => {
-    return src;
-  };
   return (
     <div className={`w-full relative ${frameClassName}`}>
       <Image
-        src={imageUrl || "/"}
+        src={imageUrl!}
         alt={alt}
         fill
-        priority={true}
+        priority={priority}
         className={`${imageClassName} `}
-        loader={loaderProp}
       />
       {isTop ? (
         <div className="absolute w-full bottom-0 px-4 pt-20 pb-10 bg-gradient-white">
