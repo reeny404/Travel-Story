@@ -36,7 +36,20 @@ function MyProfile() {
     setIsEdit(!isEdit);
   };
 
-  if (isPending) return <p>Loading...</p>;
+  if (isPending) {
+    return (
+      <section className="flex flex-col w-full items-center mt-[21px] mb-[29px]">
+        <Image
+          src={"/icons/avatar.svg"}
+          alt="프로필"
+          width={88}
+          height={88}
+          className="rounded-full"
+        />
+        <div className="w-[100px] h-[24px] mt-4 bg-gray-300 rounded-lg"></div>
+      </section>
+    );
+  }
 
   return (
     <section className="flex flex-col w-full items-center mt-[21px] mb-[29px]">
