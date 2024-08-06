@@ -2,6 +2,7 @@
 import useAuthFlow from "@/hooks/useAuthFlow";
 import { useAuthStore } from "@/stores/auth.store";
 import { useLoginStepStore } from "@/stores/step.store";
+import { useEffect } from "react";
 import AuthForm from "./_components/AuthForm/AuthForm";
 import AuthLayout from "./_components/AuthLayout/AuthLayout";
 
@@ -9,6 +10,15 @@ function LoginPage() {
   const { submit, change } = useAuthFlow();
   const { step, labelText, labelColor, isInputValid } = useLoginStepStore();
   const { user } = useAuthStore();
+  const { setLabelColor, setLabelText, setStep, setIsInputValid } =
+    useLoginStepStore();
+
+  useEffect(() => {
+    setLabelColor("black");
+    setLabelText("");
+    setIsInputValid(true);
+    setStep("email");
+  }, []);
 
   return (
     <>

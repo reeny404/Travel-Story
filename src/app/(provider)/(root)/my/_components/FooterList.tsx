@@ -15,7 +15,7 @@ function FooterList() {
     e.preventDefault();
     const result = await api.auth.logout();
     setUser(null);
-    router.push("/");
+    router.replace("/");
   };
 
   return (

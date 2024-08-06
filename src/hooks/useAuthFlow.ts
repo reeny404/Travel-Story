@@ -79,12 +79,10 @@ function useAuthFlow() {
       return setLabelText("비밀번호가 일치하지 않습니다.");
     }
     setUser(response.data.session.user);
-    setStep("email");
-    setLabelColor("black");
     if (isTypeExist) {
-      return router.push("/");
+      return router.replace("/");
     }
-    return router.push("/onboard");
+    return router.replace("/onboard");
   };
 
   // 회원가입 email 버튼 누를 시
@@ -117,12 +115,10 @@ function useAuthFlow() {
     }
     const response = await api.auth.signUp(user.email, user.password, nickname);
     setUser(response.data.session.user);
-    setStep("email");
-    setLabelColor("black");
     if (isTypeExist) {
-      return router.push("/");
+      return router.replace("/");
     }
-    return router.push("/onboard");
+    return router.replace("/onboard");
   };
 
   return {
