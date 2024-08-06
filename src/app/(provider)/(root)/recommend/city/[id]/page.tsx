@@ -14,6 +14,7 @@ import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import DetailCard from "../../_components/Cards/DetailCard";
 import MainTourForm from "../../_components/MainTour/MainTourForm";
 
@@ -23,12 +24,13 @@ type CityDetailPageProps = {
 
 function CityDetailPage({ params }: CityDetailPageProps) {
   const { setCityId, cityId } = useRecommendStore((state) => state);
+  const { ref: viewRef, inView } = useInView();
 
   useEffect(() => {
     setCityId(parseInt(params.id));
   }, []);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
-
+  console.log("currentTab", currentTab);
   const { data: city, isPending } = useQuery<
     RecommendResponse<City>,
     AxiosError,
@@ -115,12 +117,12 @@ function CityDetailPage({ params }: CityDetailPageProps) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: "transparent",
-        title: "",
+        backgroundColor: inView ? "transparent" : "white",
+        title: inView ? "" : city?.krName!,
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.white,
+            icon: inView ? ICON.search.white : ICON.search.black,
             alt: "Search",
             size: 20,
             onClick: () => {},
@@ -132,6 +134,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
         title={city?.title!}
         description={city?.description!}
         imageUrl={city?.imageUrl!}
+        viewRef={viewRef}
       />
       <div className=" container w-full h-full flex-col pt-1 ">
         <div className="px-4">
@@ -139,6 +142,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
             currentTab={currentTab!}
             setCurrentTab={setCurrentTab}
             TABS={TABS.default}
+            isGray={true}
           />
         </div>
         <div className="pt-5 pb-10">

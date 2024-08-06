@@ -12,10 +12,12 @@ import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useMemo } from "react";
+import { useInView } from "react-intersection-observer";
 import DetailCard from "../../../_components/Cards/DetailCard";
 import MainTourForm from "../../../_components/MainTour/MainTourForm";
 // 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
 // 이 페이지는 SSR이여야함
+//TODO  query 호춣을 최대한 줄여서 메모이제이션으로 관리해야 할 필요가 있음 그 후 헤더가 부자연스러운 부분을 파악해야될 것 같음
 
 type CountryDetailPage = {
   params: { id: string };
@@ -24,6 +26,7 @@ type CountryDetailPage = {
 function CountryDetailPage({ params }: CountryDetailPage) {
   const countryId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
+  const { ref: viewRef, inView } = useInView();
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
@@ -147,12 +150,12 @@ function CountryDetailPage({ params }: CountryDetailPage) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: "transparent",
-        title: "",
+        backgroundColor: inView ? "transparent" : "white",
+        title: inView ? "" : country.data.krName!,
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.search.white,
+            icon: inView ? ICON.search.white : ICON.search.black,
             alt: "Search",
             size: 20,
             onClick: () => {},
@@ -164,6 +167,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         title={country?.data?.title!}
         // description={country?.data?.description!}
         imageUrl={country?.data?.imageUrl!}
+        viewRef={viewRef}
       />
       <div className=" container overflow-auto w-full h-full flex-col pt-1 ">
         <Tab
@@ -171,6 +175,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
           currentTab={currentTab!}
           setCurrentTab={setCurrentTab}
           frameClassName="px-4"
+          isGray={true}
         />
         <div className="pt-5 pb-4">
           {currentTab === "place" && (
@@ -248,11 +253,11 @@ function CountryDetailPage({ params }: CountryDetailPage) {
             title="친구와 함께"
             type="friends"
           />
-          {shopsSliderProps && (
+          {placeSliderProps && (
             <CardSlider
               spacing={20}
               slidesPerView={1.2}
-              cards={shopsSliderProps!}
+              cards={placeSliderProps!}
             />
           )}
         </div>
