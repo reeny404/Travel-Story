@@ -115,7 +115,7 @@ class AreaAPI {
           userId,
         },
       });
-      return response.data;
+      return response.data.length === 0 ? null : response.data;
     } catch (error) {
       return console.log(error);
     }

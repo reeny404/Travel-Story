@@ -36,7 +36,6 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     queryKey: ["planData", user?.id],
     queryFn: () => api.area.getPlan(user?.id!),
   });
-
   const { mutate: addSchedule } = useMutation({
     mutationFn: async (data: ScheduleData) => {
       const response = await api.area.addSchedule(data);
@@ -77,10 +76,6 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     }, 300);
   }, []);
 
-  if (!planData) {
-    return;
-  }
-
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full z-[950] bg-black${
@@ -90,7 +85,7 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     >
       <form
         ref={formRef}
-        className={`absolute bottom-0 left-0 w-full h-auto pt-7 pb-8 px-5 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet bg-white transform${
+        className={`absolute bottom-0 left-0 w-full h-[472px] pt-7 px-5 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet bg-white transform${
           isClosing
             ? "translate-y-full"
             : isOpening
@@ -98,8 +93,11 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
               : "translate-y-0"
         }transition-transform duration-300`}
       >
-        <AddBottomSheetTitle areaId={area?.id} />
-        <section className="min-h-96">
+        <AddBottomSheetTitle
+          areaId={area?.id}
+          isPlan={planData ? true : false}
+        />
+        <section className="no-scroll h-[328px] flex flex-col gap-y-4 overflow-scroll">
           {planData &&
             planData.map((plan: any, idx: number) => {
               return (
@@ -114,16 +112,16 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
               );
             })}
         </section>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 pb-1">
           <button
-            className="h-10 text-center border border-gray-600 rounded-lg"
+            className="h-10 text-center border-[0.6px] border-neutral-600 text-neutral-750 rounded-lg"
             type="button"
             onClick={() => onClose()}
           >
             {!planData ? "계속 둘러보기" : "취소"}
           </button>
           <button
-            className="h-10 text-center border border-gray-600 rounded-lg"
+            className="h-10 text-center bg-neutral-750 text-white rounded-lg"
             type="button"
             onClick={() => {
               !planData ? router.push("/plan") : handleAdd();
