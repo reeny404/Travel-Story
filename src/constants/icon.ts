@@ -12,6 +12,7 @@ export const ICON = {
   },
   add: {
     white: { name: "add", ext: "svg" },
+    bold: { name: "add-bold", ext: "svg" },
     person: {
       black: { name: "person-add", ext: "svg" },
     },

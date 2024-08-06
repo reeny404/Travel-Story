@@ -25,13 +25,12 @@ type AreaDetailCSRPage = {
 function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
   const { user } = useAuth();
-
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
     AxiosError,
     Area
   >({
-    queryKey: ["areasById", areaId],
+    queryKey: ["area", areaId],
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data.data,
   });
@@ -97,7 +96,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               />
               <Tab
                 TABS={TABS.areaDetail}
-                currentTab={currentTab}
+                currentTab={currentTab!}
                 setCurrentTab={setCurrentTab}
                 frameClassName="top-[56px] shadow-area-section"
               />
