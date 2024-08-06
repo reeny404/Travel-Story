@@ -21,7 +21,6 @@ function AuthLayout({
     useLoginStepStore();
   const { prevPath } = usePathStore();
   const router = useRouter();
-  const result = false;
 
   const handleKakaoLogin = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
