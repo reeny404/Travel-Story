@@ -1,4 +1,5 @@
 "use client";
+import clsx from "clsx";
 import Image from "next/image";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -31,32 +32,38 @@ function ReviewBottomSheetImages({
     const extension = file.name.split(".").pop();
     const fileName = `${uuidv4()}.${extension}`;
     const imageFileToServer = { name: fileName, file: file };
-    setImgFile((prev) => [...prev, imageFileToServer]);
+    setImgFile((prev) => [imageFileToServer, ...prev]);
   };
   return (
-    <div className="flex w-full px-4">
-      <ul className="flex gap-2 flex-wrap">
+    <div className="flex w-full">
+      <ul className="flex gap-3 flex-wrap">
         {images.map((imageSrc, index) => (
           <li
             key={index}
-            className="w-12 h-12 text-gray-300 flex items-center justify-center bg-gray-300 overflow-hidden"
+            className="relative w-12 h-12 text-gray-300 flex items-center justify-center bg-neutral-150 rounded-lg aspect-square"
           >
             <Image
               src={imageSrc}
               alt={`선택 이미지 ${index}`}
-              width={48}
-              height={48}
-              className="object-cover"
+              fill
+              className="object-cover rounded-lg"
             />
           </li>
         ))}
 
-        <li className="w-12 h-12 flex items-center justify-center bg-gray-300">
+        <li
+          className={clsx(
+            `h-12 flex items-center justify-center bg-neutral-150 rounded-lg`,
+            {
+              "w-12": images.length > 0,
+            }
+          )}
+        >
           <label
             htmlFor="image-upload"
-            className="cursor-pointer text-gray-500"
+            className="cursor-pointer flex px-4 gap-x-2 "
           >
-            <PlusIcon />
+            {images.length === 0 && <p>사진 추가</p>} <PlusIcon />
           </label>
           <input
             type="file"

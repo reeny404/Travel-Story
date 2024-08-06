@@ -21,7 +21,8 @@ const config: Config = {
       zIndex: {
         drawer: "1000",
         tab: "950",
-        bottomSheet: "1000",
+        underbar: "1000",
+        bottomSheet: "9999",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
