@@ -21,10 +21,14 @@ function AuthLayout({
     useLoginStepStore();
   const { prevPath } = usePathStore();
   const router = useRouter();
+  const result = false;
 
   const handleKakaoLogin = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
+      options: {
+        redirectTo: "http://localhost:3000/api/auth/callback",
+      },
     });
     if (error) {
       console.error("소셜로그인 중 에러: ", error);
