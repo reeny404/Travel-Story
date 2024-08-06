@@ -6,6 +6,9 @@
   body {
     @apply text-primary;
   }
+  .button-px button {
+    @apply px-5; /* Tailwind 클래스 적용, 5는 20px에 해당 */
+  }
 }
 
 .no-scrollbar::-webkit-scrollbar {

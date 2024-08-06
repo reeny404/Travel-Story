@@ -12,6 +12,7 @@ export const ICON = {
   },
   add: {
     white: { name: "add", ext: "svg" },
+    bold: { name: "add-bold", ext: "svg" },
     person: {
       black: { name: "person-add", ext: "svg" },
     },
@@ -101,6 +102,7 @@ export const ICON = {
   },
   shareArea: {
     black: { name: "share-black", ext: "svg" },
+    white: { name: "share-white", ext: "svg" },
   },
   search: {
     black: "search-black",
