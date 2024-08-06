@@ -11,7 +11,7 @@ type AuthPageProps = {
   isSocialHidden?: boolean;
 };
 
-function AuthLayout({
+function AuthContainer({
   title,
   isSocialHidden = false,
   children,
@@ -97,4 +97,4 @@ function AuthLayout({
   );
 }
 
-export default AuthLayout;
+export default AuthContainer;
