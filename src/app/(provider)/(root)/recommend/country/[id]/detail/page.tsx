@@ -168,7 +168,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
       <div className=" container overflow-auto w-full h-full flex-col pt-1 ">
         <Tab
           TABS={TABS.default}
-          currentTab={currentTab}
+          currentTab={currentTab!}
           setCurrentTab={setCurrentTab}
           frameClassName="px-4"
         />

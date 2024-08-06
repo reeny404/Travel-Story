@@ -136,7 +136,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
       <div className=" container w-full h-full flex-col pt-1 ">
         <div className="px-4">
           <Tab
-            currentTab={currentTab}
+            currentTab={currentTab!}
             setCurrentTab={setCurrentTab}
             TABS={TABS.default}
           />
