@@ -1,9 +1,12 @@
 "use client";
 
 import { api } from "@/apis/api";
+import { getIconPath } from "@/components/commons/Icon/getIconPath";
+import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { PlanData } from "@/types/plan";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 
 function AddBottomSheetTitle({ areaId }: { areaId: number }) {
   const { user } = useAuth();
@@ -37,17 +40,24 @@ function AddBottomSheetTitle({ areaId }: { areaId: number }) {
     addPlan(data);
   };
   return (
-    <div className="w-full h-full flex justify-between items-center p-1">
+    <div className="w-full h-full flex justify-between items-center">
       <h1 className="w-full h-full flex items-center p-1 text-lg outline-none bg-white font-bold">
-        장소를 추가할 일정이 없어요.
+        새 일정을 만들어 주세요.
       </h1>
 
       <button
         type="button"
         onClick={handleAddPlan}
-        className="w-24 h-full text-sm rounded-xl p-1 bg-blue-300 "
+        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white text-sm font-medium rounded-[16px] bg-[#2A2A2A]"
       >
-        내 여행
+        <Image
+          src={getIconPath(ICON.add.bold)}
+          alt="add"
+          width={20}
+          height={20}
+          className="hover:cursor-pointer object-contain"
+        />
+        <p>내 여행</p>
       </button>
     </div>
   );

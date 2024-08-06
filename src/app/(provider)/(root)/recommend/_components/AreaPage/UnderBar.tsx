@@ -41,7 +41,7 @@ function UnderBar({ area }: UnderBarProps) {
   };
   const BottomSheet = createAddBottomSheet();
   return (
-    <article className="h-11 w-full flex gap-x-2 sticky bottom-5 z-40">
+    <article className="h-11 w-full flex gap-x-2 sticky bottom-5 z-bottomSheet">
       {isBottomSheetVisible && (
         <BottomSheet area={area} onClose={handleClose} />
       )}

@@ -25,7 +25,7 @@ type AreaDetailCSRPage = {
 function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
   const { user } = useAuth();
-
+  console.log("currentTab", currentTab);
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
     AxiosError,
@@ -97,7 +97,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               />
               <Tab
                 TABS={TABS.areaDetail}
-                currentTab={currentTab}
+                currentTab={currentTab!}
                 setCurrentTab={setCurrentTab}
                 frameClassName="top-[56px] shadow-area-section"
               />

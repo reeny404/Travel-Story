@@ -90,7 +90,7 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     >
       <form
         ref={formRef}
-        className={`absolute bottom-0 left-0 w-full h-auto py-4 pb-8 px-4 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet bg-white transform${
+        className={`absolute bottom-0 left-0 w-full h-auto pt-7 pb-8 px-5 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet bg-white transform${
           isClosing
             ? "translate-y-full"
             : isOpening

@@ -16,7 +16,7 @@ function Tab({ currentTab, setCurrentTab, TABS, frameClassName }: TabProps) {
   return (
     <div
       className={clsx(
-        `w-full h-11 flex justify-around items-center gap-x-2 z-30 my-3 sticky ${frameClassName}`,
+        `w-full h-11 flex justify-around items-center gap-x-2 z-tab my-3 sticky ${frameClassName}`,
         { "rounded-lg": TABS[0].en === "notice" }
       )}
     >
