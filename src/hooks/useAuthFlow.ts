@@ -5,7 +5,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { emailValidCheck } from "@/utils/emailCheck";
 import { getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function useAuthFlow() {
   const { setStep, setLabelColor, setLabelText, setIsInputValid } =
@@ -14,6 +14,8 @@ function useAuthFlow() {
   const router = useRouter();
   const { setUser } = useAuth();
   const isTypeExist = getCookie("hasTravelType");
+  const params = useSearchParams();
+  const nextURL = params.get("nextUrl") ?? "/";
 
   /** Change 관련 handle */
   // 로그인 email 유효성 검사
@@ -64,6 +66,7 @@ function useAuthFlow() {
     putEmail(email);
     const nextStep = await api.auth.emailUser(email);
     setStep(nextStep);
+
     if (nextStep === "add-user") {
       setIsInputValid(false);
     } else {
@@ -80,7 +83,7 @@ function useAuthFlow() {
     }
     setUser(response.data.session.user);
     if (isTypeExist) {
-      return router.replace("/");
+      return router.replace(nextURL);
     }
     return router.replace("/onboard");
   };
