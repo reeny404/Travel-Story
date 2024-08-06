@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
 
 function FooterList() {
-  const lineStyle = "mb-3 cursor-pointer";
+  const lineStyle = "mb-2 px-4 py-3 text-lg cursor-pointer";
   const router = useRouter();
   const { setUser } = useAuth();
 
@@ -19,11 +19,10 @@ function FooterList() {
   };
 
   return (
-    <section className="w-full mt-[30px]">
+    <section className="w-full mt-3 px-4">
       <p className={lineStyle}>고객센터</p>
       <p className={lineStyle}>이용약관</p>
       <p className={lineStyle}>개인정보처리방침</p>
-      <p className={lineStyle}>사용 가이드</p>
       <p className={lineStyle} onClick={(e) => handleLogoutClick(e)}>
         로그아웃
       </p>
