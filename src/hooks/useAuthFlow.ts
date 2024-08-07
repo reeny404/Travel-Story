@@ -8,8 +8,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 function useAuthFlow() {
-  const { setStep, setLabelColor, setLabelText, setIsInputValid } =
-    useLoginStepStore();
+  const { setLabelColor, setLabelText, setIsInputValid } = useLoginStepStore();
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
   const router = useRouter();
   const { setUser } = useAuth();
@@ -63,12 +62,13 @@ function useAuthFlow() {
   const handleEmailSubmit = async (email: string) => {
     putEmail(email);
     const nextStep = await api.auth.emailUser(email);
-    setStep(nextStep);
 
     if (nextStep === "add-user") {
       setIsInputValid(false);
+      router.push("/login?step=add-user");
     } else {
       setIsInputValid(true);
+      router.push("/login?step=password");
     }
   };
 
@@ -89,7 +89,7 @@ function useAuthFlow() {
   // 회원가입 email 버튼 누를 시
   const handleSignupSubmit = () => {
     setIsInputValid(true);
-    setStep("new-password");
+    router.push("/login?step=new-password");
   };
 
   // 회원가입 password 버튼 누를 시
@@ -97,14 +97,14 @@ function useAuthFlow() {
     setIsInputValid(true);
     putPassword(password);
     setLabelColor("black");
-    setStep("check-password");
+    router.push("/login?step=check-password");
   };
 
   // 회원가입 password check 버튼 누를 시
   const handleCheckPasswordSubmit = () => {
     setIsInputValid(true);
     setLabelColor("black");
-    setStep("nickname");
+    router.push("/login?step=nickname");
   };
 
   // 회원가입 nickname 버튼 누를 시

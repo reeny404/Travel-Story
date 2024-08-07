@@ -1,24 +1,36 @@
 "use client";
+import { useAuth } from "@/contexts/auth.contexts";
 import useAuthFlow from "@/hooks/useAuthFlow";
 import { useAuthStore } from "@/stores/auth.store";
 import { useLoginStepStore } from "@/stores/step.store";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import AuthContainer from "./_components/AuthContainer/AuthContainer";
 import AuthForm from "./_components/AuthForm/AuthForm";
 
 function LoginPage() {
   const { submit, change } = useAuthFlow();
-  const { step, labelText, labelColor, isInputValid } = useLoginStepStore();
+  const { labelText, labelColor, isInputValid } = useLoginStepStore();
   const { user } = useAuthStore();
-  const { setLabelColor, setLabelText, setStep, setIsInputValid } =
-    useLoginStepStore();
+  const { isLoggedIn } = useAuth();
+  const { setLabelColor, setLabelText, setIsInputValid } = useLoginStepStore();
+  const params = useSearchParams();
+  const router = useRouter();
+  const nextURL = params.get("nextUrl");
+  const step = params.get("step") ?? "email";
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.replace("/");
+    }
+  }, []);
 
   useEffect(() => {
     setLabelColor("black");
     setLabelText("");
-    setIsInputValid(true);
-    setStep("email");
-  }, [setLabelColor, setLabelText, setIsInputValid, setStep]);
+    if (step !== "add-user") return setIsInputValid(true);
+    setIsInputValid(false);
+  }, [step]);
 
   return (
     <>
