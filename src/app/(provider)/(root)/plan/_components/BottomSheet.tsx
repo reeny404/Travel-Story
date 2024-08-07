@@ -11,7 +11,7 @@ import BottomSheetTitle from "../_components/BottomSheetTitle";
 import UpdateButton from "../_components/UpdateButton";
 
 type BottomSheetProps = BottomSheetType & {
-  item: any;
+  item?: any;
   onClose: () => void;
   planId: string;
   day: number;
