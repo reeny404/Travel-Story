@@ -2,6 +2,7 @@
 import { BottomSheetType } from "@/types/plan";
 import PlusIcon from "./PlusIcon";
 
+import { useEffect, useState } from "react";
 import CheckIcon from "./icons/CheckIcon";
 
 type CheckListProps = {
@@ -14,9 +15,14 @@ type CheckListProps = {
 function BottomSheetCheckList({
   type,
   status,
-  checkList,
+  checkList: initialCheckList,
   setCheckList,
 }: CheckListProps) {
+  const [checkList, updateCheckList] = useState(initialCheckList);
+  useEffect(() => {
+    updateCheckList(initialCheckList);
+  }, [initialCheckList]);
+
   const handleCheck = (index: number) => {
     const newCheckList = [...checkList];
     newCheckList[index].isCheck = !newCheckList[index].isCheck;

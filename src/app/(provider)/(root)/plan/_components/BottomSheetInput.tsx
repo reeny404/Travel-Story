@@ -24,6 +24,10 @@ export default function BottomSheetInput({
   }> | null>(null);
 
   useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  useEffect(() => {
     switch (type) {
       case "memo":
         setPlaceholder("메모하기");

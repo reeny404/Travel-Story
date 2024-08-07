@@ -84,6 +84,7 @@ export async function POST(request: NextRequest) {
       endTime,
       images,
       day,
+      spead,
     } = await request.json();
 
     let insertData: any;
@@ -133,6 +134,7 @@ export async function POST(request: NextRequest) {
             startTime,
             endTime,
             imagesUrl: images,
+            spead,
           },
         ])
         .select();

@@ -3,6 +3,7 @@ import PlanAPI from "@/apis/plan.api";
 import Icon from "@/components/commons/Icon";
 import Profile from "@/components/Frame/Profile";
 import { ICON } from "@/constants/icon";
+import useDrawerStore from "@/stores/drawer.store";
 import { BottomSheetType } from "@/types/plan";
 import { Tables } from "@/types/supabase";
 import axios from "axios";
@@ -14,12 +15,13 @@ import CreateScheduleButton from "../_components/CreateScheduleButton";
 import DayMenu from "../_components/DayMenu";
 import BarIcon from "../_components/icons/BarIcon";
 import MapIcon from "../_components/icons/MapIcon";
-import ScheduleList from "./ScheduleList";
+import ScheduleList from "../_components/ScheduleList";
 
 const api = new PlanAPI(axios);
 type PlanDetailPageProps = { params: { planId: string } };
 
 function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
+  const { openDrawer } = useDrawerStore();
   const router = useRouter();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [bottomSheetConfig, setBottomSheetConfig] = useState<BottomSheetType>({
@@ -35,6 +37,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
     const fetchPlanData = async () => {
       try {
         const planData: Tables<"plan">[] = await api.getMyPlans(); // PlanAPI를 통해 데이터 가져오기
+        console.log(planData);
         const plan = planData.find((p: Tables<"plan">) => p.id === planId);
 
         if (plan) {
@@ -100,8 +103,6 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
     return <div>Loading...</div>;
   }
 
-  // const { openDrawer } = useDrawerStore();
-
   return (
     <div className="min-h-screen w-full bg-[#FCFCFC]">
       <div className="h-72 w-full bg-gray-200">
@@ -117,7 +118,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
               icon={ICON.menu.burgerWhite}
               alt="drawer"
               size={20}
-              // onClick={openDrawer}
+              onClick={openDrawer}
             />
             <h2 className="text-[18px] font-semibold ml-2">{title}</h2>
             <div className="flex items-center ml-auto">

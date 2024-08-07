@@ -11,6 +11,7 @@ import BottomSheetTitle from "../_components/BottomSheetTitle";
 import UpdateButton from "../_components/UpdateButton";
 
 type BottomSheetProps = BottomSheetType & {
+  item: any;
   onClose: () => void;
   planId: string;
   day: number;
@@ -24,6 +25,7 @@ const apiClient = axios.create({
 const planAPI = new PlanAPI(apiClient);
 
 function BottomSheet({
+  item,
   type,
   status: initialStatus,
   onClose,
@@ -35,10 +37,29 @@ function BottomSheet({
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const [images, setImages] = useState<string[]>(type === "memo" ? [] : []);
-  const [checkList, setCheckList] = useState(
-    type === "memo" ? [{ text: "사진 찍기", isCheck: false }] : []
-  );
+  const [checkList, setCheckList] = useState<
+    { text: string; isCheck: boolean }[]
+  >(type === "memo" ? [{ text: "사진 찍기", isCheck: false }] : []);
+  const [formData, setFormData] = useState<Record<string, any>>({
+    title: "",
+    memo: "",
+    time: "",
+    spend: "",
+    place: "",
+  });
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (status === "read") {
+      setFormData({
+        title: item.data.title,
+        memo: item.data.memo,
+        time: item.data.time,
+        spend: item.data.spend,
+        place: item.data.place,
+      });
+    }
+  }, [item]);
 
   const handleClose = (e?: React.MouseEvent<HTMLDivElement>) => {
     if (e && formRef.current && !formRef.current.contains(e.target as Node)) {
@@ -136,16 +157,32 @@ function BottomSheet({
               : "translate-y-0"
         } transition-transform duration-300`}
       >
-        <BottomSheetTitle type={type} status={status} />
+        <BottomSheetTitle type={type} status={status} title={formData.title} />
         {type !== "memo" && (
-          <BottomSheetInput type="time" isDisabled={status === "read"} />
+          <BottomSheetInput
+            type="time"
+            isDisabled={status === "read"}
+            value={formData.time}
+          />
         )}
-        <BottomSheetInput type="memo" isDisabled={status === "read"} />
+        <BottomSheetInput
+          type="memo"
+          isDisabled={status === "read"}
+          value={formData.memo}
+        />
         {type !== "memo" && type !== "move" && (
-          <BottomSheetInput type="spend" isDisabled={status === "read"} />
+          <BottomSheetInput
+            type="spend"
+            isDisabled={status === "read"}
+            value={formData.spend}
+          />
         )}
         {(type === "place" || type === "customePlace") && (
-          <BottomSheetInput type="place" isDisabled={status === "read"} />
+          <BottomSheetInput
+            type="place"
+            isDisabled={status === "read"}
+            value={formData.place}
+          />
         )}
         {type === "memo" && (
           <BottomSheetCheckList
