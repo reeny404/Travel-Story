@@ -27,7 +27,7 @@ function MyMenu() {
           width={20}
           height={20}
           alt="icon"
-        />{" "}
+        />
         <p className="text-sm font-normal mt-2">보관함</p>
       </div>
       <div className="w-[1px] bg-neutral-300"></div>
@@ -37,7 +37,7 @@ function MyMenu() {
           width={20}
           height={20}
           alt="icon"
-        />{" "}
+        />
         <p className="text-sm font-normal mt-2">내 리뷰</p>
       </div>
     </section>

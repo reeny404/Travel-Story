@@ -18,7 +18,7 @@ function LoginPage() {
     setLabelText("");
     setIsInputValid(true);
     setStep("email");
-  }, []);
+  }, [setLabelColor, setLabelText, setIsInputValid, setStep]);
 
   return (
     <>

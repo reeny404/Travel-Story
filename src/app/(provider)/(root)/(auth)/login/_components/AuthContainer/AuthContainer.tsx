@@ -1,6 +1,5 @@
 "use client";
 import MainLayout from "@/components/Layout/MainLayout";
-import { usePathStore } from "@/stores/path.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { createClient } from "@/supabase/client";
 import { useRouter } from "next/navigation";
@@ -19,15 +18,13 @@ function AuthContainer({
   const supabase = createClient();
   const { step, setStep, setLabelColor, setLabelText, setIsInputValid } =
     useLoginStepStore();
-  const { prevPath } = usePathStore();
   const router = useRouter();
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-
   const handleKakaoLogin = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: `${baseURL}api/auth/callback`,
+        redirectTo: `${baseURL}/api/auth/callback`,
       },
     });
     if (error) {
