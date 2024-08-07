@@ -27,7 +27,7 @@
 
 .arch-shadow {
   position: absolute;
-  top: 0; /* 고정된 위치를 위해 px 단위 사용 */
+  top: 0;
   left: 0;
   right: 0;
   height: 46%;
@@ -40,5 +40,5 @@
   );
   opacity: 0.6;
   z-index: 800;
-  pointer-events: none; /* 상호작용을 방지하여 배경 요소에 영향을 주지 않음 */
+  pointer-events: none;
 }
