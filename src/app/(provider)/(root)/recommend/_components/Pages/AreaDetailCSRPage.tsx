@@ -133,19 +133,26 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   areaId={areaId}
                 />
                 {areaReviews &&
-                  areaReviews.map((review, idx) => {
-                    return (
-                      <AreaReviewCard
-                        key={idx}
-                        userImageUrl={user?.user_metadata.profileImg}
-                        name={user?.user_metadata.nickname}
-                        imageUrl={review.imageUrls[0]}
-                        createdAt={review.createdAt}
-                        rating={review.rating!}
-                        description={review.content!}
-                      />
-                    );
-                  })}
+                  areaReviews
+                    .sort(
+                      (a, b) =>
+                        new Date(b.createdAt).getTime() -
+                        new Date(a.createdAt).getTime()
+                    )
+                    .map((review, idx) => {
+                      return (
+                        <AreaReviewCard
+                          key={idx}
+                          userImageUrl={user?.user_metadata.profileImg}
+                          name={user?.user_metadata.nickname}
+                          imageUrl={review.imageUrls[0]}
+                          createdAt={review.createdAt}
+                          rating={review.rating!}
+                          description={review.content!}
+                          reviewInfo={review}
+                        />
+                      );
+                    })}
               </div>
             </div>
             <UnderBar area={area} />
