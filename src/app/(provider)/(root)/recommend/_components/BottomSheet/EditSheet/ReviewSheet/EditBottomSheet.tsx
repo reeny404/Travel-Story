@@ -76,19 +76,8 @@ function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
       return data;
     },
   });
-  const { mutate: deleteReview } = useMutation({
-    mutationFn: async (id: number) => {
-      onClose();
-      await api.review.deleteReview(id);
-    },
-    onError: (error) => {
-      console.error("Error adding data:", error);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["areaReviews"] });
-    },
-  });
-  const handleAdd = async () => {
+
+  const handleUpdate = async () => {
     const formData = new FormData();
     for (let i = 0; i < imgFile.length; i++) {
       const fileItem = imgFile[i];
@@ -109,9 +98,10 @@ function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
     try {
       updateReview(formData);
     } catch (error) {
-      console.error("Error adding data:", error);
+      console.error("Error updating data:", error);
     }
   };
+
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full z-bottomSheet bg-black${
@@ -242,7 +232,7 @@ function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
                 }
               )}
               type="button"
-              onClick={handleAdd}
+              onClick={handleUpdate}
             >
               {textValue.length === 0 ? "작성을 완료해주세요" : "리뷰 수정하기"}
             </button>

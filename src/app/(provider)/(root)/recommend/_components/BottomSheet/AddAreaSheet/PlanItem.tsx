@@ -23,7 +23,7 @@ function PlanItem({
   return (
     <div
       onClick={() => {
-        clickedPlan === idx ? setClickedPlan(null) : setClickedPlan(idx);
+        setClickedPlan(idx);
       }}
       className={clsx("w-full p-4 shadow-area-section rounded-lg", {
         "border-brand-600 border-2": clickedPlan === idx,
