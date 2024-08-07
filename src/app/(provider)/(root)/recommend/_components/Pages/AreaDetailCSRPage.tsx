@@ -27,6 +27,9 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
   const { ref, inView } = useInView({ threshold: 0 });
   const { user } = useAuth();
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const reviewSectionRef = useRef<HTMLDivElement | null>(null);
+
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
     AxiosError,
@@ -45,8 +48,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
     queryFn: () => api.review.getReviews(areaId),
     select: (data) => data.data,
   });
-
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const currentTabIndex = TABS.areaDetail.findIndex(
@@ -96,6 +97,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             <div className="w-full h-full bg-white rounded-t-lg">
               <AreaDetailCard
                 area={area}
+                reviewSectionRef={reviewSectionRef}
                 ratingAmount={areaReviews?.length || 0}
               />
               <Tab
@@ -123,6 +125,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               <div
                 ref={(tabEl) => {
                   sectionRefs.current[2] = tabEl;
+                  reviewSectionRef.current = tabEl;
                 }}
                 className="mb-3 w-full h-full rounded-lg shadow-area-section"
               >
