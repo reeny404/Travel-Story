@@ -51,7 +51,11 @@ export const ICON = {
       off: { name: "smBookmark-off", ext: "svg" },
     },
   },
-  calendar: { white: { name: "calendar", ext: "svg" } },
+  calculator: { off: { name: "calculator", ext: "svg" } },
+  calendar: {
+    white: { name: "calendar", ext: "svg" },
+    black: { name: "calendar-black", ext: "svg" },
+  },
   cancel: {
     black: "cancel-black",
     gray: "cancel-gray",
@@ -74,9 +78,10 @@ export const ICON = {
     black: "home-black",
   },
   edit: {
-    black: "edit-black",
-    blue: "edit-blue",
-    color: "edit-color",
+    line: { name: "edit-line", ext: "svg" },
+    black: { name: "edit-black", ext: "png" },
+    blue: { name: "edit-blue", ext: "png" },
+    color: { name: "edit-color", ext: "png" },
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
@@ -89,6 +94,7 @@ export const ICON = {
   },
   map: {
     black: "map-black",
+    off: { name: "map", ext: "svg" },
   },
   menu: {
     burgerBlack: "menu-burger-black",
@@ -123,6 +129,7 @@ export const ICON = {
     black: "microphone-black",
   },
   star: {
+    dark: { name: "star-black", ext: "svg" },
     fill: "star-fill",
     unfill: "star-unfill",
     half: "star-half",
