@@ -1,4 +1,5 @@
 "use client";
+import { ImgFileType } from "@/types/Recommend";
 import clsx from "clsx";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -6,10 +7,8 @@ import { v4 as uuidv4 } from "uuid";
 import PlusIcon from "../PlusIcon";
 
 type BottomSheetImagesProps = {
-  imgFile: { name: string; file: File }[];
-  setImgFile: React.Dispatch<
-    React.SetStateAction<{ name: string; file: File }[]>
-  >;
+  imgFile: ImgFileType[];
+  setImgFile: React.Dispatch<React.SetStateAction<ImgFileType[]>>;
 };
 
 function ReviewBottomSheetImages({
@@ -32,14 +31,30 @@ function ReviewBottomSheetImages({
     const extension = file.name.split(".").pop();
     const fileName = `${uuidv4()}.${extension}`;
     const imageFileToServer = { name: fileName, file: file };
-    setImgFile((prev) => [imageFileToServer, ...prev]);
+    setImgFile((prev) => [...prev, imageFileToServer]);
   };
+
+  const handleDelete = (
+    images: string[],
+    imgFile: ImgFileType[],
+    index: number
+  ) => {
+    const deletedImages = images.filter((img, idx) => index !== idx);
+    const deletedImageFiles = imgFile.filter((img, idx) => index !== idx);
+
+    setImages(deletedImages);
+    setImgFile(deletedImageFiles);
+  };
+
   return (
     <div className="flex w-full">
       <ul className="flex gap-3 flex-wrap">
         {images.map((imageSrc, index) => (
           <li
             key={index}
+            onClick={() => {
+              handleDelete(images, imgFile, index);
+            }}
             className="relative w-12 h-12 text-gray-300 flex items-center justify-center bg-neutral-150 rounded-lg aspect-square"
           >
             <Image

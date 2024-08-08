@@ -39,7 +39,6 @@ function AreaCard({
       isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
     }
   };
-  console.log("rating", rating);
   const mockTags = ["친구와 함께", "문화 체험", "도심"];
   return (
     <div className="relative w-full shadow-area-card rounded-lg mb-6">

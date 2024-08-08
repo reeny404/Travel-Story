@@ -31,7 +31,19 @@ function EditBottomSheetImages({
     const extension = file.name.split(".").pop();
     const fileName = `${uuidv4()}.${extension}`;
     const imageFileToServer = { name: fileName, file: file };
-    setImgFile((prev) => [imageFileToServer, ...prev]);
+    setImgFile((prev) => [...prev, imageFileToServer]);
+  };
+
+  const handleDelete = (
+    images: string[],
+    imgFile: ImgFileType[],
+    index: number
+  ) => {
+    const deletedImages = images.filter((img, idx) => index !== idx);
+    const deletedImageFiles = imgFile.filter((img, idx) => index !== idx);
+
+    setImages(deletedImages);
+    setImgFile(deletedImageFiles);
   };
 
   useEffect(() => {
@@ -47,6 +59,9 @@ function EditBottomSheetImages({
         {images.map((imageSrc, index) => (
           <li
             key={index}
+            onClick={() => {
+              handleDelete(images, imgFile, index);
+            }}
             className="relative w-12 h-12 text-gray-300 flex items-center justify-center bg-neutral-150 rounded-lg aspect-square"
           >
             <Image

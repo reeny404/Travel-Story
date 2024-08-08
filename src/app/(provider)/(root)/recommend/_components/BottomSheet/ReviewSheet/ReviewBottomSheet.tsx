@@ -1,6 +1,7 @@
 "use client";
 import { api } from "@/apis/api";
 import { useAuth } from "@/contexts/auth.contexts";
+import { ImgFileType } from "@/types/Recommend";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
@@ -24,13 +25,12 @@ function ReviewBottomSheet({
 }: ReviewBottomSheetProps) {
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
-  const [imgFile, setImgFile] = useState<{ name: string; file: File }[]>([]);
+  const [imgFile, setImgFile] = useState<ImgFileType[]>([]);
   const [textValue, setTextValue] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
   const { user } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
-  console.log("user", user);
   const nickname =
     user?.app_metadata.provider === "kakao"
       ? user?.user_metadata.name
@@ -78,8 +78,11 @@ function ReviewBottomSheet({
   const handleAdd = async () => {
     const formData = new FormData();
     for (let i = 0; i < imgFile.length; i++) {
-      formData.append("imgFile", imgFile[i].file);
-      formData.append("imgFileName", imgFile[i].name);
+      const fileItem = imgFile[i];
+      if (typeof fileItem !== "string") {
+        formData.append("imgFile", fileItem.file);
+        formData.append("imgFileName", fileItem.name);
+      }
     }
     formData.append("nickname", nickname);
     formData.append("profileImg", profileImg);
