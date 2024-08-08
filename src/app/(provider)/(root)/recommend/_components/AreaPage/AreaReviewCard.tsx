@@ -54,7 +54,6 @@ function AreaReviewCard({
       queryClient.invalidateQueries({ queryKey: ["areaReviews"] });
     },
   });
-
   const handleDelete = async (id: number) => {
     try {
       deleteReview(id);
@@ -76,7 +75,9 @@ function AreaReviewCard({
       <article className="flex justify-between items-center w-full">
         <div className="flex items-center">
           <VanilaImgFrame
-            imageUrl={userImageUrl || "/icons/avatar.svg"}
+            imageUrl={
+              userImageUrl !== "undefined" ? userImageUrl! : "/icons/avatar.svg"
+            }
             alt="icon"
             width="w-11"
             height="h-11"

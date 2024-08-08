@@ -88,7 +88,9 @@ export async function POST(request: NextRequest) {
   const areaName = data.get("areaName") as string;
   const textValue = data.get("textValue") as string;
   const rating = Number(data.get("rating"));
-
+  const nickname = data.get("nickname") as string;
+  const profileImg = data.get("profileImg") as string;
+  console.log("formData", data);
   const { data: reviewData } = await supabase
     .from("areaReview")
     .insert({
@@ -98,6 +100,8 @@ export async function POST(request: NextRequest) {
       areaName,
       content: textValue,
       rating,
+      nickname,
+      profileImg,
     })
     .select("*")
     .single();

@@ -147,7 +147,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ratingAmount={areaReviews?.length || 0}
                   areaId={areaId}
                 />
-                {/*TODO user metadata에서 가져오는 닉네임이 아닌 review에 닉네임을 저장해야함 로직 수정 필요*/}
                 {areaReviews &&
                   areaReviews
                     .sort(
@@ -159,8 +158,8 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                       return (
                         <AreaReviewCard
                           key={idx}
-                          userImageUrl={user?.user_metadata.profileImg}
-                          name={user?.user_metadata.nickname}
+                          userImageUrl={review.profileImg}
+                          name={review.nickname}
                           imageUrl={review.imageUrls[0]}
                           createdAt={review.createdAt}
                           rating={review.rating!}
