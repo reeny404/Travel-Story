@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
 type StepStoreProps = {
-  step: string;
+  progress: number;
   labelText: string;
   labelColor: string;
   isInputValid: boolean;
   nextURL: string;
-  setStep: (value: string) => void;
+  setProgress: (value: boolean) => void;
   setLabelText: (value: string) => void;
   setLabelColor: (value: string) => void;
   setIsInputValid: (value: boolean) => void;
@@ -14,12 +14,15 @@ type StepStoreProps = {
 };
 
 export const useLoginStepStore = create<StepStoreProps>((set) => ({
-  step: "email",
+  progress: 1,
   labelText: "",
   labelColor: "black",
   isInputValid: true,
   nextURL: "/",
-  setStep: (nextStep) => set({ step: nextStep }),
+  setProgress: (isUp) =>
+    set((state) => ({
+      progress: isUp ? state.progress + 1 : state.progress - 1,
+    })),
   setLabelColor: (nextLabel) => set({ labelColor: nextLabel }),
   setLabelText: (nextText) => set({ labelText: nextText }),
   setIsInputValid: (state) => set({ isInputValid: state }),

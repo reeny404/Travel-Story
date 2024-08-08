@@ -16,8 +16,13 @@ function AuthContainer({
   children,
 }: PropsWithChildren<AuthPageProps>) {
   const supabase = createClient();
-  const { step, setStep, setLabelColor, setLabelText, setIsInputValid } =
-    useLoginStepStore();
+  const {
+    progress: step,
+    setProgress: setStep,
+    setLabelColor,
+    setLabelText,
+    setIsInputValid,
+  } = useLoginStepStore();
   const router = useRouter();
   const { nextURL } = useLoginStepStore();
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
