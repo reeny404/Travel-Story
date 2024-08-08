@@ -1,4 +1,6 @@
-export const TABS = {
+export type Tab = { kr: string; en: string };
+
+export const TABS: { default: Tab[], areaDetail: Tab[] } = {
   default: [
     { kr: "관광", en: "place" },
     { kr: "숙소", en: "accommodation" },

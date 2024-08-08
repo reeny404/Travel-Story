@@ -1,10 +1,9 @@
 import { createClient } from "@/supabase/server";
+import { Order } from "@/types/plan";
+import { PlanUtil } from "@/utils/PlanUtil";
 import { NextRequest, NextResponse } from "next/server";
 
 const TABLE_NAME = "plan";
-type CountryData = {
-  krName: string | null;
-};
 // TODO 이거 Plan쪽으로 옮겨야댐
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -28,7 +27,7 @@ export async function GET(request: NextRequest) {
     statusText: "OK",
   });
 }
-type Order = { id?: string; type?: string };
+
 export async function POST(request: NextRequest) {
   const reqData = await request.json();
   const { userId, title, startDate, endDate, areaId } = reqData;
@@ -41,7 +40,7 @@ export async function POST(request: NextRequest) {
   if (!data) {
     return;
   }
-  const orderList: Order[][] = [[]];
+  const orderList: Order[][] = PlanUtil.order.init(startDate, endDate);
   const countryData = data[0]?.country?.krName;
   const { data: planData, error } = await supabase
     .from(TABLE_NAME)

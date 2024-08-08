@@ -1,5 +1,5 @@
 import { LatLng } from "./LatLng";
-import { TablesInsert } from "./supabase";
+import { Tables, TablesInsert } from "./supabase";
 
 export type PlanChildType =
   | "customePlace"
@@ -13,6 +13,7 @@ export type BottomSheetType = {
   status: "add" | "read" | "update";
 };
 
+export type Plan = Tables<"plan">;
 export type PlanInsertType = TablesInsert<"plan">;
 
 export type Schedule = {
@@ -21,15 +22,16 @@ export type Schedule = {
   areaId: number;
 };
 
-export type OrderList = {
+export type Order = {
   id: string;
-  type: string;
+  type: PlanChildType;
 };
+
 export type ScheduleData = {
   planId: string;
   userId: string;
   areaId: number;
-  orderList: OrderList[];
+  orderList: Order[];
   krName: string;
   day: number | null;
   type: string;

@@ -3,20 +3,30 @@
 @tailwind utilities;
 
 @layer utilities {
+  html {
+    @apply no-scrollbar;
+  }
+
   body {
     @apply text-primary;
   }
+
   .button-px button {
-    @apply px-5; /* Tailwind 클래스 적용, 5는 20px에 해당 */
+    @apply px-5;
+    /* Tailwind 클래스 적용, 5는 20px에 해당 */
   }
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
+
 .no-scrollbar {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .arch-shadow {
