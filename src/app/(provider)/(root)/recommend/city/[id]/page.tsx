@@ -31,13 +31,13 @@ function CityDetailPage({ params }: CityDetailPageProps) {
 
   useEffect(() => {
     setCityId(parseInt(params.id));
+    setCurrentTab("place");
   }, []);
 
   const handleSearch = () => {
     return router.push(`/search`);
   };
 
-  console.log("currentTab", currentTab);
   const { data: city, isPending } = useQuery<
     RecommendResponse<City>,
     AxiosError,

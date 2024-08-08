@@ -90,7 +90,6 @@ export async function POST(request: NextRequest) {
   const rating = Number(data.get("rating"));
   const nickname = data.get("nickname") as string;
   const profileImg = data.get("profileImg") as string;
-  console.log("formData", data);
   const { data: reviewData } = await supabase
     .from("areaReview")
     .insert({

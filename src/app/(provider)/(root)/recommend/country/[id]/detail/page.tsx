@@ -12,13 +12,12 @@ import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import DetailCard from "../../../_components/Cards/DetailCard";
 import MainTourForm from "../../../_components/MainTour/MainTourForm";
-// 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
 // 이 페이지는 SSR이여야함
-//TODO  query 호춣을 최대한 줄여서 메모이제이션으로 관리해야 할 필요가 있음 그 후 헤더가 부자연스러운 부분을 파악해야될 것 같음
+//TODO  query 호춣을 최대한 줄여서 메모이제이션으로 관리해야 할 필요가 있음
 
 type CountryDetailPage = {
   params: { id: string };
@@ -38,6 +37,10 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     return router.push(`/search`);
   };
 
+  useEffect(() => {
+    setCurrentTab("place");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const { data: accommodations } = useQuery<
     RecommendResponse<Area[]>,
     AxiosError,
