@@ -3,7 +3,6 @@ import { api } from "@/apis/api";
 import { AreaReview, ImgFileType } from "@/types/Recommend";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import EditBottomSheetImages from "./EditBottomSheetImages";
 import ReviewBottomSheetInput from "./EditBottomSheetInput";
@@ -17,16 +16,6 @@ type EditSheetProps = {
   areaName: string;
   reviewInfo: AreaReview;
 };
-// const mockData = [
-//   { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
-//   { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
-//   { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
-//   { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
-//   { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
-//   { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
-//   { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
-//   { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
-// ];
 
 function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
   const [isClosing, setIsClosing] = useState(false);
@@ -135,92 +124,6 @@ function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
                 imgFile={imgFile}
                 setImgFile={setImgFile}
               />
-            </div>
-          </article>
-          <article className="flex-grow mt-8 pt-10 px-5 bg-brand-100 flex flex-col items-center">
-            <h1 className="text-xl font-bold leading-[22px] pb-8">
-              어떤 점이 좋았나요?
-            </h1>
-
-            <div className="w-full overflow-x-auto flex gap-x-5 ">
-              <div className="flex flex-col gap-y-3 flex-none ">
-                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
-                  <Image
-                    src="/icons/emoji-dinner.svg"
-                    alt="image"
-                    width={20}
-                    height={20}
-                    className="object-contain"
-                  />
-                  <span className="pl-2 text-sm font-semibold leading-6">
-                    음식이 맛있어요
-                  </span>
-                </div>
-                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
-                  <Image
-                    src="/icons/emoji-architect.svg"
-                    alt="image"
-                    width={20}
-                    height={20}
-                    className="object-contain"
-                  />
-                  <span className="pl-2 text-sm font-semibold leading-6">
-                    관광지와 가까워요
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-y-3 flex-none">
-                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
-                  <Image
-                    src="/icons/emoji-dinner.svg"
-                    alt="image"
-                    width={20}
-                    height={20}
-                    className="object-contain"
-                  />
-                  <span className="pl-2 text-sm font-semibold leading-6">
-                    음식이 맛있어요
-                  </span>
-                </div>
-                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
-                  <Image
-                    src="/icons/emoji-architect.svg"
-                    alt="image"
-                    width={20}
-                    height={20}
-                    className="object-contain"
-                  />
-                  <span className="pl-2 text-sm font-semibold leading-6">
-                    관광지와 가까워요
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-y-3 flex-none">
-                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
-                  <Image
-                    src="/icons/emoji-dinner.svg"
-                    alt="image"
-                    width={20}
-                    height={20}
-                    className="object-contain"
-                  />
-                  <span className="pl-2 text-sm font-semibold leading-6">
-                    음식이 맛있어요
-                  </span>
-                </div>
-                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
-                  <Image
-                    src="/icons/emoji-architect.svg"
-                    alt="image"
-                    width={20}
-                    height={20}
-                    className="object-contain"
-                  />
-                  <span className="pl-2 text-sm font-semibold leading-6">
-                    관광지와 가까워요
-                  </span>
-                </div>
-              </div>
             </div>
           </article>
           <div className="absolute bottom-6 w-full px-5">
