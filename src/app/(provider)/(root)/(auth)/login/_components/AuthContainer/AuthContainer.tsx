@@ -39,32 +39,32 @@ function AuthContainer({
     }
   };
 
-  const handleStepBack = () => {
-    setLabelText("");
-    setLabelColor("black");
-    setIsInputValid(true);
-    switch (step) {
-      case "email":
-        router.back();
-        break;
-      case "password":
-        setStep("email");
-        break;
-      case "add-user":
-        setStep("email");
-        break;
-      case "new-password":
-        setStep("add-user");
-        setIsInputValid(false);
-        break;
-      case "check-password":
-        setStep("new-password");
-        break;
-      case "nickname":
-        setStep("check-password");
-        break;
-    }
-  };
+  // const handleStepBack = () => {
+  //   setLabelText("");
+  //   setLabelColor("black");
+  //   setIsInputValid(true);
+  //   switch (step) {
+  //     case "email":
+  //       router.back();
+  //       break;
+  //     case "password":
+  //       setStep("email");
+  //       break;
+  //     case "add-user":
+  //       setStep("email");
+  //       break;
+  //     case "new-password":
+  //       setStep("add-user");
+  //       setIsInputValid(false);
+  //       break;
+  //     case "check-password":
+  //       setStep("new-password");
+  //       break;
+  //     case "nickname":
+  //       setStep("check-password");
+  //       break;
+  //   }
+  // };
 
   return (
     <MainLayout headerProps={{ title: "로그인", backgroundColor: "noShadow" }}>
