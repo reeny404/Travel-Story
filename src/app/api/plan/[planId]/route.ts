@@ -15,8 +15,7 @@ export async function POST(request: NextRequest, { params: { planId } }: PostPar
   try {
     const requestParameter = await request.json();
     const type: PlanChildType = requestParameter.type;
-    const dayIndex: number = requestParameter.dayIndex - 1; // 1부터 시작해서 0부터 시작하도록 변경
-
+    const dayIndex: number = Number(requestParameter.dayIndex) - 1; // 1부터 시작해서 0부터 시작하도록 변경
 
     const supabase = createClient();
     const manager = getTableManager(supabase, type);
@@ -40,13 +39,12 @@ export async function POST(request: NextRequest, { params: { planId } }: PostPar
       throw new SyntaxError("supabase error, plan select", { cause: planSelectError })
     }
 
-    const orderList: Array<Array<Order>> = new Array(planOrder?.orderList) as Array<Array<Order>>;
+    const orderList = planOrder?.orderList as Array<Array<Order>>;
     orderList.at(dayIndex)?.push({ id: childData.id, type });
-    const orderListJson: string = JSON.stringify(orderList);
 
     const { data: plan, error } = await supabase
       .from(TABLE_PLAN)
-      .update({ orderList: orderListJson })
+      .update({ orderList })
       .eq("id", planId);
 
     if (error) {

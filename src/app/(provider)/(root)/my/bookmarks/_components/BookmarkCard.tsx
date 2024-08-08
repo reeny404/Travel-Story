@@ -1,6 +1,4 @@
-import Icon from "@/components/commons/Icon";
 import ImageFrame from "@/components/Frame/ImageFrame";
-import { ICON } from "@/constants/icon";
 import { BookmarkWithArea } from "@/types/Recommend";
 import { MyBookmarkPageParams } from "../page";
 import AddToPlanButton from "./AddToPlanButton";
@@ -30,7 +28,7 @@ function BookmarkCard({ bookmark, params }: AreaCardProps) {
           {area.description}
         </p>
         <div className="flex items-center">
-          <Icon icon={ICON.star.fill} size={16} />
+          {/* <Icon icon={ICON.star.fill} size={16} /> */}
           <span className="text-sm">4.6</span>
         </div>
         <div className="flex justify-end text-sm">
