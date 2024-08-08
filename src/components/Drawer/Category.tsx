@@ -62,11 +62,12 @@ function Category({
         </div>
         {hasSubCategory && (
           <Image
-            src={`/icons/${isOpen ? ICON.arrow.up.black : ICON.arrow.down.black}.png`}
+            src={`/icons/${ICON.arrow.down.black}.png`}
             alt={alt}
             width={16}
             height={8}
             priority
+            className={`transform transition-transform duration-300 ${isOpen && "-rotate-180"}`}
           />
         )}
       </button>

@@ -41,6 +41,10 @@ function Home() {
     router.push(`/search?query=${term}`);
   };
 
+  const handleMoveSearch = () => {
+    router.push(`/search`);
+  };
+
   return (
     <MainLayout
       headerProps={{
@@ -48,6 +52,12 @@ function Home() {
         title: "TravelStory",
         titleAlign: "left" as const,
         rightIcons: [
+          {
+            icon: ICON.search.black,
+            alt: "Avatar",
+            size: 20,
+            onClick: handleMoveSearch,
+          },
           {
             icon: ICON.avatar.black,
             alt: "Avatar",
