@@ -84,6 +84,8 @@ export async function POST(request: NextRequest) {
       endTime,
       images,
       day,
+      spend,
+      checkList,
     } = await request.json();
 
     let insertData: any;
@@ -113,8 +115,7 @@ export async function POST(request: NextRequest) {
             planId,
             title,
             content: memo,
-            check: memo.checkList,
-            imagesUrl: images,
+            check: checkList,
           },
         ])
         .select();
@@ -133,6 +134,7 @@ export async function POST(request: NextRequest) {
             startTime,
             endTime,
             imagesUrl: images,
+            spend,
           },
         ])
         .select();
@@ -173,7 +175,6 @@ export async function POST(request: NextRequest) {
     }
 
     const planDataParsed = planData as PlanData;
-
     let updatedOrderList: OrderListType[][] = planDataParsed.orderList || [];
 
     while (updatedOrderList.length < day) {
