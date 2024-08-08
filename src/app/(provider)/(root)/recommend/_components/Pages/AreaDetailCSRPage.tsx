@@ -10,7 +10,6 @@ import { useTab } from "@/hooks/useTab";
 import { Area, AreaReview, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import AreaDetailCard from "../AreaPage/AreaDetailCard";
@@ -31,14 +30,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { user } = useAuth();
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const reviewSectionRef = useRef<HTMLDivElement | null>(null);
-<<<<<<< HEAD
-=======
-  const router = useRouter();
-
-  const handleSearch = () => {
-    return router.push(`/search`);
-  };
->>>>>>> feat/reviewCRUD
 
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
@@ -95,7 +86,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             icon: inView ? ICON.shareArea.white : ICON.shareArea.black,
             alt: "share",
             size: 20,
-            onClick: () => handleSearch(),
+            onClick: () => {},
           },
         ],
       }}
@@ -167,13 +158,8 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                       return (
                         <AreaReviewCard
                           key={idx}
-<<<<<<< HEAD
                           userImageUrl={review.profileImg}
                           name={review.nickname}
-=======
-                          userImageUrl={user?.user_metadata.profileImg}
-                          name={user?.user_metadata.nickname}
->>>>>>> feat/reviewCRUD
                           imageUrl={review.imageUrls[0]}
                           createdAt={review.createdAt}
                           rating={review.rating!}

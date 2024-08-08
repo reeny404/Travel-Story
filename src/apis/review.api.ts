@@ -42,11 +42,7 @@ class ReviewAPI {
     const response = await this.axios.post(path, data);
     return response.data;
   }
-<<<<<<< HEAD
   async updateReview(data: FormData) {
-=======
-  async updateReview(data: any) {
->>>>>>> feat/reviewCRUD
     const path = "api/review";
     const response = await this.axios.put(path, data);
     return response.data;
