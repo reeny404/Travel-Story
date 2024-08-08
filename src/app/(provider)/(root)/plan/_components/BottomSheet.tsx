@@ -1,9 +1,7 @@
 "use client";
 
 import { api } from "@/apis/api";
-import PlanAPI from "@/apis/plan.api";
-import { BottomSheetType } from "@/types/plan";
-import axios from "axios";
+import { BottomSheetType, Memo, Todo } from "@/types/plan";
 import { useEffect, useRef, useState } from "react";
 import BottomSheetCheckList from "../_components/BottomSheetCheckList";
 import BottomSheetImages from "../_components/BottomSheetImages";
@@ -19,12 +17,6 @@ type BottomSheetProps = BottomSheetType & {
   id?: string;
 };
 
-const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  timeout: 1000,
-});
-const planAPI = new PlanAPI(apiClient);
-
 function BottomSheet({
   item,
   type,
@@ -37,10 +29,10 @@ function BottomSheet({
   const [status, setStatus] = useState(initialStatus);
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
-  const [images, setImages] = useState<string[]>(type === "memo" ? [] : []);
-  const [checkList, setCheckList] = useState<
-    { text: string; isCheck: boolean }[]
-  >(type === "memo" ? [{ text: "사진 찍기", isCheck: false }] : []);
+  const [images, setImages] = useState<string[]>([]);
+  const [checkList, setCheckList] = useState<Todo[]>(
+    type === "memo" ? [{ text: "사진 찍기", isCheck: false }] : []
+  );
   const [formData, setFormData] = useState<Record<string, any>>({
     title: "",
     memo: "",
@@ -105,7 +97,7 @@ function BottomSheet({
     }
     data.id = id;
     try {
-      const response = await planAPI.updatePlan(planId, data);
+      const response = await api.plan.updatePlan(planId, data);
 
       if (!response) {
         console.error("Error updating data");
@@ -131,7 +123,13 @@ function BottomSheet({
       data.checkList = checkList;
     }
     try {
-      const response = await api.plan.create(data);
+      const insertData: Memo = {
+        title: data.title,
+        planId: planId,
+        content: data.content,
+        check: checkList,
+      };
+      const response = await api.plan.addChild(planId, day, type, insertData);
 
       if (!response) {
         console.error("Error adding data");

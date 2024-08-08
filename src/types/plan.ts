@@ -16,12 +16,21 @@ export type BottomSheetType = {
 export type Plan = Tables<"plan">;
 export type PlanInsertType = TablesInsert<"plan">;
 
+export type PlanChildData = Schedule | Memo;
+export type Memo = {
+  planId: string;
+  title: string;
+  content: string;
+  check: Todo[];
+};
+
 export type Schedule = {
   title: string;
   latlng: LatLng;
   areaId: number;
 };
 
+export type Todo = { text: string; isCheck: boolean };
 export type Order = {
   id: string;
   type: PlanChildType;
