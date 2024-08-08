@@ -7,22 +7,25 @@ import { IconType } from "@/types/Icon";
 import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
-const headerStyles = cva("w-full h-[52px] flex items-center justify-between", {
-  variants: {
-    backgroundColor: {
-      transparent: "bg-transparent header-fixed z-[900]",
-      white: "bg-white shadow-area-card header-sticky h-[52px] z-[900]",
+const headerStyles = cva(
+  "w-full h-[52px] header-fixed flex items-center justify-between",
+  {
+    variants: {
+      backgroundColor: {
+        transparent: "bg-transparent  z-[900]",
+        white: "bg-white shadow-area-card h-[52px] z-[900]",
+      },
+      titleAlign: {
+        left: "justify-start",
+        center: "justify-center",
+      },
     },
-    titleAlign: {
-      left: "justify-start",
-      center: "justify-center",
+    defaultVariants: {
+      backgroundColor: "white",
+      titleAlign: "center",
     },
-  },
-  defaultVariants: {
-    backgroundColor: "white",
-    titleAlign: "center",
-  },
-});
+  }
+);
 
 export type HeaderProps = {
   backgroundColor?: "transparent" | "white";

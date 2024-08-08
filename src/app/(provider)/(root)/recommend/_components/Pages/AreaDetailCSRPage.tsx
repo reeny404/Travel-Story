@@ -25,7 +25,7 @@ type AreaDetailCSRPage = {
 };
 function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
-  const { ref, inView } = useInView({ rootMargin: "-10px 0px 0px 0px" });
+  const { ref, inView } = useInView();
   const { user } = useAuth();
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const reviewSectionRef = useRef<HTMLDivElement | null>(null);
@@ -63,7 +63,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   if (isLoading) {
     return <div>loading...</div>;
   }
-
   return (
     <MainLayout
       headerProps={{
