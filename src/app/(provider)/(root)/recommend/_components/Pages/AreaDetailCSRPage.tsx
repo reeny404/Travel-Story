@@ -10,6 +10,7 @@ import { useTab } from "@/hooks/useTab";
 import { Area, AreaReview, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import AreaDetailCard from "../AreaPage/AreaDetailCard";
@@ -25,8 +26,16 @@ type AreaDetailCSRPage = {
 };
 function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
-  const { ref, inView } = useInView({ threshold: 0 });
+  const { ref, inView } = useInView();
   const { user } = useAuth();
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const reviewSectionRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
+
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
     AxiosError,
@@ -46,8 +55,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
     select: (data) => data.data,
   });
 
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   useEffect(() => {
     const currentTabIndex = TABS.areaDetail.findIndex(
       (tab) => tab.en === currentTab
@@ -65,7 +72,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: inView ? "transparent" : "white",
+        backgroundColor: inView ? "transparent" : "whiteFixed",
         title: inView ? "" : area?.krName!,
         titleAlign: "center",
         rightIcons: [
@@ -73,7 +80,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             icon: inView ? ICON.shareArea.white : ICON.shareArea.black,
             alt: "share",
             size: 20,
-            onClick: () => {},
+            onClick: () => handleSearch(),
           },
         ],
       }}
@@ -96,6 +103,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             <div className="w-full h-full bg-white rounded-t-lg">
               <AreaDetailCard
                 area={area}
+                reviewSectionRef={reviewSectionRef}
                 ratingAmount={areaReviews?.length || 0}
               />
               <Tab
@@ -123,6 +131,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               <div
                 ref={(tabEl) => {
                   sectionRefs.current[2] = tabEl;
+                  reviewSectionRef.current = tabEl;
                 }}
                 className="mb-3 w-full h-full rounded-lg shadow-area-section"
               >
@@ -133,19 +142,26 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   areaId={areaId}
                 />
                 {areaReviews &&
-                  areaReviews.map((review, idx) => {
-                    return (
-                      <AreaReviewCard
-                        key={idx}
-                        userImageUrl={user?.user_metadata.profileImg}
-                        name={user?.user_metadata.nickname}
-                        imageUrl={review.imageUrls[0]}
-                        createdAt={review.createdAt}
-                        rating={review.rating!}
-                        description={review.content!}
-                      />
-                    );
-                  })}
+                  areaReviews
+                    .sort(
+                      (a, b) =>
+                        new Date(b.createdAt).getTime() -
+                        new Date(a.createdAt).getTime()
+                    )
+                    .map((review, idx) => {
+                      return (
+                        <AreaReviewCard
+                          key={idx}
+                          userImageUrl={user?.user_metadata.profileImg}
+                          name={user?.user_metadata.nickname}
+                          imageUrl={review.imageUrls[0]}
+                          createdAt={review.createdAt}
+                          rating={review.rating!}
+                          description={review.content!}
+                          reviewInfo={review}
+                        />
+                      );
+                    })}
               </div>
             </div>
             <UnderBar area={area} />

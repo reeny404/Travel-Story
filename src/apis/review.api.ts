@@ -42,6 +42,16 @@ class ReviewAPI {
     const response = await this.axios.post(path, data);
     return response.data;
   }
+  async updateReview(data: any) {
+    const path = "api/review";
+    const response = await this.axios.put(path, data);
+    return response.data;
+  }
+  async deleteReview(id: number) {
+    const path = "api/review";
+    await this.axios.delete(path, { data: { id } });
+    console.log("id", id);
+  }
 }
 
 export default ReviewAPI;
