@@ -4,11 +4,12 @@ import { api } from "@/apis/api";
 import CardType from "@/components/Card/CardType";
 import MainLayout from "@/components/Layout/MainLayout";
 import CardSlider from "@/components/Slider/CardSlider";
+import ImageSlider from "@/components/Slider/SmImageSlider";
 import Tab from "@/components/Tab/Tab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
-import { Area, Country, RecommendResponse } from "@/types/Recommend";
+import { Area, City, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -28,14 +29,25 @@ function CountryDetailPage({ params }: CountryDetailPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
   const { ref: viewRef, inView } = useInView();
   const router = useRouter();
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
+
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
   });
 
-  const handleSearch = () => {
-    return router.push(`/search`);
-  };
+  const { data: cities } = useQuery<
+    RecommendResponse<City[]>,
+    AxiosError,
+    City[]
+  >({
+    queryKey: ["citiesByCountry", countryId],
+    queryFn: () => api.city.getCitiesByCountry(countryId),
+    select: (cities) => cities.data,
+  });
 
   useEffect(() => {
     setCurrentTab("place");
@@ -178,11 +190,16 @@ function CountryDetailPage({ params }: CountryDetailPage) {
     >
       <DetailCard
         title={country?.data?.title!}
-        // description={country?.data?.description!}
+        name={country?.data?.name}
         imageUrl={country?.data?.imageUrl!}
         viewRef={viewRef}
       />
-      <div className=" container overflow-auto w-full h-full flex-col pt-1 ">
+      <div className=" container overflow-auto w-full h-full flex-col">
+        <div className="w-full h-[82px] mb-1 mt-5">
+          {cities && (
+            <ImageSlider cards={cities} spacing={0} slidesPerView={4.5} />
+          )}
+        </div>
         <Tab
           TABS={TABS.default}
           currentTab={currentTab!}
