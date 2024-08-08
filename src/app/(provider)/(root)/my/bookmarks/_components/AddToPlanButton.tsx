@@ -17,7 +17,7 @@ type AddtoPlanButtonProps = {
 function AddToPlanButton({ plan, area }: AddtoPlanButtonProps) {
   const router = useRouter();
   const { planId, dayIndex } = plan;
-  const isAbleToAddPlan: boolean = !planId || !dayIndex;
+  const isAbleToAddPlan: boolean = !!planId && !!dayIndex;
 
   const handleOnClickToAdd = useCallback(() => {
     api.plan
