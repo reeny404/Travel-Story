@@ -3,9 +3,18 @@ import { ComponentType, LazyExoticComponent, SVGProps } from "react";
 export type SvgIconProps = {
   name: string;
   color?: string;
-  size?: number;
+  width?: number;
+  height?: number;
+  strokeWidth?: number | string;
   className?: string;
   title?: string;
+  hasStroke?: boolean;
+};
+
+export type loadSvgIconType = {
+  name: string;
+  width: number;
+  height: number;
 };
 
 export type IconComponentType =

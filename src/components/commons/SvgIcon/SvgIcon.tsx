@@ -1,5 +1,11 @@
+"use client";
+
 import { COLOR as baseColors } from "@/constants/color";
-import { IconComponentType, SvgIconProps } from "@/types/SvgIcon";
+import {
+  IconComponentType,
+  loadSvgIconType,
+  SvgIconProps,
+} from "@/types/SvgIcon";
 import Image from "next/image";
 import { lazy } from "react";
 import { colors as themeColors } from "../../../../styles/theme/colors";
@@ -7,17 +13,24 @@ import { colors as themeColors } from "../../../../styles/theme/colors";
 const customColor = { ...themeColors, ...baseColors };
 
 // 동일 페이지 내 같은 아이콘 반복 import 방지용 캐시 역할 객체
-const iconCache: {
-  [key: string]: IconComponentType;
-} = {};
+const iconCache: { [key: string]: IconComponentType } = {};
 
-const loadSvgIcon = (name: string): IconComponentType => {
+const loadSvgIcon = ({
+  name,
+  width,
+  height,
+}: loadSvgIconType): IconComponentType => {
   if (!iconCache[name]) {
     iconCache[name] = lazy(() =>
       import(`@/assets/icons/${name}.svg`).catch(() => {
         return {
           default: () => (
-            <Image src="/logo.svg" alt="fallback icon" width={20} height={20} />
+            <Image
+              src="/logo.svg"
+              alt="fallback icon"
+              width={width}
+              height={height}
+            />
           ),
         };
       })
@@ -27,37 +40,48 @@ const loadSvgIcon = (name: string): IconComponentType => {
 };
 
 const getColor = (initialColor: any, colorPath: string): string | undefined => {
-  return colorPath
-    .split("-")
-    .reduce((color, number) => color && color[number], initialColor) as
-    | string
-    | undefined;
+  let color = initialColor[colorPath];
+
+  if (color === undefined) {
+    color = colorPath
+      .split("-")
+      .reduce((color, number) => color && color[number], initialColor) as
+      | string
+      | undefined;
+  }
+
+  return color;
 };
 
 const SvgIcon = ({
   name,
   color = "primary",
-  size = 20,
-  className = "",
+  width = 20,
+  height = 20,
+  strokeWidth = 1.75,
+  className,
   title,
+  hasStroke = false,
 }: SvgIconProps) => {
-  const Icon = loadSvgIcon(name);
-
+  const Icon = loadSvgIcon({ name, width, height });
   const fillColor = getColor(customColor, color) || color;
 
   return (
-    <div
-      className={`flex justify-center items-center ${className}`}
-      style={{ width: `${size}px`, height: `${size}px` }}
+    <button
+      className={`flex justify-center items-center cursor-pointer ${className}`}
+      style={{ width: `${width}px`, height: `${height}px` }}
+      type="button"
     >
       <Icon
-        width={size}
-        height={size}
-        fill={fillColor}
+        width={width}
+        height={height}
+        fill={hasStroke ? "none" : fillColor}
+        stroke={hasStroke ? fillColor : "none"}
+        strokeWidth={hasStroke ? strokeWidth : "none"}
         title={title}
         role="image"
       />
-    </div>
+    </button>
   );
 };
 export default SvgIcon;
