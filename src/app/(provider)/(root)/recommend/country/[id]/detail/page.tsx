@@ -100,6 +100,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         city: place.info.location[1],
         country: place.info.location[0],
         areaName: place.krName!,
+        rating: place.rating!,
       };
     });
   }, [places]);
@@ -115,6 +116,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         city: restaurant.info.location[1],
         country: restaurant.info.location[0],
         areaName: restaurant.krName!,
+        rating: restaurant.rating!,
       };
     });
   }, [restaurants]);
@@ -131,6 +133,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         city: shop.info.location[1],
         country: shop.info.location[0],
         areaName: shop.krName!,
+        rating: shop.rating!,
       };
     });
   }, [shops]);
@@ -147,6 +150,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         city: accommodation.info.location[1],
         country: accommodation.info.location[0],
         areaName: accommodation.krName!,
+        rating: accommodation.rating!,
       };
     });
   }, [accommodations]);

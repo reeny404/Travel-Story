@@ -1,3 +1,4 @@
+import SingleRatingIcon from "@/components/Card/SingleRatingIcon";
 import PrimaryTagList from "@/components/commons/TagList/PrimaryTagList";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
@@ -38,6 +39,7 @@ function AreaCard({
       isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
     }
   };
+  console.log("rating", rating);
   const mockTags = ["친구와 함께", "문화 체험", "도심"];
   return (
     <div className="relative w-full shadow-area-card rounded-lg mb-6">
@@ -56,7 +58,10 @@ function AreaCard({
         <p className="px-4 pt-4 mb-2 text-sm text-ellipsis line-clamp-2 leading-5">
           {description}
         </p>
-        <PrimaryTagList tagList={mockTags} />
+        <div className="w-full flex px-4 ">
+          <SingleRatingIcon rating={rating!} />
+          <PrimaryTagList tagList={mockTags} />
+        </div>
       </div>
       <div className="absolute p-[10px] top-2 right-2 hover:cursor-pointer">
         <div className="relative w-6 h-6 aspect-square">

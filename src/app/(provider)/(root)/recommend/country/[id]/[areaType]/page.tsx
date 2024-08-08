@@ -62,7 +62,7 @@ function AreaTypePage({ params }: AreaTypePageProps) {
               areaName={area.krName!}
               title={area.title}
               description={area.description}
-              rating={4}
+              rating={area.rating!}
               imageUrl={area.imageUrl}
               linkUrl={`/recommend/area/${area.id}`}
               id={area.id}

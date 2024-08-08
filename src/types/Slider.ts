@@ -8,6 +8,7 @@ export type SlideCardProps = {
   city: string;
   country: string;
   areaName: string;
+  rating?: number;
 };
 
 export type SliderProps = {

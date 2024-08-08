@@ -1,6 +1,5 @@
-import { getIconPath } from "@/components/commons/Icon/getIconPath";
+import SingleRatingIcon from "@/components/Card/SingleRatingIcon";
 import PrimaryTagList from "@/components/commons/TagList/PrimaryTagList";
-import { ICON } from "@/constants/icon";
 import Image from "next/image";
 import Link from "next/link";
 import { convertTypeToKr } from "../AreaPage/_utils/convertTypeToKr";
@@ -45,16 +44,7 @@ function SimilarAreaCard({
             />
             <p className="text-xs leading-[22px]">{convertTypeToKr(type)}</p>
           </div>
-          <div className="flex gap-x-1 items-center relative aspect-square">
-            <Image
-              alt="rating"
-              src={getIconPath(ICON.star.fill)}
-              width={12}
-              height={12}
-              className="object-fill"
-            />
-            <p className="text-xs text-neutral-500">{rating}</p>
-          </div>
+          <SingleRatingIcon rating={rating} />
         </div>
         <div className="w-full pt-3 -ml-4">
           <PrimaryTagList tagList={MOCK_TAGS} />
