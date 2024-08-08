@@ -143,7 +143,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
     >
       <DetailCard
         title={city?.title!}
-        description={city?.description!}
+        name={city?.name}
         imageUrl={city?.imageUrl!}
         viewRef={viewRef}
       />
