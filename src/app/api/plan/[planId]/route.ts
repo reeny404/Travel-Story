@@ -40,14 +40,13 @@ export async function POST(request: NextRequest, { params: { planId } }: PostPar
       throw new SyntaxError("supabase error, plan select", { cause: planSelectError })
     }
 
-    const orderList: Array<Array<Array<Order>>> = new Array(planOrder?.orderList) as Array<Array<Array<Order>>>;
-    orderList.at(0)?.at(dayIndex)?.push({ id: childData.id, type });
-
+    const orderList: Array<Array<Order>> = new Array(planOrder?.orderList) as Array<Array<Order>>;
+    orderList.at(dayIndex)?.push({ id: childData.id, type });
     const orderListJson: string = JSON.stringify(orderList);
 
     const { data: plan, error } = await supabase
       .from(TABLE_PLAN)
-      .update({ orderList })
+      .update({ orderList: orderListJson })
       .eq("id", planId);
 
     if (error) {

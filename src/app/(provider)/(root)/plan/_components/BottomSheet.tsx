@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/apis/api";
 import PlanAPI from "@/apis/plan.api";
 import { BottomSheetType } from "@/types/plan";
 import axios from "axios";
@@ -107,7 +108,7 @@ function BottomSheet({
       data.checkList = checkList;
     }
     try {
-      const response = await planAPI.addPlan(planId, data);
+      const response = await api.plan.create(data);
 
       if (!response) {
         console.error("Error adding data");
