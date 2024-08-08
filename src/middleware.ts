@@ -7,7 +7,6 @@ const LOGIN_KEY = "sb-yqoupynehwgshtspamuf-auth-token";
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const pathname = url.pathname;
-
   // 비회원 접근 시 막아야되는 페이지
   if (pathname === "/my" || pathname === "/plan/recent") {
     if (

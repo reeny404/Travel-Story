@@ -4,8 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const supabase = createClient();
 
-  const { searchParams, origin } = new URL(request.url);
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+  const origin = url.origin;
   const code = searchParams.get("code");
+  const next = searchParams.get("next") ?? "/";
 
   const isTypeExist = request.cookies.get("hasTravelType");
 
@@ -15,7 +18,8 @@ export async function GET(request: NextRequest) {
       if (error) {
         return NextResponse.redirect(`${origin}/auth/error`);
       }
-      const redirectUrl = isTypeExist ? "/" : "/onboard";
+      const redirectUrl = isTypeExist ? next : `/onboard?next=${next}`;
+      console.log(`${origin}${redirectUrl}`);
       return NextResponse.redirect(`${origin}${redirectUrl}`);
     } catch (e) {
       return NextResponse.redirect(`${origin}/auth/error`);

@@ -16,15 +16,22 @@ function AuthContainer({
   children,
 }: PropsWithChildren<AuthPageProps>) {
   const supabase = createClient();
-  const { step, setStep, setLabelColor, setLabelText, setIsInputValid } =
-    useLoginStepStore();
+  const {
+    progress: step,
+    setProgress: setStep,
+    setLabelColor,
+    setLabelText,
+    setIsInputValid,
+  } = useLoginStepStore();
   const router = useRouter();
+  const { nextURL } = useLoginStepStore();
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
   const handleKakaoLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: `${baseURL}/api/auth/callback`,
+        redirectTo: `${baseURL}/api/auth/callback?next=${encodeURIComponent(nextURL)}`,
       },
     });
     if (error) {
@@ -32,35 +39,35 @@ function AuthContainer({
     }
   };
 
-  const handleStepBack = () => {
-    setLabelText("");
-    setLabelColor("black");
-    setIsInputValid(true);
-    switch (step) {
-      case "email":
-        router.back();
-        break;
-      case "password":
-        setStep("email");
-        break;
-      case "add-user":
-        setStep("email");
-        break;
-      case "new-password":
-        setStep("add-user");
-        setIsInputValid(false);
-        break;
-      case "check-password":
-        setStep("new-password");
-        break;
-      case "nickname":
-        setStep("check-password");
-        break;
-    }
-  };
+  // const handleStepBack = () => {
+  //   setLabelText("");
+  //   setLabelColor("black");
+  //   setIsInputValid(true);
+  //   switch (step) {
+  //     case "email":
+  //       router.back();
+  //       break;
+  //     case "password":
+  //       setStep("email");
+  //       break;
+  //     case "add-user":
+  //       setStep("email");
+  //       break;
+  //     case "new-password":
+  //       setStep("add-user");
+  //       setIsInputValid(false);
+  //       break;
+  //     case "check-password":
+  //       setStep("new-password");
+  //       break;
+  //     case "nickname":
+  //       setStep("check-password");
+  //       break;
+  //   }
+  // };
 
   return (
-    <MainLayout headerProps={{ title: "로그인" }}>
+    <MainLayout headerProps={{ title: "로그인", backgroundColor: "noShadow" }}>
       <div
         className="w-full px-4 pt-12 bg-white"
         style={{ minHeight: "calc(100vh - 52px)" }}
