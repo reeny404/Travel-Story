@@ -11,6 +11,7 @@ import { Area, AreaReview, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
+import { useInView } from "react-intersection-observer";
 import AreaDetailCard from "../AreaPage/AreaDetailCard";
 import AreaReviewCard from "../AreaPage/AreaReviewCard";
 import LocationForm from "../AreaPage/LocationForm";
@@ -24,14 +25,14 @@ type AreaDetailCSRPage = {
 };
 function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
+  const { ref, inView } = useInView({ threshold: 0 });
   const { user } = useAuth();
-
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
     AxiosError,
     Area
   >({
-    queryKey: ["areasById", areaId],
+    queryKey: ["area", areaId],
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data.data,
   });
@@ -64,12 +65,12 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: "white",
-        title: area?.krName!,
+        backgroundColor: inView ? "transparent" : "white",
+        title: inView ? "" : area?.krName!,
         titleAlign: "center",
         rightIcons: [
           {
-            icon: ICON.shareArea.black,
+            icon: inView ? ICON.shareArea.white : ICON.shareArea.black,
             alt: "share",
             size: 20,
             onClick: () => {},
@@ -79,16 +80,18 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
     >
       {area && (
         <main className="h-full w-full relative container">
-          <CardImgFrame
-            imageUrl={area.imageUrl}
-            alt={area.title}
-            frameClassName="-z-50 -mb-11 aspect-4/5"
-            imageClassName="object-cover"
-            isTop={true}
-            country={area.info.location[0]}
-            city={area.info.location[1]}
-            areaName={area.name}
-          />
+          <div ref={ref}>
+            <CardImgFrame
+              imageUrl={area.imageUrl}
+              alt={area.title}
+              frameClassName="-z-50 -mb-11 aspect-4/5"
+              imageClassName="object-cover"
+              isTop={true}
+              country={area.info.location[0]}
+              city={area.info.location[1]}
+              areaName={area.name}
+            />
+          </div>
           <section className="w-full h-full p-4 pb-0">
             <div className="w-full h-full bg-white rounded-t-lg">
               <AreaDetailCard
@@ -97,7 +100,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               />
               <Tab
                 TABS={TABS.areaDetail}
-                currentTab={currentTab}
+                currentTab={currentTab!}
                 setCurrentTab={setCurrentTab}
                 frameClassName="top-[56px] shadow-area-section"
               />

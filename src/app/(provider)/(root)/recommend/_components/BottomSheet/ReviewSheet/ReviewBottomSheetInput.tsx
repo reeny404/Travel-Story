@@ -14,7 +14,7 @@ export default function ReviewBottomSheetInput({
 
   return (
     <textarea
-      className="border border-gray-400 outline-none rounded-lg m-4 p-2 h-40  text-sm "
+      className="border-[1.25px] border-neutral-200 text-neutral-400 rounded-lg p-4 h-36 "
       value={textValue}
       onChange={handleChange}
       placeholder={"어떤 경험을 공유하고 싶으신가요?"}

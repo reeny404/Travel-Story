@@ -1,6 +1,8 @@
 "use client";
 import { api } from "@/apis/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import clsx from "clsx";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import ReviewBottomSheetImages from "./ReviewBottomSheetImages";
 import ReviewBottomSheetInput from "./ReviewBottomSheetInput";
@@ -13,7 +15,16 @@ type ReviewBottomSheetProps = {
   id: string; // 추가
   areaName: string;
 };
-
+const mockData = [
+  { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
+  { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
+  { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
+  { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
+  { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
+  { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
+  { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
+  { icon: `/icons/emoji-dinner.svg`, text: "음식이 맛있어요" },
+];
 function ReviewBottomSheet({
   onClose,
   areaId,
@@ -39,7 +50,7 @@ function ReviewBottomSheet({
 
   const handleRatingClick = (rating: number, idx: number) => {
     if (rating === idx) {
-      setRating(0);
+      setRating((prev) => prev - 1);
       return;
     }
     setRating(idx);
@@ -85,17 +96,16 @@ function ReviewBottomSheet({
       console.error("Error adding data:", error);
     }
   };
-
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full z-[950] bg-black${
+      className={`fixed top-0 left-0 w-full h-full z-bottomSheet bg-black${
         isOpening || isClosing ? "transition-opacity duration-300" : ""
       } ${isOpening ? "bg-opacity-0" : "bg-opacity-50"}`}
       onClick={handleClose}
     >
       <form
         ref={formRef}
-        className={`absolute bottom-0 left-0 w-full h-auto py-4 pb-8 px-4 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet bg-white transform${
+        className={`absolute bottom-0 left-0 w-full h-[660px] pt-7 rounded-t-3xl shadow-bottom-sheet bg-white transform${
           isClosing
             ? "translate-y-full"
             : isOpening
@@ -103,24 +113,125 @@ function ReviewBottomSheet({
               : "translate-y-0"
         }transition-transform duration-300`}
       >
-        <ReviewBottomSheetTitle />
-        <ReviewBottomSheetRating
-          rating={rating}
-          handleRatingClick={handleRatingClick}
-        />
+        <section className="relative w-full h-full flex flex-col">
+          <article className="relative w-full flex px-5 flex-col gap-y-8 ">
+            <ReviewBottomSheetTitle />
+            <ReviewBottomSheetRating
+              rating={rating}
+              handleRatingClick={handleRatingClick}
+            />
+            <div className="w-full flex flex-col gap-y-3">
+              <ReviewBottomSheetInput
+                textValue={textValue}
+                setTextValue={setTextValue}
+              />
+              <ReviewBottomSheetImages
+                imgFile={imgFile}
+                setImgFile={setImgFile}
+              />
+            </div>
+          </article>
+          <article className="flex-grow mt-8 pt-10 px-5 bg-brand-100 flex flex-col items-center">
+            <h1 className="text-xl font-bold leading-[22px] pb-8">
+              어떤 점이 좋았나요?
+            </h1>
 
-        <ReviewBottomSheetInput
-          textValue={textValue}
-          setTextValue={setTextValue}
-        />
-        <ReviewBottomSheetImages imgFile={imgFile} setImgFile={setImgFile} />
-        <button
-          className="w-full h-10 mt-2 text-center border border-gray-600 rounded-lg"
-          type="button"
-          onClick={handleAdd}
-        >
-          작성 완료
-        </button>
+            <div className="w-full overflow-x-auto flex gap-x-5 ">
+              <div className="flex flex-col gap-y-3 flex-none ">
+                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
+                  <Image
+                    src="/icons/emoji-dinner.svg"
+                    alt="image"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                  <span className="pl-2 text-sm font-semibold leading-6">
+                    음식이 맛있어요
+                  </span>
+                </div>
+                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
+                  <Image
+                    src="/icons/emoji-architect.svg"
+                    alt="image"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                  <span className="pl-2 text-sm font-semibold leading-6">
+                    관광지와 가까워요
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-col gap-y-3 flex-none">
+                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
+                  <Image
+                    src="/icons/emoji-dinner.svg"
+                    alt="image"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                  <span className="pl-2 text-sm font-semibold leading-6">
+                    음식이 맛있어요
+                  </span>
+                </div>
+                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
+                  <Image
+                    src="/icons/emoji-architect.svg"
+                    alt="image"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                  <span className="pl-2 text-sm font-semibold leading-6">
+                    관광지와 가까워요
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-col gap-y-3 flex-none">
+                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
+                  <Image
+                    src="/icons/emoji-dinner.svg"
+                    alt="image"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                  <span className="pl-2 text-sm font-semibold leading-6">
+                    음식이 맛있어요
+                  </span>
+                </div>
+                <div className="px-5 py-[10px] bg-white rounded-lg flex items-center">
+                  <Image
+                    src="/icons/emoji-architect.svg"
+                    alt="image"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                  <span className="pl-2 text-sm font-semibold leading-6">
+                    관광지와 가까워요
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+          <div className="absolute bottom-6 w-full px-5">
+            <button
+              className={clsx(
+                "bg-button-disable w-full h-10 text-center text-neutral-450 rounded-lg",
+                {
+                  "!bg-neutral-750 !text-white": textValue.length > 0,
+                }
+              )}
+              type="button"
+              onClick={handleAdd}
+            >
+              {textValue.length === 0 ? "작성을 완료해주세요" : "리뷰 등록하기"}
+            </button>
+          </div>
+        </section>
       </form>
     </div>
   );

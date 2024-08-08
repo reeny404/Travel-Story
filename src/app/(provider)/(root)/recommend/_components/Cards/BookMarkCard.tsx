@@ -32,7 +32,7 @@ function BookMarkCard({
     e.preventDefault();
 
     if (!isLoggedIn) {
-      openModal("로그인 필요", "로그인 유저만 가능합니다");
+      openModal("로그인하면 일정에 장소를 추가할 수 있어요");
       return;
     }
 
