@@ -51,7 +51,8 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
 
   const handleAdd = async () => {
     if (clickedPlan !== 0 && (!clickedPlan || !day)) {
-      return console.log("여행 일정을 선택해주세요");
+      alert("여행 일정을 선택해주세요");
+      return;
     }
     const data = planData[clickedPlan!];
     const scheduleData: ScheduleData = {

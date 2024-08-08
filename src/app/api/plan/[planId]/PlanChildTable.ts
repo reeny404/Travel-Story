@@ -6,7 +6,7 @@ interface DataManager<T> {
   insert: (data: T) => Promise<T | null>
 }
 
-export class PlanChild {
+export class PlanChild<T> implements DataManager<T> {
   protected client: SupabaseClient;
   protected tableName: string;
 
@@ -14,32 +14,45 @@ export class PlanChild {
     this.client = supabase
     this.tableName = tableName;
   }
-}
 
-class ScheduleManager extends PlanChild implements DataManager<Tables<"schedule">> {
-  constructor(supabase: SupabaseClient) {
-    super(supabase, "schedule")
-  }
-
-  async insert(info: Tables<"schedule">): Promise<Tables<"schedule"> | null> {
+  async insert(info: T): Promise<T | null> {
     const { data, error } = await this.client
       .from(this.tableName)
       .insert(info)
       .select()
-      .returns<Tables<"schedule">>()
       .single();
 
     if (error) {
-      throw new Error("schedule insert 중 에러 발생", { cause: error });
+      throw new Error("insert 중 에러 발생", { cause: error });
     }
 
     return data;
   }
 }
 
+class ScheduleManager extends PlanChild<Tables<"schedule">> {
+  constructor(supabase: SupabaseClient) {
+    super(supabase, "schedule")
+  }
+}
+
+class MemoManager extends PlanChild<Tables<"memo">> {
+  constructor(supabase: SupabaseClient) {
+    super(supabase, "memo")
+  }
+}
+
+class MoveScheduleManager extends PlanChild<Tables<"moveSchedule">> {
+  constructor(supabase: SupabaseClient) {
+    super(supabase, "moveSchedule")
+  }
+}
+
 export function getTableManager(supabase: SupabaseClient, type: PlanChildType) {
   switch (type) {
     case "customePlace": return new ScheduleManager(supabase);
+    case "memo": return new MemoManager(supabase);
+    case "move": return new MoveScheduleManager(supabase);
     default: return null;
   }
 }

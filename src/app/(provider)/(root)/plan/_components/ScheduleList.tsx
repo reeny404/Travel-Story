@@ -38,7 +38,6 @@ function ScheduleList({
           params: { planId, day: selectedDay },
         });
         setData(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         console.error("일정 데이터를 가져오는 중 오류 발생:", error);
       }
@@ -109,7 +108,6 @@ function ScheduleList({
     setType(type);
     setStatus(status);
     setIsBottomSheetOpen(true);
-    console.log(item);
   };
 
   const closeBottomSheet = () => {

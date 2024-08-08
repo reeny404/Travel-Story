@@ -1,15 +1,14 @@
 "use client";
 
 import { api } from "@/apis/api";
-import PlanAPI from "@/apis/plan.api";
-import { BottomSheetType } from "@/types/plan";
-import axios from "axios";
+import { BottomSheetType, Todo } from "@/types/plan";
 import { useEffect, useRef, useState } from "react";
 import BottomSheetCheckList from "../_components/BottomSheetCheckList";
 import BottomSheetImages from "../_components/BottomSheetImages";
 import BottomSheetInput from "../_components/BottomSheetInput";
 import BottomSheetTitle from "../_components/BottomSheetTitle";
 import UpdateButton from "../_components/UpdateButton";
+import { getInsertData } from "./getInsertData";
 
 type BottomSheetProps = BottomSheetType & {
   item?: any;
@@ -18,12 +17,6 @@ type BottomSheetProps = BottomSheetType & {
   day: number;
   id?: string;
 };
-
-const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  timeout: 1000,
-});
-const planAPI = new PlanAPI(apiClient);
 
 function BottomSheet({
   item,
@@ -37,10 +30,10 @@ function BottomSheet({
   const [status, setStatus] = useState(initialStatus);
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
-  const [images, setImages] = useState<string[]>(type === "memo" ? [] : []);
-  const [checkList, setCheckList] = useState<
-    { text: string; isCheck: boolean }[]
-  >(type === "memo" ? [{ text: "사진 찍기", isCheck: false }] : []);
+  const [images, setImages] = useState<string[]>([]);
+  const [checkList, setCheckList] = useState<Todo[]>(
+    type === "memo" ? [{ text: "사진 찍기", isCheck: false }] : []
+  );
   const [formData, setFormData] = useState<Record<string, any>>({
     title: "",
     memo: "",
@@ -63,6 +56,10 @@ function BottomSheet({
       });
     }
   }, [item, status]);
+
+  const handleChangeTitle = (title: string) => {
+    setFormData((data) => ({ ...data, title }));
+  };
 
   const handleClose = (e?: React.MouseEvent<HTMLDivElement>) => {
     if (e && formRef.current && !formRef.current.contains(e.target as Node)) {
@@ -105,7 +102,7 @@ function BottomSheet({
     }
     data.id = id;
     try {
-      const response = await planAPI.updatePlan(planId, data);
+      const response = await api.plan.updatePlan(planId, data);
 
       if (!response) {
         console.error("Error updating data");
@@ -122,18 +119,22 @@ function BottomSheet({
   };
 
   const handleAdd = async () => {
-    const data = getFormData();
-    data.images = JSON.stringify(images);
-    data.planId = planId;
-    data.type = type;
-    data.day = day;
-    console.log("Sending data to server:", data);
-    if (type === "memo") {
-      data.checkList = checkList;
-    }
     try {
-      const response = await api.plan.create(data);
+      // 동일한 key값의 data가 있으면 엎어쓸 확률이 있음
+      // ref에서 가져오던 useState 값을 가져오던 하나로 통일 필요
+      const data = getFormData();
+      Object.keys(formData)
+        .filter((key: string) => !!formData[key])
+        .forEach((key) => {
+          data[key] = data[key] ?? formData[key];
+        });
+      const insertData = getInsertData(type, data, planId, checkList);
+      if (!insertData) {
+        console.warn("insert용 데이터 생성 불가");
+        return;
+      }
 
+      const response = await api.plan.addChild(planId, day, type, insertData);
       if (!response) {
         console.error("Error adding data");
         return;
@@ -161,7 +162,12 @@ function BottomSheet({
               : "translate-y-0"
         } transition-transform duration-300`}
       >
-        <BottomSheetTitle type={type} status={status} title={formData.title} />
+        <BottomSheetTitle
+          type={type}
+          status={status}
+          title={formData.title}
+          onChange={handleChangeTitle}
+        />
         {type !== "memo" && (
           <BottomSheetInput
             type="time"
@@ -175,13 +181,13 @@ function BottomSheet({
           isDisabled={status === "read"}
           value={formData.memo}
         />
-        {type !== "memo" && type !== "move" && (
+        {/* {type !== "memo" && type !== "move" && (
           <BottomSheetInput
             type="spend"
             isDisabled={status === "read"}
             value={formData.spend}
           />
-        )}
+        )} */}
         {(type === "place" || type === "customePlace") && (
           <BottomSheetInput
             type="place"

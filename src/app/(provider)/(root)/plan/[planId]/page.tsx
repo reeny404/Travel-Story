@@ -38,7 +38,6 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
     const fetchPlanData = async () => {
       try {
         const planData: Tables<"plan">[] = await api.getMyPlans(); // PlanAPI를 통해 데이터 가져오기
-        console.log(planData);
         const plan = planData.find((p: Tables<"plan">) => p.id === planId);
 
         if (plan) {

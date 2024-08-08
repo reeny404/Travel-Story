@@ -15,10 +15,9 @@ class BookmarkAPI {
   // 유저 정보에 따른 북마크들을 가져옵니다.
   async getBookmarks(): Promise<RecommendResponse<BookmarkWithArea[]>> {
     const path = "/api/bookmark";
-    const response = await this.axios.get<RecommendResponse<BookmarkWithArea[]>>(
+    const { data } = await this.axios.get<RecommendResponse<BookmarkWithArea[]>>(
       path
     );
-    const data = response.data;
     return data;
   }
 
