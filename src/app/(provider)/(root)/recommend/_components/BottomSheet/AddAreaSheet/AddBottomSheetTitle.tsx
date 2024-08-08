@@ -39,7 +39,7 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
     const data = {
       userId: user.id,
       areaId: areaId,
-      title: PlanUtil.getTitle(user?.user_metadata.nickname),
+      title: PlanUtil.getTitle(user?.user_metadata),
       startDate: new Date().toISOString(),
       endDate: new Date().toISOString(),
     };

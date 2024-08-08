@@ -1,10 +1,15 @@
 import { Order } from "@/types/plan";
+import { UserMetadata } from "@supabase/supabase-js";
 import { DateUtil } from "./DateUtil";
 
 export type OrderList = Array<Array<Order>>
 
-function getTitle(nickname: string): string {
-  return nickname ? `${nickname}님의 여행` : "나만의 여행";
+function getTitle(meta?: UserMetadata): string {
+  if (!meta) {
+    return "나만의 여행";
+  }
+  const nickname = meta.name || meta.nickname;
+  return `${nickname}님의 여행`;
 }
 
 function initOrderList(startDate: string | undefined | null, endDate: string | undefined | null): OrderList {
