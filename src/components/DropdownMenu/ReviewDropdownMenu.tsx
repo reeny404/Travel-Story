@@ -45,7 +45,11 @@ const ReviewDropdownMenu = ({ handleOpen, handleDelete }: DropdownMenu) => {
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded-md shadow-lg z-10">
-          <ul>
+          <ul
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
             <li
               onClick={handleOpen}
               className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
