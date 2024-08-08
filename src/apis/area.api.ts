@@ -26,7 +26,6 @@ class AreaAPI {
   /**
    *
    * @param id {number} cityId or id
-   * @param isMultiple  {boolean} 다수 지역 or 한개의 지역
    * @returns
    */
   async getAreasById(id: number): Promise<RecommendResponse<Area>> {

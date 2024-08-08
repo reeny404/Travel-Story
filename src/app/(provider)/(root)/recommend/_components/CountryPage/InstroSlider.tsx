@@ -1,5 +1,6 @@
 "use client";
 
+import { dmSerifDisplayFont } from "@/constants/fonts";
 import { IntroDataType } from "@/types/Recommend";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,22 +30,20 @@ function InstroSlider(country: IntroSliderProps) {
         <div className="relative w-full h-full min-h-[812px] flex flex-col justify-center items-center aspect-4/5">
           {/* <div className="absolute w-full -z-20 inset-0 bg-black opacity-40"></div> */}
           <Image
-            src={
-              country.countryId === 1
-                ? `/cardImages/France-intro-title.png`
-                : country.imageUrl!
-            }
+            src={country.imageUrl!}
             alt={country.title}
             fill
             className="object-cover -z-30"
           />
-          {country.countryId !== 1 && (
-            <h1 className="mt-[140px] pb-8  text-6xl font-bold text-white">
-              {country.title}
-            </h1>
-          )}
+
+          <h1
+            className={`${dmSerifDisplayFont.className} mt-[140px] pb-8 text-[64px] leading-[76.8px] text-white`}
+          >
+            {country.title}
+          </h1>
+
           <div
-            className={`w-full flex flex-col justify-center items-center gap-y-[9px] ${country.countryId === 1 ? `mt-[249px]` : ""}`}
+            className={`w-full flex flex-col justify-center items-center gap-y-[9px]`}
           >
             <p className="text-white">.</p>
             {country.cities.map((city, idx) => {

@@ -1,4 +1,12 @@
+"use client";
+import { api } from "@/apis/api";
 import RatingIcons from "@/components/Card/RatingIcons";
+import ReviewDropdownMenu from "@/components/DropdownMenu/ReviewDropdownMenu";
+import { useAuth } from "@/contexts/auth.contexts";
+import { AreaReview } from "@/types/Recommend";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { createEditwBottomSheet } from "../BottomSheet/EditSheet/ReviewSheet/EditBottomSheet";
 import VanilaImgFrame from "../VanilaImgFram";
 
 // props로 유저정보, 리뷰정보를 받아야함.
@@ -9,6 +17,7 @@ type AreaReviewCardProps = {
   imageUrl: string;
   rating: number;
   description: string;
+  reviewInfo: AreaReview;
 };
 
 function AreaReviewCard({
@@ -18,14 +27,57 @@ function AreaReviewCard({
   imageUrl,
   rating = 0,
   description,
+  reviewInfo,
 }: AreaReviewCardProps) {
+  const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const { isLoggedIn } = useAuth();
   const date = createdAt.slice(0, 10).replaceAll("-", ".");
+  const queryClient = useQueryClient();
+
+  const handleOpen = () => {
+    setBottomSheetVisible(true);
+  };
+
+  const handleClose = () => {
+    setBottomSheetVisible(false);
+  };
+
+  const BottomSheet = createEditwBottomSheet();
+  const { mutate: deleteReview } = useMutation({
+    mutationFn: async (id: number) => {
+      await api.review.deleteReview(id);
+    },
+    onError: (error) => {
+      console.error("Error adding data:", error);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["areaReviews"] });
+    },
+  });
+  const handleDelete = async (id: number) => {
+    try {
+      deleteReview(id);
+    } catch (error) {
+      console.error("error deleting data", error);
+    }
+  };
   return (
     <section className="w-full flex flex-col px-4">
+      {isBottomSheetVisible && (
+        <BottomSheet
+          areaName={reviewInfo.areaName}
+          onClose={handleClose}
+          areaId={reviewInfo.areaId!}
+          id={reviewInfo.userId!}
+          reviewInfo={reviewInfo}
+        />
+      )}
       <article className="flex justify-between items-center w-full">
         <div className="flex items-center">
           <VanilaImgFrame
-            imageUrl={userImageUrl || "/icons/avatar.svg"}
+            imageUrl={
+              userImageUrl !== "undefined" ? userImageUrl! : "/icons/avatar.svg"
+            }
             alt="icon"
             width="w-11"
             height="h-11"
@@ -38,14 +90,13 @@ function AreaReviewCard({
             <p className="text-xs font-semibold">{date}</p>
           </div>
         </div>
-        <VanilaImgFrame
-          imageUrl={"/icons/bars-black.svg"}
-          alt="icon"
-          width="w-5"
-          height="h-5"
-          frameClassName="bg-white rounded-full relative aspect-auto"
-          imageClassName="object-contain"
-        />
+
+        {isLoggedIn && (
+          <ReviewDropdownMenu
+            handleOpen={handleOpen}
+            handleDelete={() => handleDelete(reviewInfo.id)}
+          />
+        )}
       </article>
       <div className="mt-7">
         <RatingIcons type="small" rating={rating} />

@@ -12,8 +12,9 @@ const headerStyles = cva(
   {
     variants: {
       backgroundColor: {
-        transparent: "bg-transparent fixed top-0",
-        white: "bg-white shadow-area-card sticky top-0 h-[52px]",
+        transparent: "bg-transparent header-fixed",
+        white: "bg-white shadow-area-card sticky top-0",
+        whiteFixed: "bg-white shadow-area-card header-fixed ",
         noShadow: "bg-white sticky top-0 h-[52px] z-[900]",
       },
       titleAlign: {
@@ -29,7 +30,7 @@ const headerStyles = cva(
 );
 
 export type HeaderProps = {
-  backgroundColor?: "transparent" | "white" | "noShadow";
+  backgroundColor?: "transparent" | "white" | "whiteFixed" | "noShadow";
   title?: string;
   titleAlign?: "left" | "center";
   rightIcons?: {

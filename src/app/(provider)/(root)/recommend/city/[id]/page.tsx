@@ -13,6 +13,7 @@ import { Area, City, RecommendResponse } from "@/types/Recommend";
 import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import DetailCard from "../../_components/Cards/DetailCard";
@@ -25,12 +26,18 @@ type CityDetailPageProps = {
 function CityDetailPage({ params }: CityDetailPageProps) {
   const { setCityId, cityId } = useRecommendStore((state) => state);
   const { ref: viewRef, inView } = useInView();
+  const router = useRouter();
+  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
 
   useEffect(() => {
     setCityId(parseInt(params.id));
+    setCurrentTab("place");
   }, []);
-  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
-  console.log("currentTab", currentTab);
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
+
   const { data: city, isPending } = useQuery<
     RecommendResponse<City>,
     AxiosError,
@@ -62,12 +69,13 @@ function CityDetailPage({ params }: CityDetailPageProps) {
       title: place.title,
       description: place.description,
       imageUrl: place.imageUrl!,
-      linkUrl: `/recommend/area${place.id}`,
+      linkUrl: `/recommend/area/${place.id}`,
       tags: ["친구와 함께", "문화체험", "도심"],
       id: place.id,
       city: place.info.location[1],
       country: place.info.location[0],
       areaName: place.krName!,
+      rating: place.rating!,
     };
   });
   const restaurantsSliderProps = restaurantAreas?.map((restaurant, idx) => {
@@ -75,12 +83,13 @@ function CityDetailPage({ params }: CityDetailPageProps) {
       title: restaurant.title,
       description: restaurant.description,
       imageUrl: restaurant.imageUrl!,
-      linkUrl: `/recommend/area${restaurant.id}`,
+      linkUrl: `/recommend/area/${restaurant.id}`,
       tags: ["친구와 함께", "문화체험", "도심"],
       id: restaurant.id,
       city: restaurant.info.location[1],
       country: restaurant.info.location[0],
       areaName: restaurant.krName!,
+      rating: restaurant.rating!,
     };
   });
   const shopsSliderProps = shopAreas?.map((shop, idx) => {
@@ -88,12 +97,13 @@ function CityDetailPage({ params }: CityDetailPageProps) {
       title: shop.title,
       description: shop.description,
       imageUrl: shop.imageUrl!,
-      linkUrl: `/recommend/area${shop.id}`,
+      linkUrl: `/recommend/area/${shop.id}`,
       tags: ["친구와 함께", "문화체험", "도심"],
       id: shop.id,
       city: shop.info.location[1],
       country: shop.info.location[0],
       areaName: shop.krName!,
+      rating: shop.rating!,
     };
   });
   const accommodationsSliderProps = accommodationAreas?.map(
@@ -108,6 +118,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
         city: accommodation.info.location[1],
         country: accommodation.info.location[0],
         areaName: accommodation.krName!,
+        rating: accommodation.rating!,
       };
     }
   );
@@ -117,7 +128,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: inView ? "transparent" : "white",
+        backgroundColor: inView ? "transparent" : "whiteFixed",
         title: inView ? "" : city?.krName!,
         titleAlign: "center",
         rightIcons: [
@@ -125,14 +136,14 @@ function CityDetailPage({ params }: CityDetailPageProps) {
             icon: inView ? ICON.search.white : ICON.search.black,
             alt: "Search",
             size: 20,
-            onClick: () => {},
+            onClick: handleSearch,
           },
         ],
       }}
     >
       <DetailCard
         title={city?.title!}
-        description={city?.description!}
+        name={city?.name}
         imageUrl={city?.imageUrl!}
         viewRef={viewRef}
       />

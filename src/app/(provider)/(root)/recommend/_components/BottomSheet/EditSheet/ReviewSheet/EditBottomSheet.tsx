@@ -1,41 +1,33 @@
 "use client";
 import { api } from "@/apis/api";
-import { useAuth } from "@/contexts/auth.contexts";
-import { ImgFileType } from "@/types/Recommend";
+import { AreaReview, ImgFileType } from "@/types/Recommend";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
-import ReviewBottomSheetImages from "./ReviewBottomSheetImages";
-import ReviewBottomSheetInput from "./ReviewBottomSheetInput";
-import ReviewBottomSheetRating from "./ReviewBottomSheetRating";
-import ReviewBottomSheetTitle from "./ReviewBottomSheetTitle";
+import EditBottomSheetImages from "./EditBottomSheetImages";
+import ReviewBottomSheetInput from "./EditBottomSheetInput";
+import ReviewBottomSheetRating from "./EditBottomSheetRating";
+import ReviewBottomSheetTitle from "./EditBottomSheetTitle";
 
-type ReviewBottomSheetProps = {
+type EditSheetProps = {
   onClose: () => void;
   areaId: number;
   id: string; // 추가
   areaName: string;
+  reviewInfo: AreaReview;
 };
 
-function ReviewBottomSheet({
-  onClose,
-  areaId,
-  id,
-  areaName,
-}: ReviewBottomSheetProps) {
+function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const [imgFile, setImgFile] = useState<ImgFileType[]>([]);
-  const [textValue, setTextValue] = useState<string>("");
-  const [rating, setRating] = useState<number>(0);
-  const { user } = useAuth();
+  const [textValue, setTextValue] = useState<string>(reviewInfo.content! ?? "");
+  const [rating, setRating] = useState<number>(reviewInfo.rating ?? 0);
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
-  const nickname =
-    user?.app_metadata.provider === "kakao"
-      ? user?.user_metadata.name
-      : user?.user_metadata.nickname;
-  const profileImg = user?.user_metadata.avatar_url;
+  useEffect(() => {
+    setImgFile(() => reviewInfo.imageUrls);
+  }, []);
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (formRef.current && !formRef.current.contains(e.target as Node)) {
       setIsClosing(true);
@@ -44,7 +36,6 @@ function ReviewBottomSheet({
       }, 300);
     }
   };
-
   const handleRatingClick = (rating: number, idx: number) => {
     if (rating === idx) {
       setRating((prev) => prev - 1);
@@ -60,10 +51,10 @@ function ReviewBottomSheet({
     }, 300);
   }, []);
 
-  const { mutate: addReview } = useMutation({
+  const { mutate: updateReview } = useMutation({
     mutationFn: async (formData: FormData) => {
-      const response = await api.review.addReview(formData);
       onClose();
+      const response = await api.review.updateReview(formData);
       return response.data;
     },
     onError: (error) => {
@@ -75,29 +66,31 @@ function ReviewBottomSheet({
     },
   });
 
-  const handleAdd = async () => {
+  const handleUpdate = async () => {
     const formData = new FormData();
     for (let i = 0; i < imgFile.length; i++) {
       const fileItem = imgFile[i];
       if (typeof fileItem !== "string") {
         formData.append("imgFile", fileItem.file);
         formData.append("imgFileName", fileItem.name);
+      } else {
+        formData.append("stringImgFile", fileItem);
       }
     }
-    formData.append("nickname", nickname);
-    formData.append("profileImg", profileImg);
-    formData.append("userId", id);
-    formData.append("areaId", areaId.toString());
+    formData.append("id", reviewInfo.id.toString());
+    formData.append("userId", reviewInfo.userId);
+    formData.append("areaId", reviewInfo.areaId!.toString());
     formData.append("textValue", textValue);
     formData.append("rating", rating.toString());
-    formData.append("areaName", areaName);
+    formData.append("areaName", reviewInfo.areaName);
 
     try {
-      addReview(formData);
+      updateReview(formData);
     } catch (error) {
-      console.error("Error adding data:", error);
+      console.error("Error updating data:", error);
     }
   };
+
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full z-bottomSheet bg-black${
@@ -127,13 +120,12 @@ function ReviewBottomSheet({
                 textValue={textValue}
                 setTextValue={setTextValue}
               />
-              <ReviewBottomSheetImages
+              <EditBottomSheetImages
                 imgFile={imgFile}
                 setImgFile={setImgFile}
               />
             </div>
           </article>
-
           <div className="absolute bottom-6 w-full px-5">
             <button
               className={clsx(
@@ -143,9 +135,9 @@ function ReviewBottomSheet({
                 }
               )}
               type="button"
-              onClick={handleAdd}
+              onClick={handleUpdate}
             >
-              {textValue.length === 0 ? "작성을 완료해주세요" : "리뷰 등록하기"}
+              {textValue.length === 0 ? "작성을 완료해주세요" : "리뷰 수정하기"}
             </button>
           </div>
         </section>
@@ -154,23 +146,25 @@ function ReviewBottomSheet({
   );
 }
 
-export function createReviewBottomSheet() {
-  return function ReviewBottomSheetWrapper({
+export function createEditwBottomSheet() {
+  return function EditBottomSheetWrapper({
     onClose,
     areaId,
     areaName,
     id,
+    reviewInfo,
     // 추가
-  }: ReviewBottomSheetProps) {
+  }: EditSheetProps) {
     return (
-      <ReviewBottomSheet
+      <EditBottomSheet
         areaName={areaName}
         onClose={onClose}
         areaId={areaId}
+        reviewInfo={reviewInfo}
         id={id} // 전달
       />
     );
   };
 }
 
-export default ReviewBottomSheet;
+export default EditBottomSheet;
