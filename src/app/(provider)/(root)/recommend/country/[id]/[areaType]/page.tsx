@@ -7,6 +7,7 @@ import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { convertTypeToKr } from "../../../_components/AreaPage/_utils/convertTypeToKr";
 import AreaCard from "../../../_components/Cards/AreaCard";
 type AreaTypePageProps = {
   params: { id: string; areaType: string };
@@ -39,7 +40,7 @@ function AreaTypePage({ params }: AreaTypePageProps) {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        title: country?.data.krName!,
+        title: convertTypeToKr(areaType),
         titleAlign: "center",
         rightIcons: [
           {

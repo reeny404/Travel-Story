@@ -8,5 +8,5 @@ export const convertTypeToKr = (type: string) => {
   if (type === "accommodation") {
     return "숙소";
   }
-  return "쇼핑";
+  return "상가";
 };
