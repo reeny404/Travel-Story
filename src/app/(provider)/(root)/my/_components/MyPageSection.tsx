@@ -6,7 +6,7 @@ import MySchedule from "./MySchedule";
 function MyPageSection() {
   return (
     <main
-      className="flex flex-col w-full px-5 pt-12"
+      className="flex flex-col w-full px-5 pt-12 bg-neutral-100"
       style={{ minHeight: "calc(100vh - 52px)" }}
     >
       <MyProfile />

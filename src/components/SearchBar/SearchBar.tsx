@@ -3,6 +3,7 @@
 import { ICON } from "@/constants/icon";
 import Image from "next/image";
 import { useState } from "react";
+import SvgIcon from "../commons/SvgIcon";
 
 type SearchBarProps = {
   onSearch?: (term: string) => void;
@@ -38,14 +39,14 @@ function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
       onSubmit={handleSearch}
     >
       <div className="flex">
-        <Image
-          src={`/icons/${ICON.search.black}.png`}
-          alt="search"
+        <SvgIcon
+          name="search"
           width={20}
           height={20}
-          className="mr-2 cursor-pointer"
-          priority
+          title="search"
+          className="mr-2"
         />
+
         <input
           className="w-[250px] bg-transparent outline-none"
           placeholder={`'파리'로 떠나보실래요?`}
