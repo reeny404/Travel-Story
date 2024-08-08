@@ -19,13 +19,14 @@ function AuthContainer({
   const { step, setStep, setLabelColor, setLabelText, setIsInputValid } =
     useLoginStepStore();
   const router = useRouter();
+  const { nextURL } = useLoginStepStore();
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const handleKakaoLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: `${baseURL}/api/auth/callback`,
+        redirectTo: `${baseURL}/api/auth/callback?next=${encodeURIComponent(nextURL)}`,
       },
     });
     if (error) {

@@ -84,7 +84,7 @@ function useAuthFlow() {
     if (isTypeExist) {
       return router.replace(nextURL);
     }
-    return router.replace(`/onboard`);
+    return router.replace(`/onboard?next=${nextURL}`);
   };
 
   // 회원가입 email 버튼 누를 시
@@ -120,7 +120,7 @@ function useAuthFlow() {
     if (isTypeExist) {
       return router.replace(nextURL);
     }
-    return router.replace(`/onboard`);
+    return router.replace(`/onboard?next=${nextURL}`);
   };
 
   return {

@@ -24,7 +24,6 @@ function Login() {
     if (isLoggedIn) {
       router.replace("/");
     }
-
     if (nextURL) return setNextURL(nextURL);
   }, []);
 

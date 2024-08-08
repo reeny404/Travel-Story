@@ -16,8 +16,8 @@ function CreatePlanIntroPage() {
   const [selectedTab, setSelectedTab] = useState<string>(titles[0]);
   const [planData, setPlanData] = useState<PlanInsertType>({});
 
-  const { user } = useAuth();
-  if (!user) {
+  const { isInitialized, isLoggedIn } = useAuth();
+  if (isInitialized && !isLoggedIn) {
     router.replace("/login?nextUrl=" + encodeURI("/plan/create"));
     return;
   }
