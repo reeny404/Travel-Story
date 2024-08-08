@@ -7,6 +7,10 @@
     @apply no-scrollbar;
   }
 
+  html {
+    @apply no-scrollbar;
+  }
+
   body {
     @apply text-primary;
   }
