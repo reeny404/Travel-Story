@@ -38,9 +38,3 @@
   top: 0;
   transition: position 0.3s ease-in-out;
 }
-
-.header-sticky {
-  position: sticky;
-  top: 0;
-  transition: position 0.3s ease-in-out;
-}
