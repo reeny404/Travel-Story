@@ -13,6 +13,7 @@ import { Area, City, RecommendResponse } from "@/types/Recommend";
 import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import DetailCard from "../../_components/Cards/DetailCard";
@@ -25,11 +26,17 @@ type CityDetailPageProps = {
 function CityDetailPage({ params }: CityDetailPageProps) {
   const { setCityId, cityId } = useRecommendStore((state) => state);
   const { ref: viewRef, inView } = useInView();
+  const router = useRouter();
+  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
 
   useEffect(() => {
     setCityId(parseInt(params.id));
   }, []);
-  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
+
   console.log("currentTab", currentTab);
   const { data: city, isPending } = useQuery<
     RecommendResponse<City>,
@@ -125,7 +132,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
             icon: inView ? ICON.search.white : ICON.search.black,
             alt: "Search",
             size: 20,
-            onClick: () => {},
+            onClick: handleSearch,
           },
         ],
       }}

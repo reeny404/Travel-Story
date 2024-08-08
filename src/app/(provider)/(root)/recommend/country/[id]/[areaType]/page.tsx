@@ -6,6 +6,7 @@ import { ICON } from "@/constants/icon";
 import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import AreaCard from "../../../_components/Cards/AreaCard";
 type AreaTypePageProps = {
   params: { id: string; areaType: string };
@@ -14,6 +15,12 @@ type AreaTypePageProps = {
 function AreaTypePage({ params }: AreaTypePageProps) {
   const areaType = params.areaType;
   const countryId = parseInt(params.id);
+  const router = useRouter();
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
+
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
@@ -39,7 +46,7 @@ function AreaTypePage({ params }: AreaTypePageProps) {
             icon: ICON.search.black,
             alt: "Search",
             size: 20,
-            onClick: () => {},
+            onClick: handleSearch,
           },
         ],
       }}

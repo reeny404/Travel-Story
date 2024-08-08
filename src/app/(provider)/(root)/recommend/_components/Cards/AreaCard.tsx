@@ -46,22 +46,18 @@ function AreaCard({
           imageUrl={imageUrl}
           alt={title}
           frameClassName="aspect-square"
-          imageClassName="object-cover rounded-lg"
+          imageClassName="object-cover rounded-t-lg"
           city={city}
           country={country}
           areaName={areaName}
         />
       </Link>
-      {/* TODO areaCardShadow 해결해야댐 일단 넘김 */}
       <div className="pb-5">
         <p className="px-4 pt-4 mb-2 text-sm text-ellipsis line-clamp-2 leading-5">
           {description}
         </p>
         <PrimaryTagList tagList={mockTags} />
-
-        {/* <PrimaryTagList tagList={mockTags} /> */}
       </div>
-      {/* bookmark 쉐도우 해결해야댐 */}
       <div className="absolute p-[10px] top-2 right-2 hover:cursor-pointer">
         <div className="relative w-6 h-6 aspect-square">
           <Image

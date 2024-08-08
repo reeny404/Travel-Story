@@ -3,7 +3,8 @@
 import RatingIcons from "@/components/Card/RatingIcons";
 import { Area } from "@/types/Recommend";
 import Image from "next/image";
-import { MutableRefObject, useCallback } from "react";
+import { MutableRefObject } from "react";
+import { convertTypeToKr } from "./_utils/convertTypeToKr";
 
 type AreaDetailCardProps = {
   area: Area;
@@ -15,19 +16,6 @@ function AreaDetailCard({
   ratingAmount,
   reviewSectionRef,
 }: AreaDetailCardProps) {
-  const convertTypeToKr = useCallback((type: string) => {
-    if (type === "restaurant") {
-      return "식당";
-    }
-    if (type === "place") {
-      return "관광지";
-    }
-    if (type === "accommodation") {
-      return "숙소";
-    }
-    return "쇼핑";
-  }, []);
-
   const handleClickRating = () => {
     if (reviewSectionRef.current) {
       reviewSectionRef.current.scrollIntoView({

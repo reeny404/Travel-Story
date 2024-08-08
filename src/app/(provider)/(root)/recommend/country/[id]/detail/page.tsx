@@ -11,6 +11,7 @@ import { useTab } from "@/hooks/useTab";
 import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import DetailCard from "../../../_components/Cards/DetailCard";
@@ -27,10 +28,15 @@ function CountryDetailPage({ params }: CountryDetailPage) {
   const countryId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
   const { ref: viewRef, inView } = useInView();
+  const router = useRouter();
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
   });
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
 
   const { data: accommodations } = useQuery<
     RecommendResponse<Area[]>,
@@ -158,7 +164,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
             icon: inView ? ICON.search.white : ICON.search.black,
             alt: "Search",
             size: 20,
-            onClick: () => {},
+            onClick: handleSearch,
           },
         ],
       }}

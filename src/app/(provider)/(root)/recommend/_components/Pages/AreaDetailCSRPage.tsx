@@ -10,7 +10,6 @@ import { useTab } from "@/hooks/useTab";
 import { Area, AreaReview, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import AreaDetailCard from "../AreaPage/AreaDetailCard";
@@ -20,21 +19,17 @@ import NoticeForm from "../AreaPage/NoticeForm";
 import ReviewSummaryCard from "../AreaPage/ReviewSummary";
 import UnderBar from "../AreaPage/UnderBar";
 import CardImgFrame from "../Cards/CardImgFrame";
+import SimilarAreaCard from "../Cards/SimilarAreaCard";
 
 type AreaDetailCSRPage = {
   areaId: number;
 };
 function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({ threshold: 0 });
   const { user } = useAuth();
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const reviewSectionRef = useRef<HTMLDivElement | null>(null);
-  const router = useRouter();
-
-  const handleSearch = () => {
-    return router.push(`/search`);
-  };
 
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
@@ -45,6 +40,17 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data.data,
   });
+
+  const { data: areasByCity } = useQuery<
+    RecommendResponse<Area[]>,
+    AxiosError,
+    Area[]
+  >({
+    queryKey: ["areasByCity", area?.cityId],
+    queryFn: () => api.area.getAreasByCity(area?.cityId!),
+    select: (data) => data?.data,
+  });
+  const similarArea = areasByCity?.filter((item) => item.type === area?.type);
   const { data: areaReviews } = useQuery<
     RecommendResponse<AreaReview[]>,
     AxiosError,
@@ -80,7 +86,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             icon: inView ? ICON.shareArea.white : ICON.shareArea.black,
             alt: "share",
             size: 20,
-            onClick: () => handleSearch(),
+            onClick: () => {},
           },
         ],
       }}
@@ -141,6 +147,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ratingAmount={areaReviews?.length || 0}
                   areaId={areaId}
                 />
+                {/*TODO user metadata에서 가져오는 닉네임이 아닌 review에 닉네임을 저장해야함 로직 수정 필요*/}
                 {areaReviews &&
                   areaReviews
                     .sort(
@@ -163,6 +170,36 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                       );
                     })}
               </div>
+              {similarArea && (
+                <div
+                  ref={(tabEl) => {
+                    sectionRefs.current[3] = tabEl;
+                  }}
+                  className="mb-9 pt-8 pb-7 px-4 w-full h-full rounded-lg shadow-area-section"
+                >
+                  <section className="w-full flex flex-col gap-y-7">
+                    <h1 className="text-lg font-medium min-w-20">
+                      비슷한 장소 둘러보기
+                    </h1>
+                    <div className="w-full grid grid-cols-2 gap-x-3 gap-y-4">
+                      {similarArea.map((area: Area, idx) => {
+                        if (idx < 4) {
+                          return (
+                            <SimilarAreaCard
+                              rating={area.rating ?? 0}
+                              key={idx}
+                              title={area.krName!}
+                              imageUrl={area.imageUrl ?? "/"}
+                              linkUrl={`/recommend/area/${area.id}`}
+                              type={area.type!}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  </section>
+                </div>
+              )}
             </div>
             <UnderBar area={area} />
           </section>
