@@ -13,13 +13,15 @@ function LoginPage() {
   const { labelText, labelColor, isInputValid } = useLoginStepStore();
   const { user } = useAuthStore();
   const { isLoggedIn } = useAuth();
-  const { setLabelColor, setLabelText, setIsInputValid } = useLoginStepStore();
+  const { setLabelColor, setLabelText, setIsInputValid, setNextURL } =
+    useLoginStepStore();
   const params = useSearchParams();
   const router = useRouter();
   const nextURL = params.get("nextUrl");
   const step = params.get("step") ?? "email";
 
   useEffect(() => {
+    setNextURL(nextURL ?? "/");
     if (isLoggedIn) {
       router.replace("/");
     }

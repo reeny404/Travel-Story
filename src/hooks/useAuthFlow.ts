@@ -8,7 +8,8 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 function useAuthFlow() {
-  const { setLabelColor, setLabelText, setIsInputValid } = useLoginStepStore();
+  const { nextURL, setLabelColor, setLabelText, setIsInputValid } =
+    useLoginStepStore();
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
   const router = useRouter();
   const { setUser } = useAuth();
@@ -81,9 +82,9 @@ function useAuthFlow() {
     }
     setUser(response.data.session.user);
     if (isTypeExist) {
-      return router.replace("/");
+      return router.replace(nextURL);
     }
-    return router.replace("/onboard");
+    return router.replace(`/onboard`);
   };
 
   // 회원가입 email 버튼 누를 시
@@ -117,9 +118,9 @@ function useAuthFlow() {
     const response = await api.auth.signUp(user.email, user.password, nickname);
     setUser(response.data.session.user);
     if (isTypeExist) {
-      return router.replace("/");
+      return router.replace(nextURL);
     }
-    return router.replace("/onboard");
+    return router.replace(`/onboard`);
   };
 
   return {

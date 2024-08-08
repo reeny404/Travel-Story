@@ -60,7 +60,7 @@ function AuthContainer({
   };
 
   return (
-    <MainLayout headerProps={{ title: "로그인" }}>
+    <MainLayout headerProps={{ title: "로그인", backgroundColor: "noShadow" }}>
       <div
         className="w-full px-4 pt-12 bg-white"
         style={{ minHeight: "calc(100vh - 52px)" }}
