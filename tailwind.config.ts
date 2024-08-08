@@ -14,6 +14,7 @@ const config: Config = {
       colors: {
         ...colors,
         ...COLOR,
+        "neutral-400/84": "rgba(255, 255, 255, 0.84)",
       },
       maxWidth: {
         xs: "450px",
@@ -46,6 +47,7 @@ const config: Config = {
         "inner-bookmark": "inset 0px 0px 8px rgba(0, 0, 0, 0.25)",
         plan: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
         header: "0px 4px 20px 0px rgba(0, 0, 0, 0.04)",
+        drawer: "4px 0px 20px 0px rgba(0, 0, 0, 0.16)",
       },
       aspectRatio: {
         "4/5": "4 / 5",

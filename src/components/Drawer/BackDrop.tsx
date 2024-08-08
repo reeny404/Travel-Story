@@ -1,0 +1,13 @@
+import useDrawerStore from "@/stores/drawer.store";
+
+function BackDrop() {
+  const { closeDrawer } = useDrawerStore();
+  return (
+    <div
+      className="fixed top-0 left-1/2 transform -translate-x-1/2 max-w-[430px] w-full h-full bg-black/30 backdrop-blur-lg shadow-drawer z-drawer"
+      onClick={closeDrawer}
+    />
+  );
+}
+
+export default BackDrop;

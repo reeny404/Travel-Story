@@ -58,10 +58,10 @@ const SvgIcon = ({
   color = "primary",
   width = 20,
   height = 20,
-  strokeWidth = 1.75,
-  className,
   title,
+  className,
   hasStroke = false,
+  strokeWidth = 1.75,
 }: SvgIconProps) => {
   const Icon = loadSvgIcon({ name, width, height });
   const fillColor = getColor(customColor, color) || color;

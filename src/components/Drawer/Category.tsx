@@ -13,6 +13,8 @@ type CategoryProps = {
   label: string;
   hasSubCategory?: boolean;
   children?: React.ReactNode;
+  isSelected?: boolean;
+  onClick?: (label: string) => void;
 };
 
 function Category({
@@ -22,6 +24,8 @@ function Category({
   label,
   hasSubCategory,
   children,
+  isSelected,
+  onClick,
 }: CategoryProps) {
   const router = useRouter();
   const { closeDrawer } = useDrawerStore();
@@ -30,6 +34,9 @@ function Category({
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (onClick) {
+      onClick(label);
+    }
 
     if (!hasSubCategory && href) {
       router.push(href);
@@ -42,6 +49,14 @@ function Category({
     }
   };
 
+  // subCategory 한 개만 열리게 하는 기능
+  useEffect(() => {
+    if (!isSelected) {
+      setIsOpen(false);
+    }
+  }, [isSelected]);
+
+  // subCategory 열리는 높이 조절
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.style.height = isOpen
@@ -53,12 +68,20 @@ function Category({
   return (
     <>
       <button
-        className="flex justify-between items-center bg-white mb-3 p-4"
+        className={`flex justify-between items-center rounded-lg mt-3 mb-3 px-4 py-3 ${
+          isSelected ? "bg-brand-300" : "bg-transparent"
+        }`}
         onClick={handleClick}
       >
         <div className="flex items-center gap-3">
-          <Image src={imgPath} alt={alt} width={18} height={18} />
-          <h3 className="mt-[2px]">{label}</h3>
+          <Image src={imgPath} alt={alt} width={20} height={20} />
+          <h3
+            className={`mt-[2px] text-lg ${
+              isSelected ? "font-medium" : "font-normal"
+            }`}
+          >
+            {label}
+          </h3>
         </div>
         {hasSubCategory && (
           <Image
