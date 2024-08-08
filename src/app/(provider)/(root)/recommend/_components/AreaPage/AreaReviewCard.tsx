@@ -54,6 +54,10 @@ function AreaReviewCard({
       queryClient.invalidateQueries({ queryKey: ["areaReviews"] });
     },
   });
+<<<<<<< HEAD
+=======
+
+>>>>>>> feat/reviewCRUD
   const handleDelete = async (id: number) => {
     try {
       deleteReview(id);

@@ -3,8 +3,12 @@
 import RatingIcons from "@/components/Card/RatingIcons";
 import { Area } from "@/types/Recommend";
 import Image from "next/image";
+<<<<<<< HEAD
 import { MutableRefObject } from "react";
 import { convertTypeToKr } from "./_utils/convertTypeToKr";
+=======
+import { MutableRefObject, useCallback } from "react";
+>>>>>>> feat/reviewCRUD
 
 type AreaDetailCardProps = {
   area: Area;
@@ -16,6 +20,7 @@ function AreaDetailCard({
   ratingAmount,
   reviewSectionRef,
 }: AreaDetailCardProps) {
+<<<<<<< HEAD
   const handleClickRating = () => {
     if (reviewSectionRef.current) {
       reviewSectionRef.current.scrollIntoView({
@@ -23,6 +28,28 @@ function AreaDetailCard({
         block: "start",
       });
     }
+=======
+  const convertTypeToKr = useCallback((type: string) => {
+    if (type === "restaurant") {
+      return "식당";
+    }
+    if (type === "place") {
+      return "관광지";
+    }
+    if (type === "accommodation") {
+      return "숙소";
+    }
+    return "쇼핑";
+  }, []);
+
+  const handleClickRating = () => {
+    if (reviewSectionRef.current) {
+      reviewSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+>>>>>>> feat/reviewCRUD
   };
   return (
     <section className="w-full pt-8 pb-[52px] px-4 shadow-area-section rounded-lg">
