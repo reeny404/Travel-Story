@@ -20,6 +20,7 @@ function AuthContainer({
     useLoginStepStore();
   const router = useRouter();
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
   const handleKakaoLogin = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
