@@ -47,7 +47,7 @@ function UnderBar({ area }: UnderBarProps) {
       )}
       <button
         onClick={() => deleteBookmark.mutate()}
-        className="w-11 h-full p-3 relative flex justify-center items-center border border-black backdrop-blur-sm rounded-lg aspect-auto"
+        className="w-11 h-full p-3 relative flex justify-center items-center border border-black backdrop-blur-[10px] rounded-lg aspect-auto"
       >
         <Image
           src={
