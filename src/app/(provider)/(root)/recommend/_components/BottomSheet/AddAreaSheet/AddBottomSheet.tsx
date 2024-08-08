@@ -121,15 +121,28 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
           >
             {!planData ? "계속 둘러보기" : "취소"}
           </button>
-          <button
-            className="h-10 text-center bg-neutral-750 text-white rounded-lg"
-            type="button"
-            onClick={() => {
-              !planData ? router.push("/plan") : handleAdd();
-            }}
-          >
-            {!planData ? "내 여행 만들기" : "추가하기"}
-          </button>
+          {!planData ? (
+            <button
+              className="h-10 text-center bg-neutral-750 text-white rounded-lg"
+              type="button"
+              onClick={() => {
+                router.push("/plan");
+              }}
+            >
+              내 여행 만들기
+            </button>
+          ) : (
+            <button
+              className={`h-10 text-center rounded-lg ${!day ? "bg-neutral-300 text-neutral-550" : "bg-neutral-750 text-white"}`}
+              type="button"
+              disabled={!day}
+              onClick={() => {
+                handleAdd();
+              }}
+            >
+              추가하기
+            </button>
+          )}
         </div>
       </form>
     </div>

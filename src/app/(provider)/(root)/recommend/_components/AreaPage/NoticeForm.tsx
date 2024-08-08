@@ -12,8 +12,8 @@ function NoticeForm({ area }: NiticeFormProps) {
 
   return (
     <section className="px-4 py-8 w-full">
-      <h1 className="font-bold my-5 min-w-20">이용안내</h1>
-      <article className="flex w-full">
+      <h1 className="text-lg font-medium mb-7 min-w-20">이용안내</h1>
+      <article className="flex w-full pb-8">
         <div>
           <ImageFrame
             src={`/icons/${ICON.notice.white}.svg`}
@@ -23,14 +23,14 @@ function NoticeForm({ area }: NiticeFormProps) {
         </div>
         <div className="flex flex-col">
           {splitNotes.map((part, index) => (
-            <p key={index} className="ml-5 w-72 text-sm">
+            <p key={index} className="ml-3 w-72 leading-6">
               {part}
               {index < splitNotes.length - 1 && "."}
             </p>
           ))}
         </div>
       </article>
-      <article className="flex w-full mt-5">
+      <article className="flex w-full pb-3">
         <ImageFrame
           src={`/icons/${ICON.bill.white}.svg`}
           alt="euro"
@@ -38,7 +38,7 @@ function NoticeForm({ area }: NiticeFormProps) {
         />
         {/* 추가 정보들 여기에 조건으로 달아서 출력 */}
 
-        <div className="ml-5 w-72 text-sm">
+        <div className="ml-3 w-72 leading-6">
           <TicketPrice
             ticket_price={area.info.ticket_price!}
             type={area.type!}

@@ -3,26 +3,27 @@
 import RatingIcons from "@/components/Card/RatingIcons";
 import { Area } from "@/types/Recommend";
 import Image from "next/image";
-import { useCallback } from "react";
+import { MutableRefObject } from "react";
+import { convertTypeToKr } from "./_utils/convertTypeToKr";
 
 type AreaDetailCardProps = {
   area: Area;
   ratingAmount: number;
+  reviewSectionRef: MutableRefObject<HTMLDivElement | null>;
 };
-function AreaDetailCard({ area, ratingAmount }: AreaDetailCardProps) {
-  const convertTypeToKr = useCallback((type: string) => {
-    if (type === "restaurant") {
-      return "식당";
+function AreaDetailCard({
+  area,
+  ratingAmount,
+  reviewSectionRef,
+}: AreaDetailCardProps) {
+  const handleClickRating = () => {
+    if (reviewSectionRef.current) {
+      reviewSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
-    if (type === "place") {
-      return "관광지";
-    }
-    if (type === "accommodation") {
-      return "숙소";
-    }
-    return "쇼핑";
-  }, []);
-
+  };
   return (
     <section className="w-full pt-8 pb-[52px] px-4 shadow-area-section rounded-lg">
       <article className="w-full ">
@@ -37,7 +38,10 @@ function AreaDetailCard({ area, ratingAmount }: AreaDetailCardProps) {
             />
             <p>{convertTypeToKr(area.type!)}</p>
           </div>
-          <div className="flex items-center gap-x-1">
+          <div
+            onClick={handleClickRating}
+            className="flex items-center gap-x-1"
+          >
             <RatingIcons type="big" rating={area.rating!} />
             <span className="text-xs text-[#949494]">{`(${ratingAmount})`}</span>
           </div>

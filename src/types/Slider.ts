@@ -1,3 +1,5 @@
+import { City } from "./Recommend";
+
 export type SlideCardProps = {
   title: string;
   description: string;
@@ -8,6 +10,7 @@ export type SlideCardProps = {
   city: string;
   country: string;
   areaName: string;
+  rating?: number;
 };
 
 export type SliderProps = {
@@ -25,4 +28,10 @@ export type ArchSliderProps = {
     imageUrl: string;
     title: string;
   }[];
+};
+
+export type SmImageSliderProps = {
+  spacing: number;
+  slidesPerView: number;
+  cards: City[];
 };

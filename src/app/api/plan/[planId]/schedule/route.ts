@@ -30,6 +30,7 @@ type ScheduleType = {
   planId: string | null;
   areaId?: number;
   area?: AreaType;
+  spend?: number;
 };
 
 type MoveType = {

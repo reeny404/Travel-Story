@@ -78,3 +78,5 @@ export type RecommendResponse<T> = {
 export type CardResponseType = {
   [key: string]: extendArea[];
 };
+
+export type ImgFileType = string | { name: string; file: File };
