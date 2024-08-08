@@ -6,6 +6,7 @@ import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import { BottomSheetType } from "@/types/plan";
 import { Tables } from "@/types/supabase";
+import { DateUtil } from "@/utils/DateUtil";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -44,24 +45,14 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           // startDate 및 endDate가 문자열임을 가정하고 변환
           const startDate = new Date(plan.startDate as string);
           const endDate = new Date(plan.endDate as string);
-
-          const timeDiff = endDate.getTime() - startDate.getTime();
-          const daysCount = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // 일 수 계산
+          const daysCount = DateUtil.getGapDay(startDate, endDate);
 
           const daysArray = Array.from({ length: daysCount }, (_, i) => i + 1);
           setDays(daysArray);
           setTitle(plan.title);
 
-          // 날짜 형식 변환
-          const formatDate = (date: Date) => {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, "0");
-            const day = String(date.getDate()).padStart(2, "0");
-            return `${year}.${month}.${day}`;
-          };
-
-          const formattedStartDate = formatDate(startDate);
-          const formattedEndDate = formatDate(endDate);
+          const formattedStartDate = DateUtil.format("yyyy.MM.dd", startDate);
+          const formattedEndDate = DateUtil.format("yyyy.MM.dd", endDate);
           setFormattedDates(`${formattedStartDate} - ${formattedEndDate}`);
         }
       } catch (error) {

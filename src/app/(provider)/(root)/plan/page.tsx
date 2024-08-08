@@ -3,7 +3,6 @@ import ImageFrame from "@/components/Frame/ImageFrame";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import { DateUtil } from "@/utils/DateUtil";
-import Link from "next/link";
 import { useMemo } from "react";
 import CreatePlanButton from "./_components/CreatePlanButton";
 import PlanList from "./_components/PlanList";
@@ -42,9 +41,7 @@ export default function PlanListPage() {
           </div>
           <PlanList />
         </div>
-        <Link href="/plan/create">
-          <CreatePlanButton />
-        </Link>
+        <CreatePlanButton />
       </div>
     </MainLayout>
   );

@@ -31,7 +31,7 @@ function NewPlanBase({ data: plan, setData }: MyPlanDefaultProps) {
         <Input
           autoFocus
           id="travel-title"
-          placeholder="○○○님의 여행"
+          placeholder="OOO님의 여행"
           className="py-2 border-b outline-none"
           text={plan.title ?? ""}
           setText={setTitle}
