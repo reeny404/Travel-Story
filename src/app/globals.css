@@ -10,8 +10,10 @@
   body {
     @apply text-primary;
   }
+
   .button-px button {
-    @apply px-5; /* Tailwind 클래스 적용, 5는 20px에 해당 */
+    @apply px-5;
+    /* Tailwind 클래스 적용, 5는 20px에 해당 */
   }
 }
 
@@ -26,3 +28,29 @@
   scrollbar-width   : none;
   /* Firefox */
 }
+
+.arch-container {
+  position: relative;
+  width   : 100%;
+  height  : 516px;
+  /* 이미지의 높이 */
+  overflow: hidden;
+}
+
+.arch-shadow {
+  position: absolute;
+  top     : 0;
+  left    : 0;
+  right   : 0;
+  height  : 46%;
+  width   : 100%;
+  background: radial-gradient(240px at bottom,
+      rgba(0, 0, 0, 0) 80%,
+      rgba(110, 110, 110, 0.6) 80%,
+      rgba(110, 110, 110, 0.6) 100%);
+  opacity       : 0.6;
+  z-index       : 800;
+  pointer-events: none;
+}
+
+>>>>>>>7225f8e4c8e3b2b1b34a0b56228944f23a4bfffe

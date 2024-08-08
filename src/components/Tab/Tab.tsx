@@ -11,8 +11,6 @@ type TabProps = {
   isGray?: boolean;
 };
 
-// TODO 텝을 누를 때  이전 이미지가 나오는 경우가 있어 일단은 아래 로직으로 진행 후에 고쳐야함
-
 function Tab({
   currentTab,
   setCurrentTab,
