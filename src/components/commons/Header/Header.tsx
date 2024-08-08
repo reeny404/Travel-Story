@@ -8,12 +8,13 @@ import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
 const headerStyles = cva(
-  "w-full h-[52px] header-fixed flex items-center justify-between",
+  "w-full h-[52px] flex items-center justify-between z-[900]",
   {
     variants: {
       backgroundColor: {
-        transparent: "bg-transparent  z-[900]",
-        white: "bg-white shadow-area-card h-[52px] z-[900]",
+        transparent: "bg-transparent header-fixed",
+        white: "bg-white shadow-area-card sticky top-0",
+        whiteFixed: "bg-white shadow-area-card header-fixed ",
       },
       titleAlign: {
         left: "justify-start",
@@ -28,7 +29,7 @@ const headerStyles = cva(
 );
 
 export type HeaderProps = {
-  backgroundColor?: "transparent" | "white";
+  backgroundColor?: "transparent" | "white" | "whiteFixed";
   title?: string;
   titleAlign?: "left" | "center";
   rightIcons?: {

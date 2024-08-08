@@ -10,6 +10,7 @@ import { useTab } from "@/hooks/useTab";
 import { Area, AreaReview, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import AreaDetailCard from "../AreaPage/AreaDetailCard";
@@ -29,6 +30,11 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { user } = useAuth();
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const reviewSectionRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
 
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
@@ -66,7 +72,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: inView ? "transparent" : "white",
+        backgroundColor: inView ? "transparent" : "whiteFixed",
         title: inView ? "" : area?.krName!,
         titleAlign: "center",
         rightIcons: [
@@ -74,7 +80,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             icon: inView ? ICON.shareArea.white : ICON.shareArea.black,
             alt: "share",
             size: 20,
-            onClick: () => {},
+            onClick: () => handleSearch(),
           },
         ],
       }}
