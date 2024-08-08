@@ -79,3 +79,8 @@ export type PlanData = {
   startDate: string;
   endDate: string;
 };
+
+export type AreaType = { data: Tables<'area'> } & Order;
+export type SupabaseScheduleType = { data: Tables<'schedule'> & { area?: AreaType } } & Order;
+export type SupabaseMemoType = { data: Tables<'memo'> } & Order;
+export type SupabaseMoveType = { data: Tables<'moveSchedule'> } & Order;

@@ -1,6 +1,11 @@
 "use client";
 
-import axios from "axios";
+import useScheduleStore from "@/stores/schedule.store";
+import {
+  SupabaseMemoType,
+  SupabaseMoveType,
+  SupabaseScheduleType,
+} from "@/types/plan";
 import { useEffect, useState } from "react";
 import BottomSheet from "./BottomSheet";
 import CheckIcon from "./icons/CheckIcon";
@@ -23,7 +28,11 @@ function ScheduleList({
   planId: string;
   selectedDay: number;
 }) {
-  const [data, setData] = useState<any[]>([]);
+  const {
+    planChildren: scheduleList,
+    fetchSchedule: fetchScheduleList,
+    updateScheduleCheck,
+  } = useScheduleStore();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [type, setType] = useState<"customePlace" | "place" | "move" | "memo">(
@@ -32,18 +41,7 @@ function ScheduleList({
   const [status, setStatus] = useState<"add" | "read" | "update">("read");
 
   useEffect(() => {
-    const fetchScheduleData = async () => {
-      try {
-        const response = await axios.get(`/api/plan/${planId}/schedule`, {
-          params: { planId, day: selectedDay },
-        });
-        setData(response.data.data);
-      } catch (error) {
-        console.error("일정 데이터를 가져오는 중 오류 발생:", error);
-      }
-    };
-
-    fetchScheduleData();
+    fetchScheduleList(planId, selectedDay);
   }, [planId, selectedDay]);
 
   const handleCheckboxChange = async (
@@ -52,30 +50,7 @@ function ScheduleList({
     isChecked: boolean
   ) => {
     try {
-      setData((prevData) =>
-        prevData.map((item) =>
-          item.id === itemId
-            ? {
-                ...item,
-                data: {
-                  ...item.data,
-                  check: item.data.check?.map(
-                    (checkItem: CheckItemType, index: number) =>
-                      index === checkIndex
-                        ? { ...checkItem, isCheck: !isChecked }
-                        : checkItem
-                  ),
-                },
-              }
-            : item
-        )
-      );
-
-      await axios.put(`/api/plan/${planId}/check`, {
-        itemId,
-        checkIndex,
-        isChecked: !isChecked,
-      });
+      updateScheduleCheck(planId, selectedDay, itemId, checkIndex, isChecked);
     } catch (error) {
       console.error("체크 상태 업데이트 중 오류 발생:", error);
     }
@@ -120,13 +95,14 @@ function ScheduleList({
   return (
     <>
       <ul className="p-6 h-full">
-        {data.map((item, index) => {
-          const isLastItem = index === data.length - 1;
+        {scheduleList.map((item, index) => {
+          const isLastItem = index === scheduleList.length - 1;
           let countText = "";
           let backgroundColor = "black";
           let colorIcon = "white";
 
           if (item.type === "customePlace" || item.type === "place") {
+            const schedule: SupabaseScheduleType = item as SupabaseScheduleType;
             countText = `${++placeIndex}`;
             backgroundColor = colors[(placeIndex - 1) % colors.length];
             colorIcon = backgroundColor;
@@ -155,7 +131,9 @@ function ScheduleList({
                         className="h-6 w-6 mr-2"
                         color={colorIcon}
                       />
-                      <h3 className="text-base font-bold">{item.data.title}</h3>
+                      <h3 className="text-base font-bold">
+                        {schedule.data.title}
+                      </h3>
                     </div>
                     <button
                       onClick={() =>
@@ -174,32 +152,32 @@ function ScheduleList({
                     </button>
                   </div>
                   <div className="w-full min-h-20 py-2 px-3 relative bg-white text-sm shadow-schecule-list rounded-lg">
-                    {item.data.startTime && item.data.endTime && (
+                    {schedule.data.startTime && schedule.data.endTime && (
                       <div className="flex items-center h-5 justify-between mb-3">
                         <div className="flex items-center">
                           <TimeIcon className="mr-2" />
                           <p>
-                            {formatTime(item.data.startTime)} -{" "}
-                            {formatTime(item.data.endTime)}
+                            {formatTime(schedule.data.startTime)} -{" "}
+                            {formatTime(schedule.data.endTime)}
                           </p>
                         </div>
                         <p className="pl-4 h-full text-sm text-[#828282] leading-5 ">
                           {calculateDuration(
-                            item.data.startTime,
-                            item.data.endTime
+                            schedule.data.startTime,
+                            schedule.data.endTime
                           )}
                         </p>
                       </div>
                     )}
-                    {item.data.memo && !item.data.startTime && (
+                    {schedule.data.memo && !schedule.data.startTime && (
                       <div className="flex items-center mb-3">
                         <FillMemoIcon className="mr-2" />
-                        <p>{item.data.memo}</p>
+                        <p>{schedule.data.memo}</p>
                       </div>
                     )}
                     <div className="flex items-center mb-3">
                       <FillLocationIcon className="mr-2" />
-                      <p>{item.data.place}</p>
+                      <p>{schedule.data.place}</p>
                     </div>
                     <ClipIcon className="absolute right-4 bottom-4" />
                   </div>
@@ -209,6 +187,7 @@ function ScheduleList({
           }
 
           if (item.type === "move") {
+            const move: SupabaseMoveType = item as SupabaseMoveType;
             // const TransportIcon =
             //   transportIcons[item.data.type as TransportType];
             return (
@@ -221,12 +200,12 @@ function ScheduleList({
                   </div>
                   <div className="w-[87%] h-full leading-full flex items-center justify-between">
                     <div className="w-full h-full text-white text-sm leading-10">
-                      {item.data.type}
+                      {move.data.type}
                     </div>
                     <span className="pl-2 mr-1 h-5 text-sm text-[#EFEFEF] border-l border-[#EFEFEF] whitespace-nowrap">
                       {calculateDuration(
-                        item.data.startTime,
-                        item.data.endTime
+                        move.data.startTime,
+                        move.data.endTime
                       )}
                     </span>
                   </div>
@@ -239,9 +218,10 @@ function ScheduleList({
           }
 
           if (item.type === "memo") {
+            const memo: SupabaseMemoType = item as SupabaseMemoType;
             return (
               <li
-                key={item.id}
+                key={memo.id}
                 className="flex items-center justify-between min-h-44 h-full"
               >
                 <div className="w-[10%] min-h-44 mr-[3%] flex flex-col h-full">
@@ -255,12 +235,12 @@ function ScheduleList({
 
                 <div className="w-[87%] min-h-44">
                   <div className="w-full flex items-center justify-between mb-2">
-                    <h3 className="text-base font-bold">{item.data.title}</h3>
+                    <h3 className="text-base font-bold">{memo.data.title}</h3>
                   </div>
                   <div className="w-full min-h-20 h-auto py-2 px-4 bg-white text-sm shadow-schecule-list rounded-lg">
                     <div className="flex items-center h-full">
                       <ul className="w-full">
-                        {item.data.check?.map(
+                        {(memo.data.check as Array<CheckItemType>)?.map(
                           (checkItem: CheckItemType, index: number) => (
                             <li
                               key={index}
@@ -275,7 +255,7 @@ function ScheduleList({
                                 } cursor-pointer`}
                                 onClick={() =>
                                   handleCheckboxChange(
-                                    item.id,
+                                    memo.id,
                                     index,
                                     checkItem.isCheck
                                   )

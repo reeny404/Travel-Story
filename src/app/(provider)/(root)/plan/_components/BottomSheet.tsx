@@ -1,6 +1,7 @@
 "use client";
 
 import { api } from "@/apis/api";
+import useScheduleStore from "@/stores/schedule.store";
 import { BottomSheetType, Todo } from "@/types/plan";
 import { useEffect, useRef, useState } from "react";
 import BottomSheetCheckList from "../_components/BottomSheetCheckList";
@@ -27,6 +28,8 @@ function BottomSheet({
   day,
   id,
 }: BottomSheetProps) {
+  const { createSchedule } = useScheduleStore();
+
   const [status, setStatus] = useState(initialStatus);
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
@@ -134,11 +137,7 @@ function BottomSheet({
         return;
       }
 
-      const response = await api.plan.addChild(planId, day, type, insertData);
-      if (!response) {
-        console.error("Error adding data");
-        return;
-      }
+      await createSchedule(planId, day, type, insertData);
     } catch (error) {
       console.error("Error adding data:", error);
     }
