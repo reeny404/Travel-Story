@@ -22,7 +22,8 @@ function BottomSheetTitle({
   type,
   status,
   title = "",
-}: BottomSheetType & { title?: string }) {
+  onChange: onChangeTitle,
+}: BottomSheetType & { title?: string; onChange: (title: string) => void }) {
   const [inpTitleValue, setTitleValue] = useState(title);
   const [titlePlaceholder, setTitlePlaceholder] = useState("");
   const [selectedTransport, setSelectedTransport] = useState<string | null>(
@@ -36,6 +37,7 @@ function BottomSheetTitle({
   const handleMoveTitleChange = (label: string) => {
     setTitleValue(label);
     setSelectedTransport(label);
+    onChangeTitle(label);
   };
 
   useEffect(() => {

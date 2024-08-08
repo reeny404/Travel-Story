@@ -1,13 +1,14 @@
 "use client";
 
 import { api } from "@/apis/api";
-import { BottomSheetType, Memo, Todo } from "@/types/plan";
+import { BottomSheetType, Todo } from "@/types/plan";
 import { useEffect, useRef, useState } from "react";
 import BottomSheetCheckList from "../_components/BottomSheetCheckList";
 import BottomSheetImages from "../_components/BottomSheetImages";
 import BottomSheetInput from "../_components/BottomSheetInput";
 import BottomSheetTitle from "../_components/BottomSheetTitle";
 import UpdateButton from "../_components/UpdateButton";
+import { getInsertData } from "./getInsertData";
 
 type BottomSheetProps = BottomSheetType & {
   item?: any;
@@ -55,6 +56,10 @@ function BottomSheet({
       });
     }
   }, [item, status]);
+
+  const handleChangeTitle = (title: string) => {
+    setFormData((data) => ({ ...data, title }));
+  };
 
   const handleClose = (e?: React.MouseEvent<HTMLDivElement>) => {
     if (e && formRef.current && !formRef.current.contains(e.target as Node)) {
@@ -114,23 +119,22 @@ function BottomSheet({
   };
 
   const handleAdd = async () => {
-    const data = getFormData();
-    data.images = JSON.stringify(images);
-    data.planId = planId;
-    data.type = type;
-    data.day = day;
-    if (type === "memo") {
-      data.checkList = checkList;
-    }
     try {
-      const insertData: Memo = {
-        title: data.title,
-        planId: planId,
-        content: data.content,
-        check: checkList,
-      };
-      const response = await api.plan.addChild(planId, day, type, insertData);
+      // 동일한 key값의 data가 있으면 엎어쓸 확률이 있음
+      // ref에서 가져오던 useState 값을 가져오던 하나로 통일 필요
+      const data = getFormData();
+      Object.keys(formData)
+        .filter((key: string) => !!formData[key])
+        .forEach((key) => {
+          data[key] = data[key] ?? formData[key];
+        });
+      const insertData = getInsertData(type, data, planId, checkList);
+      if (!insertData) {
+        console.warn("insert용 데이터 생성 불가");
+        return;
+      }
 
+      const response = await api.plan.addChild(planId, day, type, insertData);
       if (!response) {
         console.error("Error adding data");
         return;
@@ -158,7 +162,12 @@ function BottomSheet({
               : "translate-y-0"
         } transition-transform duration-300`}
       >
-        <BottomSheetTitle type={type} status={status} title={formData.title} />
+        <BottomSheetTitle
+          type={type}
+          status={status}
+          title={formData.title}
+          onChange={handleChangeTitle}
+        />
         {type !== "memo" && (
           <BottomSheetInput
             type="time"
@@ -172,13 +181,13 @@ function BottomSheet({
           isDisabled={status === "read"}
           value={formData.memo}
         />
-        {type !== "memo" && type !== "move" && (
+        {/* {type !== "memo" && type !== "move" && (
           <BottomSheetInput
             type="spend"
             isDisabled={status === "read"}
             value={formData.spend}
           />
-        )}
+        )} */}
         {(type === "place" || type === "customePlace") && (
           <BottomSheetInput
             type="place"
