@@ -17,7 +17,7 @@ const TransportOption: React.FC<TransportOptionProps> = ({
     <li className="text-center">
       <button
         className={`w-14 h-14 leading-14 rounded-lg flex items-center justify-center mx-auto ${
-          isSelected ? "bg-[##E8F97B] text-white" : "bg-gray-100"
+          isSelected ? "bg-olive-300 text-white" : "bg-gray-100"
         }`}
         type="button"
         onClick={() => onClick(label)}

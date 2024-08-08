@@ -18,8 +18,12 @@ const icons = [
   AirplaneIcon,
 ];
 
-function BottomSheetTitle({ type, status }: BottomSheetType) {
-  const [inpTitleValue, setTitleValue] = useState("");
+function BottomSheetTitle({
+  type,
+  status,
+  title = "",
+}: BottomSheetType & { title?: string }) {
+  const [inpTitleValue, setTitleValue] = useState(title);
   const [titlePlaceholder, setTitlePlaceholder] = useState("");
   const [selectedTransport, setSelectedTransport] = useState<string | null>(
     null
@@ -47,12 +51,14 @@ function BottomSheetTitle({ type, status }: BottomSheetType) {
         setTitlePlaceholder("어디로 가시나요?");
         break;
       case "move":
-        setTitlePlaceholder("이동수단을 선택해주세요");
+        setTitlePlaceholder("이동 수단");
         break;
-      default:
-        setTitlePlaceholder("");
     }
   }, [type]);
+
+  useEffect(() => {
+    setTitleValue(title);
+  }, [title]);
 
   return (
     <div>
