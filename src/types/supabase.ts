@@ -455,7 +455,6 @@ export type Database = {
           memo: string | null
           place: string | null
           planId: string | null
-          spend: number | null
           startTime: string | null
           title: string | null
           type: string | null
@@ -470,7 +469,6 @@ export type Database = {
           memo?: string | null
           place?: string | null
           planId?: string | null
-          spend?: number | null
           startTime?: string | null
           title?: string | null
           type?: string | null
@@ -485,7 +483,6 @@ export type Database = {
           memo?: string | null
           place?: string | null
           planId?: string | null
-          spend?: number | null
           startTime?: string | null
           title?: string | null
           type?: string | null
