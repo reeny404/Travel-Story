@@ -43,23 +43,25 @@ function BottomSheet({
   const [formData, setFormData] = useState<Record<string, any>>({
     title: "",
     memo: "",
-    time: "",
+    startTime: "",
+    endTime: "",
     spend: "",
     place: "",
   });
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (status === "read") {
+    if (status === "read" && item) {
       setFormData({
         title: item.data.title,
         memo: item.data.memo,
-        time: item.data.time,
+        startTime: item.data.startTime,
+        endTime: item.data.endTime,
         spend: item.data.spend,
         place: item.data.place,
       });
     }
-  }, [item]);
+  }, [item, status]);
 
   const handleClose = (e?: React.MouseEvent<HTMLDivElement>) => {
     if (e && formRef.current && !formRef.current.contains(e.target as Node)) {
@@ -124,6 +126,7 @@ function BottomSheet({
     data.planId = planId;
     data.type = type;
     data.day = day;
+    console.log("Sending data to server:", data);
     if (type === "memo") {
       data.checkList = checkList;
     }
@@ -162,7 +165,8 @@ function BottomSheet({
           <BottomSheetInput
             type="time"
             isDisabled={status === "read"}
-            value={formData.time}
+            startTime={formData.startTime}
+            endTime={formData.endTime}
           />
         )}
         <BottomSheetInput

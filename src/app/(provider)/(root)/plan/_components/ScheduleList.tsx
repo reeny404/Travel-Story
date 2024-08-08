@@ -145,17 +145,7 @@ function ScheduleList({
                   >
                     {countText}
                   </div>
-                  <button
-                    onClick={() =>
-                      openBottomSheet(
-                        item,
-                        item.type as "customePlace" | "place" | "move" | "memo",
-                        "read"
-                      )
-                    }
-                  >
-                    a
-                  </button>
+
                   {!isLastItem && (
                     <span className="w-[1px] flex-1 bg-gray-300 mx-auto block"></span>
                   )}
@@ -169,6 +159,21 @@ function ScheduleList({
                       />
                       <h3 className="text-base font-bold">{item.data.title}</h3>
                     </div>
+                    <button
+                      onClick={() =>
+                        openBottomSheet(
+                          item,
+                          item.type as
+                            | "customePlace"
+                            | "place"
+                            | "move"
+                            | "memo",
+                          "read"
+                        )
+                      }
+                    >
+                      read바텀시트
+                    </button>
                   </div>
                   <div className="w-full min-h-20 py-2 px-3 relative bg-white text-sm shadow-schecule-list rounded-lg">
                     {item.data.startTime && item.data.endTime && (

@@ -57,7 +57,7 @@ function BottomSheetTitle({
   }, [type]);
 
   useEffect(() => {
-    setTitleValue(title); // Initialize with fetched title
+    setTitleValue(title);
   }, [title]);
 
   return (
