@@ -7,6 +7,7 @@ import { Area, City, RecommendResponse } from "@/types/Recommend";
 import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import AreaCard from "../../../_components/Cards/AreaCard";
 
 type AreaTypePageProps = {
@@ -16,6 +17,11 @@ type AreaTypePageProps = {
 function AreaTypePage({ params }: AreaTypePageProps) {
   const areaType = params.areaType;
   const cityId = parseInt(params.id);
+  const router = useRouter();
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
 
   const { data: city, isPending } = useQuery<
     RecommendResponse<City>,
@@ -50,7 +56,7 @@ function AreaTypePage({ params }: AreaTypePageProps) {
             icon: ICON.search.black,
             alt: "Search",
             size: 20,
-            onClick: () => {},
+            onClick: handleSearch,
           },
         ],
       }}

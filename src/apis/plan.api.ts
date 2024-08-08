@@ -1,8 +1,5 @@
-import { PlanChildType, PlanInsertType, Schedule } from "@/types/plan";
-import { Tables } from "@/types/supabase";
+import { Plan, PlanChildData, PlanChildType, PlanInsertType } from "@/types/plan";
 import { AxiosInstance } from "axios";
-
-type ChildData = Schedule;
 
 export default class PlanAPI {
   private axios: AxiosInstance;
@@ -11,16 +8,19 @@ export default class PlanAPI {
     this.axios = axios;
   }
 
-  async create(plan: PlanInsertType) {
+  /**
+   * create Plan
+   */
+  async create(plan: PlanInsertType): Promise<Plan | null> {
     return await this.axios
       .post("/api/plan", plan)
       .then(({ data }) => data)
       .catch((e) => console.error(e));
   }
 
-  async getMyPlans() {
+  async getMyPlans(): Promise<Plan[]> {
     return await this.axios
-      .get<Tables<"plan">[]>(`/api/plan`)
+      .get<Plan[]>(`/api/plan`)
       .then(({ data }) => data)
       .catch((e) => {
         console.error(e);
@@ -28,7 +28,7 @@ export default class PlanAPI {
       });
   }
 
-  async updatePlan(planId: string, updatedData: Record<string, any>) {
+  async updatePlan(planId: string, updatedData: Record<string, any>): Promise<Plan | null> {
     return await this.axios
       .put(`/api/plan/${planId}/schedule`, updatedData)
       .then(({ data }) => data)
@@ -38,7 +38,7 @@ export default class PlanAPI {
       });
   }
 
-  async addPlan(planId: string, newData: Record<string, any>) {
+  async addPlan(planId: string, newData: Record<string, any>): Promise<Plan | null> {
     return await this.axios
       .post(`/api/plan/${planId}/schedule`, newData)
       .then(({ data }) => data)
@@ -48,7 +48,10 @@ export default class PlanAPI {
       });
   }
 
-  async addChild(planId: string, dayIndex: number, type: PlanChildType, newData: ChildData) {
+  /**
+   * create schedule or moveSchedule or ....
+   */
+  async addChild(planId: string, dayIndex: number, type: PlanChildType, newData: PlanChildData): Promise<Plan | null> {
     return await this.axios
       .post(`/api/plan/${planId}`, { type, dayIndex, data: newData })
       .then(({ data }) => data)

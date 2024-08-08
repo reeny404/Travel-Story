@@ -2,14 +2,17 @@
 import SubmitButton from "@/components/commons/SubmitButton";
 import TravelStyle from "@/components/TravelStyle";
 import { useTravelType } from "@/stores/travelType.store";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { MouseEvent, useEffect, useState } from "react";
 
 function OnBoard() {
   const { travelType } = useTravelType();
   const router = useRouter();
   const [isValidated, setIsValidated] = useState<boolean>(true);
+  const params = useSearchParams();
+  const nextURL = params.get("next") ?? "/";
 
+  console.log(nextURL);
   useEffect(() => {
     if (
       travelType.season.length !== 0 &&
@@ -26,10 +29,10 @@ function OnBoard() {
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault();
-
+    console.log(nextURL);
     localStorage.setItem("userTravelType", JSON.stringify(travelType));
+    router.replace(nextURL);
     document.cookie = "hasTravelType=true; path=/";
-    router.replace("/");
   };
 
   return (

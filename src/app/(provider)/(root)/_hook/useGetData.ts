@@ -37,6 +37,7 @@ const useGetData = () => {
               country: area.country?.krName || "",
               areaName: area.krName || area.name,
               type: area.type || "",
+              rating: area.rating || 0,
             }));
             return acc;
           },

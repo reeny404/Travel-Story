@@ -5,6 +5,7 @@ import { getIconPath } from "@/components/commons/Icon/getIconPath";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { PlanData } from "@/types/plan";
+import { PlanUtil } from "@/utils/PlanUtil";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 
@@ -38,7 +39,7 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
     const data = {
       userId: user.id,
       areaId: areaId,
-      title: `${user?.user_metadata.nickname}님의 여행`,
+      title: PlanUtil.getTitle(user?.user_metadata),
       startDate: new Date().toISOString(),
       endDate: new Date().toISOString(),
     };
@@ -53,7 +54,7 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
       <button
         type="button"
         onClick={handleAddPlan}
-        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white bg-neutral-650 text-sm font-medium rounded-[16px]"
+        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white bg-neutral-750 hover:bg-neutral-900 hover:text-neutral-350 text-sm font-medium rounded-[16px]"
       >
         <Image
           src={getIconPath(ICON.add.bold)}

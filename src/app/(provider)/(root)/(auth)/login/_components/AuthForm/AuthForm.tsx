@@ -29,8 +29,8 @@ function AuthForm({
 
   const textColor = clsx({
     "text-black": labelColor === "black",
-    "text-[#FF0000]": labelColor === "red",
-    "text-[#007AFF]": labelColor === "green",
+    "text-danger-500": labelColor === "red",
+    "text-info-600": labelColor === "green",
   });
 
   // input change마다 상태가 바뀌게하는 함수
@@ -83,7 +83,7 @@ function AuthForm({
       </label>
       <button
         disabled={isInputValid}
-        className="w-full h-[48px] bg-black text-white text-center text-[18px] rounded-md mt-[96px] disabled:bg-[#CECECE]"
+        className="w-full h-[48px] bg-neutral-750 text-white text-center text-[18px] rounded-md mt-[96px] disabled:bg-[#CECECE]"
       >
         계속하기
       </button>

@@ -23,6 +23,7 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
               city={card.city}
               country={card.country}
               areaName={card.areaName}
+              rating={card.rating}
             />
           </div>
         </SwiperSlide>
