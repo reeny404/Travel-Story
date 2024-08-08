@@ -13,7 +13,6 @@ function DetailCard({
   imageUrl,
   viewRef,
 }: DetailCardProps) {
-  console.log("123", 123);
   return (
     <div
       ref={viewRef}

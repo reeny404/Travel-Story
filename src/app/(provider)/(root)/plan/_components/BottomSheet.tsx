@@ -127,7 +127,6 @@ function BottomSheet({
     data.planId = planId;
     data.type = type;
     data.day = day;
-    console.log("Sending data to server:", data);
     if (type === "memo") {
       data.checkList = checkList;
     }

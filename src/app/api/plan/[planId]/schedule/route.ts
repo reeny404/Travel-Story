@@ -238,7 +238,6 @@ export async function GET(request: NextRequest) {
     const planDataParsed = planData as PlanData;
 
     const orderListForDay = planDataParsed.orderList?.[day - 1] || [];
-    console.log(orderListForDay)
 
     // Schedule 데이터
     const scheduleIds = orderListForDay

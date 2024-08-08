@@ -30,7 +30,6 @@ function CityDetailPage({ params }: CityDetailPageProps) {
     setCityId(parseInt(params.id));
   }, []);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
-  console.log("currentTab", currentTab);
   const { data: city, isPending } = useQuery<
     RecommendResponse<City>,
     AxiosError,
