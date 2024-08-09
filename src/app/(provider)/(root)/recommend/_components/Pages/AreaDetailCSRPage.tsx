@@ -86,7 +86,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             icon: inView ? ICON.shareArea.white : ICON.shareArea.black,
             alt: "share",
             size: 20,
-            onClick: () => {},
+            onClick: () => alert("구현 중입니다."),
           },
         ],
       }}
