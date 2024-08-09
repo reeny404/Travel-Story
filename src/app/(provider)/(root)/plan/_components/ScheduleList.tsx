@@ -42,6 +42,7 @@ function ScheduleList({
 
   useEffect(() => {
     fetchScheduleList(planId, selectedDay);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [planId, selectedDay]);
 
   const handleCheckboxChange = async (
