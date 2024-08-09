@@ -1,15 +1,15 @@
 import { ICON } from "@/constants/icon";
 import Image from "next/image";
 
-type ReviewBottomSheetRating = {
+type EditBottomSheetRating = {
   rating: number;
   handleRatingClick: (rating: number, idx: number) => void;
 };
 
-function ReviewBottomSheetRating({
+function EditBottomSheetRating({
   rating,
   handleRatingClick,
-}: ReviewBottomSheetRating) {
+}: EditBottomSheetRating) {
   return (
     <div className="w-full h-10 flex justify-center gap-x-3 aspect-square">
       {Array.from({ length: 5 }).map((_, idx) => (
@@ -31,4 +31,4 @@ function ReviewBottomSheetRating({
   );
 }
 
-export default ReviewBottomSheetRating;
+export default EditBottomSheetRating;

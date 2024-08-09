@@ -29,14 +29,16 @@ function AreaCard({
   country,
   areaName,
 }: AreaCardProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(id);
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks({
+    areaId: id,
+  });
   const { openModal } = useModalStore();
   const { isLoggedIn } = useAuth();
   const toggleBookmark = () => {
     if (!isLoggedIn) {
       openModal("로그인하면 일정에 장소를 추가할 수 있어요");
     } else {
-      isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
+      isBookmarked ? deleteBookmark.mutate(id) : addBookmark.mutate(id);
     }
   };
   const mockTags = ["친구와 함께", "문화 체험", "도심"];
