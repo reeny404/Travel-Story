@@ -69,7 +69,7 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     await createSchedule(planId, day ?? 1, "customePlace", insertData);
     setDay(null);
     onClose();
-    router.push(`/plan/${planId}`);
+    // router.push(`/plan/${planId}`);
   };
 
   useEffect(() => {
