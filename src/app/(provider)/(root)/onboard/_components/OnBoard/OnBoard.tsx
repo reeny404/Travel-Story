@@ -1,9 +1,9 @@
 "use client";
-import SubmitButton from "@/components/commons/SubmitButton";
-import TravelStyle from "@/components/TravelStyle";
+import MainLayout from "@/components/Layout/MainLayout";
 import { useTravelType } from "@/stores/travelType.store";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MouseEvent, useEffect, useState } from "react";
+import Continent from "../Continent";
 
 function OnBoard() {
   const { travelType } = useTravelType();
@@ -36,27 +36,9 @@ function OnBoard() {
   };
 
   return (
-    <div className="flex bg-[#f5f5f5] w-full min-h-dvh py-10">
-      <div className="flex flex-col w-[375px] px-[13px] mx-auto">
-        <h1 className="text-[24px] font-bold mb-4">
-          나한테 딱 맞춘 여행
-          <br /> 맞춤설정
-        </h1>
-        <form className="flex flex-col items-center">
-          <TravelStyle title="여행 테마가 무엇인가요?" category="theme" />
-          <TravelStyle title="언제 떠나시나요?" category="season" />
-          <TravelStyle title="누구와 떠나시나요?" category="travelMate" />
-          <SubmitButton
-            theme="primary"
-            size="lg"
-            disabled={isValidated}
-            onClick={(e) => handleTravelTypeClick(e)}
-          >
-            설정 저장
-          </SubmitButton>
-        </form>
-      </div>
-    </div>
+    <MainLayout headerProps={{ backgroundColor: "noShadow", title: "" }}>
+      <Continent />
+    </MainLayout>
   );
 }
 
