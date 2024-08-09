@@ -63,7 +63,7 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     };
     const insertData = getInsertData("customePlace", scheduleData, planId);
     if (!insertData) {
-      alert("고객센터로 연락해주세요 망했지 뭐");
+      alert("새로고침 후 재시도 해주세요");
       return;
     }
     await createSchedule(planId, day ?? 1, "customePlace", insertData);
