@@ -6,7 +6,7 @@ function SuggestArea() {
       <span>사람들이 많이 가는 곳은 어딜까?</span>
       <Link
         href="/recommend/country/1/detail"
-        className="bg-lime-400 rounded px-4 py-1 hover:text-white hover:bg-gray-750"
+        className="bg-lime-400 rounded px-4 py-1 hover:text-white hover:bg-primary"
       >
         구경가기
       </Link>
