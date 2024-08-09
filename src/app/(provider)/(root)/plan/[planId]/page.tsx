@@ -87,6 +87,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
 
   const createByBookmark = useCallback(() => {
     router.push(`/my/bookmarks?planId=${planId}&day=${selectedDay}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDay, planId]);
 
   if (!planId) {
