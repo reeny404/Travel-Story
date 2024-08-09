@@ -39,7 +39,7 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
     const data = {
       userId: user.id,
       areaId: areaId,
-      title: PlanUtil.getTitle(user?.user_metadata.nickname),
+      title: PlanUtil.getTitle(user?.user_metadata),
       startDate: new Date().toISOString(),
       endDate: new Date().toISOString(),
     };
@@ -54,7 +54,7 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
       <button
         type="button"
         onClick={handleAddPlan}
-        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white bg-neutral-650 text-sm font-medium rounded-[16px]"
+        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white bg-neutral-750 hover:bg-neutral-900 hover:text-neutral-350 text-sm font-medium rounded-[16px]"
       >
         <Image
           src={getIconPath(ICON.add.bold)}

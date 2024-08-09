@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const title = plan.title ?? PlanUtil.getTitle(user?.user_metadata.name);
+  const title = plan.title ?? PlanUtil.getTitle(user?.user_metadata);
   const orderList = PlanUtil.order.init(plan.startDate, plan.endDate);
   const { data, error } = await supabase
     .from("plan")

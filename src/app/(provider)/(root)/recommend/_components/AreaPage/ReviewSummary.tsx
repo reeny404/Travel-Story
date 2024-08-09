@@ -1,5 +1,6 @@
 "use client";
 import RatingIcons from "@/components/Card/RatingIcons";
+import { getIconPath } from "@/components/commons/Icon/getIconPath";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useModalStore } from "@/stores/modal.store";
@@ -53,7 +54,7 @@ function ReviewSummaryCard({
           className="text-sm font-bold flex items-center aspect-auto"
         >
           <Image
-            src={`/icons/${ICON.edit.color}.svg`}
+            src={getIconPath(ICON.edit.color)}
             alt="edit"
             width={16}
             height={16}

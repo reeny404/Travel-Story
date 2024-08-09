@@ -4,7 +4,7 @@ import MyBookmarkList from "./_components/MyBookmarkList";
 
 export type MyBookmarkPageParams = {
   planId: string;
-  dayIndex: number;
+  day: string;
 };
 
 type PageProps = {
@@ -13,6 +13,7 @@ type PageProps = {
 
 export default function MyBookmarkPage({ searchParams }: PageProps) {
   const tabs: Tab[] = TABS.default;
+  console.log("searchParams", searchParams);
 
   return (
     <MainLayout

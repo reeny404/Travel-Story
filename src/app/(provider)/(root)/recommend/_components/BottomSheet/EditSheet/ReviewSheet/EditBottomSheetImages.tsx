@@ -2,16 +2,16 @@
 import { ImgFileType } from "@/types/Recommend";
 import clsx from "clsx";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import PlusIcon from "../PlusIcon";
+import PlusIcon from "../../PlusIcon";
 
 type BottomSheetImagesProps = {
   imgFile: ImgFileType[];
   setImgFile: React.Dispatch<React.SetStateAction<ImgFileType[]>>;
 };
 
-function ReviewBottomSheetImages({
+function EditBottomSheetImages({
   imgFile,
   setImgFile,
 }: BottomSheetImagesProps) {
@@ -46,6 +46,13 @@ function ReviewBottomSheetImages({
     setImgFile(deletedImageFiles);
   };
 
+  useEffect(() => {
+    imgFile.map((file) => {
+      if (typeof file === "string" && !images.includes(file)) {
+        return setImages((prev) => [...prev, file]);
+      }
+    });
+  }, [imgFile]);
   return (
     <div className="flex w-full">
       <ul className="flex gap-3 flex-wrap">
@@ -63,6 +70,7 @@ function ReviewBottomSheetImages({
               fill
               className="object-cover rounded-lg"
             />
+            /
           </li>
         ))}
 
@@ -94,4 +102,4 @@ function ReviewBottomSheetImages({
   );
 }
 
-export default ReviewBottomSheetImages;
+export default EditBottomSheetImages;
