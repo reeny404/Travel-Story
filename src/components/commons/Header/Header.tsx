@@ -8,14 +8,14 @@ import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
 const headerStyles = cva(
-  "w-full h-[52px] flex items-center justify-between relative z-40",
+  "w-full h-[52px] flex items-center justify-between relative z-[900]",
   {
     variants: {
       backgroundColor: {
         transparent: "bg-transparent text-white",
         white: "bg-white shadow-area-card sticky top-0",
         whiteFixed: "bg-white shadow-area-card header-fixed",
-        noShadow: "bg-white sticky top-0 h-[52px] z-40",
+        noShadow: "bg-white sticky top-0 h-[52px] z-[900]",
       },
       titleAlign: {
         left: "justify-start",
