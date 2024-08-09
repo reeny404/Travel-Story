@@ -12,9 +12,12 @@ function MyTripPlanner() {
   };
 
   return (
-    <ul className="flex flex-col gap-3 ml-12 mb-4">
+    <ul className="flex flex-col gap-3 pl-7 pr-5 pb-3">
       {SUB_CATEGORY.map((item, index) => (
-        <li key={index} className="flex items-center text-sm h-10">
+        <li
+          key={index}
+          className="flex items-center px-4 py-3 rounded-lg cursor-pointer hover:bg-primary hover:text-white active:bg-primary"
+        >
           <Link href={item.path} onClick={handleCloseDrawer}>
             {item.title}
           </Link>

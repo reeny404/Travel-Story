@@ -29,6 +29,14 @@ class CountryAPI {
     return data;
   }
 
+  async getSortedCountries(): Promise<Country[]> {
+    const path = "/api/country/drawer";
+    const response = await this.axios.get<Country[]>(path);
+
+    const data = response.data;
+    return data;
+  }
+
   // 인기 여행지(추후 필터 적용 시점에 분리할 예정)
   async getPopularCountries(): Promise<RecommendResponse<Country[]>> {
     const path = "/api/country/popular";

@@ -37,7 +37,7 @@ function LeftCardSection({
         <h3 className={`mb-[54px] font-medium text-center text-${textColor}`}>
           {subTitle}
         </h3>
-        {firstCard ? (
+        {firstCard && (
           <div className="flex justify-center items-center">
             <BookMarkCard
               title={firstCard.country}
@@ -50,8 +50,6 @@ function LeftCardSection({
               areaName={firstCard.areaName}
             />
           </div>
-        ) : (
-          <div className="text-center text-white">No data available</div>
         )}
         <ul
           style={{ width: "calc(100% - 55.24px)" }}

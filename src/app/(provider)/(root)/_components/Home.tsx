@@ -54,15 +54,9 @@ function Home() {
         rightIcons: [
           {
             icon: ICON.search.black,
-            alt: "Avatar",
+            alt: "Search",
             size: 20,
             onClick: handleMoveSearch,
-          },
-          {
-            icon: ICON.avatar.black,
-            alt: "Avatar",
-            size: 20,
-            onClick: handleAvatarClick,
           },
         ],
       }}

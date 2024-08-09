@@ -1,11 +1,31 @@
+"use client";
+
+import { api } from "@/apis/api";
 import { ICON } from "@/constants/icon";
+import { Country } from "@/types/Recommend";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useState } from "react";
 import Category from "./Category";
 import MyTripPlanner from "./MyTripPlanner";
 import TripList from "./TripList";
 
 function CategoryList() {
+  const { data: countries } = useQuery<Country[], AxiosError>({
+    queryKey: ["countries"],
+    queryFn: async (): Promise<Country[]> => {
+      const response = await api.country.getSortedCountries();
+      return response || [];
+    },
+  });
+  const [selectedCategory, setSelectedCategory] = useState<string>("여행지");
+
+  const handleCategoryClick = (label: string) => {
+    setSelectedCategory((prevLabel) => (prevLabel === label ? "" : label));
+  };
+
   return (
-    <nav className="flex flex-col">
+    <nav className="flex flex-col px-4">
       <Category
         href="/"
         imgPath={`/drawer/${ICON.drawer.home}.png`}
@@ -13,26 +33,30 @@ function CategoryList() {
         label="홈"
       />
       <Category
-        href="/my"
-        imgPath={`/drawer/${ICON.drawer.mypage}.png`}
-        alt="home"
-        label="마이 페이지"
+        href="/my/bookmarks"
+        imgPath={`/drawer/drawer-bookmark.svg`}
+        alt="bookmark"
+        label="보관함"
       />
       <Category
         imgPath={`/drawer/${ICON.drawer.planner}.png`}
-        alt="home"
+        alt="planner"
         label="내 여행 플래너"
+        isSelected={selectedCategory === "내 여행 플래너"}
+        onClick={() => handleCategoryClick("내 여행 플래너")}
         hasSubCategory
       >
         <MyTripPlanner />
       </Category>
       <Category
         imgPath={`/drawer/${ICON.drawer.tour}.png`}
-        alt="home"
+        alt="tour"
         label="여행지"
+        isSelected={selectedCategory === "여행지"}
+        onClick={() => handleCategoryClick("여행지")}
         hasSubCategory
       >
-        <TripList />
+        {countries && <TripList countries={countries} />}
       </Category>
     </nav>
   );
