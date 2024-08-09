@@ -1,9 +1,14 @@
 "use client";
+import SvgIcon from "@/components/commons/SvgIcon";
 import MainLayout from "@/components/Layout/MainLayout";
+import { useOnboardStore } from "@/stores/onboard.store";
 import { useTravelType } from "@/stores/travelType.store";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MouseEvent, useEffect, useState } from "react";
 import Continent from "../Continent";
+import ProgressBar from "../ProgressBar";
+import TravelMate from "../TravelMate";
+import TravelType from "../TravelType";
 
 function OnBoard() {
   const { travelType } = useTravelType();
@@ -11,6 +16,7 @@ function OnBoard() {
   const [isValidated, setIsValidated] = useState<boolean>(true);
   const params = useSearchParams();
   const nextURL = params.get("next") ?? "/";
+  const { progress } = useOnboardStore();
 
   console.log(nextURL);
   useEffect(() => {
@@ -35,9 +41,19 @@ function OnBoard() {
     document.cookie = "hasTravelType=true; path=/";
   };
 
+  const sections = [
+    <Continent key={1} />,
+    <TravelMate key={2} />,
+    <TravelType key={3} />,
+  ];
+
   return (
-    <MainLayout headerProps={{ backgroundColor: "noShadow", title: "" }}>
-      <Continent />
+    <MainLayout>
+      <header className="flex w-full h-[52px] items-center px-4">
+        <SvgIcon name="cancle" width={20} height={20} className="ml-auto" />
+      </header>
+      <ProgressBar />
+      {sections[progress - 1]}
     </MainLayout>
   );
 }
