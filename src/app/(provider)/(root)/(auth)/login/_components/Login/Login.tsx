@@ -10,7 +10,8 @@ import AuthForm from "../AuthForm/AuthForm";
 
 function Login() {
   const { submit, change } = useAuthFlow();
-  const { labelText, labelColor, isInputValid } = useLoginStepStore();
+  const { labelText, labelColor, isInputValid, setProgressInit } =
+    useLoginStepStore();
   const { user } = useAuthStore();
   const { isLoggedIn } = useAuth();
   const { setNextURL, setLabelColor, setLabelText, setIsInputValid } =
@@ -30,6 +31,9 @@ function Login() {
   useEffect(() => {
     setLabelColor("black");
     setLabelText("");
+    if (step === "email") {
+      setProgressInit();
+    }
     if (step !== "add-user") return setIsInputValid(true);
     setIsInputValid(false);
   }, [step]);
