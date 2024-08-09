@@ -2,8 +2,10 @@
 
 import { api } from "@/apis/api";
 import { useAuth } from "@/contexts/auth.contexts";
+import useDrawerStore from "@/stores/drawer.store";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 
 type SupabaseUser = {
   image_url: string;
@@ -12,6 +14,7 @@ type SupabaseUser = {
 
 function DrawerMyProfile() {
   const { user } = useAuth();
+  const { closeDrawer } = useDrawerStore();
   const { data: myProfile } = useQuery<SupabaseUser>({
     queryKey: ["users"],
     queryFn: () => api.auth.userProfile(user?.email as string),
@@ -40,9 +43,21 @@ function DrawerMyProfile() {
           className="rounded-full"
         />
       )}
-      <h4 className="ml-3 text-xl font-bold">
-        {nickname} <h5 className="font-medium inline">님 반가워요!</h5>
-      </h4>
+      {user ? (
+        <h4 className="ml-3 text-xl font-semibold" onClick={closeDrawer}>
+          <Link href="my">
+            {nickname}
+            <h5 className="font-medium inline"> 님 반가워요!</h5>
+          </Link>
+        </h4>
+      ) : (
+        <h4
+          className="ml-3 text-xl font-medium inline hover:cursor-pointer hover:underline"
+          onClick={closeDrawer}
+        >
+          <Link href="/login">[로그인하기]</Link>
+        </h4>
+      )}
     </div>
   );
 }
