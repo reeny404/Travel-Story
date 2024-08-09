@@ -16,13 +16,13 @@ function BookmarkButton({ areaId }: BookmarkButtonProps) {
       {isBookmarked ? (
         <Icon
           icon={ICON.bookmark.big.on}
-          size={20}
+          size={16}
           onClick={() => deleteBookmark.mutate()}
         />
       ) : (
         <Icon
           icon={ICON.bookmark.big.off}
-          size={20}
+          size={16}
           onClick={() => addBookmark.mutate()}
         />
       )}

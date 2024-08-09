@@ -130,7 +130,7 @@ export const ICON = {
   },
   star: {
     dark: { name: "star-black", ext: "svg" },
-    fill: "star-fill",
+    fill: { name: "star-fill", ext: "svg" },
     unfill: "star-unfill",
     half: "star-half",
   },

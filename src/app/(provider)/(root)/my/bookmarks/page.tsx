@@ -1,5 +1,5 @@
 import MainLayout from "@/components/Layout/MainLayout";
-import { Tab, TABS } from "@/constants/tabs";
+import { TABS, TabType } from "@/constants/tabs";
 import MyBookmarkList from "./_components/MyBookmarkList";
 
 export type MyBookmarkPageParams = {
@@ -12,7 +12,7 @@ type PageProps = {
 };
 
 export default function MyBookmarkPage({ searchParams }: PageProps) {
-  const tabs: Tab[] = TABS.default;
+  const tabs: TabType[] = TABS.default;
 
   return (
     <MainLayout

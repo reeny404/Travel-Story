@@ -238,13 +238,11 @@ export async function GET(request: NextRequest) {
     const planDataParsed = planData as PlanData;
 
     const orderListForDay = planDataParsed.orderList?.[day - 1] || [];
-    console.log(orderListForDay)
+    console.log(orderListForDay);
 
     // Schedule 데이터
     const scheduleIds = orderListForDay
-      .filter(
-        (entry) => entry.type === "customePlace" || entry.type === "place"
-      )
+      .filter((entry) => entry.type === "customPlace" || entry.type === "place")
       .map((entry) => entry.id);
     const { data: scheduleData = [] } = await supabase
       .from(TABLE_NAME)
@@ -284,7 +282,7 @@ export async function GET(request: NextRequest) {
 
     // 결과 데이터 결합
     const resultData = orderListForDay.map((entry) => {
-      if (entry.type === "customePlace" || entry.type === "place") {
+      if (entry.type === "customPlace" || entry.type === "place") {
         const data = scheduleData?.find((d) => d.id === entry.id) as
           | ScheduleType
           | undefined;
