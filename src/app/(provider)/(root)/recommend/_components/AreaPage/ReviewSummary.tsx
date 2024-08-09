@@ -36,7 +36,6 @@ function ReviewSummaryCard({
   };
 
   const BottomSheet = createReviewBottomSheet();
-
   return (
     <section className="w-full h-full pb-8 px-4">
       {isBottomSheetVisible && (

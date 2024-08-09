@@ -13,6 +13,8 @@ export const ICON = {
   add: {
     white: { name: "add", ext: "svg" },
     bold: { name: "add-bold", ext: "svg" },
+    black: { name: "add-black", ext: "svg" },
+
     person: {
       black: { name: "person-add", ext: "svg" },
     },
@@ -81,7 +83,7 @@ export const ICON = {
     line: { name: "edit-line", ext: "svg" },
     black: { name: "edit-black", ext: "png" },
     blue: { name: "edit-blue", ext: "png" },
-    color: { name: "edit-color", ext: "png" },
+    color: { name: "edit-color", ext: "svg" },
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
@@ -133,8 +135,8 @@ export const ICON = {
   star: {
     dark: { name: "star-black", ext: "svg" },
     fill: { name: "star-fill", ext: "svg" },
-    unfill: "star-unfill",
-    half: "star-half",
+    unfill: { name: "star-unfill", ext: "svg" },
+    half: { name: "star-half", ext: "svg" },
   },
   accommodation: {
     color: { name: "accommodation-color", ext: "svg" },

@@ -234,10 +234,24 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   const data = await request.json();
   const id = data.id;
+  const areaId = data.areaId;
+  console.log("areaId", areaId);
   const supabase = createClient();
   const { data: deletedData, error } = await supabase
     .from("areaReview")
     .delete()
     .eq("id", id);
+
+  const { data: ratingData } = await supabase
+    .from("areaReview")
+    .select("rating")
+    .eq("areaId", areaId);
+  const totalRating = ratingData?.reduce(
+    (acc, review) => acc + review.rating,
+    0
+  );
+  const calcedRate = Number((totalRating! / ratingData?.length!).toFixed(1));
+  await supabase.from("area").update({ rating: calcedRate }).eq("id", areaId);
+
   return NextResponse.json("");
 }

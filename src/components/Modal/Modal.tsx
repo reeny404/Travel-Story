@@ -1,9 +1,8 @@
 "use client";
 import { useModalStore } from "@/stores/modal.store";
 import { useRouter } from "next/navigation";
-
 function Modal() {
-  const { isOpen, title, content, closeModal } = useModalStore();
+  const { isOpen, title, content, closeModal, nextUrl } = useModalStore();
   const router = useRouter();
 
   if (!isOpen) {
@@ -11,8 +10,8 @@ function Modal() {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 px-5">
-      <div className="fixed inset-0 bg-black opacity-50"></div>
+    <div className="fixed inset-0 flex items-center justify-center z-[9999] px-5">
+      <div className="fixed inset-0 bg-black opacity-50 "></div>
 
       <article className="relative bg-white px-7 py-8 border border-gray-300 rounded-lg shadow-lg max-w-md w-full z-10">
         {/* <h1 className="text-2xl font-bold mb-4 text-center">{title}</h1> */}
@@ -28,7 +27,7 @@ function Modal() {
           </button>
           <button
             onClick={() => {
-              closeModal(), router.push("/login");
+              closeModal(), router.push(`/login?nextUrl=${nextUrl}`);
             }}
             className="w-1/2 h-10 bg-neutral-750 text-white py-2 rounded"
           >

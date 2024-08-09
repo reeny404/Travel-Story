@@ -1,4 +1,4 @@
-function ReviewBottomSheetTitle() {
+function EditBottomSheetTitle() {
   return (
     <h1 className="w-full h-auto flex items-center text-xl bg-white font-semibold leading-6">
       리뷰작성
@@ -6,4 +6,4 @@ function ReviewBottomSheetTitle() {
   );
 }
 
-export default ReviewBottomSheetTitle;
+export default EditBottomSheetTitle;

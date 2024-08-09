@@ -87,7 +87,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             icon: inView ? ICON.shareArea.white : ICON.shareArea.black,
             alt: "share",
             size: 20,
-            onClick: () => {},
+            onClick: () => alert("구현 중입니다."),
           },
         ],
       }}
@@ -144,7 +144,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               >
                 <ReviewSummaryCard
                   areaName={area.krName!}
-                  rating={area.rating!}
+                  rating={area.rating ?? 0}
                   ratingAmount={areaReviews?.length || 0}
                   areaId={areaId}
                 />
