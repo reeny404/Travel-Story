@@ -1,11 +1,12 @@
-import useDrawerStore from "@/stores/drawer.store";
+type BackDropProps = {
+  onClose: () => void;
+};
 
-function BackDrop() {
-  const { closeDrawer } = useDrawerStore();
+function BackDrop({ onClose }: BackDropProps) {
   return (
     <div
       className="fixed top-0 left-1/2 transform -translate-x-1/2 max-w-[430px] w-full h-full bg-black/30 backdrop-blur-lg shadow-drawer z-drawer"
-      onClick={closeDrawer}
+      onClick={onClose}
     />
   );
 }

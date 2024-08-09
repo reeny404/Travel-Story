@@ -6,6 +6,7 @@ import useDrawerStore from "@/stores/drawer.store";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import SvgIcon from "../commons/SvgIcon";
 
 type SupabaseUser = {
   image_url: string;
@@ -24,41 +25,42 @@ function DrawerMyProfile() {
   const nickname = myProfile?.nickname;
 
   return (
-    <div className="flex flex-row items-center px-6">
-      {profileImage ? (
-        <div className="w-10 h-10 rounded-full bg-neutral-200">
-          <Image
-            src={profileImage}
-            alt="profile Image"
-            fill
-            className="object-cover"
-          />
+    <Link href={user ? "/my" : "/login"}>
+      <div
+        className="flex justify-between items-center px-6 py-4 cursor-pointer"
+        onClick={closeDrawer}
+      >
+        <div className="flex items-center">
+          {profileImage ? (
+            <div className="w-10 h-10 rounded-full bg-neutral-200">
+              <Image
+                src={profileImage}
+                alt="profile Image"
+                fill
+                className="object-cover"
+              />
+            </div>
+          ) : (
+            <Image
+              src="/icons/avatar.svg"
+              alt="profile Image"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          )}
+          {user ? (
+            <h4 className="ml-3 text-xl font-semibold">
+              {nickname}
+              <h5 className="font-medium inline"> 님 반가워요!!</h5>
+            </h4>
+          ) : (
+            <h4 className="ml-3 text-xl font-medium inline">로그인하기</h4>
+          )}
         </div>
-      ) : (
-        <Image
-          src="/travelstory-logo.png"
-          alt="profile Image"
-          width={40}
-          height={40}
-          className="rounded-full"
-        />
-      )}
-      {user ? (
-        <h4 className="ml-3 text-xl font-semibold" onClick={closeDrawer}>
-          <Link href="my">
-            {nickname}
-            <h5 className="font-medium inline"> 님 반가워요!</h5>
-          </Link>
-        </h4>
-      ) : (
-        <h4
-          className="ml-3 text-xl font-medium inline hover:cursor-pointer hover:underline"
-          onClick={closeDrawer}
-        >
-          <Link href="/login">[로그인하기]</Link>
-        </h4>
-      )}
-    </div>
+        <SvgIcon name="angle-right" title="angle" width={20} height={20} />
+      </div>
+    </Link>
   );
 }
 

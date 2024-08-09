@@ -37,10 +37,19 @@ class ReviewAPI {
     return data;
   }
 
-  async addReview(data: any) {
+  async addReview(data: FormData) {
     const path = "api/review";
     const response = await this.axios.post(path, data);
     return response.data;
+  }
+  async updateReview(data: FormData) {
+    const path = "api/review";
+    const response = await this.axios.put(path, data);
+    return response.data;
+  }
+  async deleteReview({ id, areaId }: { id: number; areaId: number }) {
+    const path = "api/review";
+    await this.axios.delete(path, { data: { id, areaId } });
   }
 }
 

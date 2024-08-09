@@ -4,6 +4,7 @@ import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
 import { useAuth } from "@/contexts/auth.contexts";
 import { PlanInsertType } from "@/types/plan";
+import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -12,12 +13,13 @@ import NewPlanStyle from "./_components/NewPlanStyle";
 
 function CreatePlanIntroPage() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const titles: string[] = useMemo(() => ["기본 정보", "여행 성격"], []);
   const [selectedTab, setSelectedTab] = useState<string>(titles[0]);
   const [planData, setPlanData] = useState<PlanInsertType>({});
 
-  const { user } = useAuth();
-  if (!user) {
+  const { isInitialized, isLoggedIn } = useAuth();
+  if (isInitialized && !isLoggedIn) {
     router.replace("/login?nextUrl=" + encodeURI("/plan/create"));
     return;
   }
@@ -25,6 +27,7 @@ function CreatePlanIntroPage() {
   const onClickToCreatePlan = () => {
     api.plan.create(planData).then(() => {
       router.push("/plan");
+      queryClient.invalidateQueries({ queryKey: ["plan", "my"] });
     });
   };
 

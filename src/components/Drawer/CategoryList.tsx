@@ -11,8 +11,6 @@ import MyTripPlanner from "./MyTripPlanner";
 import TripList from "./TripList";
 
 function CategoryList() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-
   const { data: countries } = useQuery<Country[], AxiosError>({
     queryKey: ["countries"],
     queryFn: async (): Promise<Country[]> => {
@@ -20,6 +18,7 @@ function CategoryList() {
       return response || [];
     },
   });
+  const [selectedCategory, setSelectedCategory] = useState<string>("여행지");
 
   const handleCategoryClick = (label: string) => {
     setSelectedCategory((prevLabel) => (prevLabel === label ? "" : label));
@@ -33,7 +32,6 @@ function CategoryList() {
         alt="home"
         label="홈"
       />
-      {/* 추후 추가 가능성 있는 컴포넌트 */}
       <Category
         href="/my/bookmarks"
         imgPath={`/drawer/drawer-bookmark.svg`}

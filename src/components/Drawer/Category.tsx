@@ -28,7 +28,7 @@ function Category({
 }: CategoryProps) {
   const router = useRouter();
   const { closeDrawer } = useDrawerStore();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isSelected);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,7 +44,7 @@ function Category({
     }
 
     if (hasSubCategory) {
-      setIsOpen(!isOpen);
+      setIsOpen((prev) => !prev);
     }
   };
 

@@ -8,7 +8,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 function useAuthFlow() {
-  const { setStep, setLabelColor, setLabelText, setIsInputValid } =
+  const { nextURL, setLabelColor, setLabelText, setIsInputValid, setProgress } =
     useLoginStepStore();
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
   const router = useRouter();
@@ -63,11 +63,13 @@ function useAuthFlow() {
   const handleEmailSubmit = async (email: string) => {
     putEmail(email);
     const nextStep = await api.auth.emailUser(email);
-    setStep(nextStep);
+
     if (nextStep === "add-user") {
       setIsInputValid(false);
+      router.push("/login?step=add-user");
     } else {
       setIsInputValid(true);
+      router.push("/login?step=password");
     }
   };
 
@@ -79,18 +81,17 @@ function useAuthFlow() {
       return setLabelText("비밀번호가 일치하지 않습니다.");
     }
     setUser(response.data.session.user);
-    setStep("email");
-    setLabelColor("black");
     if (isTypeExist) {
-      return router.push("/");
+      return router.replace(nextURL);
     }
-    return router.push("/onboard");
+    return router.replace(`/onboard?next=${nextURL}`);
   };
 
   // 회원가입 email 버튼 누를 시
   const handleSignupSubmit = () => {
     setIsInputValid(true);
-    setStep("new-password");
+    setProgress(true);
+    router.push("/login?step=new-password");
   };
 
   // 회원가입 password 버튼 누를 시
@@ -98,14 +99,16 @@ function useAuthFlow() {
     setIsInputValid(true);
     putPassword(password);
     setLabelColor("black");
-    setStep("check-password");
+    setProgress(true);
+    router.push("/login?step=check-password");
   };
 
   // 회원가입 password check 버튼 누를 시
   const handleCheckPasswordSubmit = () => {
     setIsInputValid(true);
     setLabelColor("black");
-    setStep("nickname");
+    setProgress(true);
+    router.push("/login?step=nickname");
   };
 
   // 회원가입 nickname 버튼 누를 시
@@ -117,12 +120,10 @@ function useAuthFlow() {
     }
     const response = await api.auth.signUp(user.email, user.password, nickname);
     setUser(response.data.session.user);
-    setStep("email");
-    setLabelColor("black");
     if (isTypeExist) {
-      return router.push("/");
+      return router.replace(nextURL);
     }
-    return router.push("/onboard");
+    return router.replace(`/onboard?next=${nextURL}`);
   };
 
   return {

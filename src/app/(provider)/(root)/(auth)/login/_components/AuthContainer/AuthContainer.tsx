@@ -1,68 +1,72 @@
 "use client";
 import MainLayout from "@/components/Layout/MainLayout";
-import { usePathStore } from "@/stores/path.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { createClient } from "@/supabase/client";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
+import ProgressBar from "../ProgressBar/ProgressBar";
 
 type AuthPageProps = {
   title: string;
   isSocialHidden?: boolean;
 };
 
-function AuthLayout({
+function AuthContainer({
   title,
   isSocialHidden = false,
   children,
 }: PropsWithChildren<AuthPageProps>) {
   const supabase = createClient();
-  const { step, setStep, setLabelColor, setLabelText, setIsInputValid } =
-    useLoginStepStore();
-  const { prevPath } = usePathStore();
+  const { progress } = useLoginStepStore();
   const router = useRouter();
+  const { nextURL } = useLoginStepStore();
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const handleKakaoLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
+      options: {
+        redirectTo: `${baseURL}/api/auth/callback?next=${encodeURIComponent(nextURL)}`,
+      },
     });
     if (error) {
       console.error("소셜로그인 중 에러: ", error);
     }
   };
 
-  const handleStepBack = () => {
-    setLabelText("");
-    setLabelColor("black");
-    setIsInputValid(true);
-    switch (step) {
-      case "email":
-        router.back();
-        break;
-      case "password":
-        setStep("email");
-        break;
-      case "add-user":
-        setStep("email");
-        break;
-      case "new-password":
-        setStep("add-user");
-        setIsInputValid(false);
-        break;
-      case "check-password":
-        setStep("new-password");
-        break;
-      case "nickname":
-        setStep("check-password");
-        break;
-    }
-  };
+  // const handleStepBack = () => {
+  //   setLabelText("");
+  //   setLabelColor("black");
+  //   setIsInputValid(true);
+  //   switch (step) {
+  //     case "email":
+  //       router.back();
+  //       break;
+  //     case "password":
+  //       setStep("email");
+  //       break;
+  //     case "add-user":
+  //       setStep("email");
+  //       break;
+  //     case "new-password":
+  //       setStep("add-user");
+  //       setIsInputValid(false);
+  //       break;
+  //     case "check-password":
+  //       setStep("new-password");
+  //       break;
+  //     case "nickname":
+  //       setStep("check-password");
+  //       break;
+  //   }
+  // };
 
   return (
-    <MainLayout headerProps={{ title: "로그인" }}>
+    <MainLayout headerProps={{ title: "로그인", backgroundColor: "noShadow" }}>
+      {progress !== 0 ? <ProgressBar /> : null}
       <div
-        className="w-full px-4 pt-12 bg-white"
-        style={{ minHeight: "calc(100vh - 52px)" }}
+        className="relative w-full px-4 pt-12 bg-white"
+        style={{ minHeight: "calc(100vh - 54px)" }}
       >
         {/* title */}
         <h1 className="text-[24px] font-semibold mb-[68px] whitespace-pre-wrap">
@@ -93,4 +97,4 @@ function AuthLayout({
   );
 }
 
-export default AuthLayout;
+export default AuthContainer;

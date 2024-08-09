@@ -1,7 +1,7 @@
 import {
   AreaBookmark,
-  AreaBookmarkWithArea,
-  BookmarkType,
+  BookmarkAPIType,
+  BookmarkWithArea,
   RecommendResponse,
 } from "@/types/Recommend";
 import { AxiosInstance } from "axios";
@@ -13,37 +13,36 @@ class BookmarkAPI {
     this.axios = axios;
   }
   // 유저 정보에 따른 북마크들을 가져옵니다.
-  async getBookmarks(id: string): Promise<RecommendResponse<AreaBookmarkWithArea[]>> {
+  async getBookmarks(): Promise<RecommendResponse<BookmarkWithArea[]>> {
     const path = "/api/bookmark";
-    const response = await this.axios.get<RecommendResponse<AreaBookmarkWithArea[]>>(
-      path,
-      { params: { id } }
-    );
+    const response =
+      await this.axios.get<RecommendResponse<BookmarkWithArea[]>>(path);
     const data = response.data;
+
     return data;
   }
 
   async addBookmark(
-    data: BookmarkType
+    data: BookmarkAPIType
   ): Promise<RecommendResponse<AreaBookmark>> {
-    const { userId, areaId } = data;
+    const { areaId } = data;
     const path = "/api/bookmark";
     const response = await this.axios.post<RecommendResponse<AreaBookmark>>(
       path,
-      { userId, areaId }
+      { areaId }
     );
     return response.data;
   }
 
   async deleteBookmark(
-    data: BookmarkType
+    data: BookmarkAPIType
   ): Promise<RecommendResponse<AreaBookmark>> {
-    const { userId, areaId } = data;
+    const { areaId } = data;
     const path = "/api/bookmark";
     const response = await this.axios.delete<RecommendResponse<AreaBookmark>>(
       path,
       {
-        data: { userId, areaId },
+        data: { areaId },
       }
     );
     return response.data;

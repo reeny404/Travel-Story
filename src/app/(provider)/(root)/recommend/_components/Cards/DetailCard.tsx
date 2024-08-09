@@ -1,26 +1,38 @@
+import { dmSerifDisplayFont } from "@/constants/fonts";
 import CardImgFrame from "./CardImgFrame";
 
 type DetailCardProps = {
   title: string;
-  description?: string;
+  name?: string;
   imageUrl: string;
+  viewRef?: any;
 };
 
-function DetailCard({ title, description, imageUrl }: DetailCardProps) {
+function DetailCard({ title, name, imageUrl, viewRef }: DetailCardProps) {
   return (
-    <div className="w-full relative flex justify-center">
-      {/* <div className="absolute w-full -z-20 inset-0 bg-black opacity-30"></div> */}
-      {description && (
-        <p className=" absolute text-white bottom-3 font-semibold z-10 ">
-          {title}
-        </p>
+    <div
+      ref={viewRef}
+      className="w-full text-neu relative flex justify-center overflow-hidden"
+    >
+      <div className="z-50 arch-shadow"></div>
+
+      {title && (
+        <div className="absolute bottom-4 z-50">
+          <p
+            className={`${dmSerifDisplayFont.className} h-[58px] flex items-center justify-center text-5xl text-white leading-[57.6px]`}
+          >
+            {name?.toLocaleUpperCase()}
+          </p>
+          <p className="text-white font-semibold">{title}</p>
+        </div>
       )}
 
       <CardImgFrame
         imageUrl={imageUrl}
         alt={title}
-        frameClassName="aspect-4/5 h-[516px]"
+        frameClassName="aspect-4/5 h-[516px] relative z-10"
         imageClassName="object-fill"
+        priority={true}
       />
     </div>
   );

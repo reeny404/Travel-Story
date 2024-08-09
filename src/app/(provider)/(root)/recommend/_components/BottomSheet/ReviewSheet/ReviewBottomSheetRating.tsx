@@ -1,3 +1,4 @@
+import { getIconPath } from "@/components/commons/Icon/getIconPath";
 import { ICON } from "@/constants/icon";
 import Image from "next/image";
 
@@ -11,20 +12,20 @@ function ReviewBottomSheetRating({
   handleRatingClick,
 }: ReviewBottomSheetRating) {
   return (
-    <div className="w-full flex justify-center p-5 pt-4">
+    <div className="w-full h-10 flex justify-center gap-x-3 aspect-square">
       {Array.from({ length: 5 }).map((_, idx) => (
         <Image
           key={`filled-${idx}`}
           src={
             rating <= idx
-              ? `/icons/${ICON.star.unfill}.svg`
-              : `/icons/${ICON.star.fill}.svg`
+              ? getIconPath(ICON.star.unfill)
+              : getIconPath(ICON.star.fill)
           }
           alt="filled star"
-          width={30}
-          height={30}
+          width={36}
+          height={36}
           onClick={() => handleRatingClick(rating, idx + 1)}
-          className={"object-contain mr-1 cursor-pointer"}
+          className={"object-fill cursor-pointer"}
         />
       ))}
     </div>

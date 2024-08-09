@@ -1,9 +1,11 @@
 "use client";
 import { api } from "@/apis/api";
+import { getInsertData } from "@/app/(provider)/(root)/plan/_components/getInsertData";
 import { useAuth } from "@/contexts/auth.contexts";
+import useScheduleStore from "@/stores/schedule.store";
 import { Area } from "@/types/Recommend";
-import { ScheduleData } from "@/types/plan";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { Schedule } from "@/types/plan";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import AddBottomSheetTitle from "./AddBottomSheetTitle";
@@ -15,6 +17,7 @@ type BottomSheetProps = {
 };
 
 function AddBottomSheet({ onClose, area }: BottomSheetProps) {
+  const { createSchedule } = useScheduleStore();
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const [clickedPlan, setClickedPlan] = useState<number | null>(null);
@@ -36,38 +39,37 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     queryKey: ["planData", user?.id],
     queryFn: () => api.area.getPlan(user?.id!),
   });
-
-  const { mutate: addSchedule } = useMutation({
-    mutationFn: async (data: ScheduleData) => {
-      const response = await api.area.addSchedule(data);
-      return response;
-    },
-    onError: (error) => {
-      console.error("Error adding data:", error);
-    },
-    onSuccess: (data) => {
-      return data;
-    },
-  });
-
   const handleAdd = async () => {
     if (clickedPlan !== 0 && (!clickedPlan || !day)) {
-      return console.log("여행 일정을 선택해주세요");
+      alert("여행 일정을 선택해주세요");
+      return;
     }
     const data = planData[clickedPlan!];
-    const scheduleData: ScheduleData = {
-      planId: data?.id,
-      userId: data?.userId,
+    const planId: string = data?.id;
+    if (!planId) {
+      alert("새로고침 후 재시도해주세요");
+      return;
+    }
+
+    const scheduleData: Schedule = {
+      planId: planId,
       areaId: area?.id,
-      orderList: data?.orderList,
-      krName: area?.krName!,
-      day: day,
+      title: area?.krName!,
+      place: "",
+      memo: "",
+      imagesUrl: [],
       type: "place",
       latlng: { lat: area.lat!, lng: area.lng! },
     };
-    addSchedule(scheduleData);
+    const insertData = getInsertData("customePlace", scheduleData, planId);
+    if (!insertData) {
+      alert("고객센터로 연락해주세요 망했지 뭐");
+      return;
+    }
+    await createSchedule(planId, day ?? 1, "customePlace", insertData);
     setDay(null);
     onClose();
+    router.push(`/plan/${planId}`);
   };
 
   useEffect(() => {
@@ -77,20 +79,16 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     }, 300);
   }, []);
 
-  if (!planData) {
-    return;
-  }
-
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full z-[950] bg-black${
+      className={`fixed top-0 left-0 w-full h-full z-bottomSheet bg-black${
         isOpening || isClosing ? "transition-opacity duration-300" : ""
       } ${isOpening ? "bg-opacity-0" : "bg-opacity-50"} `}
       onClick={handleClose}
     >
       <form
         ref={formRef}
-        className={`absolute bottom-0 left-0 w-full h-auto py-4 pb-8 px-4 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet bg-white transform${
+        className={`absolute bottom-0 left-0 w-full h-[472px] pt-7 px-5 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet overflow-hidden bg-white transform${
           isClosing
             ? "translate-y-full"
             : isOpening
@@ -98,8 +96,11 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
               : "translate-y-0"
         }transition-transform duration-300`}
       >
-        <AddBottomSheetTitle areaId={area?.id} />
-        <section className="min-h-96">
+        <AddBottomSheetTitle
+          areaId={area?.id}
+          isPlan={planData ? true : false}
+        />
+        <section className="no-scroll h-[328px] flex flex-col gap-y-4 overflow-scroll">
           {planData &&
             planData.map((plan: any, idx: number) => {
               return (
@@ -114,23 +115,36 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
               );
             })}
         </section>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 pb-1">
           <button
-            className="h-10 text-center border border-gray-600 rounded-lg"
+            className="h-10 text-center border-[0.6px] border-neutral-600 text-neutral-750 rounded-lg"
             type="button"
             onClick={() => onClose()}
           >
             {!planData ? "계속 둘러보기" : "취소"}
           </button>
-          <button
-            className="h-10 text-center border border-gray-600 rounded-lg"
-            type="button"
-            onClick={() => {
-              !planData ? router.push("/plan") : handleAdd();
-            }}
-          >
-            {!planData ? "내 여행 만들기" : "추가하기"}
-          </button>
+          {!planData ? (
+            <button
+              className="h-10 text-center bg-neutral-750 text-white rounded-lg"
+              type="button"
+              onClick={() => {
+                router.push("/plan");
+              }}
+            >
+              내 여행 만들기
+            </button>
+          ) : (
+            <button
+              className={`h-10 text-center rounded-lg ${!day ? "bg-neutral-300 text-neutral-550" : "bg-neutral-750 text-white"}`}
+              type="button"
+              disabled={!day}
+              onClick={() => {
+                handleAdd();
+              }}
+            >
+              추가하기
+            </button>
+          )}
         </div>
       </form>
     </div>

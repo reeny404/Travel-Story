@@ -16,7 +16,7 @@ function Drawer() {
     startXRef.current = e.touches[0].clientX;
     currentXRef.current = 0;
     if (drawerRef.current) {
-      drawerRef.current.style.transition = "none"; // 터치 시작 시 애니메이션 제거
+      drawerRef.current!.style.transition = "none";
     }
   };
 
@@ -51,6 +51,15 @@ function Drawer() {
     currentXRef.current = 0;
   };
 
+  // 부드럽게 drawer 닫기
+  const handleCloseWithSlide = () => {
+    if (drawerRef.current) {
+      drawerRef.current.style.transition = "transform 0.5s ease-out";
+      drawerRef.current.style.transform = "translateX(-100%)";
+    }
+    setTimeout(() => closeDrawer(), 500);
+  };
+
   // 뒷배경 스크롤 방지 기능
   useEffect(() => {
     if (isOpen) {
@@ -66,10 +75,10 @@ function Drawer() {
 
   return (
     <>
-      {isOpen && <BackDrop />}
+      {isOpen && <BackDrop onClose={handleCloseWithSlide} />}
       <aside
         ref={drawerRef}
-        className={`fixed top-0 max-w-[391px] w-full h-full pt-4 bg-neutral-400/84 shadow-drawer z-drawer backdrop-blur-[14px] rounded-r-lg ${
+        className={`fixed top-0 max-w-[391px] w-full h-full pt-4 bg-neutral-400/84 shadow-drawer z-drawer backdrop-blur-[14px] rounded-r-lg transform transition-transform duration-500 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         style={{
@@ -79,7 +88,6 @@ function Drawer() {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="flex justify-end items-center px-4 pt-4 rounded-tr-lg"></div>
         <DrawerMyProfile />
         <hr className="w-[88%] h-[0.6px] mx-auto bg-neutral-400 border-0 my-4" />
         <div

@@ -12,6 +12,9 @@ export const ICON = {
   },
   add: {
     white: { name: "add", ext: "svg" },
+    bold: { name: "add-bold", ext: "svg" },
+    black: { name: "add-black", ext: "svg" },
+
     person: {
       black: { name: "person-add", ext: "svg" },
     },
@@ -50,7 +53,11 @@ export const ICON = {
       off: { name: "smBookmark-off", ext: "svg" },
     },
   },
-  calendar: { white: { name: "calendar", ext: "svg" } },
+  calculator: { off: { name: "calculator", ext: "svg" } },
+  calendar: {
+    white: { name: "calendar", ext: "svg" },
+    black: { name: "calendar-black", ext: "svg" },
+  },
   cancel: {
     black: "cancel-black",
     gray: "cancel-gray",
@@ -73,12 +80,14 @@ export const ICON = {
     black: "home-black",
   },
   edit: {
-    black: "edit-black",
-    blue: "edit-blue",
-    color: "edit-color",
+    line: { name: "edit-line", ext: "svg" },
+    black: { name: "edit-black", ext: "png" },
+    blue: { name: "edit-blue", ext: "png" },
+    color: { name: "edit-color", ext: "svg" },
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
+    white: { name: "ellipsis", ext: "svg" }
   },
   filter: {
     black: "filter-black",
@@ -88,6 +97,8 @@ export const ICON = {
   },
   map: {
     black: "map-black",
+    off: { name: "map", ext: "svg" },
+    white: { name: "map-white", ext: "svg" },
   },
   menu: {
     burgerBlack: "menu-burger-black",
@@ -101,6 +112,7 @@ export const ICON = {
   },
   shareArea: {
     black: { name: "share-black", ext: "svg" },
+    white: { name: "share-white", ext: "svg" },
   },
   search: {
     black: "search-black",
@@ -121,9 +133,10 @@ export const ICON = {
     black: "microphone-black",
   },
   star: {
-    fill: "star-fill",
-    unfill: "star-unfill",
-    half: "star-half",
+    dark: { name: "star-black", ext: "svg" },
+    fill: { name: "star-fill", ext: "svg" },
+    unfill: { name: "star-unfill", ext: "svg" },
+    half: { name: "star-half", ext: "svg" },
   },
   accommodation: {
     color: { name: "accommodation-color", ext: "svg" },

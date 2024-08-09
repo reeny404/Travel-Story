@@ -25,15 +25,17 @@ function PlanItem({
       onClick={() => {
         setClickedPlan(idx);
       }}
-      className={clsx("w-full min-h-24 m-2 p-2", {
-        "border border-blue-400 border-2 rounded-lg": clickedPlan === idx,
+      className={clsx("w-full p-4 shadow-area-section rounded-lg", {
+        "border-brand-600 border-2": clickedPlan === idx,
       })}
     >
-      <h1 className="font-bold mb-1">{plan.title}</h1>
-      <p className="text-xs">
+      <h1 className="font-bold">{plan.title}</h1>
+      <p className="text-xs text-neutral-550">
         {plan.startDate} ~ {plan.endDate.slice(5)}
       </p>
-      {clickedPlan === idx && <DateList setDay={setDay} days={days} />}
+      <div className={clsx("w-full mt-4", { hidden: clickedPlan !== idx })}>
+        <DateList setDay={setDay} days={days} startDate={plan.startDate} />
+      </div>
     </div>
   );
 }

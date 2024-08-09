@@ -1,13 +1,15 @@
+import adjustDate from "@/utils/adjustDate";
 import clsx from "clsx";
 import { Dispatch, SetStateAction, useState } from "react";
 
 type DateListProps = {
-  setDay?: Dispatch<SetStateAction<number | null>>;
+  setDay: Dispatch<SetStateAction<number | null>>;
   days: number;
+  startDate: string;
 };
 
-function DateList({ days, setDay }: DateListProps) {
-  const [ClickedIdx, setClickedIdx] = useState<number | null>(null);
+function DateList({ days, setDay, startDate }: DateListProps) {
+  const [clickedIdx, setClickedIdx] = useState<number | null>(null);
   const makeDateList = (days: number) => {
     const dateList = [];
     if (!days) {
@@ -17,19 +19,28 @@ function DateList({ days, setDay }: DateListProps) {
       dateList.push(
         <div
           key={i}
-          className={clsx("w-16 p-2 m-2 text-center rounded-lg", {
-            "bg-black text-white": i === ClickedIdx,
-          })}
+          className={clsx(
+            "w-[67px] h-12 bg-neutral-100 flex flex-col justify-center text-center rounded-lg",
+            {
+              "bg-neutral-650 text-white": i === clickedIdx,
+            }
+          )}
           onClick={() => {
-            setClickedIdx(i);
-            setDay?.(i);
+            clickedIdx === i
+              ? (setDay(null), setClickedIdx(null))
+              : (setDay(i), setClickedIdx(i));
           }}
         >
-          {i}일차
+          <p className="text-sm font-semibold">{i}일차</p>
+          <p className="text-xs">{adjustDate(startDate, i - 1)}</p>
         </div>
       );
     }
-    return <div className="flex flex-wrap w-full">{dateList}</div>;
+    return (
+      <div className="flex flex-wrap w-full gap-x-[10px] gap-y-[10px]">
+        {dateList}
+      </div>
+    );
   };
   return makeDateList(days);
 }

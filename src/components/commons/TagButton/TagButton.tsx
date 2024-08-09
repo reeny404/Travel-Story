@@ -1,15 +1,16 @@
 import { cva, VariantProps } from "class-variance-authority";
 import { ComponentProps, PropsWithChildren } from "react";
 
-export type TagButtonTheme = "primary" | "blue" | "white";
+export type TagButtonTheme = "primary" | "blue" | "white" | "gray";
 export type TagButtonSize = "xs" | "sm" | "md" | "lg";
 
-const tagVariant = cva("rounded-2xl hover:opacity-90", {
+const tagVariant = cva("rounded-[20px] hover:opacity-90", {
   variants: {
     theme: {
       primary: "bg-transparent border border-black text-black",
       blue: "bg-[#06F] text-white font-semibold",
       white: "bg-white  ml-2.5",
+      gray: "bg-white border-[0.6px] border-neutral-350 text-neutral-500",
     },
     size: {
       xs: "px-2 py-[1px] text-xs",

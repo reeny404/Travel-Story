@@ -1,36 +1,16 @@
-import { getIconPath } from "@/components/commons/Icon/getIconPath";
 import ImageFrame from "@/components/Frame/ImageFrame";
-import { ICON } from "@/constants/icon";
-import { Schedule } from "@/types/plan";
-import { Area, AreaBookmark } from "@/types/Recommend";
-import { useCallback, useMemo } from "react";
+import { BookmarkWithArea } from "@/types/Recommend";
+import { MyBookmarkPageParams } from "../page";
+import AddToPlanButton from "./AddToPlanButton";
 import BookmarkButton from "./BookmarkButton";
 
 type AreaCardProps = {
-  bookmark: AreaBookmark;
-  area: Area;
-  onClickAddToPlan: (data: Schedule) => void;
+  bookmark: BookmarkWithArea;
+  params: MyBookmarkPageParams;
 };
 
-function BookmarkCard({ bookmark, area, onClickAddToPlan }: AreaCardProps) {
-  const iconMarkderPath: string = useMemo(() => {
-    return getIconPath(ICON.location.gray);
-  }, []);
-  const iconClendarPath: string = useMemo(() => {
-    return getIconPath(ICON.calendar.white);
-  }, []);
-
-  const handleOnClickToAdd = useCallback(() => {
-    const data: Schedule = {
-      title: area.krName!,
-      latlng: { lat: area.lat!, lng: area.lng! },
-      areaId: area.id,
-    };
-
-    onClickAddToPlan(data);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+function BookmarkCard({ bookmark, params }: AreaCardProps) {
+  const { area } = bookmark;
   return (
     <div key={bookmark.id} className="flex rounded mx-4 bg-white">
       <div className="w-1/3">
@@ -48,17 +28,11 @@ function BookmarkCard({ bookmark, area, onClickAddToPlan }: AreaCardProps) {
           {area.description}
         </p>
         <div className="flex items-center">
-          <ImageFrame src={iconMarkderPath} className="w-4 h-4" />
-          <span className="text-sm">콜로세움 근처, 로마</span>
+          {/* <Icon icon={ICON.star.fill} size={16} /> */}
+          <span className="text-sm">4.6</span>
         </div>
         <div className="flex justify-end text-sm">
-          <button
-            className="h-8 flex justify-center items-center px-3 mt-4 rounded-full bg-blue-500 text-white"
-            onClick={handleOnClickToAdd}
-          >
-            <ImageFrame src={iconClendarPath} className="w-4 h-4 mr-2" />내
-            여행에 추가
-          </button>
+          <AddToPlanButton plan={params} area={area} />
         </div>
       </div>
     </div>

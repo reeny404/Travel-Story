@@ -49,7 +49,7 @@ function BottomSheetImages({
         {status !== "read" && (
           <li className="w-12 h-12 flex items-center justify-center bg-[#f5f5f5] rounded-xl">
             <label htmlFor="image-upload" className="cursor-pointer">
-              <PlusIcon classNmae="text-black" />
+              <PlusIcon className="text-black" />
             </label>
             <input
               type="file"

@@ -6,15 +6,15 @@ import MySchedule from "./MySchedule";
 function MyPageSection() {
   return (
     <main
-      className="flex flex-col w-full px-7 bg-[#F5F5F5]"
+      className="flex flex-col w-full px-5 pt-12 bg-neutral-100"
       style={{ minHeight: "calc(100vh - 52px)" }}
     >
       <MyProfile />
       <MySchedule />
-      <section className="w-full p-[10px] my-[18px] bg-[#D2E8FF] rounded-lg">
-        공지사항
-      </section>
       <MyMenu />
+      <section className="w-full p-[10px] mt-10 text-white bg-neutral-650 rounded-lg">
+        [공지] 공지사항
+      </section>
       <FooterList />
     </main>
   );

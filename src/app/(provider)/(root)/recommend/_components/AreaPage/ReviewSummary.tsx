@@ -1,5 +1,6 @@
 "use client";
 import RatingIcons from "@/components/Card/RatingIcons";
+import { getIconPath } from "@/components/commons/Icon/getIconPath";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useModalStore } from "@/stores/modal.store";
@@ -25,7 +26,7 @@ function ReviewSummaryCard({
   const { openModal } = useModalStore();
   const handleOpen = () => {
     if (!isLoggedIn) {
-      openModal("로그인 필요", "로그인 유저만 가능합니다");
+      openModal("로그인하면 일정에 장소를 추가할 수 있어요");
     } else {
       setBottomSheetVisible(true);
     }
@@ -35,7 +36,6 @@ function ReviewSummaryCard({
   };
 
   const BottomSheet = createReviewBottomSheet();
-
   return (
     <section className="w-full h-full pb-8 px-4">
       {isBottomSheetVisible && (
@@ -53,7 +53,7 @@ function ReviewSummaryCard({
           className="text-sm font-bold flex items-center aspect-auto"
         >
           <Image
-            src={`/icons/${ICON.edit.color}.svg`}
+            src={getIconPath(ICON.edit.color)}
             alt="edit"
             width={16}
             height={16}

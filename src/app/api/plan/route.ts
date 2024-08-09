@@ -1,9 +1,11 @@
 import { createClient } from "@/supabase/server";
 import { TablesInsert } from "@/types/supabase";
+import { PlanUtil } from "@/utils/PlanUtil";
 import { NextRequest, NextResponse } from "next/server";
 
-const TABLE_NAME = "plan";
-
+/**
+ * 내 plan 목록 가져오기
+ */
 export async function GET() {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -15,7 +17,7 @@ export async function GET() {
   }
 
   const { data, error } = await supabase
-    .from(TABLE_NAME)
+    .from("plan")
     .select()
     .eq("userId", user.id)
     .order("createdAt", { ascending: false });
@@ -33,23 +35,26 @@ export async function GET() {
   })
 }
 
+/**
+ * plan 생성하기
+ */
 export async function POST(request: NextRequest) {
   const plan = (await request.json()) as TablesInsert<"plan">;
   const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  let title = plan.title;
-  if (!title) {
-    const nickname = user?.user_metadata.name;
-    title = `${nickname ? nickname + "님의 " : "나만의 "} 여행`
-  }
 
+  const title = plan.title ?? PlanUtil.getTitle(user?.user_metadata);
+  const orderList = PlanUtil.order.init(plan.startDate, plan.endDate);
   const { data, error } = await supabase
-    .from(TABLE_NAME)
-    .insert({ ...plan, title, userId: user?.id })
+    .from("plan")
+    .insert({ ...plan, title, userId: user?.id, orderList })
     .select();
-  console.error(error);
+
+  if (error) {
+    console.error(error);
+  }
 
   return NextResponse.json(data);
 }
