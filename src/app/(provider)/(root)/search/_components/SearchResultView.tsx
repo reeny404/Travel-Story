@@ -2,7 +2,7 @@
 
 import AreaTagCard from "@/components/Card/AreaTagCard";
 import { Area } from "@/types/Recommend";
-import { getCategory } from "@/utils/getCategory";
+import { getKrCategory } from "@/utils/getKrCategory";
 import { useRouter } from "next/navigation";
 
 type SearchResultViewProps = {
@@ -53,7 +53,7 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
             image={result.imageUrl || "/sampleImg.jpg"}
             alt={result.name}
             title={result.krName ?? ""}
-            tag={getCategory(result.type ?? "")}
+            tag={getKrCategory(result.type ?? "")}
             rating={result.rating ?? ""}
             desc={result.description}
             onClick={() => handleMoveDetail(result.id)}

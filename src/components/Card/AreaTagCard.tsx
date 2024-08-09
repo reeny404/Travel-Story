@@ -4,7 +4,7 @@ import { ICON } from "@/constants/icon";
 import { AreaTagCardProps, CategoryCardProps } from "@/types/Card";
 import Image from "next/image";
 
-function Category({ tag }: CategoryCardProps) {
+export function Category({ tag }: CategoryCardProps) {
   const { icon, color, label } = CATEGORY_LIST[tag];
 
   return (
