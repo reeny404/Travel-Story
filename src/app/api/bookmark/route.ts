@@ -4,7 +4,7 @@ import { AuthUtil } from "./../auth/AuthUtil";
 
 export async function GET(request: NextRequest) {
   const supabase = createClient();
-  const userId = (await AuthUtil.getUser(supabase)).id;
+  const userId = (await AuthUtil.getUser(supabase))?.id;
   if (!userId) {
     return NextResponse.json({
       status: 400,
@@ -48,8 +48,8 @@ export async function POST(request: NextRequest) {
   const data = await request.json();
   const areaId = data.areaId;
   const supabase = createClient();
-  const userId = (await AuthUtil.getUser(supabase)).id;
-  if (!areaId) {
+  const userId = (await AuthUtil.getUser(supabase))?.id;
+  if (!userId || !areaId) {
     return NextResponse.json({
       status: 400,
       message: "Bad Request",
@@ -94,7 +94,11 @@ export async function DELETE(request: NextRequest) {
   const areaId = data.areaId;
 
   const supabase = createClient();
-  const userId = (await AuthUtil.getUser(supabase)).id;
+  const userId = (await AuthUtil.getUser(supabase))?.id;
+  if (!userId) {
+    return NextResponse.json(null);
+  }
+
   const { data: deletedData } = await supabase
     .from("areaBookmark")
     .delete()
