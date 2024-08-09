@@ -18,6 +18,7 @@ class BookmarkAPI {
     const response =
       await this.axios.get<RecommendResponse<BookmarkWithArea[]>>(path);
     const data = response.data;
+
     return data;
   }
 
