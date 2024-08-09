@@ -79,6 +79,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
     <MainLayout
       headerProps={{
         backgroundColor: inView ? "transparent" : "whiteFixed",
+        headerFixed: true,
         title: inView ? "" : area?.krName!,
         titleAlign: "center",
         rightIcons: [

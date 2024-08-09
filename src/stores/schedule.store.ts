@@ -20,7 +20,7 @@ const useScheduleStore = create<Store>()(
       fetchSchedule: async (planId: string, day: number) => {
         try {
           const response = await axios.get(`/api/plan/${planId}/schedule`, {
-            params: { planId, day },
+            params: { day },
           });
 
           set({

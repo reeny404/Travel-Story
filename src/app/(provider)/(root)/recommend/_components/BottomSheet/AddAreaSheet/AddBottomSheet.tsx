@@ -1,9 +1,11 @@
 "use client";
 import { api } from "@/apis/api";
+import { getInsertData } from "@/app/(provider)/(root)/plan/_components/getInsertData";
 import { useAuth } from "@/contexts/auth.contexts";
+import useScheduleStore from "@/stores/schedule.store";
 import { Area } from "@/types/Recommend";
-import { ScheduleData } from "@/types/plan";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { Schedule } from "@/types/plan";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import AddBottomSheetTitle from "./AddBottomSheetTitle";
@@ -15,6 +17,7 @@ type BottomSheetProps = {
 };
 
 function AddBottomSheet({ onClose, area }: BottomSheetProps) {
+  const { createSchedule } = useScheduleStore();
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const [clickedPlan, setClickedPlan] = useState<number | null>(null);
@@ -36,38 +39,37 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     queryKey: ["planData", user?.id],
     queryFn: () => api.area.getPlan(user?.id!),
   });
-  const { mutate: addSchedule } = useMutation({
-    mutationFn: async (data: ScheduleData) => {
-      const response = await api.area.addSchedule(data);
-      return response;
-    },
-    onError: (error) => {
-      console.error("Error adding data:", error);
-    },
-    onSuccess: (data) => {
-      return data;
-    },
-  });
-
   const handleAdd = async () => {
     if (clickedPlan !== 0 && (!clickedPlan || !day)) {
       alert("여행 일정을 선택해주세요");
       return;
     }
     const data = planData[clickedPlan!];
-    const scheduleData: ScheduleData = {
-      planId: data?.id,
-      userId: data?.userId,
+    const planId: string = data?.id;
+    if (!planId) {
+      alert("새로고침 후 재시도해주세요");
+      return;
+    }
+
+    const scheduleData: Schedule = {
+      planId: planId,
       areaId: area?.id,
-      orderList: data?.orderList,
-      krName: area?.krName!,
-      day: day,
+      title: area?.krName!,
+      place: "",
+      memo: "",
+      imagesUrl: [],
       type: "place",
       latlng: { lat: area.lat!, lng: area.lng! },
     };
-    addSchedule(scheduleData);
+    const insertData = getInsertData("customePlace", scheduleData, planId);
+    if (!insertData) {
+      alert("고객센터로 연락해주세요 망했지 뭐");
+      return;
+    }
+    await createSchedule(planId, day ?? 1, "customePlace", insertData);
     setDay(null);
     onClose();
+    router.push(`/plan/${planId}`);
   };
 
   useEffect(() => {

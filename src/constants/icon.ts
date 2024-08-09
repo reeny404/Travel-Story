@@ -87,6 +87,7 @@ export const ICON = {
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
+    white: { name: "ellipsis", ext: "svg" }
   },
   filter: {
     black: "filter-black",
@@ -97,6 +98,7 @@ export const ICON = {
   map: {
     black: "map-black",
     off: { name: "map", ext: "svg" },
+    white: { name: "map-white", ext: "svg" },
   },
   menu: {
     burgerBlack: "menu-burger-black",
