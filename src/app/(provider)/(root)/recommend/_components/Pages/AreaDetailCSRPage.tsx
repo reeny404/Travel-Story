@@ -143,7 +143,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               >
                 <ReviewSummaryCard
                   areaName={area.krName!}
-                  rating={area.rating!}
+                  rating={area.rating ?? 0}
                   ratingAmount={areaReviews?.length || 0}
                   areaId={areaId}
                 />

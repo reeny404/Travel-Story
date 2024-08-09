@@ -41,11 +41,10 @@ function AreaReviewCard({
   const handleClose = () => {
     setBottomSheetVisible(false);
   };
-
   const BottomSheet = createEditwBottomSheet();
   const { mutate: deleteReview } = useMutation({
-    mutationFn: async (id: number) => {
-      await api.review.deleteReview(id);
+    mutationFn: async ({ id, areaId }: { id: number; areaId: number }) => {
+      await api.review.deleteReview({ id, areaId });
     },
     onError: (error) => {
       console.error("Error adding data:", error);
@@ -56,7 +55,7 @@ function AreaReviewCard({
   });
   const handleDelete = async (id: number) => {
     try {
-      deleteReview(id);
+      deleteReview({ id, areaId: reviewInfo.areaId! });
     } catch (error) {
       console.error("error deleting data", error);
     }
