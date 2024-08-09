@@ -73,7 +73,8 @@ function Header({
       <div className="flex items-center pl-[5px]">
         <Icon
           icon={
-            backgroundColor === "transparent"
+            backgroundColor === "transparent" ||
+            backgroundColor === "transparentFixed"
               ? ICON.menu.burgerWhite
               : ICON.menu.burgerBlack
           }
