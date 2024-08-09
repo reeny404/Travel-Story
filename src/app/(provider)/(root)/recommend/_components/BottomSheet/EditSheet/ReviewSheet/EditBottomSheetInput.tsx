@@ -4,7 +4,7 @@ type ReviewBottomSheetInputProps = {
   textValue: string;
   setTextValue: React.Dispatch<React.SetStateAction<string>>;
 };
-export default function ReviewBottomSheetInput({
+export default function EditBottomSheetInput({
   textValue,
   setTextValue,
 }: ReviewBottomSheetInputProps) {

@@ -28,7 +28,7 @@ export default function MyBookmarkList({ tabs, params }: PageProps) {
     // tabs는 절대 바뀔 일이 없다는 전제하에 작성됨
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log("bookmarks", bookmarks);
   const list: BookmarkWithArea[] = bookmarks?.length
     ? bookmarks.filter((bookmark) => filterTag.en === bookmark.area.type)
     : [];

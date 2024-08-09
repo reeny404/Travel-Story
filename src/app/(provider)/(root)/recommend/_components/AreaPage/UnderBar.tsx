@@ -14,15 +14,18 @@ type UnderBarProps = {
 };
 
 function UnderBar({ area }: UnderBarProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(area.id);
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks({
+    areaId: area.id,
+  });
 
   const { isLoggedIn } = useAuth();
-  const { openModal } = useModalStore();
+  const { openModal, setNextUrl } = useModalStore();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const handleOpen = () => {
     if (!isLoggedIn) {
       openModal("로그인하면 일정에 장소를 추가할 수 있어요");
+      setNextUrl(`/recommend/area/${area.id}`);
     } else {
       setBottomSheetVisible(true);
     }
@@ -36,17 +39,23 @@ function UnderBar({ area }: UnderBarProps) {
     if (!isLoggedIn) {
       openModal("로그인하면 일정에 장소를 추가할 수 있어요");
     } else {
-      isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
+      if (isBookmarked) {
+        deleteBookmark.mutate(area.id);
+      }
+      if (!isBookmarked) {
+        addBookmark.mutate(area.id);
+      }
     }
   };
   const BottomSheet = createAddBottomSheet();
+
   return (
     <article className="h-11 w-full flex gap-x-2 sticky bottom-5 z-underbar">
       {isBottomSheetVisible && (
         <BottomSheet area={area} onClose={handleClose} />
       )}
       <button
-        onClick={() => deleteBookmark.mutate()}
+        onClick={toggleBookmark}
         className="w-11 h-full p-3 relative flex justify-center items-center border border-black backdrop-blur-[10px] rounded-lg aspect-auto"
       >
         <Image
@@ -59,7 +68,6 @@ function UnderBar({ area }: UnderBarProps) {
           width={16}
           height={16}
           className="hover:cursor-pointer object-contain"
-          onClick={toggleBookmark}
         />
       </button>
 
