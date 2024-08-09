@@ -12,7 +12,7 @@ type SupabaseUser = {
 
 function DrawerMyProfile() {
   const { user } = useAuth();
-  const { data: myProfile, isPending } = useQuery<SupabaseUser>({
+  const { data: myProfile } = useQuery<SupabaseUser>({
     queryKey: ["users"],
     queryFn: () => api.auth.userProfile(user?.email as string),
   });
@@ -33,7 +33,7 @@ function DrawerMyProfile() {
         </div>
       ) : (
         <Image
-          src="/logo.svg"
+          src="/travelstory-logo.png"
           alt="profile Image"
           width={40}
           height={40}

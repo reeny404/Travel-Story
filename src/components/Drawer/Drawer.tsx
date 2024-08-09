@@ -1,8 +1,6 @@
 "use client";
 
-import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 import BackDrop from "./BackDrop";
 import CategoryList from "./CategoryList";
@@ -25,7 +23,6 @@ function Drawer() {
   const handleTouchMove = (e: React.TouchEvent) => {
     if (startXRef.current === null) return;
     const touchX = e.touches[0].clientX;
-    console.log(touchX);
 
     const diff = (startXRef.current - touchX) * 0.4;
     if (diff > 0) {
@@ -72,7 +69,7 @@ function Drawer() {
       {isOpen && <BackDrop />}
       <aside
         ref={drawerRef}
-        className={`fixed top-0 left-0 max-w-[391px] w-full h-full pt-4 bg-neutral-400/84 shadow-drawer z-drawer backdrop-blur-[14px] rounded-r-lg ${
+        className={`fixed top-0 max-w-[391px] w-full h-full pt-4 bg-neutral-400/84 shadow-drawer z-drawer backdrop-blur-[14px] rounded-r-lg ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         style={{
@@ -82,20 +79,15 @@ function Drawer() {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="flex justify-end items-center px-4 pt-4 rounded-tr-lg">
-          <button onClick={closeDrawer}>
-            <Image
-              src={`/icons/${ICON.cancel.black}.png`}
-              alt="cancel"
-              width={16}
-              height={16}
-              priority
-            />
-          </button>
-        </div>
+        <div className="flex justify-end items-center px-4 pt-4 rounded-tr-lg"></div>
         <DrawerMyProfile />
         <hr className="w-[88%] h-[0.6px] mx-auto bg-neutral-400 border-0 my-4" />
-        <CategoryList />
+        <div
+          className="overflow-y-auto no-scrollbar"
+          style={{ maxHeight: "calc(100vh - 8rem)" }}
+        >
+          <CategoryList />
+        </div>
       </aside>
     </>
   );

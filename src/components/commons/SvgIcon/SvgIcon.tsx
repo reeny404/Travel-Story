@@ -26,7 +26,7 @@ const loadSvgIcon = ({
         return {
           default: () => (
             <Image
-              src="/logo.svg"
+              src="/travelstory-logo.png"
               alt="fallback icon"
               width={width}
               height={height}

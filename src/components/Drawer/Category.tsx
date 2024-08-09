@@ -1,6 +1,5 @@
 "use client";
 
-import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -63,12 +62,12 @@ function Category({
         ? `${contentRef.current.scrollHeight}px`
         : "0px";
     }
-  }, [isOpen]);
+  }, [isOpen, children]);
 
   return (
     <>
       <button
-        className={`flex justify-between items-center rounded-lg mt-3 mb-3 px-4 py-3 ${
+        className={`flex justify-between items-center rounded-lg mb-2 px-4 py-3 ${
           isSelected ? "bg-brand-300" : "bg-transparent"
         }`}
         onClick={handleClick}
@@ -83,7 +82,7 @@ function Category({
             {label}
           </h3>
         </div>
-        {hasSubCategory && (
+        {/* {hasSubCategory && (
           <Image
             src={`/icons/${ICON.arrow.down.black}.png`}
             alt={alt}
@@ -92,11 +91,11 @@ function Category({
             priority
             className={`transform transition-transform duration-300 ${isOpen && "-rotate-180"}`}
           />
-        )}
+        )} */}
       </button>
       <div
         ref={contentRef}
-        className="overflow-hidden transition-height duration-300 ease-in-out"
+        className="overflow-hidden transition-all duration-300 ease-in-out"
       >
         {isOpen && children}
       </div>

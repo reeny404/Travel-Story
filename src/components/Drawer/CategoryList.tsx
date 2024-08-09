@@ -1,6 +1,10 @@
 "use client";
 
+import { api } from "@/apis/api";
 import { ICON } from "@/constants/icon";
+import { Country } from "@/types/Recommend";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import Category from "./Category";
 import MyTripPlanner from "./MyTripPlanner";
@@ -8,6 +12,14 @@ import TripList from "./TripList";
 
 function CategoryList() {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+
+  const { data: countries } = useQuery<Country[], AxiosError>({
+    queryKey: ["countries"],
+    queryFn: async (): Promise<Country[]> => {
+      const response = await api.country.getSortedCountries();
+      return response || [];
+    },
+  });
 
   const handleCategoryClick = (label: string) => {
     setSelectedCategory((prevLabel) => (prevLabel === label ? "" : label));
@@ -21,9 +33,10 @@ function CategoryList() {
         alt="home"
         label="홈"
       />
+      {/* 추후 추가 가능성 있는 컴포넌트 */}
       <Category
         href="/my"
-        imgPath={`/drawer/${ICON.drawer.mypage}.png`}
+        imgPath={`/drawer/drawer-bookmark.svg`}
         alt="mypage"
         label="마이 페이지"
       />
@@ -45,7 +58,7 @@ function CategoryList() {
         onClick={() => handleCategoryClick("여행지")}
         hasSubCategory
       >
-        <TripList />
+        {countries && <TripList countries={countries} />}
       </Category>
     </nav>
   );
