@@ -1,6 +1,7 @@
 "use client";
 
 import { api } from "@/apis/api";
+import SvgIcon from "@/components/commons/SvgIcon";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { Area, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
@@ -47,8 +48,11 @@ function ClientSearch() {
 
   return (
     <>
-      <div className="flex justify-center items-center px-5 pt-5">
+      <div className="flex justify-center items-center gap-2 px-4 pt-2 pb-3">
         <SearchBar onSearch={handleSearch} initialValue={searchTerm} />
+        <div className="p-[10px] bg-white rounded-lg shadow-filter-icon">
+          <SvgIcon name="slider" width={18} height={18} title="filter" />
+        </div>
       </div>
 
       <section className="w-full mt-4">
