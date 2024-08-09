@@ -1,3 +1,4 @@
+import { getIconPath } from "@/components/commons/Icon/getIconPath";
 import { ICON } from "@/constants/icon";
 import Image from "next/image";
 
@@ -17,8 +18,8 @@ function EditBottomSheetRating({
           key={`filled-${idx}`}
           src={
             rating <= idx
-              ? `/icons/${ICON.star.unfill}.svg`
-              : `/icons/${ICON.star.fill}.svg`
+              ? getIconPath(ICON.star.unfill)
+              : getIconPath(ICON.star.fill)
           }
           alt="filled star"
           width={36}
