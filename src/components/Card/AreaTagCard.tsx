@@ -1,10 +1,10 @@
 import { getIconPath } from "@/components/commons/Icon/getIconPath";
 import { CATEGORY_LIST } from "@/constants/category";
 import { ICON } from "@/constants/icon";
-import { AreaTagCardProps, CategoryCardProps } from "@/types/Card";
+import { AreaTagCardProps, CategoryProps } from "@/types/Card";
 import Image from "next/image";
 
-export function Category({ tag }: CategoryCardProps) {
+export function Category({ tag }: CategoryProps) {
   const { icon, color, label } = CATEGORY_LIST[tag];
 
   return (

@@ -1,7 +1,7 @@
-import { CategoryCardProps } from "@/types/Card";
+import { CategoryProps } from "@/types/Card";
 
-export const getCategory = (category: string): CategoryCardProps["tag"] => {
-  const categoryMap: { [key: string]: CategoryCardProps["tag"] } = {
+export const getKrCategory = (category: string): CategoryProps["tag"] => {
+  const categoryMap: { [key: string]: CategoryProps["tag"] } = {
     place: "관광",
     restaurant: "식당",
     accommodation: "숙소",
