@@ -35,10 +35,10 @@ function CategoryList() {
       />
       {/* 추후 추가 가능성 있는 컴포넌트 */}
       <Category
-        href="/my"
+        href="/my/bookmarks"
         imgPath={`/drawer/drawer-bookmark.svg`}
-        alt="mypage"
-        label="마이 페이지"
+        alt="bookmark"
+        label="보관함"
       />
       <Category
         imgPath={`/drawer/${ICON.drawer.planner}.png`}

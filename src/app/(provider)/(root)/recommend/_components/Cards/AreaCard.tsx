@@ -5,6 +5,7 @@ import { useModalStore } from "@/stores/modal.store";
 import Image from "next/image";
 import Link from "next/link";
 import CardImgFrame from "./CardImgFrame";
+
 export type AreaCardProps = {
   title: string;
   description: string;
