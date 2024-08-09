@@ -154,12 +154,17 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+type GetParams = {
+  params: { planId: string }
+}
+
+export async function GET(request: NextRequest, { params: { planId } }: GetParams) {
   try {
     const supabase = createClient();
-    const { searchParams } = request.nextUrl;
-    const planId = searchParams.get("planId");
+    const searchParams = request.nextUrl.searchParams;
+    // const planId = searchParams.get("planId");
     const day = parseInt(searchParams.get("day") || "1", 10);
+    console.error(planId, day, searchParams);
 
     if (!planId) {
       return NextResponse.json({ error: "Missing planId" }, { status: 400 });
