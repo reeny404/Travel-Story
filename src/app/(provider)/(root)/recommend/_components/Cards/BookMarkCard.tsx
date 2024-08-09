@@ -25,7 +25,9 @@ function BookMarkCard({
   country,
   areaName,
 }: BookMarkCardProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(id);
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks({
+    areaId: id,
+  });
   const { openModal } = useModalStore();
   const { isLoggedIn } = useAuth();
   const toggleBookmark = (e: React.MouseEvent) => {
@@ -36,7 +38,7 @@ function BookMarkCard({
       return;
     }
 
-    isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
+    isBookmarked ? deleteBookmark.mutate(id) : addBookmark.mutate(id);
   };
 
   return (

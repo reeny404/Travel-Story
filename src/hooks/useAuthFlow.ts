@@ -8,7 +8,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 function useAuthFlow() {
-  const { nextURL, setLabelColor, setLabelText, setIsInputValid } =
+  const { nextURL, setLabelColor, setLabelText, setIsInputValid, setProgress } =
     useLoginStepStore();
   const { user, putEmail, putPassword, putNickname } = useAuthStore();
   const router = useRouter();
@@ -90,6 +90,7 @@ function useAuthFlow() {
   // 회원가입 email 버튼 누를 시
   const handleSignupSubmit = () => {
     setIsInputValid(true);
+    setProgress(true);
     router.push("/login?step=new-password");
   };
 
@@ -98,6 +99,7 @@ function useAuthFlow() {
     setIsInputValid(true);
     putPassword(password);
     setLabelColor("black");
+    setProgress(true);
     router.push("/login?step=check-password");
   };
 
@@ -105,6 +107,7 @@ function useAuthFlow() {
   const handleCheckPasswordSubmit = () => {
     setIsInputValid(true);
     setLabelColor("black");
+    setProgress(true);
     router.push("/login?step=nickname");
   };
 

@@ -9,9 +9,13 @@ function MyMenu() {
   const handleBookMarkClick = () => {
     router.push("/my/bookmarks");
   };
+
+  const handleMyTravelClick = () => {
+    router.push("/plan");
+  };
   return (
     <section className="flex w-full px-8 py-3 justify-around bg-white rounded-lg">
-      <div className={pageMoveDiv}>
+      <div className={pageMoveDiv} onClick={handleMyTravelClick}>
         <Image
           src={"/icons/calendar-black.svg"}
           width={20}

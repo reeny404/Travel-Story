@@ -8,23 +8,28 @@ import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
 const headerStyles = cva(
-  "w-full h-[52px] flex items-center justify-between z-[900]",
+  "w-full h-[52px] flex items-center justify-between relative z-[900]",
   {
     variants: {
       backgroundColor: {
-        transparent: "bg-transparent header-fixed",
+        transparent: "bg-transparent text-white",
         white: "bg-white shadow-area-card sticky top-0",
-        whiteFixed: "bg-white shadow-area-card header-fixed ",
+        whiteFixed: "bg-white shadow-area-card header-fixed",
         noShadow: "bg-white sticky top-0 h-[52px] z-[900]",
       },
       titleAlign: {
         left: "justify-start",
         center: "justify-center",
       },
+      headerFixed: {
+        true: "header-fixed",
+        false: "",
+      },
     },
     defaultVariants: {
       backgroundColor: "white",
       titleAlign: "center",
+      headerFixed: false,
     },
   }
 );
@@ -33,6 +38,7 @@ export type HeaderProps = {
   backgroundColor?: "transparent" | "white" | "whiteFixed" | "noShadow";
   title?: string;
   titleAlign?: "left" | "center";
+  headerFixed?: boolean;
   rightIcons?: {
     icon: IconType;
     alt: string;
@@ -44,6 +50,7 @@ export type HeaderProps = {
 
 function Header({
   backgroundColor,
+  headerFixed = false,
   title = "TravelStory",
   titleAlign = "center",
   rightIcons,

@@ -7,6 +7,7 @@ type StepStoreProps = {
   isInputValid: boolean;
   nextURL: string;
   setProgress: (value: boolean) => void;
+  setProgressInit: () => void;
   setLabelText: (value: string) => void;
   setLabelColor: (value: string) => void;
   setIsInputValid: (value: boolean) => void;
@@ -14,7 +15,7 @@ type StepStoreProps = {
 };
 
 export const useLoginStepStore = create<StepStoreProps>((set) => ({
-  progress: 1,
+  progress: 0,
   labelText: "",
   labelColor: "black",
   isInputValid: true,
@@ -23,6 +24,7 @@ export const useLoginStepStore = create<StepStoreProps>((set) => ({
     set((state) => ({
       progress: isUp ? state.progress + 1 : state.progress - 1,
     })),
+  setProgressInit: () => set({ progress: 0 }),
   setLabelColor: (nextLabel) => set({ labelColor: nextLabel }),
   setLabelText: (nextText) => set({ labelText: nextText }),
   setIsInputValid: (state) => set({ isInputValid: state }),

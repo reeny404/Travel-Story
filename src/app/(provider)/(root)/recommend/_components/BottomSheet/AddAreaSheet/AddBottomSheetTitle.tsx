@@ -50,11 +50,11 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
       <h1 className="w-full h-full flex items-center p-1 text-lg outline-none bg-white text-neutral-750 font-bold">
         {isPlan ? "어디에 추가하시겠어요?" : "새 일정을 만들어 주세요."}
       </h1>
-
+      {/* 호버 opacity로 일단 땜빵.. */}
       <button
         type="button"
         onClick={handleAddPlan}
-        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white bg-neutral-750 hover:bg-neutral-900 hover:text-neutral-350 text-sm font-medium rounded-[16px]"
+        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white bg-neutral-750 hover:bg-opacity-80 text-sm font-medium rounded-[16px]"
       >
         <Image
           src={getIconPath(ICON.add.bold)}

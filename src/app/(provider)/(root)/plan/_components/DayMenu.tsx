@@ -7,6 +7,10 @@ function DayMenu({
   selectedDay: number;
   onDaySelect: (day: number) => void;
 }) {
+  if (!days.length) {
+    return <></>;
+  }
+
   return (
     <ul className="h-12 min-w-full overflow-x-auto flex items-center bg-white no-scrollbar">
       {days.map((day) => (

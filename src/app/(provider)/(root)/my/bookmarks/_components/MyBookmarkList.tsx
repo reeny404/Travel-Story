@@ -7,6 +7,7 @@ import { BookmarkWithArea } from "@/types/Recommend";
 import { useCallback, useEffect, useState } from "react";
 import { MyBookmarkPageParams } from "../page";
 import BookmarkCard from "./BookmarkCard";
+import SuggestArea from "./SuggestArea";
 
 type PageProps = {
   params: MyBookmarkPageParams;
@@ -28,7 +29,7 @@ export default function MyBookmarkList({ tabs, params }: PageProps) {
     // tabs는 절대 바뀔 일이 없다는 전제하에 작성됨
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log("bookmarks", bookmarks);
   const list: BookmarkWithArea[] = bookmarks?.length
     ? bookmarks.filter((bookmark) => filterTag.en === bookmark.area.type)
     : [];
@@ -43,6 +44,7 @@ export default function MyBookmarkList({ tabs, params }: PageProps) {
         />
       </section>
       <section className="space-y-4">
+        {!list.length && <SuggestArea />}
         {list.map((bookmark) => (
           <BookmarkCard key={bookmark.id} bookmark={bookmark} params={params} />
         ))}
