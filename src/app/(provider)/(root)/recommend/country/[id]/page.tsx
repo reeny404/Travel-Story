@@ -48,8 +48,7 @@ function IntroPage({ params }: IntroPageProps) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: "transparent",
-        headerFixed: true,
+        backgroundColor: "transparentFixed",
         title: "",
         titleAlign: "center",
         rightIcons: [

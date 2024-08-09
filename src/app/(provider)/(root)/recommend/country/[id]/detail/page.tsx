@@ -175,8 +175,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: inView ? "transparent" : "whiteFixed",
-        headerFixed: true,
+        backgroundColor: inView ? "transparentFixed" : "whiteFixed",
         title: inView ? "" : country.data.krName!,
         titleAlign: "center",
         rightIcons: [
