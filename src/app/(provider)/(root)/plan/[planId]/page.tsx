@@ -1,7 +1,7 @@
 "use client";
 import PlanAPI from "@/apis/plan.api";
-import Icon from "@/components/commons/Icon";
 import Profile from "@/components/Frame/Profile";
+import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import { BottomSheetType } from "@/types/plan";
@@ -14,8 +14,6 @@ import { useCallback, useEffect, useState } from "react";
 import BottomSheet from "../_components/BottomSheet";
 import CreateScheduleButton from "../_components/CreateScheduleButton";
 import DayMenu from "../_components/DayMenu";
-import BarIcon from "../_components/icons/BarIcon";
-import MapIcon from "../_components/icons/MapIcon";
 import ScheduleList from "../_components/ScheduleList";
 
 const api = new PlanAPI(axios);
@@ -31,7 +29,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
   });
   const [selectedDay, setSelectedDay] = useState(1);
   const [days, setDays] = useState<number[]>([]);
-  const [title, setTitle] = useState<string | null>();
+  const [title, setTitle] = useState<string>("");
   const [formattedDates, setFormattedDates] = useState<string>("");
 
   useEffect(() => {
@@ -48,7 +46,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
 
           const daysArray = Array.from({ length: daysCount }, (_, i) => i + 1);
           setDays(daysArray);
-          setTitle(plan.title);
+          setTitle(plan.title ?? "");
 
           const formattedStartDate = DateUtil.format("yyyy.MM.dd", startDate);
           const formattedEndDate = DateUtil.format("yyyy.MM.dd", endDate);
@@ -85,41 +83,40 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
     []
   );
 
-  const createByBookmark = useCallback(() => {
-    router.push(`/my/bookmarks?planId=${planId}&day=${selectedDay}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDay, planId]);
-
   if (!planId) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#FCFCFC]">
-      <div className="h-72 w-full bg-gray-200">
-        <div className="relative w-full h-full px-4 py-3">
+    <MainLayout
+      headerProps={{
+        backgroundColor: "transparent",
+        title: title,
+        titleAlign: "left",
+        rightIcons: [
+          {
+            icon: ICON.map.white,
+            alt: "map",
+            size: 24,
+            path: `/plan/${planId}/route`,
+          },
+          {
+            icon: ICON.ellipsis.white,
+            alt: "더보기",
+            size: 24,
+            onClick: () => alert("구현 중입니다."),
+          },
+        ],
+      }}
+    >
+      <div className="min-h-screen bg-gray-50 relative -top-[52px]">
+        <div className="relative w-full h-72 px-4 py-3 bg-gray-200">
           <Image
             src="/plan/planBanner.png"
             alt="planBanner"
             fill
             className="object-cover"
           />
-          <div className="absolute items-center px-4 flex justify-between left-0 top-0 h-11 w-full text-white">
-            <Icon
-              icon={ICON.menu.burgerWhite}
-              alt="drawer"
-              size={20}
-              onClick={openDrawer}
-            />
-            <h2 className="text-[18px] font-semibold ml-2">{title}</h2>
-            <div className="flex items-center ml-auto">
-              <MapIcon
-                className="w-6 h-6"
-                onClick={() => router.push(`/plan/${planId}/route`)}
-              />
-              <BarIcon className="w-6 h-6 ml-6" />
-            </div>
-          </div>
           <p className="absolute left-4 bottom-3 rounded-2xl py-[2px] px-4 border border-white text-white">
             {formattedDates}
           </p>
@@ -130,30 +127,30 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
             />
           </div>
         </div>
-      </div>
-      <DayMenu
-        days={days}
-        selectedDay={selectedDay}
-        onDaySelect={handleDaySelect}
-      />
-      <ScheduleList planId={planId} selectedDay={selectedDay} />
-      {isBottomSheetVisible && (
-        <BottomSheet
-          type={bottomSheetConfig.type}
-          status={bottomSheetConfig.status}
-          onClose={handleClose}
-          planId={planId}
-          day={selectedDay}
+        <DayMenu
+          days={days}
+          selectedDay={selectedDay}
+          onDaySelect={handleDaySelect}
         />
-      )}
+        <ScheduleList planId={planId} selectedDay={selectedDay} />
+        {isBottomSheetVisible && (
+          <BottomSheet
+            type={bottomSheetConfig.type}
+            status={bottomSheetConfig.status}
+            onClose={handleClose}
+            planId={planId}
+            day={selectedDay}
+          />
+        )}
 
-      <CreateScheduleButton
-        createSchedule={() => handleCreateSchedule("customePlace", "add")}
-        createByBookmark={createByBookmark}
-        createMemo={() => handleCreateSchedule("memo", "add")}
-        createMoveSchedule={() => handleCreateSchedule("move", "add")}
-      />
-    </div>
+        <CreateScheduleButton
+          createSchedule={() => handleCreateSchedule("customePlace", "add")}
+          pathTocreateByBookmark={`/my/bookmarks?planId=${planId}&day=${selectedDay}`}
+          createMemo={() => handleCreateSchedule("memo", "add")}
+          createMoveSchedule={() => handleCreateSchedule("move", "add")}
+        />
+      </div>
+    </MainLayout>
   );
 }
 

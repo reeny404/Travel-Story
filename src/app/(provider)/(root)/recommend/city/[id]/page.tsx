@@ -128,7 +128,7 @@ function CityDetailPage({ params }: CityDetailPageProps) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: inView ? "transparent" : "whiteFixed",
+        backgroundColor: inView ? "transparentFixed" : "whiteFixed",
         title: inView ? "" : city?.krName!,
         titleAlign: "center",
         rightIcons: [

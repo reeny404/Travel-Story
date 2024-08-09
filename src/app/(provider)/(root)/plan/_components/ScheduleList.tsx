@@ -136,7 +136,7 @@ function ScheduleList({
                         {schedule.data.title}
                       </h3>
                     </div>
-                    <button
+                    {/* <button
                       onClick={() =>
                         openBottomSheet(
                           item,
@@ -150,7 +150,7 @@ function ScheduleList({
                       }
                     >
                       read바텀시트
-                    </button>
+                    </button> */}
                   </div>
                   <div className="w-full min-h-20 py-2 px-3 relative bg-white text-sm shadow-schecule-list rounded-lg">
                     {schedule.data.startTime && schedule.data.endTime && (

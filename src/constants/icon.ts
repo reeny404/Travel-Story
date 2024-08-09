@@ -13,6 +13,8 @@ export const ICON = {
   add: {
     white: { name: "add", ext: "svg" },
     bold: { name: "add-bold", ext: "svg" },
+    black: { name: "add-black", ext: "svg" },
+
     person: {
       black: { name: "person-add", ext: "svg" },
     },
@@ -81,10 +83,11 @@ export const ICON = {
     line: { name: "edit-line", ext: "svg" },
     black: { name: "edit-black", ext: "png" },
     blue: { name: "edit-blue", ext: "png" },
-    color: { name: "edit-color", ext: "png" },
+    color: { name: "edit-color", ext: "svg" },
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
+    white: { name: "ellipsis", ext: "svg" }
   },
   filter: {
     black: "filter-black",
@@ -95,6 +98,7 @@ export const ICON = {
   map: {
     black: "map-black",
     off: { name: "map", ext: "svg" },
+    white: { name: "map-white", ext: "svg" },
   },
   menu: {
     burgerBlack: "menu-burger-black",
@@ -130,9 +134,9 @@ export const ICON = {
   },
   star: {
     dark: { name: "star-black", ext: "svg" },
-    fill: "star-fill",
-    unfill: "star-unfill",
-    half: "star-half",
+    fill: { name: "star-fill", ext: "svg" },
+    unfill: { name: "star-unfill", ext: "svg" },
+    half: { name: "star-half", ext: "svg" },
   },
   accommodation: {
     color: { name: "accommodation-color", ext: "svg" },

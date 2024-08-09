@@ -22,7 +22,7 @@ function CreateButton({ Icon, onClick, href, color }: Props) {
       )}
     >
       {href ? (
-        <Link href="/plan/create">
+        <Link href={href}>
           <Icon
             className={clsx("text-black group-hover:text-white", color?.icon)}
           />

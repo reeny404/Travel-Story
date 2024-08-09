@@ -5,9 +5,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import EditBottomSheetImages from "./EditBottomSheetImages";
-import ReviewBottomSheetInput from "./EditBottomSheetInput";
-import ReviewBottomSheetRating from "./EditBottomSheetRating";
-import ReviewBottomSheetTitle from "./EditBottomSheetTitle";
+import EditBottomSheetInput from "./EditBottomSheetInput";
+import EditBottomSheetRating from "./EditBottomSheetRating";
+import EditBottomSheetTitle from "./EditBottomSheetTitle";
 
 type EditSheetProps = {
   onClose: () => void;
@@ -16,8 +16,8 @@ type EditSheetProps = {
   areaName: string;
   reviewInfo: AreaReview;
 };
-
-function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
+type editType = {};
+function EditBottomSheet<T>({ onClose, reviewInfo }: EditSheetProps & T) {
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const [imgFile, setImgFile] = useState<ImgFileType[]>([]);
@@ -25,9 +25,11 @@ function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
   const [rating, setRating] = useState<number>(reviewInfo.rating ?? 0);
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
+
   useEffect(() => {
     setImgFile(() => reviewInfo.imageUrls);
   }, []);
+
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (formRef.current && !formRef.current.contains(e.target as Node)) {
       setIsClosing(true);
@@ -90,7 +92,7 @@ function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
       console.error("Error updating data:", error);
     }
   };
-
+  //
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full z-bottomSheet bg-black${
@@ -108,15 +110,17 @@ function EditBottomSheet({ onClose, reviewInfo }: EditSheetProps) {
               : "translate-y-0"
         }transition-transform duration-300`}
       >
+        {/* editBottomSheetTemplate Template 상태 관리 하면 될 것 같 긴 하 거 든 요? */}
+        {/* type = edit type = review */}
         <section className="relative w-full h-full flex flex-col">
           <article className="relative w-full flex px-5 flex-col gap-y-8 ">
-            <ReviewBottomSheetTitle />
-            <ReviewBottomSheetRating
+            <EditBottomSheetTitle />
+            <EditBottomSheetRating
               rating={rating}
               handleRatingClick={handleRatingClick}
             />
             <div className="w-full flex flex-col gap-y-3">
-              <ReviewBottomSheetInput
+              <EditBottomSheetInput
                 textValue={textValue}
                 setTextValue={setTextValue}
               />
@@ -156,7 +160,7 @@ export function createEditwBottomSheet() {
     // 추가
   }: EditSheetProps) {
     return (
-      <EditBottomSheet
+      <EditBottomSheet<editType>
         areaName={areaName}
         onClose={onClose}
         areaId={areaId}
