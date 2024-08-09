@@ -7,7 +7,7 @@ const FK_SCHEDULE_ID = "scheduleId";
 
 /**
  * scheduleId로 account 를 조회한다.
- * 
+ *
  * @param scheduleId
  */
 export async function GET(request: NextRequest) {
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   if (!scheduleId) {
     return NextResponse.json(null, {
       status: 400,
-      statusText: "스케줄 아이디가 없습니다. :" + scheduleId
+      statusText: "스케줄 아이디가 없습니다. :" + scheduleId,
     });
   }
 
@@ -26,14 +26,18 @@ export async function GET(request: NextRequest) {
     .eq(FK_SCHEDULE_ID, scheduleId)
     .single();
 
-
-  return NextResponse.json(data, error ? {
-    status: 400,
-    statusText: `[${error.code}] ${error.hint} > ${error.message}`
-  } : {
-    status: 200,
-    statusText: "OK",
-  });
+  return NextResponse.json(
+    data,
+    error
+      ? {
+          status: 400,
+          statusText: `[${error.code}] ${error.hint} > ${error.message}`,
+        }
+      : {
+          status: 200,
+          statusText: "OK",
+        }
+  );
 }
 
 /**
@@ -47,7 +51,7 @@ export async function POST(request: NextRequest) {
   const { data } = await supabase
     .from(ACCOUNT_BOOK)
     .insert({
-      ...account
+      ...account,
     })
     .select();
 

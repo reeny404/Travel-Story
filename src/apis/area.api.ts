@@ -1,4 +1,5 @@
-import { Area, Rating, RecommendResponse } from "@/types/Recommend";
+import { Area, RecommendResponse } from "@/types/Recommend";
+import { Tables } from "@/types/supabase";
 import { AxiosError, AxiosInstance } from "axios";
 type RatingResponse = {
   status: number;
@@ -25,7 +26,6 @@ class AreaAPI {
   /**
    *
    * @param id {number} cityId or id
-   * @param isMultiple  {boolean} 다수 지역 or 한개의 지역
    * @returns
    */
   async getAreasById(id: number): Promise<RecommendResponse<Area>> {
@@ -93,20 +93,52 @@ class AreaAPI {
     return data;
   }
 
-  async getAreaRating(id: number): Promise<RatingResponse | undefined> {
+  // 메인 페이지에서 사용되는 카테고리 별 관광지 정보
+  async getAreasByCategory(): Promise<
+    RecommendResponse<{ [key: string]: Area[] }>
+  > {
+    const path = "/api/area/category";
+    const response =
+      await this.axios.get<RecommendResponse<{ [key: string]: Area[] }>>(path);
+    const data = response.data;
+
+    return data;
+  }
+
+  // TODO 아래 두 메서드 Plan쪽으로 옮겨야댐
+  async getPlan(userId: string) {
     try {
-      const path = `/api/area/rating`;
-      const response = await this.axios.get<RecommendResponse<Rating>>(path, {
+      const path = `api/area/plan`;
+      const response = await this.axios.get(path, {
         params: {
-          id,
+          userId,
         },
       });
-      const data = response.data;
-      return data;
+      return response.data.length === 0 ? null : response.data;
     } catch (error) {
-      throw new Error();
+      return console.log(error);
+    }
+  }
+
+  async addPlan(data: Partial<PlanType>) {
+    try {
+      const path = `api/area/plan`;
+      const response = await this.axios.post<PlanType>(path, data);
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+
+  async addSchedule(data: any) {
+    try {
+      const path = "api/area/schedule";
+      const response = await this.axios.post<Schedule>(path, data);
+    } catch (error) {
+      return console.log(error);
     }
   }
 }
+type PlanType = Tables<"plan">;
+type Schedule = Tables<"schedule"> & Tables<"plan">;
 
 export default AreaAPI;

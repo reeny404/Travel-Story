@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import { COLOR } from "./src/constants/color";
+import { colors } from "./styles/theme/colors";
 
 const config: Config = {
   content: [
@@ -9,16 +11,30 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        ...colors,
+        ...COLOR,
+      },
       maxWidth: {
-        xs: "375px",
+        xs: "450px",
+      },
+      zIndex: {
+        drawer: "1000",
+        tab: "950",
+        underbar: "1000",
+        bottomSheet: "9999",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-white":
+          "linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.31) 34%, #FFF 100%)",
+        "gradient-areaCard":
+          "linear-gradient(180deg, rgba(0, 0, 0, 0.00)0%, rgba(0, 0, 0, 0.80)100%)",
       },
       screens: {
-        xs: "375px",
+        xs: "450px",
         sm: "640px",
         md: "768px",
         lg: "1024px",
@@ -26,10 +42,19 @@ const config: Config = {
       },
       boxShadow: {
         "bottom-sheet": "0px -4px 20px 0px rgba(0, 0, 0, 0.25)",
+        "schecule-list": "0px 4px 20px 0px #00000014",
+        "area-card": "0px 4px 12px 0px rgba(0, 0, 0, 0.12)",
+        "area-section": "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
+        "bookmark-card": "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
+        "inner-bookmark": "inset 0px 0px 8px rgba(0, 0, 0, 0.25)",
+        plan: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
+        header: "0px 4px 20px 0px rgba(0, 0, 0, 0.04)",
+      },
+      aspectRatio: {
+        "4/5": "4 / 5",
       },
     },
   },
-  plugins: [],
 };
 
 export default config;

@@ -3,10 +3,11 @@ import { useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import TagButton from "../TagButton";
-import { TagButtonTheme } from "../TagButton/TagButton";
+import { TagButtonSize, TagButtonTheme } from "../TagButton/TagButton";
 
 type SlideTagListProps<T extends string> = {
   tagList: T[];
+  size?: TagButtonSize;
   theme?: TagButtonTheme;
   onTagClick: (tag: T) => void;
 } & TagSliderProps;
@@ -16,6 +17,7 @@ function SlideTagList<T extends string>({
   tagList,
   onTagClick,
   spacing,
+  size = "sm",
   theme = "primary",
 }: SlideTagListProps<T>) {
   const [selectedTag, setSelectedTag] = useState<T>(tagList[0]);
@@ -31,7 +33,7 @@ function SlideTagList<T extends string>({
         <SwiperSlide key={index} style={{ width: "auto" }}>
           <TagButton
             theme={theme}
-            size="sm"
+            size={size}
             isChecked={tag === selectedTag}
             onClick={() => handleTagClick(tag)}
           >

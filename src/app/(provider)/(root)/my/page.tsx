@@ -1,24 +1,24 @@
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
+import MyPageSection from "./_components/MyPageSection";
 
 function MyPage() {
   return (
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        leftIcons: [
-          {
-            icon: ICON.arrow.back.black,
-            alt: "Back",
-            size: 20,
-            path: "back",
-          },
-        ],
         title: "마이페이지",
         titleAlign: "center",
+        rightIcons: [
+          {
+            icon: ICON.edit.line,
+            alt: "edit",
+            size: 18,
+          },
+        ],
       }}
     >
-      <div>마이페이지</div>
+      <MyPageSection />
     </MainLayout>
   );
 }

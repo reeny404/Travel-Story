@@ -1,43 +1,67 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import LocationIcon from "./icons/LocationIcon";
+import MemoIcon from "./icons/MemoIcon";
+import SpendIcon from "./icons/SpendIcon";
+import TimeIcon from "./icons/TimeIcon";
 
 type BottomSheetInputType = {
   isDisabled?: boolean;
   value?: string;
   type: "memo" | "spend" | "place" | "time";
+  startTime?: string;
+  endTime?: string;
 };
 
 export default function BottomSheetInput({
   isDisabled = false,
   value = "",
   type,
+  startTime = "",
+  endTime = "",
 }: BottomSheetInputType) {
   const [inputValue, setInputValue] = useState(value);
+  const [inputStartTime, setInputStartTime] = useState(startTime);
+  const [inputEndTime, setInputEndTime] = useState(endTime);
   const [placeholder, setPlaceholder] = useState("");
-  const [icon, setIcon] = useState("");
+  const [IconComponent, setIconComponent] = useState<React.FC<{
+    className?: string;
+  }> | null>(null);
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  useEffect(() => {
+    setInputStartTime(startTime);
+  }, [startTime]);
+
+  useEffect(() => {
+    setInputEndTime(endTime);
+  }, [endTime]);
 
   useEffect(() => {
     switch (type) {
       case "memo":
         setPlaceholder("메모하기");
-        setIcon("📝"); // 예시 메모 아이콘
+        setIconComponent(() => MemoIcon);
         break;
       case "spend":
         setPlaceholder("지출한 비용");
-        setIcon("💸"); // 예시 지출 아이콘
+        setIconComponent(() => SpendIcon);
         break;
       case "place":
         setPlaceholder("위치 추가하기");
-        setIcon("📍"); // 예시 위치 아이콘
+        setIconComponent(() => LocationIcon);
         break;
       case "time":
         setPlaceholder("시간 선택");
-        setIcon("⏰"); // 예시 시간 아이콘
+        setIconComponent(() => TimeIcon);
         break;
       default:
         setPlaceholder("");
-        setIcon("❓"); // 예시 기본 아이콘
+        setIconComponent(null);
     }
   }, [type]);
 
@@ -49,44 +73,41 @@ export default function BottomSheetInput({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const newStartTime = event.target.value;
-    if (newStartTime > endTime && endTime !== "") {
+    if (newStartTime > inputEndTime && inputEndTime !== "") {
       alert("시작 시간은 종료 시간보다 늦을 수 없습니다.");
       return;
     }
-    setStartTime(newStartTime);
+    setInputStartTime(newStartTime);
   };
 
   const handleEndTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newEndTime = event.target.value;
-    if (newEndTime < startTime && startTime !== "") {
+    if (newEndTime < inputStartTime && inputStartTime !== "") {
       alert("종료 시간은 시작 시간보다 이를 수 없습니다.");
       return;
     }
-    setEndTime(newEndTime);
+    setInputEndTime(newEndTime);
   };
 
   const calculateDuration = () => {
-    if (startTime && endTime) {
-      const start = new Date(`2024-01-01T${startTime}:00`);
-      const end = new Date(`2024-01-01T${endTime}:00`);
+    if (inputStartTime && inputEndTime) {
+      const start = new Date(`2024-01-01T${inputStartTime}:00`);
+      const end = new Date(`2024-01-01T${inputEndTime}:00`);
       const duration = (end.getTime() - start.getTime()) / 60000; // 분 단위로 계산
       return `${duration} 분`;
     }
     return "";
   };
 
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-
   if (type === "time") {
     return (
       <div className="flex items-center">
-        <i className="mr-2 w-8 text-center">{icon}</i>
+        {IconComponent && <IconComponent className="mr-2 w-8 text-center" />}
         <input
           className="outline-0 w-22 border-[1px] text-sm border-gray appearance-none"
           type="time"
-          name={"startTime"}
-          value={startTime}
+          name="startTime"
+          value={inputStartTime}
           disabled={isDisabled}
           onChange={handleStartTimeChange}
           placeholder={placeholder}
@@ -95,8 +116,8 @@ export default function BottomSheetInput({
         <input
           className="outline-0 w-22 border-[1px] text-center text-sm border-gray appearance-none"
           type="time"
-          name={"endTime"}
-          value={endTime}
+          name="endTime"
+          value={inputEndTime}
           disabled={isDisabled}
           onChange={handleEndTimeChange}
           placeholder={placeholder}
@@ -110,7 +131,7 @@ export default function BottomSheetInput({
 
   return (
     <div className="flex items-center">
-      <i className="mr-2 w-8 text-center">{icon}</i>
+      {IconComponent && <IconComponent className="mr-2 w-8 text-center" />}
       <input
         className="border-0 outline-0 w-[90%] border-b-[1px] text-sm border-white"
         type={type === "spend" ? "number" : "text"}

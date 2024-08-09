@@ -1,11 +1,34 @@
 "use client";
 import { BottomSheetType } from "@/types/plan";
 import React, { useEffect, useState } from "react";
+import AirplaneIcon from "./icons/AirplaneIcon";
+import BicycleIcon from "./icons/BicycleIcon";
+import CarIcon from "./icons/CarIcon";
+import PublicTransportIcon from "./icons/PublicTransportIcon";
+import ShipIcon from "./icons/ShipIcon";
+import WalkingIcon from "./icons/WalkingIcon";
 import TransportOption from "./TransportOption";
 
-function BottomSheetTitle({ type, status }: BottomSheetType) {
-  const [inpTitleValue, setTitleValue] = useState("");
+const icons = [
+  WalkingIcon,
+  BicycleIcon,
+  CarIcon,
+  PublicTransportIcon,
+  ShipIcon,
+  AirplaneIcon,
+];
+
+function BottomSheetTitle({
+  type,
+  status,
+  title = "",
+  onChange: onChangeTitle,
+}: BottomSheetType & { title?: string; onChange: (title: string) => void }) {
+  const [inpTitleValue, setTitleValue] = useState(title);
   const [titlePlaceholder, setTitlePlaceholder] = useState("");
+  const [selectedTransport, setSelectedTransport] = useState<string | null>(
+    null
+  );
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitleValue(event.target.value);
@@ -13,6 +36,8 @@ function BottomSheetTitle({ type, status }: BottomSheetType) {
 
   const handleMoveTitleChange = (label: string) => {
     setTitleValue(label);
+    setSelectedTransport(label);
+    onChangeTitle(label);
   };
 
   useEffect(() => {
@@ -24,38 +49,40 @@ function BottomSheetTitle({ type, status }: BottomSheetType) {
         setTitlePlaceholder("지출한 비용");
         break;
       case "place":
-        setTitlePlaceholder("위치 추가하기");
-        break;
       case "customePlace":
-        setTitlePlaceholder("위치 추가하기");
+        setTitlePlaceholder("어디로 가시나요?");
         break;
       case "move":
-        setTitlePlaceholder("이동수단을 선택해주세요");
+        setTitlePlaceholder("이동 수단");
         break;
-      default:
-        setTitlePlaceholder("");
     }
   }, [type]);
+
+  useEffect(() => {
+    setTitleValue(title);
+  }, [title]);
 
   return (
     <div>
       <input
-        className="w-full h-10 pl-2 text-lg outline-none bg-white font-bold"
+        className="w-full h-10 pl-2 text-lg outline-none bg-white font-bold mb-2"
         type="text"
         name="title"
         value={inpTitleValue}
         onChange={handleTitleChange}
         placeholder={titlePlaceholder}
-        disabled={type === "move" || status == "read"}
+        disabled={type === "move" || status === "read"}
       />
       {type === "move" && (
-        <ul className="my-5 mx-auto grid grid-cols-3 gap-y-5">
+        <ul className="mb-2 mx-auto grid grid-cols-3 gap-y-5">
           {["도보", "자전거", "렌트카", "대중교통", "선박", "항공"].map(
-            (option) => (
+            (option, index) => (
               <TransportOption
                 key={option}
                 label={option}
+                icon={icons[index]}
                 onClick={handleMoveTitleChange}
+                isSelected={selectedTransport === option}
               />
             )
           )}

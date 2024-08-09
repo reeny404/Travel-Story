@@ -4,18 +4,20 @@ import { api } from "@/apis/api";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import Plan from "./Plan";
+import Suggestion from "./Suggestion";
 
 function PlanList() {
-  const { data: list, isLoading } = useQuery({
-    queryKey: ["plan"],
+  const { data: list, isPending } = useQuery({
+    queryKey: ["plan", "my"],
     queryFn: () => api.plan.getMyPlans(),
   });
 
-  if (isLoading) {
-    return "로딩 중";
+  if (isPending) {
+    return <p className="mx-auto pt-10 text-center">로딩 중...</p>;
   }
-  if (!list) {
-    return "데이터 없음";
+
+  if (!list || !list.length) {
+    return <Suggestion />;
   }
 
   return (

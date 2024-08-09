@@ -8,32 +8,37 @@ function Plan({ plan }: props) {
   const { title, imagesUrl, startDate, endDate } = plan;
 
   return (
-    <div className="flex items-center p-4 bg-white shadow hover:shadow-md">
-      <div className="w-20 h-20 bg-gray-200 flex items-center justify-center">
+    <div className="min-h-32 p-3 space-x-4 flex items-center bg-white rounded-md shadow-plan hover:shadow-md">
+      <div className="w-24 h-full bg-gray-200 flex items-center justify-center rounded-lg">
         <ImageFrame
           src={imagesUrl}
-          alt="일정 대표 사진"
-          className="w-16 h-16 object-cover"
+          alt="plnaImg"
+          className="w-24 min-h-32 aspect-4/5"
+          round="lg"
         />
-        {/* TODO 여기에 일정 사진?? 들어가는 건가? */}
       </div>
-      <div className="ml-4 flex-1">
-        <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="text-sm text-gray-500">
+      <div className="flex flex-col flex-1 py-3">
+        <div className="flex justify-between items-center">
+          <h2 className="pb-1 text-lg font-semibold leading-6">{title}</h2>
+          <button className="ml-auto mb-auto">
+            <ImageFrame
+              src="/icon/ellipsisVertical.svg"
+              alt="더보기"
+              className="w-4 h-4"
+            />
+          </button>
+        </div>
+        <p className="mb-6 text-sm text-gray-500 leading-5">
           {startDate} - {endDate}
         </p>
-        <div className="flex items-center mt-2 space-x-2">
+        <div className="flex items-center space-x-2">
           {/* TODO 현재 로그인한 사용자 profile 이미지 넣어주기 */}
-          <Profile src={null} className="w-5 h-5" />
+          <Profile
+            src="https://yqoupynehwgshtspamuf.supabase.co/storage/v1/object/public/plan/profileSample.jpg"
+            className="w-9 h-9"
+          />
         </div>
       </div>
-      <button className="ml-auto mb-auto">
-        <ImageFrame
-          src="/icon/ellipsisVertical.svg"
-          alt="더보기"
-          className="w-4 h-4"
-        />
-      </button>
     </div>
   );
 }

@@ -1,8 +1,29 @@
 export const ICON = {
+  account: {
+    memo: {
+      black: { name: "memo", ext: "svg" },
+    },
+    card: {
+      black: { name: "card", ext: "svg" },
+    },
+    shop: {
+      black: { name: "shop", ext: "svg" },
+    },
+  },
+  add: {
+    white: { name: "add", ext: "svg" },
+    bold: { name: "add-bold", ext: "svg" },
+    person: {
+      black: { name: "person-add", ext: "svg" },
+    },
+  },
   arrow: {
     back: {
       black: "arrow-back-black",
       white: "arrow-back-white",
+    },
+    right: {
+      black: "arrow-right-short-sm-black",
     },
     foward: {
       lightgreen: "arrow-foward-lightgreen",
@@ -14,20 +35,41 @@ export const ICON = {
       black: "arrow-up-black",
     },
   },
+
   avatar: {
     black: "avatar-black",
     gray: "avatar-gray",
+  },
+  bookmark: {
+    big: {
+      on: { name: "lgBookmark-on", ext: "svg" },
+      off: { name: "lgBookmark-off", ext: "svg" },
+      white: { name: "bookmark", ext: "svg" },
+    },
+    small: {
+      on: { name: "smBookmark-on", ext: "svg" },
+      off: { name: "smBookmark-off", ext: "svg" },
+    },
+  },
+  calculator: { off: { name: "calculator", ext: "svg" } },
+  calendar: {
+    white: { name: "calendar", ext: "svg" },
+    black: { name: "calendar-black", ext: "svg" },
   },
   cancel: {
     black: "cancel-black",
     gray: "cancel-gray",
     white: "cancel-white",
   },
+  car: { white: { name: "car", ext: "svg" } },
+  checkmark: {
+    white: { name: "checkmark-done", ext: "svg" },
+  },
   chevron: {
     blue: "chevron-blue",
   },
-  credit: {
-    euro: "euro-black",
+  bill: {
+    white: "bill-white",
   },
   dottedSquare: {
     blue: "dotted-square-blue",
@@ -36,8 +78,10 @@ export const ICON = {
     black: "home-black",
   },
   edit: {
-    black: "edit-black",
-    blue: "edit-blue",
+    line: { name: "edit-line", ext: "svg" },
+    black: { name: "edit-black", ext: "png" },
+    blue: { name: "edit-blue", ext: "png" },
+    color: { name: "edit-color", ext: "png" },
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
@@ -50,6 +94,7 @@ export const ICON = {
   },
   map: {
     black: "map-black",
+    off: { name: "map", ext: "svg" },
   },
   menu: {
     burgerBlack: "menu-burger-black",
@@ -58,6 +103,13 @@ export const ICON = {
   notification: {
     black: "notification-black",
   },
+  share: {
+    black: { name: "share", ext: "svg" },
+  },
+  shareArea: {
+    black: { name: "share-black", ext: "svg" },
+    white: { name: "share-white", ext: "svg" },
+  },
   search: {
     black: "search-black",
     white: "search-white",
@@ -65,35 +117,59 @@ export const ICON = {
   settings: {
     black: "settings-black",
   },
+  location: {
+    gray: { name: "location", ext: "svg" },
+    white: { name: "location-white", ext: "svg" },
+    black: { name: "location-black", ext: "svg" },
+  },
   notice: {
     white: "notice-white",
   },
   microphone: {
     black: "microphone-black",
   },
-
   star: {
+    dark: { name: "star-black", ext: "svg" },
     fill: "star-fill",
     unfill: "star-unfill",
+    half: "star-half",
   },
-
-  account: {
-    memo: {
-      black: { name: "memo", ext: "svg" }
+  accommodation: {
+    color: { name: "accommodation-color", ext: "svg" },
+    none: { name: "accommodation-none", ext: "svg" },
+  },
+  place: {
+    color: { name: "place-color", ext: "svg" },
+    none: { name: "place-none", ext: "svg" },
+    white: { name: "place-white", ext: "svg" },
+  },
+  restaurant: {
+    color: { name: "restaurant-color", ext: "svg" },
+    none: { name: "restaurant-none", ext: "svg" },
+  },
+  shop: {
+    color: { name: "shop-color", ext: "svg" },
+    none: { name: "shop-none", ext: "svg" },
+  },
+  areaCalender: {
+    big: {
+      black: "lgCalender-black",
+      white: "lgCalender-white",
+      area: "calender-area",
     },
-    card: {
-      black: { name: "card", ext: "svg" }
-    },
-    shop: {
-      black: { name: "shop", ext: "svg" }
+    small: {
+      black: "smCalender-black",
+      white: "smCalender-white",
     },
   },
-  bookmark: {
-    on: { name: 'bookmark-on', ext: "svg" },
-    off: { name: 'bookmark-off', ext: "svg" },
+  call: {
+    black: "call-black",
   },
-  calendar: { white: { name: "calendar", ext: "svg" } },
   time: { gray: { name: "time", ext: "svg" } },
-  maker: { gray: { name: "location", ext: "svg" } }
-
+  drawer: {
+    home: "drawer-home",
+    mypage: "drawer-mypage",
+    planner: "drawer-planner",
+    tour: "drawer-tour",
+  },
 } as const;

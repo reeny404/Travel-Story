@@ -5,14 +5,16 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import { Area, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import InitialSearchView from "./InitialSearchView";
 import SearchResultView from "./SearchResultView";
 
 function ClientSearch() {
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get("query") || "";
+  const [searchTerm, setSearchTerm] = useState<string>(initialQuery);
   const [searchResults, setSearchResults] = useState<Area[]>([]);
 
   const {
@@ -45,7 +47,10 @@ function ClientSearch() {
 
   return (
     <>
-      <SearchBar onSearch={handleSearch} />
+      <div className="flex justify-center items-center px-5 pt-5">
+        <SearchBar onSearch={handleSearch} initialValue={searchTerm} />
+      </div>
+
       <section className="w-full mt-4">
         {searchTerm ? (
           <SearchResultView

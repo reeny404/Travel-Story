@@ -1,35 +1,27 @@
-import CarouselItem from "./CarouselItem";
+// import { Area } from "@/types/Recommend";
+// import CarouselItem from "./CarouselItem";
 
-type CarouselListProps<T> = {
-  items: T[];
-  getDefaultProps: (item: T) => {
-    description: string;
-    imageUrl: string;
-    title: string;
-    linkUrl: string;
-    id: number;
-  };
-};
+// interface CarouselListProps {
+//   items: Area[];
+//   baseUrl: string;
+// }
 
-function CarouselList<T>({ items, getDefaultProps }: CarouselListProps<T>) {
-  return (
-    <>
-      {items?.map((item, idx) => {
-        const { description, imageUrl, title, linkUrl, id } =
-          getDefaultProps(item);
-        return (
-          <CarouselItem
-            key={idx}
-            id={id}
-            linkUrl={linkUrl}
-            description={description}
-            imageUrl={imageUrl}
-            title={title}
-          />
-        );
-      })}
-    </>
-  );
-}
+// function CarouselList({ items, baseUrl }: CarouselListProps) {
+//   return (
+//     <>
+//       {items.map((item) => (
+//         <CarouselItem
+//           key={item.id}
+//           id={item.id}
+//           rating={item.rating || 0}
+//           description={item.description}
+//           imageUrl={item.imageUrl!}
+//           title={item.title}
+//           linkUrl={`${baseUrl}/${item.id}`}
+//         />
+//       ))}
+//     </>
+//   );
+// }
 
-export default CarouselList;
+// export default CarouselList;
