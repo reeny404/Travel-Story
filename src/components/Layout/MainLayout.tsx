@@ -9,11 +9,11 @@ type MainLayoutProps = {
 
 function MainLayout({ children, headerProps }: MainLayoutProps) {
   return (
-    <div>
+    <>
       {headerProps && <Header {...headerProps} />}
       <ClientDrawer />
       {children}
-    </div>
+    </>
   );
 }
 

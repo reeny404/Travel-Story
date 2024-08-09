@@ -13,14 +13,14 @@ type Props = {
   createSchedule: () => void;
   createMoveSchedule: () => void;
   createMemo: () => void;
-  createByBookmark: () => void;
+  pathTocreateByBookmark: string;
 };
 
 function CreateScheduleButton({
   createSchedule,
   createMoveSchedule,
   createMemo,
-  createByBookmark,
+  pathTocreateByBookmark,
 }: Props) {
   const [isShowButtons, setIsShowButtons] = useState<Boolean>(false);
   const onClick = () => setIsShowButtons((isShow) => !isShow);
@@ -36,7 +36,7 @@ function CreateScheduleButton({
       >
         <CreateButton
           Icon={IconBookmark}
-          onClick={createByBookmark}
+          href={pathTocreateByBookmark}
           color={buttonHoverColor}
         />
         <CreateButton

@@ -7,6 +7,7 @@ import { BookmarkWithArea } from "@/types/Recommend";
 import { useCallback, useEffect, useState } from "react";
 import { MyBookmarkPageParams } from "../page";
 import BookmarkCard from "./BookmarkCard";
+import SuggestArea from "./SuggestArea";
 
 type PageProps = {
   params: MyBookmarkPageParams;
@@ -43,6 +44,7 @@ export default function MyBookmarkList({ tabs, params }: PageProps) {
         />
       </section>
       <section className="space-y-4">
+        {!list.length && <SuggestArea />}
         {list.map((bookmark) => (
           <BookmarkCard key={bookmark.id} bookmark={bookmark} params={params} />
         ))}
