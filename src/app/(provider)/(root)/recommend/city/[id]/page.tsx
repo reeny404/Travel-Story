@@ -8,7 +8,6 @@ import Tab from "@/components/Tab/Tab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
-import useRecommendStore from "@/stores/recommend.store";
 import { Area, City, RecommendResponse } from "@/types/Recommend";
 import { filterByAreaType } from "@/utils/filterByAreaType";
 import { useQuery } from "@tanstack/react-query";
@@ -24,13 +23,12 @@ type CityDetailPageProps = {
 };
 
 function CityDetailPage({ params }: CityDetailPageProps) {
-  const { setCityId, cityId } = useRecommendStore((state) => state);
+  const cityId = parseInt(params.id);
   const { ref: viewRef, inView } = useInView();
   const router = useRouter();
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
 
   useEffect(() => {
-    setCityId(parseInt(params.id));
     setCurrentTab("place");
   }, []);
 

@@ -1,11 +1,11 @@
 import ImageFrame from "@/components/Frame/ImageFrame";
-import { BookmarkWithArea } from "@/types/Recommend";
+import { extendBookmark } from "@/types/Recommend";
 import { MyBookmarkPageParams } from "../page";
 import AddToPlanButton from "./AddToPlanButton";
 import BookmarkButton from "./BookmarkButton";
 
 type AreaCardProps = {
-  bookmark: BookmarkWithArea;
+  bookmark: extendBookmark;
   params: MyBookmarkPageParams;
 };
 

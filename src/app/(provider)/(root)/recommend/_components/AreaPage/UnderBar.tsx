@@ -34,6 +34,7 @@ function UnderBar({ area }: UnderBarProps) {
   const handleClose = () => {
     setBottomSheetVisible(false);
   };
+  // TODO Supabase에 반영이 되지 않았을 때 버튼 호출 안되게 ㄱㄱ
 
   const toggleBookmark = () => {
     if (!isLoggedIn) {

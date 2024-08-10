@@ -3,7 +3,7 @@
 import { api } from "@/apis/api";
 import SlideTagList from "@/components/commons/TagList/SlideTagList";
 import { Tab } from "@/constants/tabs";
-import { BookmarkWithArea } from "@/types/Recommend";
+import { extendBookmark } from "@/types/Recommend";
 import { useCallback, useEffect, useState } from "react";
 import { MyBookmarkPageParams } from "../page";
 import BookmarkCard from "./BookmarkCard";
@@ -16,7 +16,7 @@ type PageProps = {
 
 export default function MyBookmarkList({ tabs, params }: PageProps) {
   const [filterTag, setFilterTag] = useState<Tab>(tabs[0]);
-  const [bookmarks, setBookmarks] = useState<BookmarkWithArea[]>([]);
+  const [bookmarks, setBookmarks] = useState<extendBookmark[]>([]);
   useEffect(() => {
     api.bookmark.getBookmarks().then(({ data }) => {
       setBookmarks(data);
@@ -30,7 +30,7 @@ export default function MyBookmarkList({ tabs, params }: PageProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log("bookmarks", bookmarks);
-  const list: BookmarkWithArea[] = bookmarks?.length
+  const list: extendBookmark[] = bookmarks?.length
     ? bookmarks.filter((bookmark) => filterTag.en === bookmark.area.type)
     : [];
 
