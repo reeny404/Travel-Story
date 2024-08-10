@@ -1,4 +1,4 @@
-import { Area, RecommendResponse } from "@/types/Recommend";
+import { Area, GroupedArea, RecommendResponse } from "@/types/Recommend";
 import { Tables } from "@/types/supabase";
 import { AxiosError, AxiosInstance } from "axios";
 type RatingResponse = {
@@ -62,17 +62,19 @@ class AreaAPI {
    * @param type {string} areaType
    * @returns
    */
-  async getAreasByCountry(
-    id: number,
-    type: string
-  ): Promise<RecommendResponse<Area[]>> {
+  async getAreasByCountry(id: number): Promise<RecommendResponse<GroupedArea>> {
     const path = `/api/area/country`;
-    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
-      params: {
-        id,
-        type,
-      },
-    });
+    const response = await this.axios.get<RecommendResponse<GroupedArea>>(
+      path,
+      {
+        params: {
+          id,
+        },
+      }
+    );
+    if (response.data.error) {
+      console.log("getAreasByContry Error", response.data.error);
+    }
     return response.data;
   }
 

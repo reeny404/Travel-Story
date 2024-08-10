@@ -26,7 +26,7 @@ function CardImgFrame({
   return (
     <div className={`w-full relative ${frameClassName}`}>
       <Image
-        src={imageUrl!}
+        src={imageUrl! ?? "/"}
         alt={alt}
         fill
         priority={priority}

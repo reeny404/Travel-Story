@@ -5,6 +5,7 @@ import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import { IntroCountryType } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import CountryIntroCard from "../../_components/CountryPage/CountryIntroCard";
 
 type CountryIntroPageProps = {
@@ -12,6 +13,8 @@ type CountryIntroPageProps = {
 };
 
 function CountryIntroPage({ countryId }: CountryIntroPageProps) {
+  const router = useRouter();
+
   const { data: introCountry, isLoading } = useQuery<IntroCountryType>({
     queryKey: ["introCountry", countryId],
     queryFn: async () => {
@@ -22,6 +25,10 @@ function CountryIntroPage({ countryId }: CountryIntroPageProps) {
     },
     staleTime: 1000 * 60 * 60 * 10,
   });
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
 
   return (
     <MainLayout
@@ -34,7 +41,7 @@ function CountryIntroPage({ countryId }: CountryIntroPageProps) {
             icon: ICON.search.white,
             alt: "Search",
             size: 20,
-            onClick: () => {},
+            onClick: handleSearch,
           },
         ],
       }}
