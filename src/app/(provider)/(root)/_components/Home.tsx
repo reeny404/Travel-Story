@@ -58,6 +58,12 @@ function Home() {
             size: 20,
             onClick: handleMoveSearch,
           },
+          {
+            icon: ICON.avatar.black,
+            alt: "Mypage",
+            size: 20,
+            onClick: handleAvatarClick,
+          },
         ],
       }}
     >
