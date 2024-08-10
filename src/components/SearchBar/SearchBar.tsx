@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { debounce } from "lodash";
+import { useMemo, useState } from "react";
 import SvgIcon from "../commons/SvgIcon";
 
 type SearchBarProps = {
@@ -11,17 +12,24 @@ type SearchBarProps = {
 function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState(initialValue);
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const trimmedValue = searchValue.trim();
-    if (trimmedValue && onSearch) {
-      onSearch(trimmedValue);
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+    debounceSearch(e.target.value);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchValue(value);
+  const debounceSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        if (value.trim() && onSearch) {
+          onSearch(value.trim());
+        }
+      }, 300),
+    [onSearch]
+  );
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    debounceSearch.flush();
   };
 
   const handleEmpty = () => {

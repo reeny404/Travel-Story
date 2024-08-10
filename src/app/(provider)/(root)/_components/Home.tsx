@@ -30,6 +30,13 @@ function Home() {
   //   staleTime: 1000 * 60 * 3,
   // });
 
+  const handleAvatarClick = () => {
+    if (user) {
+      return router.push("/my");
+    }
+    return router.push("/login");
+  };
+
   const handleSearch = (term: string) => {
     router.push(`/search?query=${term}`);
   };
@@ -50,6 +57,12 @@ function Home() {
             alt: "Search",
             size: 20,
             onClick: handleMoveSearch,
+          },
+          {
+            icon: ICON.avatar.black,
+            alt: "Mypage",
+            size: 20,
+            onClick: handleAvatarClick,
           },
         ],
       }}

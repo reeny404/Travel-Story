@@ -26,8 +26,8 @@ function ClientSearch() {
     queryKey: ["searchResults", searchTerm],
     queryFn: () => api.area.search(searchTerm),
     enabled: !!searchTerm,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 3,
+    gcTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
@@ -54,18 +54,15 @@ function ClientSearch() {
           <SvgIcon name="slider" width={18} height={18} title="filter" />
         </div>
       </div>
-
-      <section className="w-full mt-4">
-        {searchTerm ? (
-          <SearchResultView
-            results={searchResults}
-            isPending={isPending}
-            error={error}
-          />
-        ) : (
-          <InitialSearchView />
-        )}
-      </section>
+      {searchTerm ? (
+        <SearchResultView
+          results={searchResults}
+          isPending={isPending}
+          error={error}
+        />
+      ) : (
+        <InitialSearchView />
+      )}
     </>
   );
 }

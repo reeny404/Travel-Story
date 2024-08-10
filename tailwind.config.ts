@@ -22,7 +22,7 @@ const config: Config = {
       zIndex: {
         drawer: "1000",
         tab: "950",
-        underbar: "1000",
+        underbar: "950",
         bottomSheet: "9999",
       },
       backgroundImage: {
