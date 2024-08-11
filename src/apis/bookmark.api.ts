@@ -32,6 +32,7 @@ class BookmarkAPI {
       path,
       { areaId }
     );
+    console.log("response.data", response.data);
     return response.data;
   }
 

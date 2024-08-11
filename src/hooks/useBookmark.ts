@@ -14,53 +14,57 @@ export const useBookmarks = ({ areaId }: { areaId: number }) => {
     queryFn: () => api.bookmark.getBookmarks(),
     select: (data) => data.data,
   });
+
   const addBookmark = useMutation({
-    mutationFn: (bookmarkAreaId: number) =>
-      api.bookmark.addBookmark({
+    mutationFn: async (bookmarkAreaId: number) => {
+      const { data } = await api.bookmark.addBookmark({
         areaId: bookmarkAreaId,
-      }),
+      });
+      return data;
+    },
     onMutate: async (newBookmark) => {
       await queryClient.cancelQueries({ queryKey: ["bookmarks", newBookmark] });
 
       const previousBookmarks = queryClient.getQueryData([
         "bookmarks",
         newBookmark,
-      ]) as RecommendResponse<AreaBookmark>;
-      const prevBookmarkData = previousBookmarks;
-      // 임시로 값 생성
+      ]) as RecommendResponse<AreaBookmark[]>;
+
       const newBookmarkData = {
-        area: {
-          cityId: 1, // 임시로 설정한 도시 ID
-          countryId: 1, // 임시로 설정한 국가 ID
-          createdAt: new Date().toISOString(), // 현재 시간을 사용
-          description: "임시 설명입니다.", // 임시 설명
-          id: newBookmark, // areaId를 사용하여 임시 ID 설정
-          imageUrl: "https://example.com/placeholder.jpg", // 임시 이미지 URL
-          info: {
-            notes: "임시 노트입니다.",
-            address: "임시 주소입니다.",
-            location: [0, 0], // 임시 위치 정보
-            phoneNumber: "+00 000 000 000", // 임시 전화번호
-            opening_hours: {}, // 임시 영업 시간 정보
-          },
-        },
         areaId: newBookmark,
-        createdAt: new Date().toISOString(),
-        id: Date.now(),
+        id: Date.now(), // 임시 ID 설정
         lat: 0,
         lng: 0,
         userId: "임시 유저 ID",
+        createdAt: new Date().toISOString(),
+        area: {
+          cityId: 1,
+          countryId: 1,
+          createdAt: new Date().toISOString(),
+          description: "임시 설명입니다.",
+          id: newBookmark,
+          imageUrl: "https://example.com/placeholder.jpg",
+          info: {
+            notes: "임시 노트입니다.",
+            address: "임시 주소입니다.",
+            location: [0, 0],
+            phoneNumber: "+00 000 000 000",
+            opening_hours: {},
+          },
+        },
       };
       queryClient.setQueryData(
         ["bookmarks", newBookmark],
         (oldBookmarks: RecommendResponse<AreaBookmark[]>) => {
-          const { data } = oldBookmarks;
+          const { data } = oldBookmarks || { data: [] };
+
           return {
             ...oldBookmarks,
             data: [...data, newBookmarkData],
           };
         }
       );
+
       return { previousBookmarks };
     },
     onError: (err, newBookmark, context) => {
@@ -69,12 +73,15 @@ export const useBookmarks = ({ areaId }: { areaId: number }) => {
         context?.previousBookmarks
       );
     },
+
     onSettled: (data: any) => {
+      console.log("data", data);
       queryClient.invalidateQueries({
-        queryKey: ["bookmarks", data[0].areaId],
+        queryKey: ["bookmarks", data.areaId],
       });
     },
   });
+
   const deleteBookmark = useMutation({
     mutationFn: async (bookmarkAreaId: number) => {
       return await api.bookmark.deleteBookmark({
@@ -108,12 +115,14 @@ export const useBookmarks = ({ areaId }: { areaId: number }) => {
         context?.prevBookmarkData
       );
     },
-    onSettled: (data: any) => {
+    onSettled: ({ data }: any) => {
+      console.log("data", data);
       queryClient.invalidateQueries({
-        queryKey: ["bookmarks", data[0].areaId],
+        queryKey: ["bookmarks", data.areaId],
       });
     },
   });
+  console.log("bookmarks", bookmarks);
   const isBookmarked = bookmarks?.some(
     (bookmark) => bookmark.areaId === areaId
   );
