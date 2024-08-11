@@ -21,7 +21,7 @@ function SearchResultView({
   error,
 }: SearchResultViewProps) {
   const router = useRouter();
-  const [filteredTabs, setFilteredTabs] = useState(TABS.default);
+  const [filteredTabs, setFilteredTabs] = useState([...TABS.default]);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
 
   useEffect(() => {

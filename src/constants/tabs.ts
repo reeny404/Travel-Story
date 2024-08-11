@@ -1,16 +1,16 @@
-export type Tab = { kr: string; en: string };
+export type Tab = { kr: string; en: string; isEnabled?: boolean };
 
-export const TABS: { default: Tab[], areaDetail: Tab[] } = {
+export const TABS: { default: Tab[]; areaDetail: Tab[] } = {
   default: [
-    { kr: "관광", en: "place" },
-    { kr: "숙소", en: "accommodation" },
-    { kr: "식당", en: "restaurant" },
-    { kr: "쇼핑", en: "shop" },
+    { kr: "관광", en: "place", isEnabled: true },
+    { kr: "숙소", en: "accommodation", isEnabled: true },
+    { kr: "식당", en: "restaurant", isEnabled: true },
+    { kr: "쇼핑", en: "shop", isEnabled: true },
   ],
   areaDetail: [
-    { kr: "이용안내", en: "notice" },
-    { kr: "위치", en: "location" },
-    { kr: "리뷰", en: "review" },
-    { kr: "추천장소", en: "relatedArea" },
+    { kr: "이용안내", en: "notice", isEnabled: true },
+    { kr: "위치", en: "location", isEnabled: true },
+    { kr: "리뷰", en: "review", isEnabled: true },
+    { kr: "추천장소", en: "relatedArea", isEnabled: true },
   ],
 };
