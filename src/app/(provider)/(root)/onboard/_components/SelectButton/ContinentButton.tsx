@@ -3,16 +3,16 @@ import { cva, VariantProps } from "class-variance-authority";
 import Image from "next/image";
 
 const buttonVariants = cva(
-  "flex justify-center items-center gap-3 shadow-lg rounded-lg text-lg font-semibold",
+  "flex justify-center items-center gap-3 shadow-lg shadow-gray-200 rounded-lg text-lg font-semibold",
   {
     variants: {
       intent: {
         default: "flex-col px-5 py-4",
         width: "flex-row flex-grow p-4",
-        full: "flex-row w-full",
+        full: "flex-row w-full py-4",
       },
       isClicked: {
-        true: "border border-brand-600 bg-gradient-to-t from-brand-600 to-white",
+        true: "border border-brand-600 bg-gradient-to-t from-brand-200",
         false: "border border-white",
       },
     },

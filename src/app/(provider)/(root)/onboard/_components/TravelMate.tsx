@@ -13,7 +13,7 @@ function TravelMate() {
   ];
   return (
     <BoardContainer title={"누구랑\n함께 하시나요?"}>
-      <div className="w-full px-4">
+      <div className="w-full px-4 mb-4">
         <ContinentButton
           index={1}
           text={buttons[0].text}
@@ -21,7 +21,7 @@ function TravelMate() {
           intent={"full"}
         />
       </div>
-      <div className="grid grid-cols-3 w-full px-4">
+      <div className="grid grid-cols-3 w-full px-4 gap-4">
         {buttons.map((button, index) => {
           if (index === 0) return null;
           return (
@@ -29,7 +29,7 @@ function TravelMate() {
               key={index}
               text={button.text}
               image={button.image}
-              index={index}
+              index={index + 1}
             />
           );
         })}

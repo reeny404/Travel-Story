@@ -1,4 +1,6 @@
 import { useOnboardStore } from "@/stores/onboard.store";
+import { useLoginStepStore } from "@/stores/step.store";
+import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
 type BoardType = {
@@ -6,11 +8,24 @@ type BoardType = {
 };
 
 function BoardContainer({ title, children }: PropsWithChildren<BoardType>) {
-  const { isInputValid, progress, setProgress, setIsInputValid } =
-    useOnboardStore();
+  const {
+    isInputValid,
+    progress,
+    setProgress,
+    setIsInputValid,
+    setIsSelectedOne,
+  } = useOnboardStore();
+  const router = useRouter();
+  const { nextURL } = useLoginStepStore();
+
   const handleNextClick = () => {
+    if (progress === 3) {
+      return router.replace(nextURL);
+    }
     setProgress(true);
     setIsInputValid(true);
+    setIsSelectedOne(0);
+    router.push(`/onboard?next=${progress + 1}`);
   };
 
   return (
