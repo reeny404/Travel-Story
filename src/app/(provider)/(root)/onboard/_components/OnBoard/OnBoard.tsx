@@ -34,7 +34,7 @@ function OnBoard() {
   // };
 
   const handleCancelClick = () => {
-    //cookies에 hasTravelType을 넣기
+    document.cookie = "hasTravelType=true; path=/";
     router.back();
   };
 

@@ -20,6 +20,7 @@ function BoardContainer({ title, children }: PropsWithChildren<BoardType>) {
 
   const handleNextClick = () => {
     if (progress === 3) {
+      document.cookie = "hasTravelType=true; path=/";
       return router.replace(nextURL);
     }
     setProgress(true);
