@@ -13,8 +13,7 @@ import { useRouter } from "next/navigation";
 import { Suspense, lazy, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import DetailCard from "../Cards/DetailCard";
-import SliderSection from "../SliderSection";
-
+const SliderSection = lazy(() => import("../SliderSection"));
 const MainTourForm = lazy(() => import("../MainTour/MainTourForm"));
 
 type CountryDetailCSRPage = {

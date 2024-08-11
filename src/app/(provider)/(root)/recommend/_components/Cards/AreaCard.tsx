@@ -1,7 +1,6 @@
 import SingleRatingIcon from "@/components/Card/SingleRatingIcon";
 import PrimaryTagList from "@/components/commons/TagList/PrimaryTagList";
 import { useAuth } from "@/contexts/auth.contexts";
-import { useBookmarks } from "@/hooks/useBookmark";
 import { useModalStore } from "@/stores/modal.store";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +16,9 @@ export type AreaCardProps = {
   city: string;
   country: string;
   areaName: string;
+  isBookmarked: (areaId: number) => boolean | undefined;
+  addBookmark: () => void;
+  deleteBookmark: () => void;
 };
 
 function AreaCard({
@@ -29,17 +31,17 @@ function AreaCard({
   city,
   country,
   areaName,
+  isBookmarked,
+  addBookmark,
+  deleteBookmark,
 }: AreaCardProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks({
-    areaId: id,
-  });
   const { openModal } = useModalStore();
   const { isLoggedIn } = useAuth();
   const toggleBookmark = () => {
     if (!isLoggedIn) {
       openModal("로그인하면 일정에 장소를 추가할 수 있어요");
     } else {
-      isBookmarked ? deleteBookmark.mutate(id) : addBookmark.mutate(id);
+      isBookmarked(id) ? deleteBookmark() : addBookmark();
     }
   };
   const mockTags = ["친구와 함께", "문화 체험", "도심"];
@@ -69,7 +71,7 @@ function AreaCard({
         <div className="relative w-6 h-6 aspect-square">
           <Image
             src={
-              isBookmarked
+              isBookmarked(id)
                 ? `/icons/whiteBookmark-on.svg`
                 : `/icons/whiteBookmark-off.svg`
             }

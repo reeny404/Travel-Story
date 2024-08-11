@@ -26,13 +26,11 @@ class BookmarkAPI {
     data: BookmarkAPIType
   ): Promise<RecommendResponse<AreaBookmark>> {
     const { areaId } = data;
-    console.log("areaId", areaId);
     const path = "/api/bookmark";
     const response = await this.axios.post<RecommendResponse<AreaBookmark>>(
       path,
       { areaId }
     );
-    console.log("response.data", response.data);
     return response.data;
   }
 

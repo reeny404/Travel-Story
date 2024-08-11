@@ -1,16 +1,19 @@
 import { api } from "@/apis/api";
+import { useAuth } from "@/contexts/auth.contexts";
 import { AreaBookmark, RecommendResponse } from "@/types/Recommend";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
-export const useBookmarks = ({ areaId }: { areaId: number }) => {
+export const useBookmarks = () => {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
+
   const { data: bookmarks, refetch } = useQuery<
     RecommendResponse<AreaBookmark[]>,
     AxiosError,
     AreaBookmark[]
   >({
-    queryKey: ["bookmarks", areaId],
+    queryKey: ["bookmarks", user?.id],
     queryFn: () => api.bookmark.getBookmarks(),
     select: (data) => data.data,
   });
@@ -23,11 +26,11 @@ export const useBookmarks = ({ areaId }: { areaId: number }) => {
       return data;
     },
     onMutate: async (newBookmark) => {
-      await queryClient.cancelQueries({ queryKey: ["bookmarks", newBookmark] });
-
+      await queryClient.cancelQueries({ queryKey: ["bookmarks", user?.id] });
+      console.log("newBookmark", newBookmark);
       const previousBookmarks = queryClient.getQueryData([
         "bookmarks",
-        newBookmark,
+        user?.id,
       ]) as RecommendResponse<AreaBookmark[]>;
 
       const newBookmarkData = {
@@ -54,7 +57,7 @@ export const useBookmarks = ({ areaId }: { areaId: number }) => {
         },
       };
       queryClient.setQueryData(
-        ["bookmarks", newBookmark],
+        ["bookmarks", user?.id],
         (oldBookmarks: RecommendResponse<AreaBookmark[]>) => {
           const { data } = oldBookmarks || { data: [] };
 
@@ -69,15 +72,14 @@ export const useBookmarks = ({ areaId }: { areaId: number }) => {
     },
     onError: (err, newBookmark, context) => {
       queryClient.setQueryData(
-        ["bookmarks", newBookmark],
+        ["bookmarks", user?.id],
         context?.previousBookmarks
       );
     },
 
     onSettled: (data: any) => {
-      console.log("data", data);
       queryClient.invalidateQueries({
-        queryKey: ["bookmarks", data.areaId],
+        queryKey: ["bookmarks", data.userId],
       });
     },
   });
@@ -89,15 +91,15 @@ export const useBookmarks = ({ areaId }: { areaId: number }) => {
       });
     },
     onMutate: async (newBookmark) => {
-      await queryClient.cancelQueries({ queryKey: ["bookmarks", newBookmark] });
+      await queryClient.cancelQueries({ queryKey: ["bookmarks", user?.id] });
       const previousBookmarks = queryClient.getQueryData([
         "bookmarks",
-        newBookmark,
+        user?.id,
       ]) as RecommendResponse<AreaBookmark>;
 
       const prevBookmarkData = previousBookmarks?.data;
       queryClient.setQueryData(
-        ["bookmarks", newBookmark],
+        ["bookmarks", user?.id],
         (old: RecommendResponse<AreaBookmark[]>) => {
           const oldBookmarks = old.data;
 
@@ -111,21 +113,18 @@ export const useBookmarks = ({ areaId }: { areaId: number }) => {
     },
     onError: (err, newBookmark, context) => {
       queryClient.setQueryData(
-        ["bookmarks", newBookmark],
+        ["bookmarks", user?.id],
         context?.prevBookmarkData
       );
     },
     onSettled: ({ data }: any) => {
-      console.log("data", data);
       queryClient.invalidateQueries({
-        queryKey: ["bookmarks", data.areaId],
+        queryKey: ["bookmarks", data.userId],
       });
     },
   });
-  console.log("bookmarks", bookmarks);
-  const isBookmarked = bookmarks?.some(
-    (bookmark) => bookmark.areaId === areaId
-  );
+  const isBookmarked = (areaId: number) =>
+    bookmarks?.some((bookmark) => bookmark.areaId === areaId);
 
   return { isBookmarked, addBookmark, deleteBookmark };
 };

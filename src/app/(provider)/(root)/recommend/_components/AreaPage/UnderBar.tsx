@@ -14,9 +14,7 @@ type UnderBarProps = {
 };
 
 function UnderBar({ area }: UnderBarProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks({
-    areaId: area.id,
-  });
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks();
 
   const { isLoggedIn } = useAuth();
   const { openModal, setNextUrl } = useModalStore();
@@ -40,10 +38,10 @@ function UnderBar({ area }: UnderBarProps) {
     if (!isLoggedIn) {
       openModal("로그인하면 일정에 장소를 추가할 수 있어요");
     } else {
-      if (isBookmarked) {
+      if (isBookmarked(area.id)) {
         deleteBookmark.mutate(area.id);
       }
-      if (!isBookmarked) {
+      if (!isBookmarked(area.id)) {
         addBookmark.mutate(area.id);
       }
     }
@@ -61,7 +59,7 @@ function UnderBar({ area }: UnderBarProps) {
       >
         <Image
           src={
-            isBookmarked
+            isBookmarked(area.id)
               ? `/icons/${ICON.bookmark.big.on.name}.svg`
               : `/icons/${ICON.bookmark.big.off.name}.svg`
           }

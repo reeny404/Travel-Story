@@ -8,8 +8,16 @@ export type IntroCountryType = {
   country: Country;
 };
 export type City = Tables<"city">;
+
 export type AreaBookmark = Tables<"areaBookmark">;
 export type extendBookmark = AreaBookmark & { area: Area };
+export type GroupedArea = {
+  place: Area[];
+  accommodation: Area[];
+  restaurant: Area[];
+  shop: Area[];
+};
+
 export type BookmarkAPIType = {
   areaId: number;
 };

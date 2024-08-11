@@ -47,6 +47,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const data = await request.json();
   const areaId = data.areaId;
+  console.log("areaId", areaId);
   const supabase = createClient();
   const userId = (await AuthUtil.getUser(supabase))?.id;
   if (!userId || !areaId) {
@@ -95,7 +96,6 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   const data = await request.json();
   const areaId = data.areaId;
-  console.log("areaId", areaId);
   const supabase = createClient();
   const userId = (await AuthUtil.getUser(supabase))?.id;
   if (!userId) {

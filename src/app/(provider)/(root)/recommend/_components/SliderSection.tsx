@@ -1,8 +1,8 @@
 import CardType from "@/components/Card/CardType";
-import CardSlider from "@/components/Slider/CardSlider";
 import { getSliderProps } from "@/components/Slider/getSliderProp";
 import { Area } from "@/types/Recommend";
-import { FC, useMemo } from "react";
+import { FC, lazy, useMemo } from "react";
+const CardSlider = lazy(() => import("@/components/Slider/CardSlider"));
 
 type SliderSectionProps = {
   areas: Area[];
