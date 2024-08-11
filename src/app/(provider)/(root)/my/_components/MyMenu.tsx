@@ -11,7 +11,7 @@ function MyMenu() {
   };
 
   const handleMyTravelClick = () => {
-    router.push("/plan");
+    router.push("/plan/list");
   };
   return (
     <section className="flex w-full px-8 py-3 justify-around bg-white rounded-lg">
