@@ -7,31 +7,31 @@ const popularDestinations = [
   {
     id: 1,
     imageUrl: "/country/france.jpg",
-    title: "France",
+    title: "프랑스",
     cityNames: "파리 · 마르세유 · 릴 · 보르도",
   },
   {
     id: 2,
     imageUrl: "/country/japan.jpg",
-    title: "Japan",
+    title: "일본",
     cityNames: "도쿄 · 후쿠오카 · 교토 · 오사카",
   },
   {
     id: 4,
     imageUrl: "/country/italy.jpg",
-    title: "Italy",
+    title: "이탈리아",
     cityNames: "바티칸 · 나폴리 · 피렌체 · 로마",
   },
   {
     id: 5,
     imageUrl: "/country/spain.jpg",
-    title: "Spain",
+    title: "스페인",
     cityNames: "마드리드 · 세비야 · 바르셀로나",
   },
   {
     id: 7,
     imageUrl: "/country/australia.jpg",
-    title: "Australia",
+    title: "호주",
     cityNames: "시드니 · 멜버른 · 브리즈번",
   },
 ];
