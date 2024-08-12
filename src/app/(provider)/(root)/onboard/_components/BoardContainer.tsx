@@ -2,7 +2,6 @@ import { api } from "@/apis/api";
 import { continents, travelMates, travelTypes } from "@/constants/onboard";
 import { useOnboardStore } from "@/stores/onboard.store";
 import { useLoginStepStore } from "@/stores/step.store";
-import { useTravelType } from "@/stores/travelType.store";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
@@ -16,11 +15,14 @@ function BoardContainer({ title, children }: PropsWithChildren<BoardType>) {
     progress,
     isSelectedOne,
     isSelectedMany,
+    country,
+    travelMate,
+    setCountry,
+    setTravelMate,
     setProgress,
     setIsInputValid,
     setIsSelectedOne,
   } = useOnboardStore();
-  const { country, travelMate, setCountry, setTravelMate } = useTravelType();
   const router = useRouter();
   const { nextURL } = useLoginStepStore();
 

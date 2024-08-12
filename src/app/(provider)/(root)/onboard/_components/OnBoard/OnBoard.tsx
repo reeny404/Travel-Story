@@ -3,18 +3,15 @@ import SvgIcon from "@/components/commons/SvgIcon";
 import MainLayout from "@/components/Layout/MainLayout";
 import { useOnboardStore } from "@/stores/onboard.store";
 import { useLoginStepStore } from "@/stores/step.store";
-import { useTravelType } from "@/stores/travelType.store";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Continent from "../Continent";
 import ProgressBar from "../ProgressBar";
 import TravelMate from "../TravelMate";
 import TravelType from "../TravelType";
 
 function OnBoard() {
-  const { travelType } = useTravelType();
   const router = useRouter();
-  const [isValidated, setIsValidated] = useState<boolean>(true);
   const params = useSearchParams();
   const nextURL = params.get("next");
   const { progress, setProgress } = useOnboardStore();
@@ -23,15 +20,6 @@ function OnBoard() {
   useEffect(() => {
     setNextURL(nextURL || "/");
   }, []);
-
-  // const handleTravelTypeClick = (
-  //   e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  // ) => {
-  //   e.preventDefault();
-  //   localStorage.setItem("userTravelType", JSON.stringify(travelType));
-  //   router.replace(nextURL);
-  //   document.cookie = "hasTravelType=true; path=/";
-  // };
 
   const handleCancelClick = () => {
     document.cookie = "hasTravelType=true; path=/";
