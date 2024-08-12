@@ -20,8 +20,6 @@ function ClientSearch() {
   const [searchResults, setSearchResults] = useState<Area[]>([]);
   const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
 
-  const [tempSearchTerm, setTempSearchTerm] = useState<string>("");
-
   const {
     data: searchedData,
     isPending,
@@ -54,35 +52,16 @@ function ClientSearch() {
     setIsFiterOpen((prev) => !prev);
   };
 
-  const handleTempSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTempSearchTerm(e.target.value);
-  };
-
   return (
     <>
       <div className="flex justify-center items-center gap-2 px-4 pt-2 pb-3">
         <SearchBar onSearch={handleSearch} initialValue={searchTerm} />
-        <div
+        <button
           className="p-[10px] bg-white rounded-lg shadow-filter-icon hover:opacity-85 active:transform active:scale-95 cursor-pointer active:bg-gray-150"
           onClick={handleToggleFilter}
+          type="button"
         >
           <SvgIcon name="slider" width={18} height={18} title="filter" />
-        </div>
-      </div>
-
-      <div className="flex justify-center items-center gap-2 px-4 pt-2 pb-3">
-        <input
-          type="text"
-          className="w-[90%] bg-white p-2 border rounded-lg"
-          placeholder="임시 검색어를 입력하세요"
-          value={tempSearchTerm}
-          onChange={handleTempSearchChange}
-        />
-        <button
-          className="p-2 bg-blue-500 text-white rounded-lg"
-          onClick={() => console.log("임시 검색어:", tempSearchTerm)}
-        >
-          임시 검색
         </button>
       </div>
 

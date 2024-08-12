@@ -89,7 +89,8 @@ function SearchResultView({
 export default SearchResultView;
 
 {
-  /* <CountryButton
+  /* 추후 사용 예정
+        <CountryButton
             size="md"
             imgPath={result.imageUrl || "/sampleImg.jpg"}
             alt={result.name}

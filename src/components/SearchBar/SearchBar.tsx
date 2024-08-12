@@ -1,7 +1,7 @@
 "use client";
 
 import { debounce } from "lodash";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SvgIcon from "../commons/SvgIcon";
 
 type SearchBarProps = {
@@ -11,6 +11,10 @@ type SearchBarProps = {
 
 function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState<string>(initialValue);
+
+  useEffect(() => {
+    SvgIcon.preload("x");
+  }, []);
 
   const handleChangeTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);

@@ -45,12 +45,13 @@ function SearchFilter({ onClose }: SearchFilterProps) {
             height={20}
             title="cancel"
             onClick={onClose}
+            className="cursor-pointer"
           />
         </div>
       </header>
 
       <section className="flex flex-col justify-start items-start w-full h-[calc(100%-3rem)] px-4 pt-4 pb-[21px]">
-        <h3 className="text-[28px] font-bold leading-9 mt-[6.9%] mb-[7.88%] whitespace-pre-wrap">
+        <h3 className="text-[28px] font-bold leading-9 mt-[6.9%] mb-[7.88%]">
           검색 결과에서
           <br />
           선택한 나라만 보여드려요.

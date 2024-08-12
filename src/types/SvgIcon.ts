@@ -19,7 +19,14 @@ export type loadSvgIconType = {
 };
 
 export type IconComponentType =
-  | LazyExoticComponent<ComponentType<ExtendedSVGProps>>
-  | ComponentType<ExtendedSVGProps>;
+  | (LazyExoticComponent<ComponentType<ExtendedSVGProps>> & {
+      preload?: () => void;
+    })
+  | (ComponentType<ExtendedSVGProps> & { preload?: () => void });
 
 export type ExtendedSVGProps = SVGProps<SVGSVGElement> & { title?: string };
+
+export type SvgIconWithPreload = {
+  (props: SvgIconProps): JSX.Element;
+  preload: (name: string) => Promise<void>;
+};
