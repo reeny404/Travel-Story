@@ -13,9 +13,9 @@ const countryButtonVariant = cva("", {
       lg: "w-[500px]",
     },
     imgSize: {
-      sm: "w-6 h-6",
-      md: "w-10 h-10",
-      lg: "w-14 h-14",
+      sm: "w-[52px] h-[60px]",
+      md: "w-[84px] h-[84px]",
+      lg: "w-25 h-25",
     },
   },
 });
@@ -46,29 +46,29 @@ function CountryButton({
   return (
     <div
       className={clsx(
-        "flex justify-start items-center overflow-hidden",
+        "flex justify-start items-center overflow-hidden px-4",
         countryButtonVariant({ size })
       )}
     >
       <div
         className={clsx(
-          "relative flex-none border border-slate-100 bg-slate-200 rounded-full cursor-pointer overflow-hidden",
+          "relative overflow-hidden",
           countryButtonVariant({ imgSize })
         )}
-        onClick={onClick}
       >
-        <Image
-          src={imgPath}
-          alt={alt}
-          fill={true}
-          className="object-cover"
-          priority
-        />
+        <div className="relative w-full h-full overflow-hidden rounded-t-full rounded-b-[800px] bg-neutral-200">
+          <Image
+            src={imgPath}
+            alt={alt}
+            layout="fill"
+            className="object-cover"
+          />
+        </div>
       </div>
 
-      <div className="ml-[10px] flex-1 min-w-0">
+      <div className="ml-3 flex-1 min-w-0">
         <span
-          className={clsx("text-[15px] cursor-pointer", {
+          className={clsx("cursor-pointer", {
             "font-semibold": !!desc,
           })}
           onClick={onClick}
@@ -77,7 +77,7 @@ function CountryButton({
         </span>
         {desc && (
           <p
-            className={clsx("text-sm overflow-hidden text-ellipsis", {
+            className={clsx("text-sm overflow-hidden text-ellipsis leading-5", {
               "line-clamp-2": !isCountry,
               "whitespace-nowrap": isCountry,
               "text-slate-400": isCountry,

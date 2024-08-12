@@ -1,7 +1,8 @@
 "use client";
 
-import CountryButton from "@/components/CountryButton";
+import AreaTagCard from "@/components/Card/AreaTagCard";
 import { Area } from "@/types/Recommend";
+import { getKrCategory } from "@/utils/getKrCategory";
 import { useRouter } from "next/navigation";
 
 type SearchResultViewProps = {
@@ -34,22 +35,32 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
   };
 
   return (
-    <>
-      {results.map((result) => (
-        <div key={result.id} className="flex items-center py-3 px-8 border-b">
-          <CountryButton
+    <section className="w-full px-4">
+      {/* <CountryButton
             size="md"
             imgPath={result.imageUrl || "/sampleImg.jpg"}
             alt={result.name}
-            imgSize="md"
+            imgSize="sm"
             countryName={result.krName ?? ""}
             desc={result.name}
             onClick={() => handleMoveDetail(result.id)}
             isCountry
+          /> */}
+      {results.map((result) => (
+        <>
+          <AreaTagCard
+            key={result.id}
+            image={result.imageUrl || "/sampleImg.jpg"}
+            alt={result.name}
+            title={result.krName ?? ""}
+            tag={getKrCategory(result.type ?? "")}
+            rating={result.rating ?? ""}
+            desc={result.description}
+            onClick={() => handleMoveDetail(result.id)}
           />
-        </div>
+        </>
       ))}
-    </>
+    </section>
   );
 };
 
