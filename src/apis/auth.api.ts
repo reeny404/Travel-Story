@@ -99,6 +99,23 @@ class AuthAPI {
       console.error("프로필 업데이트 중 오류: ", error);
     }
   }
+
+  async updateUserFilter(
+    continents: string,
+    travelMate: string,
+    travelType: string[]
+  ) {
+    try {
+      const data = [
+        { continent: continents },
+        { travelType: [travelMate, ...travelType] },
+      ];
+
+      const response = await this.axios.patch("/api/auth/user", data);
+    } catch (error) {
+      console.error("온보딩 필터 저장 중 실패: ", error);
+    }
+  }
 }
 
 export default AuthAPI;

@@ -1,3 +1,5 @@
+import { api } from "@/apis/api";
+import { continents, travelMates, travelTypes } from "@/constants/onboard";
 import { useOnboardStore } from "@/stores/onboard.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { useRouter } from "next/navigation";
@@ -11,6 +13,12 @@ function BoardContainer({ title, children }: PropsWithChildren<BoardType>) {
   const {
     isInputValid,
     progress,
+    isSelectedOne,
+    isSelectedMany,
+    country,
+    travelMate,
+    setCountry,
+    setTravelMate,
     setProgress,
     setIsInputValid,
     setIsSelectedOne,
@@ -19,14 +27,27 @@ function BoardContainer({ title, children }: PropsWithChildren<BoardType>) {
   const { nextURL } = useLoginStepStore();
 
   const handleNextClick = () => {
+    const themes: string[] = [];
     if (progress === 3) {
       document.cookie = "hasTravelType=true; path=/";
+      isSelectedMany.map((theme) => {
+        themes.push(travelTypes[theme].text);
+      });
+      api.auth.updateUserFilter(
+        continents[country - 1].text,
+        travelMates[travelMate - 1].label,
+        themes
+      );
       return router.replace(nextURL);
+    } else if (progress === 2) {
+      setTravelMate(isSelectedOne);
+    } else {
+      setCountry(isSelectedOne);
     }
     setProgress(true);
     setIsInputValid(true);
     setIsSelectedOne(0);
-    router.push(`/onboard?next=${progress + 1}`);
+    router.push(`/onboard?step=${progress + 1}`);
   };
 
   return (
