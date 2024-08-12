@@ -25,7 +25,9 @@ function BookMarkCard({
   country,
   areaName,
 }: BookMarkCardProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks(id);
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks({
+    areaId: id,
+  });
   const { openModal } = useModalStore();
   const { isLoggedIn } = useAuth();
   const toggleBookmark = (e: React.MouseEvent) => {
@@ -36,7 +38,7 @@ function BookMarkCard({
       return;
     }
 
-    isBookmarked ? deleteBookmark.mutate() : addBookmark.mutate();
+    isBookmarked ? deleteBookmark.mutate(id) : addBookmark.mutate(id);
   };
 
   return (
@@ -59,7 +61,7 @@ function BookMarkCard({
             </p>
           </div>
         </Link>
-        <div className="absolute top-2 right-2 p-1 rounded-full hover:cursor-pointer">
+        <div className="absolute top-2 right-2 p-1 rounded-full shadow-md hover:cursor-pointer">
           <div className="relative w-6 h-6 aspect-square">
             <Image
               src={

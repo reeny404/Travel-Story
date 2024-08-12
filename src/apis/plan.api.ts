@@ -1,7 +1,5 @@
-import { Plan, PlanChildType, PlanInsertType, Schedule } from "@/types/plan";
+import { Plan, PlanChildData, PlanChildType, PlanInsertType } from "@/types/plan";
 import { AxiosInstance } from "axios";
-
-type ChildData = Schedule;
 
 export default class PlanAPI {
   private axios: AxiosInstance;
@@ -53,7 +51,7 @@ export default class PlanAPI {
   /**
    * create schedule or moveSchedule or ....
    */
-  async addChild(planId: string, dayIndex: number, type: PlanChildType, newData: ChildData): Promise<Plan | null> {
+  async addChild(planId: string, dayIndex: number, type: PlanChildType, newData: PlanChildData): Promise<Plan | null> {
     return await this.axios
       .post(`/api/plan/${planId}`, { type, dayIndex, data: newData })
       .then(({ data }) => data)

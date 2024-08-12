@@ -16,12 +16,12 @@ type AddtoPlanButtonProps = {
 
 function AddToPlanButton({ plan, area }: AddtoPlanButtonProps) {
   const router = useRouter();
-  const { planId, dayIndex } = plan;
-  const isAbleToAddPlan: boolean = !!planId && !!dayIndex;
+  const { planId, day } = plan;
+  const isAbleToAddPlan: boolean = !!planId && !!day;
 
   const handleOnClickToAdd = useCallback(() => {
     api.plan
-      .addChild(planId, dayIndex, "customPlace", {
+      .addChild(planId, Number(day), "customPlace", {
         title: area.krName!,
         latlng: { lat: area.lat!, lng: area.lng! },
         areaId: area.id,

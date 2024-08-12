@@ -1,41 +1,39 @@
+import { dmSerifDisplayFont } from "@/constants/fonts";
 import CardImgFrame from "./CardImgFrame";
 
 type DetailCardProps = {
   title: string;
-  description?: string;
+  name?: string;
   imageUrl: string;
   viewRef?: any;
 };
 
-function DetailCard({
-  title,
-  description,
-  imageUrl,
-  viewRef,
-}: DetailCardProps) {
-  console.log("123", 123);
+function DetailCard({ title, name, imageUrl, viewRef }: DetailCardProps) {
   return (
     <div
       ref={viewRef}
       className="w-full text-neu relative flex justify-center overflow-hidden"
     >
-      {/* 아치형 그림자 */}
-      <div className="z-50 arch-shadow arch-blur"></div>
+      <div className="z-50 arch-shadow"></div>
 
-      {description && (
-        <p className="absolute text-white bottom-3 font-semibold z-10">
-          {title}
-        </p>
+      {title && (
+        <div className="absolute bottom-4 z-50">
+          <p
+            className={`${dmSerifDisplayFont.className} h-[58px] flex items-center justify-center text-5xl text-white leading-[57.6px]`}
+          >
+            {name?.toLocaleUpperCase()}
+          </p>
+          <p className="text-white font-semibold">{title}</p>
+        </div>
       )}
 
       <CardImgFrame
         imageUrl={imageUrl}
         alt={title}
-        frameClassName="aspect-4/5 h-[516px] relative z-10" /* 이미지를 아치형 그림자 아래에 위치 */
+        frameClassName="aspect-4/5 h-[516px] relative z-10"
         imageClassName="object-fill"
         priority={true}
       />
-      {/* 아치형 그림자 */}
     </div>
   );
 }

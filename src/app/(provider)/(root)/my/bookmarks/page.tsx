@@ -4,7 +4,7 @@ import MyBookmarkList from "./_components/MyBookmarkList";
 
 export type MyBookmarkPageParams = {
   planId: string;
-  dayIndex: number;
+  day: string;
 };
 
 type PageProps = {

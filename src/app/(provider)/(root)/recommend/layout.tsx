@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 
 function RecommendLayout({ children }: PropsWithChildren) {
   return (
-    <div className="h-full w-full">
+    <div>
       {children}
       <Modal />
     </div>

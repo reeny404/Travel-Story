@@ -6,6 +6,8 @@ import { ICON } from "@/constants/icon";
 import { Area, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { convertTypeToKr } from "../../../_components/AreaPage/_utils/convertTypeToKr";
 import AreaCard from "../../../_components/Cards/AreaCard";
 type AreaTypePageProps = {
   params: { id: string; areaType: string };
@@ -14,6 +16,12 @@ type AreaTypePageProps = {
 function AreaTypePage({ params }: AreaTypePageProps) {
   const areaType = params.areaType;
   const countryId = parseInt(params.id);
+  const router = useRouter();
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
+
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
@@ -32,14 +40,14 @@ function AreaTypePage({ params }: AreaTypePageProps) {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        title: country?.data.krName!,
+        title: convertTypeToKr(areaType),
         titleAlign: "center",
         rightIcons: [
           {
             icon: ICON.search.black,
             alt: "Search",
             size: 20,
-            onClick: () => {},
+            onClick: handleSearch,
           },
         ],
       }}
@@ -54,7 +62,7 @@ function AreaTypePage({ params }: AreaTypePageProps) {
               areaName={area.krName!}
               title={area.title}
               description={area.description}
-              rating={4}
+              rating={area.rating!}
               imageUrl={area.imageUrl}
               linkUrl={`/recommend/area/${area.id}`}
               id={area.id}

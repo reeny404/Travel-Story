@@ -3,7 +3,6 @@
 import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
-import useDrawerStore from "@/stores/drawer.store";
 import useRecommendStore from "@/stores/recommend.store";
 import { IntroDataType, IntroDataTypeRes } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
@@ -19,7 +18,6 @@ type IntroPageProps = {
 function IntroPage({ params }: IntroPageProps) {
   const countryId = parseInt(params.id);
   const { setCountryId } = useRecommendStore();
-  const { openDrawer } = useDrawerStore();
   useEffect(() => {
     setCountryId(countryId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,7 +48,7 @@ function IntroPage({ params }: IntroPageProps) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: "transparent",
+        backgroundColor: "transparentFixed",
         title: "",
         titleAlign: "center",
         rightIcons: [

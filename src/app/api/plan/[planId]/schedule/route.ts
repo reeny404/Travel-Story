@@ -1,4 +1,10 @@
 import { createClient } from "@/supabase/server";
+import {
+  AreaType,
+  SupabaseMemoType,
+  SupabaseMoveType,
+  SupabaseScheduleType,
+} from "@/types/plan";
 import { NextRequest, NextResponse } from "next/server";
 
 const TABLE_NAME = "schedule";
@@ -14,61 +20,6 @@ type OrderListType = {
 
 type PlanData = {
   orderList: OrderListType[][] | null;
-};
-
-type ScheduleType = {
-  id: string;
-  title: string | null;
-  place: string | null;
-  memo: string | null;
-  type: string;
-  startTime: string;
-  endTime: string;
-  imagesUrl: any;
-  latlng: any;
-  createdAt: string;
-  planId: string | null;
-  areaId?: number;
-  area?: AreaType;
-};
-
-type MoveType = {
-  id: string;
-  planId: string;
-  memo: string | null;
-  startTime: string;
-  endTime: string;
-  type: string;
-  imagesUrl: any;
-  createdAt: string;
-};
-
-type MemoType = {
-  id: string;
-  planId: string;
-  title: string;
-  content: string;
-  check: any;
-  imagesUrl: any;
-  createdAt: string;
-};
-
-type AreaType = {
-  id: number;
-  countryId: number | null;
-  cityId: number;
-  name: string;
-  type: string | null;
-  location: string;
-  description: string;
-  imagesUrl: string | null;
-  info: any;
-  lat: number | null;
-  lng: number | null;
-  createdAt: string;
-  krName: string | null;
-  title: string;
-  rating: number;
 };
 
 export async function POST(request: NextRequest) {
@@ -208,14 +159,21 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+type GetParams = {
+  params: { planId: string };
+};
+
+export async function GET(
+  request: NextRequest,
+  { params: { planId } }: GetParams
+) {
   try {
     const supabase = createClient();
-    const { searchParams } = request.nextUrl;
-    const planId = searchParams.get("planId");
+    const searchParams = request.nextUrl.searchParams;
     const day = parseInt(searchParams.get("day") || "1", 10);
 
     if (!planId) {
+      console.error("Missing planId", searchParams, planId, day);
       return NextResponse.json({ error: "Missing planId" }, { status: 400 });
     }
 
@@ -238,7 +196,6 @@ export async function GET(request: NextRequest) {
     const planDataParsed = planData as PlanData;
 
     const orderListForDay = planDataParsed.orderList?.[day - 1] || [];
-    console.log(orderListForDay);
 
     // Schedule 데이터
     const scheduleIds = orderListForDay
@@ -269,10 +226,7 @@ export async function GET(request: NextRequest) {
 
     // Area 데이터
     const areaIds = (scheduleData || [])
-      .filter(
-        (entry): entry is ScheduleType & { areaId: number } =>
-          entry.type === "place" && entry.areaId !== undefined
-      )
+      .filter((entry) => entry.type === "place" && entry.areaId !== undefined)
       .map((entry) => entry.areaId!);
 
     const { data: areaData = [] } = await supabase
@@ -284,10 +238,11 @@ export async function GET(request: NextRequest) {
     const resultData = orderListForDay.map((entry) => {
       if (entry.type === "customPlace" || entry.type === "place") {
         const data = scheduleData?.find((d) => d.id === entry.id) as
-          | ScheduleType
+          | SupabaseScheduleType
           | undefined;
+
         if (data && data.type === "place") {
-          data.area = areaData?.find((a) => a.id === data.areaId) as
+          data.data.area = areaData?.find((a) => a.id === data.data.areaId) as
             | AreaType
             | undefined;
         }
@@ -296,14 +251,14 @@ export async function GET(request: NextRequest) {
         return {
           ...entry,
           data: moveData?.find((d) => d.id === entry.id) as
-            | MoveType
+            | SupabaseMoveType
             | undefined,
         };
       } else if (entry.type === "memo") {
         return {
           ...entry,
           data: memoData?.find((d) => d.id === entry.id) as
-            | MemoType
+            | SupabaseMemoType
             | undefined,
         };
       }

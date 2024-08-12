@@ -19,14 +19,18 @@ import NoticeForm from "../AreaPage/NoticeForm";
 import ReviewSummaryCard from "../AreaPage/ReviewSummary";
 import UnderBar from "../AreaPage/UnderBar";
 import CardImgFrame from "../Cards/CardImgFrame";
+import SimilarAreaCard from "../Cards/SimilarAreaCard";
 
 type AreaDetailCSRPage = {
   areaId: number;
 };
 function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
-  const { ref, inView } = useInView({ threshold: 0 });
+  const { ref, inView } = useInView();
   const { user } = useAuth();
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const reviewSectionRef = useRef<HTMLDivElement | null>(null);
+
   const { data: area, isLoading } = useQuery<
     RecommendResponse<Area>,
     AxiosError,
@@ -36,6 +40,17 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
     queryFn: () => api.area.getAreasById(areaId),
     select: (data) => data.data,
   });
+
+  const { data: areasByCity } = useQuery<
+    RecommendResponse<Area[]>,
+    AxiosError,
+    Area[]
+  >({
+    queryKey: ["areasByCity", area?.cityId],
+    queryFn: () => api.area.getAreasByCity(area?.cityId!),
+    select: (data) => data?.data,
+  });
+  const similarArea = areasByCity?.filter((item) => item.type === area?.type);
   const { data: areaReviews } = useQuery<
     RecommendResponse<AreaReview[]>,
     AxiosError,
@@ -45,8 +60,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
     queryFn: () => api.review.getReviews(areaId),
     select: (data) => data.data,
   });
-
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const currentTabIndex = TABS.areaDetail.findIndex(
@@ -65,7 +78,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: inView ? "transparent" : "white",
+        backgroundColor: inView ? "transparentFixed" : "whiteFixed",
         title: inView ? "" : area?.krName!,
         titleAlign: "center",
         rightIcons: [
@@ -73,7 +86,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             icon: inView ? ICON.shareArea.white : ICON.shareArea.black,
             alt: "share",
             size: 20,
-            onClick: () => {},
+            onClick: () => alert("구현 중입니다."),
           },
         ],
       }}
@@ -96,6 +109,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             <div className="w-full h-full bg-white rounded-t-lg">
               <AreaDetailCard
                 area={area}
+                reviewSectionRef={reviewSectionRef}
                 ratingAmount={areaReviews?.length || 0}
               />
               <Tab
@@ -123,30 +137,68 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               <div
                 ref={(tabEl) => {
                   sectionRefs.current[2] = tabEl;
+                  reviewSectionRef.current = tabEl;
                 }}
                 className="mb-3 w-full h-full rounded-lg shadow-area-section"
               >
                 <ReviewSummaryCard
                   areaName={area.krName!}
-                  rating={area.rating!}
+                  rating={area.rating ?? 0}
                   ratingAmount={areaReviews?.length || 0}
                   areaId={areaId}
                 />
                 {areaReviews &&
-                  areaReviews.map((review, idx) => {
-                    return (
-                      <AreaReviewCard
-                        key={idx}
-                        userImageUrl={user?.user_metadata.profileImg}
-                        name={user?.user_metadata.nickname}
-                        imageUrl={review.imageUrls[0]}
-                        createdAt={review.createdAt}
-                        rating={review.rating!}
-                        description={review.content!}
-                      />
-                    );
-                  })}
+                  areaReviews
+                    .sort(
+                      (a, b) =>
+                        new Date(b.createdAt).getTime() -
+                        new Date(a.createdAt).getTime()
+                    )
+                    .map((review, idx) => {
+                      return (
+                        <AreaReviewCard
+                          key={idx}
+                          userImageUrl={review.profileImg}
+                          name={review.nickname}
+                          imageUrl={review.imageUrls[0]}
+                          createdAt={review.createdAt}
+                          rating={review.rating!}
+                          description={review.content!}
+                          reviewInfo={review}
+                        />
+                      );
+                    })}
               </div>
+              {similarArea && (
+                <div
+                  ref={(tabEl) => {
+                    sectionRefs.current[3] = tabEl;
+                  }}
+                  className="mb-9 pt-8 pb-7 px-4 w-full h-full rounded-lg shadow-area-section"
+                >
+                  <section className="w-full flex flex-col gap-y-7">
+                    <h1 className="text-lg font-medium min-w-20">
+                      비슷한 장소 둘러보기
+                    </h1>
+                    <div className="w-full grid grid-cols-2 gap-x-3 gap-y-4">
+                      {similarArea.map((area: Area, idx) => {
+                        if (idx < 4) {
+                          return (
+                            <SimilarAreaCard
+                              rating={area.rating ?? 0}
+                              key={idx}
+                              title={area.krName!}
+                              imageUrl={area.imageUrl ?? "/"}
+                              linkUrl={`/recommend/area/${area.id}`}
+                              type={area.type!}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  </section>
+                </div>
+              )}
             </div>
             <UnderBar area={area} />
           </section>

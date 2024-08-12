@@ -46,10 +46,9 @@ export type extendArea = Tables<"area"> & {
 export type AreaBookmark = Tables<"areaBookmark">;
 export type BookmarkWithArea = AreaBookmark & { area: Area };
 
-export type BookmarkType = {
+export type BookmarkAPIType = {
   areaId: number;
 };
-
 export type AreaReview = Tables<"areaReview"> & {
   imageUrls: string[];
 };
@@ -78,3 +77,5 @@ export type RecommendResponse<T> = {
 export type CardResponseType = {
   [key: string]: extendArea[];
 };
+
+export type ImgFileType = string | { name: string; file: File };

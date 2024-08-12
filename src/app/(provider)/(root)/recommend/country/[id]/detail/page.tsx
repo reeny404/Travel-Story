@@ -4,20 +4,21 @@ import { api } from "@/apis/api";
 import CardType from "@/components/Card/CardType";
 import MainLayout from "@/components/Layout/MainLayout";
 import CardSlider from "@/components/Slider/CardSlider";
+import ImageSlider from "@/components/Slider/SmImageSlider";
 import Tab from "@/components/Tab/Tab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
-import { Area, Country, RecommendResponse } from "@/types/Recommend";
+import { Area, City, Country, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import DetailCard from "../../../_components/Cards/DetailCard";
 import MainTourForm from "../../../_components/MainTour/MainTourForm";
-// 텝이 생기면 useState로 초기값에 대한 것을 부르고 탭이 바뀔 때마다 재 호출(쿼리키 = 탭 이름)
 // 이 페이지는 SSR이여야함
-//TODO  query 호춣을 최대한 줄여서 메모이제이션으로 관리해야 할 필요가 있음 그 후 헤더가 부자연스러운 부분을 파악해야될 것 같음
+//TODO  query 호춣을 최대한 줄여서 메모이제이션으로 관리해야 할 필요가 있음
 
 type CountryDetailPage = {
   params: { id: string };
@@ -27,11 +28,31 @@ function CountryDetailPage({ params }: CountryDetailPage) {
   const countryId = parseInt(params.id);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
   const { ref: viewRef, inView } = useInView();
+  const router = useRouter();
+
+  const handleSearch = () => {
+    return router.push(`/search`);
+  };
+
   const { data: country } = useQuery<RecommendResponse<Country>>({
     queryKey: ["countryDetail", countryId],
     queryFn: () => api.country.getCountry(countryId),
   });
 
+  const { data: cities } = useQuery<
+    RecommendResponse<City[]>,
+    AxiosError,
+    City[]
+  >({
+    queryKey: ["citiesByCountry", countryId],
+    queryFn: () => api.city.getCitiesByCountry(countryId),
+    select: (cities) => cities.data,
+  });
+
+  useEffect(() => {
+    setCurrentTab("place");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const { data: accommodations } = useQuery<
     RecommendResponse<Area[]>,
     AxiosError,
@@ -94,6 +115,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         city: place.info.location[1],
         country: place.info.location[0],
         areaName: place.krName!,
+        rating: place.rating!,
       };
     });
   }, [places]);
@@ -109,6 +131,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         city: restaurant.info.location[1],
         country: restaurant.info.location[0],
         areaName: restaurant.krName!,
+        rating: restaurant.rating!,
       };
     });
   }, [restaurants]);
@@ -125,6 +148,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         city: shop.info.location[1],
         country: shop.info.location[0],
         areaName: shop.krName!,
+        rating: shop.rating!,
       };
     });
   }, [shops]);
@@ -141,6 +165,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
         city: accommodation.info.location[1],
         country: accommodation.info.location[0],
         areaName: accommodation.krName!,
+        rating: accommodation.rating!,
       };
     });
   }, [accommodations]);
@@ -150,7 +175,7 @@ function CountryDetailPage({ params }: CountryDetailPage) {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: inView ? "transparent" : "white",
+        backgroundColor: inView ? "transparentFixed" : "whiteFixed",
         title: inView ? "" : country.data.krName!,
         titleAlign: "center",
         rightIcons: [
@@ -158,18 +183,23 @@ function CountryDetailPage({ params }: CountryDetailPage) {
             icon: inView ? ICON.search.white : ICON.search.black,
             alt: "Search",
             size: 20,
-            onClick: () => {},
+            onClick: handleSearch,
           },
         ],
       }}
     >
       <DetailCard
         title={country?.data?.title!}
-        // description={country?.data?.description!}
+        name={country?.data?.name}
         imageUrl={country?.data?.imageUrl!}
         viewRef={viewRef}
       />
-      <div className=" container overflow-auto w-full h-full flex-col pt-1 ">
+      <div className=" container overflow-auto w-full h-full flex-col">
+        <div className="w-full h-[82px] mb-1 mt-5">
+          {cities && (
+            <ImageSlider cards={cities} spacing={0} slidesPerView={4.5} />
+          )}
+        </div>
         <Tab
           TABS={TABS.default}
           currentTab={currentTab!}
