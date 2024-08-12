@@ -4,7 +4,7 @@ import { getIconPath } from "../commons/Icon/getIconPath";
 
 function SingleRatingIcon({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-x-1 items-center relative aspect-square">
+    <div className="flex gap-x-1 w-[34px] items-center relative aspect-square">
       <Image
         alt="rating"
         src={getIconPath(ICON.star.fill) ?? "/"}
@@ -12,7 +12,7 @@ function SingleRatingIcon({ rating }: { rating: number }) {
         height={12}
         className="object-fill"
       />
-      <p className="text-xs text-neutral-500">{rating}</p>
+      <p className="text-xs text-neutral-500">{rating ?? 0}</p>
     </div>
   );
 }

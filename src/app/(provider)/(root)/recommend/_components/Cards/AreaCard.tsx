@@ -76,7 +76,7 @@ const AreaCard = React.memo(
           <p className="px-4 pt-4 mb-2 text-sm text-ellipsis line-clamp-2 leading-5">
             {description}
           </p>
-          <div className="w-full flex px-4 ">
+          <div className="w-full h-5 flex px-4 ">
             <SingleRatingIcon rating={rating!} />
             <PrimaryTagList tagList={mockTags} />
           </div>
