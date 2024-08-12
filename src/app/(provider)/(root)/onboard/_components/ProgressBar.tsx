@@ -8,7 +8,7 @@ function ProgressBar() {
       <div
         className="bg-brand-500 h-[2px] transition-all duration-300 ease-in-out"
         style={{ width: `${progressPercentage}%` }}
-      ></div>
+      />
     </div>
   );
 }

@@ -32,14 +32,15 @@ function BoardContainer({ title, children }: PropsWithChildren<BoardType>) {
   return (
     <main
       className="relative flex flex-col items-center w-full px-4 pt-14"
-      style={{ minHeight: "calc(100vh - 52px)" }}
+      style={{ minHeight: "calc(100vh - 54px)" }}
     >
-      <h1 className="w-full mb-16 text-[28px] font-semibold leading-9 whitespace-pre-wrap">
+      <h1 className="w-full mb-[15%] text-[28px] font-semibold leading-9 whitespace-pre-wrap">
         {title}
       </h1>
-      {children}
+      <div className="mb-[15%]">{children}</div>
+      <div className="flex-grow"></div>
       <button
-        className={`absolute w-full bottom-5 h-11 rounded-lg  mx-4 ${isInputValid ? "bg-neutral-200 text-neutral-450" : "bg-neutral-750 text-white"}`}
+        className={`sticky w-full h-11 bottom-5 rounded-lg ${isInputValid ? "bg-neutral-200 text-neutral-450" : "bg-neutral-750 text-white"}`}
         disabled={isInputValid}
         onClick={handleNextClick}
       >

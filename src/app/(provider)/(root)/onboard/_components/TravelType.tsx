@@ -10,8 +10,8 @@ function TravelType() {
     { text: "힐링", image: "tropical-drink" },
     { text: "액티비티", image: "surfing" },
     { text: "도심", image: "cityscape" },
-    { text: "역사,문화", image: "amphora" },
-    { text: "전시,관람", image: "violin" },
+    { text: "역사·문화", image: "amphora" },
+    { text: "전시·관람", image: "violin" },
   ];
 
   return (
