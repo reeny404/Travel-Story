@@ -10,10 +10,10 @@ type SearchBarProps = {
 };
 
 function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
-  const [searchValue, setSearchValue] = useState(initialValue);
+  const [searchTerm, setSearchTerm] = useState<string>(initialValue);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+  const handleChangeTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
     debounceSearch(e.target.value);
   };
 
@@ -33,7 +33,7 @@ function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
   };
 
   const handleEmpty = () => {
-    setSearchValue("");
+    setSearchTerm("");
     if (onSearch && window.location.pathname.includes("search")) {
       onSearch("");
     }
@@ -50,10 +50,11 @@ function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
         <input
           className="w-[90%] bg-transparent outline-none"
           placeholder={`'파리'로 떠나보실래요?`}
-          value={searchValue}
-          onChange={handleInputChange}
+          value={searchTerm}
+          onChange={handleChangeTerm}
         />
-        {searchValue && (
+
+        {searchTerm && (
           <SvgIcon
             name="x"
             width={12}

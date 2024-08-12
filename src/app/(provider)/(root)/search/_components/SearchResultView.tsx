@@ -63,7 +63,7 @@ function SearchResultView({
   );
 
   return (
-    <section className="w-full px-4">
+    <main className="w-full px-4">
       <Tab
         TABS={filteredTabs}
         currentTab={currentTab!}
@@ -82,7 +82,7 @@ function SearchResultView({
           onClick={() => handleMoveDetail(result.id)}
         />
       ))}
-    </section>
+    </main>
   );
 }
 
