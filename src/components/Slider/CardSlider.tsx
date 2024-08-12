@@ -8,7 +8,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // spacing: 카드 간 간격, slidesPerView: 한 화면에 보일 카드의 개수
 function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks();
-  console.log("1231241", 1231241);
   return (
     <Swiper
       spaceBetween={spacing}

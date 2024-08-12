@@ -42,6 +42,7 @@ const AreaCard = React.memo(
     const [bookmarked, setBookmarked] = useState<boolean | undefined>(
       isBookmarked
     );
+
     const toggleBookmark = () => {
       if (!isLoggedIn) {
         openModal("로그인하면 일정에 장소를 추가할 수 있어요");

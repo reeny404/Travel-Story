@@ -28,7 +28,6 @@ function UnderBar({ area }: UnderBarProps) {
       setBottomSheetVisible(true);
     }
   };
-
   const handleClose = () => {
     setBottomSheetVisible(false);
   };
