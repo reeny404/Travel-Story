@@ -1,67 +1,34 @@
 "use client";
-import { api } from "@/apis/api";
-import { useAuth } from "@/contexts/auth.contexts";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { MouseEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 type SupabaseUser = {
   image_url: string;
   nickname: string;
 };
 
-function MyProfile() {
-  const { user, isInitialized, isLoggedIn } = useAuth();
+function MyProfile({ image_url, nickname }: SupabaseUser) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { data: supabaseUser, isPending } = useQuery<SupabaseUser>({
-    queryKey: ["users"],
-    queryFn: async () => await api.auth.userProfile(user?.email as string),
-  });
-
-  const router = useRouter();
-  const profileUrl = supabaseUser?.image_url;
-  const nickname = supabaseUser?.nickname;
-
-  if (isInitialized && !isLoggedIn) {
-    router.replace("/login");
-    return;
-  }
 
   // 편집버튼 누를 때
-  const handleClickEdit = (
-    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  ) => {
-    e.preventDefault();
-    if (!isEdit) return setIsEdit(!isEdit);
-    const editNick = inputRef.current?.value as string;
-    const email = user?.email;
-    if (nickname !== editNick) {
-      api.auth.updateUser(email as string, editNick);
-    }
-    setIsEdit(!isEdit);
-  };
-
-  if (isPending) {
-    return (
-      <section className="flex flex-col w-full items-center mt-[21px] mb-[29px]">
-        <Image
-          src={"/icons/avatar.svg"}
-          alt="프로필"
-          width={88}
-          height={88}
-          className="rounded-full"
-        />
-        <div className="w-[100px] h-[24px] mt-4 bg-gray-300 rounded-lg"></div>
-      </section>
-    );
-  }
+  // const handleClickEdit = (
+  //   e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  // ) => {
+  //   e.preventDefault();
+  //   if (!isEdit) return setIsEdit(!isEdit);
+  //   const editNick = inputRef.current?.value as string;
+  //   const email = user?.email;
+  //   if (nickname !== editNick) {
+  //     api.auth.updateUser(email as string, editNick);
+  //   }
+  //   setIsEdit(!isEdit);
+  // };
 
   return (
-    <section className="flex flex-col w-full items-center mt-[21px] mb-[29px]">
+    <section className="flex flex-col w-full items-center mt-12 mb-[29px] z-10">
       <Image
-        src={profileUrl ? profileUrl : "/icons/avatar.svg"}
+        src={image_url ? image_url : "/icons/avatar.svg"}
         alt="프로필"
         width={88}
         height={88}

@@ -6,7 +6,7 @@ function MyPage() {
   return (
     <MainLayout
       headerProps={{
-        backgroundColor: "white",
+        backgroundColor: "noShadow",
         title: "마이페이지",
         titleAlign: "center",
         rightIcons: [
