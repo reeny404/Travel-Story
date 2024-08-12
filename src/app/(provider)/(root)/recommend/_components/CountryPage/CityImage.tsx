@@ -13,7 +13,7 @@ function CityImage({ id, imageUrl, name }: CityImageProps) {
   return (
     <div
       onClick={() => router.push(`/recommend/city/${id}`)}
-      className="relative w-full h-[82px] "
+      className="relative w-full h-[82px] hover:opacity-90 active:opacity-70"
     >
       <div className="relative w-full h-[74px] aspect-square">
         <Image
