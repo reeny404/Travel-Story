@@ -2,7 +2,7 @@ import { useOnboardStore } from "@/stores/onboard.store";
 
 function ProgressBar() {
   const { progress } = useOnboardStore();
-  const progressPercentage = (progress / 3) * 100;
+  const progressPercentage = (progress / 4) * 100;
   return (
     <div className="w-full h-[2px] bg-neutral-50">
       <div
