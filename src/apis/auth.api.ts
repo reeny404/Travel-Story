@@ -107,8 +107,8 @@ class AuthAPI {
   ) {
     try {
       const data = [
-        { 대륙: continents },
-        { 필터: [travelMate, ...travelType] },
+        { continent: continents },
+        { travelType: [travelMate, ...travelType] },
       ];
 
       const response = await this.axios.patch("/api/auth/user", data);
