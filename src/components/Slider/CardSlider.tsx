@@ -28,7 +28,7 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
               country={card.country}
               areaName={card.areaName}
               rating={card.rating}
-              isBookmarked={isBookmarked}
+              isBookmarked={isBookmarked(card.id)}
               addBookmark={() => addBookmark.mutate(card.id)}
               deleteBookmark={() => deleteBookmark.mutate(card.id)}
             />

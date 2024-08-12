@@ -2,28 +2,31 @@ import CardType from "@/components/Card/CardType";
 import Carousel from "@/components/Carousel/Carousel";
 import { Area, City, GroupedArea } from "@/types/Recommend";
 import { seperateArr } from "@/utils/seperateArr";
-import { ReactNode } from "react";
+import { lazy, useCallback, useMemo } from "react";
 import { v4 } from "uuid";
-import MainTourItem from "./MainTourItem";
+const MainTourItem = lazy(() => import("./MainTourItem"));
 
 type MainTourFormProps = {
   areasInfo?: GroupedArea;
 };
-// 도시에 대한 추천, 관광지에 대한 추천 데이터 -> 이를 info로 정했습니다.
-// 나라에서 도시에 대한 추천은 드롭다운이 필요하지만 관광지는 그렇지 않습니다.
-// 자세히 보기가 필요한가? 사진 또는 이름 클릭 시 이동되게 하면 충분할 것 같음.
+
 function MainTourForm({ areasInfo }: MainTourFormProps) {
-  if (!areasInfo) {
-    return;
-  }
-  const mainTourAreas = [
-    ...areasInfo.place,
-    ...areasInfo.accommodation,
-    ...areasInfo.restaurant,
-    ...areasInfo.shop,
-  ];
-  const seperatedInfo = seperateArr(mainTourAreas, 3);
-  const generateItems = (info: City[] & Area[]) => {
+  const mainTourAreas = useMemo(
+    () => [
+      ...areasInfo?.place!,
+      ...areasInfo?.accommodation!,
+      ...areasInfo?.restaurant!,
+      ...areasInfo?.shop!,
+    ],
+    [areasInfo]
+  );
+
+  const seperatedInfo = useMemo(
+    () => seperateArr(mainTourAreas, 3),
+    [mainTourAreas]
+  );
+
+  const generateItems = useCallback((info: City[] & Area[]) => {
     return (
       <div key={v4()} className="w-full">
         {info?.map((item: any, idx) => {
@@ -31,11 +34,11 @@ function MainTourForm({ areasInfo }: MainTourFormProps) {
         })}
       </div>
     );
-  };
-  const carouselItems: ReactNode[] = seperatedInfo.map(
-    (info: City[] & Area[]) => {
-      return generateItems(info);
-    }
+  }, []);
+
+  const carouselItems: React.ReactNode[] = useMemo(
+    () => seperatedInfo.map((info: City[] & Area[]) => generateItems(info)),
+    [seperatedInfo, generateItems]
   );
 
   return (

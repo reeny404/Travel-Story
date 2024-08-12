@@ -45,13 +45,16 @@ class AreaAPI {
    * @param id {number} cityId
    * @returns
    */
-  async getAreasByCity(id: number): Promise<RecommendResponse<Area[]>> {
+  async getAreasByCity(id: number): Promise<RecommendResponse<GroupedArea>> {
     const path = `/api/area/city`;
-    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
-      params: {
-        id,
-      },
-    });
+    const response = await this.axios.get<RecommendResponse<GroupedArea>>(
+      path,
+      {
+        params: {
+          id,
+        },
+      }
+    );
     const data = response.data;
     return data;
   }

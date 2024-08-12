@@ -1,6 +1,8 @@
-const AREA_LINK = (countryId: number, areaType: string) =>
+const COUNTRY_AREA_LINK = (countryId: number, areaType: string) =>
   `/recommend/country/${countryId}/${areaType}`;
-
+const CITY_AREA_LINK = (cityId: number, areaType: string) =>
+  `/recommend/country/${cityId}/${areaType}`;
 export const LinkUtils = {
-  AREA_LINK,
+  COUNTRY_AREA_LINK,
+  CITY_AREA_LINK,
 };

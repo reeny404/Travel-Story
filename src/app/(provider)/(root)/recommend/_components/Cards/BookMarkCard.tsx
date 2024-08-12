@@ -25,9 +25,7 @@ function BookMarkCard({
   country,
   areaName,
 }: BookMarkCardProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks({
-    areaId: id,
-  });
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks();
   const { openModal } = useModalStore();
   const { isLoggedIn } = useAuth();
   const toggleBookmark = (e: React.MouseEvent) => {
@@ -38,7 +36,7 @@ function BookMarkCard({
       return;
     }
 
-    isBookmarked ? deleteBookmark.mutate(id) : addBookmark.mutate(id);
+    isBookmarked(id) ? deleteBookmark.mutate(id) : addBookmark.mutate(id);
   };
 
   return (
@@ -65,7 +63,7 @@ function BookMarkCard({
           <div className="relative w-6 h-6 aspect-square">
             <Image
               src={
-                isBookmarked
+                isBookmarked(id)
                   ? `/icons/whiteBookmark-on.svg`
                   : `/icons/whiteBookmark-off.svg`
               }

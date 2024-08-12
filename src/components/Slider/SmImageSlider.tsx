@@ -11,7 +11,7 @@ function ImageSlider({ spacing, slidesPerView, cards }: SmImageSliderProps) {
       slidesPerView={slidesPerView}
       grabCursor={true}
     >
-      {cards.map((card, index) => (
+      {cards?.map((card, index) => (
         <SwiperSlide
           key={index}
           className={`${index === 0 ? "ml-4" : ""} !w-[72px] mr-2`}

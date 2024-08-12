@@ -98,7 +98,7 @@ function CountryDetailCSRPage({
           {currentTab === "place" && (
             <SliderSection
               areas={areas?.place!}
-              linkUrl={LinkUtils.AREA_LINK(countryId, "place")}
+              linkUrl={LinkUtils.COUNTRY_AREA_LINK(countryId, "place")}
               title="문화 탐방"
               type="architect"
             />
@@ -106,7 +106,7 @@ function CountryDetailCSRPage({
           {currentTab === "accommodation" && (
             <SliderSection
               areas={areas?.accommodation!}
-              linkUrl={LinkUtils.AREA_LINK(countryId, "accommodation")}
+              linkUrl={LinkUtils.COUNTRY_AREA_LINK(countryId, "accommodation")}
               title="할인하는 숙소"
               type="house"
             />
@@ -115,7 +115,7 @@ function CountryDetailCSRPage({
           {currentTab === "restaurant" && (
             <SliderSection
               areas={areas?.restaurant!}
-              linkUrl={LinkUtils.AREA_LINK(countryId, "restaurant")}
+              linkUrl={LinkUtils.COUNTRY_AREA_LINK(countryId, "restaurant")}
               title="식도락"
               type="taco"
             />
@@ -123,7 +123,7 @@ function CountryDetailCSRPage({
           {currentTab === "shop" && (
             <SliderSection
               areas={areas?.shop!}
-              linkUrl={LinkUtils.AREA_LINK(countryId, "shop")}
+              linkUrl={LinkUtils.COUNTRY_AREA_LINK(countryId, "shop")}
               title="쇼핑"
               type="friends"
             />

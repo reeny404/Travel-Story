@@ -18,8 +18,21 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("area")
     .select("*")
-    .eq("cityId", id);
+    .eq("cityId", id)
+    .order("type");
 
+  const groupedData = data?.reduce(
+    (acc, curr) => {
+      if (curr.type !== null && curr.type !== undefined) {
+        acc[curr.type] = acc[curr.type] || [];
+        if (acc[curr.type].length < 5) {
+          acc[curr.type].push(curr);
+        }
+      }
+      return acc;
+    },
+    {} as Record<string, any[]>
+  );
   if (error) {
     return NextResponse.json({
       status: 500,
@@ -41,7 +54,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     status: 200,
     message: "Success",
-    data: data,
+    data: groupedData,
     error: null,
   });
 }
