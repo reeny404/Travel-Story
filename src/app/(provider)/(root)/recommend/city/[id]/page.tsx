@@ -25,7 +25,7 @@ async function CityDetailSSRPage({ params }: CityDetailSSRPage) {
   await queryClient.prefetchQuery({
     queryKey: ["areas", cityId],
     queryFn: async () => {
-      const { data } = await api.area.getAreasByCity(cityId);
+      const { data } = await api.area.getAreasByCity(cityId, 5);
       return data;
     },
   });

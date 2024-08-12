@@ -45,13 +45,17 @@ class AreaAPI {
    * @param id {number} cityId
    * @returns
    */
-  async getAreasByCity(id: number): Promise<RecommendResponse<GroupedArea>> {
+  async getAreasByCity(
+    id: number,
+    limit: number | null
+  ): Promise<RecommendResponse<GroupedArea>> {
     const path = `/api/area/city`;
     const response = await this.axios.get<RecommendResponse<GroupedArea>>(
       path,
       {
         params: {
           id,
+          limit,
         },
       }
     );
@@ -65,13 +69,17 @@ class AreaAPI {
    * @param type {string} areaType
    * @returns
    */
-  async getAreasByCountry(id: number): Promise<RecommendResponse<GroupedArea>> {
+  async getAreasByCountry(
+    id: number,
+    limit: number | null
+  ): Promise<RecommendResponse<GroupedArea>> {
     const path = `/api/area/country`;
     const response = await this.axios.get<RecommendResponse<GroupedArea>>(
       path,
       {
         params: {
           id,
+          limit,
         },
       }
     );

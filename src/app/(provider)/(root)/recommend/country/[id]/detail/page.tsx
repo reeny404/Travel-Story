@@ -33,7 +33,7 @@ async function CountryDetailSSRPage({ params }: CountryDetailSSRPage) {
   await queryClient.prefetchQuery({
     queryKey: ["areas", countryId],
     queryFn: async () => {
-      const { data } = await api.area.getAreasByCountry(countryId);
+      const { data } = await api.area.getAreasByCountry(countryId, 5);
       return data;
     },
   });

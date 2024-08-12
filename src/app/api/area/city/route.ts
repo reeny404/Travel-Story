@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+  const limit = searchParams.get("limit");
   if (!id) {
     return NextResponse.json({
       status: 400,
@@ -25,7 +26,12 @@ export async function GET(request: NextRequest) {
     (acc, curr) => {
       if (curr.type !== null && curr.type !== undefined) {
         acc[curr.type] = acc[curr.type] || [];
-        if (acc[curr.type].length < 5) {
+        // limit이 null이거나 undefined인 경우, 제한 없이 데이터를 추가합니다.
+        if (
+          limit === null ||
+          limit === undefined ||
+          acc[curr.type].length < Number(limit)
+        ) {
           acc[curr.type].push(curr);
         }
       }
@@ -33,6 +39,7 @@ export async function GET(request: NextRequest) {
     },
     {} as Record<string, any[]>
   );
+
   if (error) {
     return NextResponse.json({
       status: 500,

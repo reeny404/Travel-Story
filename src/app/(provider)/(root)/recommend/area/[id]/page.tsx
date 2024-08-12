@@ -25,7 +25,7 @@ export default async function AreaDetailSSRPage({ params }: Props) {
     await queryClient.prefetchQuery({
       queryKey: ["areas", areaData.cityId],
       queryFn: async () => {
-        const { data } = await api.area.getAreasByCity(areaData.cityId);
+        const { data } = await api.area.getAreasByCity(areaData.cityId, 4);
         return data;
       },
     });

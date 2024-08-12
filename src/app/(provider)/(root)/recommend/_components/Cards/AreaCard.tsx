@@ -17,9 +17,9 @@ export type AreaCardProps = {
   city: string;
   country: string;
   areaName: string;
-  isBookmarked: boolean | undefined;
-  addBookmark: () => void;
-  deleteBookmark: () => void;
+  isBookmarked?: boolean | undefined;
+  addBookmark?: () => void;
+  deleteBookmark?: () => void;
 };
 
 const AreaCard = React.memo(
@@ -45,9 +45,9 @@ const AreaCard = React.memo(
         openModal("로그인하면 일정에 장소를 추가할 수 있어요");
       } else {
         if (isBookmarked) {
-          deleteBookmark();
+          deleteBookmark!();
         } else {
-          addBookmark();
+          addBookmark!();
         }
       }
     };

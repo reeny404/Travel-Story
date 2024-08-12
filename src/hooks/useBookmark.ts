@@ -27,7 +27,6 @@ export const useBookmarks = () => {
     },
     onMutate: async (newBookmark) => {
       await queryClient.cancelQueries({ queryKey: ["bookmarks", user?.id] });
-      console.log("newBookmark", newBookmark);
       const previousBookmarks = queryClient.getQueryData([
         "bookmarks",
         user?.id,

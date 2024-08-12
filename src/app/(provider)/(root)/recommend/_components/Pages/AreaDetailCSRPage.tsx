@@ -41,7 +41,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { data: areas } = useQuery<GroupedArea, AxiosError, Area[]>({
     queryKey: ["areas", area?.cityId],
     queryFn: async () => {
-      const { data } = await api.area.getAreasByCity(area?.cityId!);
+      const { data } = await api.area.getAreasByCity(area?.cityId!, 4);
       return data;
     },
     select: (data) => {

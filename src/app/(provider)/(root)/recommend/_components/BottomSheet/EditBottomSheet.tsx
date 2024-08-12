@@ -114,7 +114,7 @@ function EditBottomSheet<T>({ onClose, reviewInfo }: EditSheetProps & T) {
   );
 }
 
-export function createEditwBottomSheet() {
+export function createEditBottomSheet() {
   return function EditBottomSheetWrapper({
     onClose,
     areaName,

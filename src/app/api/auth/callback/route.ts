@@ -19,7 +19,6 @@ export async function GET(request: NextRequest) {
         return NextResponse.redirect(`${origin}/auth/error`);
       }
       const redirectUrl = isTypeExist ? next : `/onboard?next=${next}`;
-      console.log(`${origin}${redirectUrl}`);
       return NextResponse.redirect(`${origin}${redirectUrl}`);
     } catch (e) {
       return NextResponse.redirect(`${origin}/auth/error`);

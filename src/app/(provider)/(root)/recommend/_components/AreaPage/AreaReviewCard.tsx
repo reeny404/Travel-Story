@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/auth.contexts";
 import { AreaReview } from "@/types/Recommend";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { createEditwBottomSheet } from "../BottomSheet/EditBottomSheet";
+import { createEditBottomSheet } from "../BottomSheet/EditBottomSheet";
 import VanilaImgFrame from "../VanilaImgFram";
 
 // props로 유저정보, 리뷰정보를 받아야함.
@@ -41,7 +41,7 @@ const AreaReviewCard = React.memo(
     const handleClose = () => {
       setBottomSheetVisible(false);
     };
-    const BottomSheet = createEditwBottomSheet();
+    const BottomSheet = createEditBottomSheet();
     const { mutate: deleteReview } = useMutation({
       mutationFn: async ({ id, areaId }: { id: number; areaId: number }) => {
         await api.review.deleteReview({ id, areaId });
@@ -66,8 +66,6 @@ const AreaReviewCard = React.memo(
           <BottomSheet
             areaName={reviewInfo.areaName}
             onClose={handleClose}
-            areaId={reviewInfo.areaId!}
-            id={reviewInfo.userId!}
             reviewInfo={reviewInfo}
           />
         )}
