@@ -1,21 +1,22 @@
 "use client";
 
 import { api } from "@/apis/api";
-import SlideTagList from "@/components/commons/TagList/SlideTagList";
-import { Tab } from "@/constants/tabs";
+import Tab from "@/components/Tab/Tab";
+import { TABS, TabType } from "@/constants/tabs";
+import { useTab } from "@/hooks/useTab";
 import { extendBookmark } from "@/types/Recommend";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MyBookmarkPageParams } from "../page";
 import BookmarkCard from "./BookmarkCard";
 import SuggestArea from "./SuggestArea";
 
 type PageProps = {
   params: MyBookmarkPageParams;
-  tabs: Tab[];
+  tabs: TabType[];
 };
 
 export default function MyBookmarkList({ tabs, params }: PageProps) {
-  const [filterTag, setFilterTag] = useState<Tab>(tabs[0]);
+  const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
   const [bookmarks, setBookmarks] = useState<extendBookmark[]>([]);
   useEffect(() => {
     api.bookmark.getBookmarks().then(({ data }) => {
@@ -23,24 +24,18 @@ export default function MyBookmarkList({ tabs, params }: PageProps) {
     });
   }, []);
 
-  const onTagClick = useCallback((tag: string) => {
-    const clickedTab: Tab = tabs.find((tab) => tab.kr === tag) ?? tabs[0];
-    setFilterTag(clickedTab);
-    // tabs는 절대 바뀔 일이 없다는 전제하에 작성됨
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  console.log("bookmarks", bookmarks);
   const list: extendBookmark[] = bookmarks?.length
-    ? bookmarks.filter((bookmark) => filterTag.en === bookmark.area.type)
+    ? bookmarks.filter((bookmark) => currentTab === bookmark.area.type)
     : [];
 
   return (
     <>
-      <section className="p-4">
-        <SlideTagList
-          tagList={tabs.map((tab) => tab.kr)}
-          onTagClick={onTagClick}
-          spacing={10}
+      <section className="py-1 px-4">
+        <Tab
+          TABS={TABS.default}
+          currentTab={currentTab!}
+          setCurrentTab={setCurrentTab}
+          isGray={true}
         />
       </section>
       <section className="space-y-4">

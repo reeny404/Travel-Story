@@ -49,7 +49,7 @@ function BottomSheetTitle({
         setTitlePlaceholder("지출한 비용");
         break;
       case "place":
-      case "customePlace":
+      case "customPlace":
         setTitlePlaceholder("어디로 가시나요?");
         break;
       case "move":

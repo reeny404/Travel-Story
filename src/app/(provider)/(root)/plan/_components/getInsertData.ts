@@ -1,4 +1,10 @@
-import { Memo, MoveSchedule, PlanChildData, PlanChildType, Schedule } from "@/types/plan";
+import {
+  Memo,
+  MoveSchedule,
+  PlanChildData,
+  PlanChildType,
+  Schedule,
+} from "@/types/plan";
 
 export function getInsertData(
   type: PlanChildType,
@@ -35,13 +41,13 @@ export function getInsertData(
 
     return insertData;
   }
-  if (type === "customePlace") {
+  if (type === "customPlace") {
     const insertData = {
       title: data.title,
       memo: data.memo,
       startTime: data.startTime,
       endTime: data.endTime,
-      place: data.place
+      place: data.place,
     } as Schedule;
 
     if (isExcepTime) {
