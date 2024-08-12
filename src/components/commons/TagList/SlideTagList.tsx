@@ -18,7 +18,7 @@ function SlideTagList<T extends string>({
   onTagClick,
   spacing,
   size = "sm",
-  theme = "neutral-650",
+  theme = "primary",
 }: SlideTagListProps<T>) {
   const [selectedTag, setSelectedTag] = useState<T>(tagList[0]);
 
