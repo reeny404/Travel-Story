@@ -4,10 +4,10 @@ import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import { useBookmarks } from "@/hooks/useBookmark";
 import { Area } from "@/types/Recommend";
+import { getKrCategory } from "@/utils/getKrCategory";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { lazy } from "react";
-import { convertTypeToKr } from "../AreaPage/_utils/convertTypeToKr";
 const AreaCard = lazy(() => import("../Cards/AreaCard"));
 
 type CityAreaTypeCSRPageProps = {
@@ -31,7 +31,7 @@ function CityAreaTypeCSRPage({ cityId, areaType }: CityAreaTypeCSRPageProps) {
     <MainLayout
       headerProps={{
         backgroundColor: "white",
-        title: convertTypeToKr(areaType),
+        title: getKrCategory(areaType),
         titleAlign: "center",
         rightIcons: [
           {

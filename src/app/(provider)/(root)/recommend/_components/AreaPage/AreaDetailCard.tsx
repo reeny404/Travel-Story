@@ -1,8 +1,8 @@
 import RatingIcons from "@/components/Card/RatingIcons";
 import { Area } from "@/types/Recommend";
+import { getKrCategory } from "@/utils/getKrCategory";
 import Image from "next/image";
 import React, { MutableRefObject } from "react";
-import { convertTypeToKr } from "./_utils/convertTypeToKr";
 
 type AreaDetailCardProps = {
   area: Area;
@@ -33,7 +33,7 @@ const AreaDetailCard = React.memo(
                 height={10}
                 className="mr-2 object-contain"
               />
-              <p>{convertTypeToKr(area.type!)}</p>
+              <p>{getKrCategory(area.type!)}</p>
             </div>
             <div
               onClick={handleClickRating}

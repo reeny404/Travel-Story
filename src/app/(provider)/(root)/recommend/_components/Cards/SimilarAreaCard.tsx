@@ -1,9 +1,9 @@
 import SingleRatingIcon from "@/components/Card/SingleRatingIcon";
 import PrimaryTagList from "@/components/commons/TagList/PrimaryTagList";
+import { getKrCategory } from "@/utils/getKrCategory";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { convertTypeToKr } from "../AreaPage/_utils/convertTypeToKr";
 import CardImgFrame from "./CardImgFrame";
 // TODO getKrCategory로 수정할 것
 type SimilarAreaCardProps = {
@@ -39,7 +39,7 @@ const SimilarAreaCard = React.memo(
                 height={14}
                 className="mr-2 object-contain"
               />
-              <p className="text-xs leading-[22px]">{convertTypeToKr(type)}</p>
+              <p className="text-xs leading-[22px]">{getKrCategory(type)}</p>
             </div>
             <SingleRatingIcon rating={rating} />
           </div>
