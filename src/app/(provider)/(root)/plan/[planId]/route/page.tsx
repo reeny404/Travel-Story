@@ -3,6 +3,7 @@
 import SlideTagList from "@/components/commons/TagList/SlideTagList";
 import { LatLng } from "@/types/LatLng";
 import { DateUtil } from "@/utils/DateUtil";
+import clsx from "clsx";
 import { useCallback, useMemo } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -86,19 +87,26 @@ function PlanRoutePage() {
   const routes: LatLng[] = useMemo(() => {
     return schedules.map((schedule) => schedule.latlng);
   }, []);
+  console.log(schedules);
 
   return (
     <section>
       <Map locations={routes}></Map>
-      <div className="fixed bottom-4">
+      <div className="h-0 relative bottom-52">
         <Swiper
-          spaceBetween={0}
-          slidesPerView="auto"
+          spaceBetween={10}
+          slidesPerView={1.2}
           grabCursor={true}
           className="mb-2"
         >
           {schedules.map((schedule, i) => (
-            <SwiperSlide key={i}>
+            <SwiperSlide
+              key={i}
+              className={clsx({
+                "ml-3": i === 0,
+                "mr-3": i === schedules.length - 1,
+              })}
+            >
               <RouteCard route={{ ...schedule, index: i + 1 }} />
             </SwiperSlide>
           ))}

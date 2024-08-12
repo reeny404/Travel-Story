@@ -57,7 +57,7 @@ function RouteCard({ route }: Props) {
   }, [route]);
 
   return (
-    <div className="w-[360px] p-3 ml-2.5 space-y-3 flex flex-col bg-white rounded-md shadow-md">
+    <div className="p-3 space-y-3 flex flex-col bg-white rounded-md shadow-md">
       <div className="flex justify-between items-center">
         <div
           className={NumberVariant({
