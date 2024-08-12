@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/auth.contexts";
 import { AreaReview } from "@/types/Recommend";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { createEditwBottomSheet } from "../BottomSheet/EditSheet/ReviewSheet/EditBottomSheet";
+import { createEditwBottomSheet } from "../BottomSheet/EditBottomSheet";
 import VanilaImgFrame from "../VanilaImgFram";
 
 // props로 유저정보, 리뷰정보를 받아야함.

@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/auth.contexts";
 import { useModalStore } from "@/stores/modal.store";
 import Image from "next/image";
 import React, { useState } from "react";
-import { createReviewBottomSheet } from "../BottomSheet/ReviewSheet/ReviewBottomSheet";
+import { createReviewBottomSheet } from "../BottomSheet/ReviewBottomSheet";
 
 type ReviewSummaryCardProps = {
   rating: number;

@@ -8,6 +8,7 @@ import { Schedule } from "@/types/plan";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { BottomSheet } from "../BottomSheet";
 import AddBottomSheetTitle from "./AddBottomSheetTitle";
 import PlanItem from "./PlanItem";
 
@@ -80,74 +81,55 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
   }, []);
 
   return (
-    <div
-      className={`fixed top-0 left-0 w-full h-full z-bottomSheet bg-black${
-        isOpening || isClosing ? "transition-opacity duration-300" : ""
-      } ${isOpening ? "bg-opacity-0" : "bg-opacity-50"} `}
-      onClick={handleClose}
-    >
-      <form
-        ref={formRef}
-        className={`absolute bottom-0 left-0 w-full h-[472px] pt-7 px-5 flex flex-col gap-3 rounded-t-3xl shadow-bottom-sheet overflow-hidden bg-white transform${
-          isClosing
-            ? "translate-y-full"
-            : isOpening
-              ? "translate-y-full"
-              : "translate-y-0"
-        }transition-transform duration-300`}
-      >
-        <AddBottomSheetTitle
-          areaId={area?.id}
-          isPlan={planData ? true : false}
-        />
-        <section className="no-scroll h-[328px] flex flex-col gap-y-4 overflow-scroll">
-          {planData &&
-            planData.map((plan: any, idx: number) => {
-              return (
-                <PlanItem
-                  setDay={setDay}
-                  setClickedPlan={setClickedPlan}
-                  clickedPlan={clickedPlan}
-                  key={idx}
-                  plan={plan}
-                  idx={idx}
-                />
-              );
-            })}
-        </section>
-        <div className="grid grid-cols-2 gap-3 pb-1">
+    <BottomSheet onClose={onClose} height="472px">
+      <AddBottomSheetTitle areaId={area?.id} isPlan={planData ? true : false} />
+      <section className="no-scroll h-[328px] flex flex-col pt-4 gap-y-4 overflow-scroll">
+        {planData &&
+          planData.map((plan: any, idx: number) => {
+            return (
+              <PlanItem
+                setDay={setDay}
+                setClickedPlan={setClickedPlan}
+                clickedPlan={clickedPlan}
+                key={idx}
+                plan={plan}
+                idx={idx}
+              />
+            );
+          })}
+      </section>
+      <div className="grid grid-cols-2 gap-3 pb-1">
+        <button
+          className="h-10 text-center border-[0.6px] border-neutral-600 text-neutral-750 rounded-lg"
+          type="button"
+          onClick={() => onClose()}
+        >
+          {!planData ? "계속 둘러보기" : "취소"}
+        </button>
+        {!planData ? (
           <button
-            className="h-10 text-center border-[0.6px] border-neutral-600 text-neutral-750 rounded-lg"
+            className="h-10 text-center bg-neutral-750 text-white rounded-lg"
             type="button"
-            onClick={() => onClose()}
+            onClick={() => {
+              router.push("/plan");
+            }}
           >
-            {!planData ? "계속 둘러보기" : "취소"}
+            내 여행 만들기
           </button>
-          {!planData ? (
-            <button
-              className="h-10 text-center bg-neutral-750 text-white rounded-lg"
-              type="button"
-              onClick={() => {
-                router.push("/plan");
-              }}
-            >
-              내 여행 만들기
-            </button>
-          ) : (
-            <button
-              className={`h-10 text-center rounded-lg ${!day ? "bg-neutral-300 text-neutral-550" : "bg-neutral-750 text-white"}`}
-              type="button"
-              disabled={!day}
-              onClick={() => {
-                handleAdd();
-              }}
-            >
-              추가하기
-            </button>
-          )}
-        </div>
-      </form>
-    </div>
+        ) : (
+          <button
+            className={`h-10 text-center rounded-lg ${!day ? "bg-neutral-300 text-neutral-550" : "bg-neutral-750 text-white"}`}
+            type="button"
+            disabled={!day}
+            onClick={() => {
+              handleAdd();
+            }}
+          >
+            추가하기
+          </button>
+        )}
+      </div>
+    </BottomSheet>
   );
 }
 
