@@ -1,62 +1,76 @@
 "use client";
-import SubmitButton from "@/components/commons/SubmitButton";
-import TravelStyle from "@/components/TravelStyle";
+import SvgIcon from "@/components/commons/SvgIcon";
+import MainLayout from "@/components/Layout/MainLayout";
+import { useOnboardStore } from "@/stores/onboard.store";
+import { useLoginStepStore } from "@/stores/step.store";
 import { useTravelType } from "@/stores/travelType.store";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Continent from "../Continent";
+import ProgressBar from "../ProgressBar";
+import TravelMate from "../TravelMate";
+import TravelType from "../TravelType";
 
 function OnBoard() {
   const { travelType } = useTravelType();
   const router = useRouter();
   const [isValidated, setIsValidated] = useState<boolean>(true);
   const params = useSearchParams();
-  const nextURL = params.get("next") ?? "/";
+  const nextURL = params.get("next");
+  const { progress, setProgress } = useOnboardStore();
+  const { setNextURL } = useLoginStepStore();
 
-  console.log(nextURL);
   useEffect(() => {
-    if (
-      travelType.season.length !== 0 &&
-      travelType.theme.length !== 0 &&
-      travelType.travelMate.length !== 0
-    ) {
-      setIsValidated(false);
-    } else {
-      setIsValidated(true);
-    }
-  }, [travelType]);
+    setNextURL(nextURL || "/");
+  }, []);
 
-  const handleTravelTypeClick = (
-    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  ) => {
-    e.preventDefault();
-    console.log(nextURL);
-    localStorage.setItem("userTravelType", JSON.stringify(travelType));
-    router.replace(nextURL);
+  // const handleTravelTypeClick = (
+  //   e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  // ) => {
+  //   e.preventDefault();
+  //   localStorage.setItem("userTravelType", JSON.stringify(travelType));
+  //   router.replace(nextURL);
+  //   document.cookie = "hasTravelType=true; path=/";
+  // };
+
+  const handleCancelClick = () => {
     document.cookie = "hasTravelType=true; path=/";
+    router.back();
   };
 
+  const handleBackClick = () => {
+    setProgress(false);
+    router.back();
+  };
+
+  const sections = [
+    <Continent key={1} />,
+    <TravelMate key={2} />,
+    <TravelType key={3} />,
+  ];
+
   return (
-    <div className="flex bg-[#f5f5f5] w-full min-h-dvh py-10">
-      <div className="flex flex-col w-[375px] px-[13px] mx-auto">
-        <h1 className="text-[24px] font-bold mb-4">
-          나한테 딱 맞춘 여행
-          <br /> 맞춤설정
-        </h1>
-        <form className="flex flex-col items-center">
-          <TravelStyle title="여행 테마가 무엇인가요?" category="theme" />
-          <TravelStyle title="언제 떠나시나요?" category="season" />
-          <TravelStyle title="누구와 떠나시나요?" category="travelMate" />
-          <SubmitButton
-            theme="primary"
-            size="lg"
-            disabled={isValidated}
-            onClick={(e) => handleTravelTypeClick(e)}
-          >
-            설정 저장
-          </SubmitButton>
-        </form>
-      </div>
-    </div>
+    <MainLayout>
+      <header className="flex w-full h-[52px] items-center px-4">
+        {progress !== 1 ? (
+          <div onClick={handleBackClick}>
+            <SvgIcon
+              name="arrow-right"
+              width={24}
+              height={24}
+              title="arrow"
+              hasStroke={true}
+              className="transform rotate-180"
+            />
+          </div>
+        ) : null}
+        <div className="w-fit h-fit ml-auto" onClick={handleCancelClick}>
+          <SvgIcon name="cancel" width={20} height={20} />
+        </div>
+      </header>
+      <ProgressBar />
+      {sections[progress - 1]}
+    </MainLayout>
   );
 }
 
