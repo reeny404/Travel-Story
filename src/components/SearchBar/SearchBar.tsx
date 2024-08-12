@@ -1,7 +1,5 @@
 "use client";
 
-import { ICON } from "@/constants/icon";
-import Image from "next/image";
 import { useState } from "react";
 import SvgIcon from "../commons/SvgIcon";
 
@@ -35,35 +33,29 @@ function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
 
   return (
     <form
-      className="flex justify-between w-11/12 h-10 p-[10px] bg-white rounded-lg shadow-md text-sm"
+      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-search-bar"
       onSubmit={handleSearch}
     >
-      <div className="flex">
-        <SvgIcon
-          name="search"
-          width={20}
-          height={20}
-          title="search"
-          className="mr-2"
-        />
+      <div className="flex items-center w-full gap-3">
+        <SvgIcon name="search" width={20} height={20} title="search" />
 
         <input
-          className="w-[250px] bg-transparent outline-none"
+          className="w-[90%] bg-transparent outline-none"
           placeholder={`'파리'로 떠나보실래요?`}
           value={searchValue}
           onChange={handleInputChange}
         />
+        {searchValue && (
+          <SvgIcon
+            name="x"
+            width={12}
+            height={12}
+            title="cancel"
+            className="cursor-pointer transition-transform duration-300 ease-in-out"
+            onClick={handleEmpty}
+          />
+        )}
       </div>
-      {searchValue && (
-        <Image
-          src={`/icons/${ICON.cancel.gray}.png`}
-          alt="microphone"
-          width={18}
-          height={18}
-          className="mr-2 cursor-pointer transition-transform duration-300 ease-in-out"
-          onClick={handleEmpty}
-        />
-      )}
     </form>
   );
 }
