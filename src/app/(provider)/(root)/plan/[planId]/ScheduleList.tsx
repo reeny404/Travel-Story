@@ -117,7 +117,7 @@ function ScheduleList({
         let backgroundColor = "black";
         let colorIcon = "white";
 
-        if (item.type === "customePlace" || item.type === "place") {
+        if (item.type === "customPlace" || item.type === "place") {
           countText = `${++placeIndex}`;
           backgroundColor = colors[(placeIndex - 1) % colors.length];
           colorIcon = backgroundColor;
