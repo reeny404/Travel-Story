@@ -27,17 +27,25 @@ export const useBookmarks = () => {
     },
     onMutate: async (newBookmark) => {
       await queryClient.cancelQueries({ queryKey: ["bookmarks", user?.id] });
-      const previousBookmarks = queryClient.getQueryData([
+
+      let previousBookmarks = queryClient.getQueryData([
         "bookmarks",
         user?.id,
       ]) as RecommendResponse<AreaBookmark[]>;
-
+      if (previousBookmarks.message === "No Data") {
+        previousBookmarks = {
+          status: 200,
+          message: "Success",
+          data: [],
+          error: null,
+        };
+      }
       const newBookmarkData = {
         areaId: newBookmark,
         id: Date.now(), // 임시 ID 설정
         lat: 0,
         lng: 0,
-        userId: "임시 유저 ID",
+        userId: user?.id || "임시 유저 ID", // 유저 ID를 사용하는 것이 좋습니다.
         createdAt: new Date().toISOString(),
         area: {
           cityId: 1,
@@ -55,11 +63,19 @@ export const useBookmarks = () => {
           },
         },
       };
+
       queryClient.setQueryData(
         ["bookmarks", user?.id],
         (oldBookmarks: RecommendResponse<AreaBookmark[]>) => {
-          const { data } = oldBookmarks || { data: [] };
-
+          const { data } = oldBookmarks;
+          if ((oldBookmarks.status = 404)) {
+            return {
+              status: 200,
+              message: "Success",
+              data: [newBookmarkData],
+              error: null,
+            };
+          }
           return {
             ...oldBookmarks,
             data: [...data, newBookmarkData],
@@ -75,7 +91,6 @@ export const useBookmarks = () => {
         context?.previousBookmarks
       );
     },
-
     onSettled: (data: any) => {
       queryClient.invalidateQueries({
         queryKey: ["bookmarks", data.userId],
@@ -122,8 +137,14 @@ export const useBookmarks = () => {
       });
     },
   });
+
+  // 파라미터
+  const toggleBookmark = (areaId: number, isBookmark: boolean) => {
+    isBookmark ? deleteBookmark.mutate(areaId) : addBookmark.mutate(areaId);
+  };
+
   const isBookmarked = (areaId: number) =>
     bookmarks?.some((bookmark) => bookmark.areaId === areaId);
 
-  return { isBookmarked, addBookmark, deleteBookmark };
+  return { toggleBookmark, isBookmarked, addBookmark, deleteBookmark };
 };

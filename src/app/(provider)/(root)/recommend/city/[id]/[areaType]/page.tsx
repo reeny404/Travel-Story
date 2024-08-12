@@ -7,11 +7,11 @@ import {
 } from "@tanstack/react-query";
 import CityAreaTypeCSRPage from "../../../_components/Pages/CityAreaTypeCSRPage";
 
-type CountryAreaTypeSSRPageProps = {
+type CityAreaTypeSSRPageProps = {
   params: { id: string; areaType: string };
 };
 
-async function CountryAreaTypeSSRPage({ params }: CountryAreaTypeSSRPageProps) {
+async function CityAreaTypeSSRPage({ params }: CityAreaTypeSSRPageProps) {
   const cityId = parseInt(params.id);
   const areaType = params.areaType;
   const queryClient = new QueryClient();
@@ -32,4 +32,4 @@ async function CountryAreaTypeSSRPage({ params }: CountryAreaTypeSSRPageProps) {
   );
 }
 
-export default CountryAreaTypeSSRPage;
+export default CityAreaTypeSSRPage;

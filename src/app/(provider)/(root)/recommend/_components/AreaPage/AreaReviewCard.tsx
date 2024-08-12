@@ -51,6 +51,9 @@ const AreaReviewCard = React.memo(
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["areaReviews"] });
+        queryClient.invalidateQueries({
+          queryKey: ["area", reviewInfo.areaId],
+        });
       },
     });
     const handleDelete = async (id: number) => {

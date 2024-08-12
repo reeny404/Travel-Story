@@ -99,7 +99,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             <CardImgFrame
               imageUrl={area?.imageUrl}
               alt={area.title}
-              frameClassName="-z-50 -mb-11 aspect-4/5"
+              frameClassName="-z-10 -mb-11 aspect-4/5"
               imageClassName="object-cover"
               isTop={true}
               country={area.info?.location[0]}
@@ -178,18 +178,16 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                     </h1>
                     <div className="w-full grid grid-cols-2 gap-x-3 gap-y-4">
                       {areas?.map((area: Area, idx) => {
-                        if (idx < 4) {
-                          return (
-                            <SimilarAreaCard
-                              rating={area.rating ?? 0}
-                              key={area.id}
-                              title={area.krName!}
-                              imageUrl={area.imageUrl ?? "/"}
-                              linkUrl={`/recommend/area/${area.id}`}
-                              type={area.type!}
-                            />
-                          );
-                        }
+                        return (
+                          <SimilarAreaCard
+                            rating={area.rating ?? 0}
+                            key={area.id}
+                            title={area.krName!}
+                            imageUrl={area.imageUrl ?? "/"}
+                            linkUrl={`/recommend/area/${area.id}`}
+                            type={area.type!}
+                          />
+                        );
                       })}
                     </div>
                   </section>

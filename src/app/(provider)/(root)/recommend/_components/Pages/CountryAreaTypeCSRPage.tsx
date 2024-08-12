@@ -9,12 +9,15 @@ import { useRouter } from "next/navigation";
 import { lazy } from "react";
 import { convertTypeToKr } from "../AreaPage/_utils/convertTypeToKr";
 const AreaCard = lazy(() => import("../Cards/AreaCard"));
-type AreaTypePageProps = {
+type CountryAreaTypeCSRPageProps = {
   countryId: number;
   areaType: string;
 };
 
-function CountryAreaTypeCSRPage({ countryId, areaType }: AreaTypePageProps) {
+function CountryAreaTypeCSRPage({
+  countryId,
+  areaType,
+}: CountryAreaTypeCSRPageProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks();
   const router = useRouter();
 
