@@ -1,7 +1,10 @@
+import Icon from "@/components/commons/Icon";
 import ImageFrame from "@/components/Frame/ImageFrame";
 import Icon from "@/components/commons/Icon";
 import { ICON } from "@/constants/icon";
 import { extendBookmark } from "@/types/Recommend";
+import { ICON } from "@/constants/icon";
+import { BookmarkWithArea } from "@/types/Recommend";
 import { MyBookmarkPageParams } from "../page";
 import AddToPlanButton from "./AddToPlanButton";
 import BookmarkButton from "./BookmarkButton";
