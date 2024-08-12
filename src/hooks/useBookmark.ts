@@ -14,7 +14,10 @@ export const useBookmarks = () => {
     AreaBookmark[]
   >({
     queryKey: ["bookmarks", user?.id],
-    queryFn: () => api.bookmark.getBookmarks(),
+    queryFn: async () => {
+      const data = await api.bookmark.getBookmarks();
+      return data;
+    },
     select: (data) => data.data,
   });
 
@@ -42,10 +45,10 @@ export const useBookmarks = () => {
       }
       const newBookmarkData = {
         areaId: newBookmark,
-        id: Date.now(), // 임시 ID 설정
+        id: Date.now(),
         lat: 0,
         lng: 0,
-        userId: user?.id || "임시 유저 ID", // 유저 ID를 사용하는 것이 좋습니다.
+        userId: user?.id,
         createdAt: new Date().toISOString(),
         area: {
           cityId: 1,
@@ -138,13 +141,8 @@ export const useBookmarks = () => {
     },
   });
 
-  // 파라미터
-  const toggleBookmark = (areaId: number, isBookmark: boolean) => {
-    isBookmark ? deleteBookmark.mutate(areaId) : addBookmark.mutate(areaId);
-  };
-
   const isBookmarked = (areaId: number) =>
     bookmarks?.some((bookmark) => bookmark.areaId === areaId);
 
-  return { toggleBookmark, isBookmarked, addBookmark, deleteBookmark };
+  return { isBookmarked, addBookmark, deleteBookmark };
 };

@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/auth.contexts";
 import { useModalStore } from "@/stores/modal.store";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import CardImgFrame from "./CardImgFrame";
 
 export type AreaCardProps = {
@@ -39,15 +39,19 @@ const AreaCard = React.memo(
   }: AreaCardProps) => {
     const { openModal } = useModalStore();
     const { isLoggedIn } = useAuth();
-
+    const [bookmarked, setBookmarked] = useState<boolean | undefined>(
+      isBookmarked
+    );
     const toggleBookmark = () => {
       if (!isLoggedIn) {
         openModal("로그인하면 일정에 장소를 추가할 수 있어요");
       } else {
-        if (isBookmarked) {
+        if (bookmarked) {
           deleteBookmark!();
+          setBookmarked(false);
         } else {
           addBookmark!();
+          setBookmarked(true);
         }
       }
     };
@@ -80,7 +84,7 @@ const AreaCard = React.memo(
           <div className="relative w-6 h-6 aspect-square">
             <Image
               src={
-                isBookmarked
+                bookmarked
                   ? `/icons/whiteBookmark-on.svg`
                   : `/icons/whiteBookmark-off.svg`
               }
@@ -94,9 +98,6 @@ const AreaCard = React.memo(
         </div>
       </div>
     );
-  },
-  (prevProps, nextProps) => {
-    return prevProps.isBookmarked === nextProps.isBookmarked;
   }
 );
 
