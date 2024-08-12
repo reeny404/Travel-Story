@@ -71,6 +71,7 @@ function ReviewBottomSheet({
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["areaReviews"] });
+      queryClient.invalidateQueries({ queryKey: ["area", areaId] });
       return data;
     },
   });

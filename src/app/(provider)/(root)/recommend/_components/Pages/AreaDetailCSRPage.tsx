@@ -5,61 +5,63 @@ import MainLayout from "@/components/Layout/MainLayout";
 import Tab from "@/components/Tab/Tab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
-import { useAuth } from "@/contexts/auth.contexts";
 import { useTab } from "@/hooks/useTab";
-import { Area, AreaReview, RecommendResponse } from "@/types/Recommend";
+import { Area, AreaReview, GroupedArea } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useEffect, useRef } from "react";
+import { lazy, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import AreaDetailCard from "../AreaPage/AreaDetailCard";
-import AreaReviewCard from "../AreaPage/AreaReviewCard";
-import LocationForm from "../AreaPage/LocationForm";
-import NoticeForm from "../AreaPage/NoticeForm";
-import ReviewSummaryCard from "../AreaPage/ReviewSummary";
 import UnderBar from "../AreaPage/UnderBar";
 import CardImgFrame from "../Cards/CardImgFrame";
-import SimilarAreaCard from "../Cards/SimilarAreaCard";
+const SimilarAreaCard = lazy(() => import("../Cards/SimilarAreaCard"));
+const ReviewSummaryCard = lazy(() => import("../AreaPage/ReviewSummary"));
+const NoticeForm = lazy(() => import("../AreaPage/NoticeForm"));
+const LocationForm = lazy(() => import("../AreaPage/LocationForm"));
+const AreaReviewCard = lazy(() => import("../AreaPage/AreaReviewCard"));
 
 type AreaDetailCSRPage = {
   areaId: number;
 };
 function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
-  const { ref, inView } = useInView();
-  const { user } = useAuth();
+  const { ref, inView } = useInView({
+    threshold: 0.2,
+  });
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const reviewSectionRef = useRef<HTMLDivElement | null>(null);
 
-  const { data: area, isLoading } = useQuery<
-    RecommendResponse<Area>,
-    AxiosError,
-    Area
-  >({
+  const { data: area, isLoading } = useQuery<Area>({
     queryKey: ["area", areaId],
-    queryFn: () => api.area.getAreasById(areaId),
-    select: (data) => data.data,
+    queryFn: async () => {
+      const { data } = await api.area.getAreasById(areaId);
+      return data;
+    },
+  });
+  const { data: areas } = useQuery<GroupedArea, AxiosError, Area[]>({
+    queryKey: ["areas", area?.cityId],
+    queryFn: async () => {
+      const { data } = await api.area.getAreasByCity(area?.cityId!);
+      return data;
+    },
+    select: (data) => {
+      return data[area?.type as keyof GroupedArea];
+    },
+  });
+  const { data: areaReviews } = useQuery<AreaReview[]>({
+    queryKey: ["areaReviews", areaId],
+    queryFn: async () => {
+      const { data } = await api.review.getReviews(areaId);
+      return data;
+    },
   });
 
-  const { data: areasByCity } = useQuery<
-    RecommendResponse<Area[]>,
-    AxiosError,
-    Area[]
-  >({
-    queryKey: ["areasByCity", area?.cityId],
-    queryFn: () => api.area.getAreasByCity(area?.cityId!),
-    select: (data) => data?.data,
-  });
-  const similarArea = areasByCity?.filter((item) => item.type === area?.type);
-  const { data: areaReviews } = useQuery<
-    RecommendResponse<AreaReview[]>,
-    AxiosError,
-    AreaReview[]
-  >({
-    queryKey: ["areaReviews", areaId],
-    queryFn: () => api.review.getReviews(areaId),
-    select: (data) => data.data,
-  });
+  const sortedAreaReviews = useMemo(() => {
+    return areaReviews?.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }, [areaReviews]);
 
   useEffect(() => {
     const currentTabIndex = TABS.areaDetail.findIndex(
@@ -95,13 +97,13 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
         <main className="h-full w-full relative container">
           <div ref={ref}>
             <CardImgFrame
-              imageUrl={area.imageUrl}
+              imageUrl={area?.imageUrl}
               alt={area.title}
               frameClassName="-z-50 -mb-11 aspect-4/5"
               imageClassName="object-cover"
               isTop={true}
-              country={area.info.location[0]}
-              city={area.info.location[1]}
+              country={area.info?.location[0]}
+              city={area.info?.location[1]}
               areaName={area.name}
             />
           </div>
@@ -147,29 +149,23 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ratingAmount={areaReviews?.length || 0}
                   areaId={areaId}
                 />
-                {areaReviews &&
-                  areaReviews
-                    .sort(
-                      (a, b) =>
-                        new Date(b.createdAt).getTime() -
-                        new Date(a.createdAt).getTime()
-                    )
-                    .map((review, idx) => {
-                      return (
-                        <AreaReviewCard
-                          key={idx}
-                          userImageUrl={review.profileImg}
-                          name={review.nickname}
-                          imageUrl={review.imageUrls[0]}
-                          createdAt={review.createdAt}
-                          rating={review.rating!}
-                          description={review.content!}
-                          reviewInfo={review}
-                        />
-                      );
-                    })}
+                {sortedAreaReviews &&
+                  sortedAreaReviews?.map((review, idx) => {
+                    return (
+                      <AreaReviewCard
+                        key={review.id}
+                        userImageUrl={review.profileImg}
+                        name={review.nickname}
+                        imageUrl={review.imageUrls[0]}
+                        createdAt={review.createdAt}
+                        rating={review.rating!}
+                        description={review.content!}
+                        reviewInfo={review}
+                      />
+                    );
+                  })}
               </div>
-              {similarArea && (
+              {areas && (
                 <div
                   ref={(tabEl) => {
                     sectionRefs.current[3] = tabEl;
@@ -181,12 +177,12 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                       비슷한 장소 둘러보기
                     </h1>
                     <div className="w-full grid grid-cols-2 gap-x-3 gap-y-4">
-                      {similarArea.map((area: Area, idx) => {
+                      {areas?.map((area: Area, idx) => {
                         if (idx < 4) {
                           return (
                             <SimilarAreaCard
                               rating={area.rating ?? 0}
-                              key={idx}
+                              key={area.id}
                               title={area.krName!}
                               imageUrl={area.imageUrl ?? "/"}
                               linkUrl={`/recommend/area/${area.id}`}
