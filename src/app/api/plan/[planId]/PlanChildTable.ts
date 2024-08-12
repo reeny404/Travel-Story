@@ -32,34 +32,27 @@ export class PlanChild<T> implements DataManager<T> {
 
 class ScheduleManager extends PlanChild<Tables<"schedule">> {
   constructor(supabase: SupabaseClient) {
-    super(supabase, "schedule")
+    super(supabase, "schedule");
   }
 }
 
 class MemoManager extends PlanChild<Tables<"memo">> {
   constructor(supabase: SupabaseClient) {
-    super(supabase, "memo")
+    super(supabase, "memo");
   }
 }
 
 class MoveScheduleManager extends PlanChild<Tables<"moveSchedule">> {
   constructor(supabase: SupabaseClient) {
-    super(supabase, "moveSchedule")
+    super(supabase, "moveSchedule");
   }
 }
 
 export function getTableManager(supabase: SupabaseClient, type: PlanChildType) {
   switch (type) {
-<<<<<<< HEAD
     case "customPlace":
       return new ScheduleManager(supabase);
     default:
       return null;
-=======
-    case "customePlace": return new ScheduleManager(supabase);
-    case "memo": return new MemoManager(supabase);
-    case "move": return new MoveScheduleManager(supabase);
-    default: return null;
->>>>>>> 0d740d9158c175e0214a9fad6b724e1d0061a488
   }
 }
