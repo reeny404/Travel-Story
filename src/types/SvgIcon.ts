@@ -9,6 +9,7 @@ export type SvgIconProps = {
   className?: string;
   title?: string;
   hasStroke?: boolean;
+  onClick?: () => void;
 };
 
 export type loadSvgIconType = {

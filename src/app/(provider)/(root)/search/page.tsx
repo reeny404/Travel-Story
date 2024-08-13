@@ -10,10 +10,7 @@ function SearchPage() {
         title: "어디로 떠나시나요",
       }}
     >
-      <section
-        style={{ minHeight: "calc(100vh - 52px)" }}
-        className="bg-[#F8F8F8]"
-      >
+      <section style={{ minHeight: "calc(100vh - 52px)" }}>
         <div className="flex flex-col">
           <Suspense fallback={<div>Loading...</div>}>
             <ClientSearch />

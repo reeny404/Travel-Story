@@ -24,7 +24,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
   const router = useRouter();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [bottomSheetConfig, setBottomSheetConfig] = useState<BottomSheetType>({
-    type: "customePlace",
+    type: "customPlace",
     status: "add",
   });
   const [selectedDay, setSelectedDay] = useState(1);
@@ -144,7 +144,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
         )}
 
         <CreateScheduleButton
-          createSchedule={() => handleCreateSchedule("customePlace", "add")}
+          createSchedule={() => handleCreateSchedule("customPlace", "add")}
           pathTocreateByBookmark={`/my/bookmarks?planId=${planId}&day=${selectedDay}`}
           createMemo={() => handleCreateSchedule("memo", "add")}
           createMoveSchedule={() => handleCreateSchedule("move", "add")}

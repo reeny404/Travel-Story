@@ -62,6 +62,7 @@ const SvgIcon = ({
   className,
   hasStroke = false,
   strokeWidth = 1.75,
+  onClick,
 }: SvgIconProps) => {
   const Icon = loadSvgIcon({ name, width, height });
   const fillColor = getColor(customColor, color) || color;
@@ -80,6 +81,7 @@ const SvgIcon = ({
         strokeWidth={hasStroke ? strokeWidth : "none"}
         title={title}
         role="image"
+        onClick={onClick}
       />
     </button>
   );

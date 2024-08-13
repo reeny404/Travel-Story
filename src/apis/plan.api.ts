@@ -1,4 +1,4 @@
-import { Plan, PlanChildData, PlanChildType, PlanInsertType } from "@/types/plan";
+import { Plan, PlanChildData, PlanChildType, PlanFull, PlanInsertType } from "@/types/plan";
 import { AxiosInstance } from "axios";
 
 export default class PlanAPI {
@@ -56,5 +56,15 @@ export default class PlanAPI {
       .post(`/api/plan/${planId}`, { type, dayIndex, data: newData })
       .then(({ data }) => data)
       .catch((e) => console.error(e));
+  }
+
+  async getRoutes(planId: string, day: number = 1): Promise<PlanFull> {
+    return await this.axios
+      .get(`/api/plan/${planId}?day=${day}`)
+      .then(({ data }) => data.data)
+      .catch((e) => {
+        console.error(e);
+        return [];
+      });
   }
 }

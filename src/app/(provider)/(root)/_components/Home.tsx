@@ -30,13 +30,6 @@ function Home() {
   //   staleTime: 1000 * 60 * 3,
   // });
 
-  const handleAvatarClick = () => {
-    if (user) {
-      return router.push("/my");
-    }
-    return router.push("/login");
-  };
-
   const handleSearch = (term: string) => {
     router.push(`/search?query=${term}`);
   };
@@ -71,7 +64,7 @@ function Home() {
         className="relative w-full bg-gray"
         style={{ minHeight: "calc(100vh - 52px)" }}
       >
-        <div className="relative w-full h-[222px] bg-slate-200">
+        <div className="relative w-full h-[222px] bg-neutral-200">
           <Link href="/recommend/country/1/detail">
             <Image
               src="/banners/banner1_x3.png"

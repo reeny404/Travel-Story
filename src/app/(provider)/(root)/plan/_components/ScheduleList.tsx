@@ -35,7 +35,7 @@ function ScheduleList({
   } = useScheduleStore();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  const [type, setType] = useState<"customePlace" | "place" | "move" | "memo">(
+  const [type, setType] = useState<"customPlace" | "place" | "move" | "memo">(
     "place"
   ); // Default type
   const [status, setStatus] = useState<"add" | "read" | "update">("read");
@@ -77,7 +77,7 @@ function ScheduleList({
 
   const openBottomSheet = (
     item: any,
-    type: "customePlace" | "place" | "move" | "memo",
+    type: "customPlace" | "place" | "move" | "memo",
     status: "add" | "read" | "update"
   ) => {
     setSelectedItem(item);
@@ -102,7 +102,7 @@ function ScheduleList({
           let backgroundColor = "black";
           let colorIcon = "white";
 
-          if (item.type === "customePlace" || item.type === "place") {
+          if (item.type === "customPlace" || item.type === "place") {
             const schedule: SupabaseScheduleType = item as SupabaseScheduleType;
             countText = `${++placeIndex}`;
             backgroundColor = colors[(placeIndex - 1) % colors.length];
@@ -141,7 +141,7 @@ function ScheduleList({
                         openBottomSheet(
                           item,
                           item.type as
-                            | "customePlace"
+                            | "customPlace"
                             | "place"
                             | "move"
                             | "memo",
