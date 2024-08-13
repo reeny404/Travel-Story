@@ -1,4 +1,9 @@
-import { SupabaseScheduleType } from "@/types/plan";
+import {
+  BottomSheetType,
+  PlanChildType,
+  SupabaseScheduleType,
+  SupbasePlanChildren,
+} from "@/types/plan";
 import { PlanUtil } from "@/utils/PlanUtil";
 import { getColorChip } from "./Color";
 import ClipIcon from "./icons/ClipIcon";
@@ -10,50 +15,39 @@ type Props = {
   index: number;
   schedule: SupabaseScheduleType;
   isLast: boolean;
+  showMore: (
+    item: SupbasePlanChildren,
+    type: PlanChildType,
+    status: BottomSheetType["status"]
+  ) => void;
 };
 
-function Schedule({ index, schedule, isLast }: Props) {
-  const countText = `${++index}`;
-  const backgroundColor = getColorChip(index - 1);
-  const colorIcon = backgroundColor;
+function Schedule({ index, schedule, isLast, showMore }: Props) {
+  const color = getColorChip(index - 1);
+
   return (
-    <li
-      key={schedule.id}
-      className="flex items-center justify-between min-h-44 h-full"
-    >
-      <div className="w-[10%] min-h-44 mr-[3%] flex flex-col h-full">
+    <>
+      <div className="w-1/12 min-h-44 mr-[3%] flex flex-col h-full">
         <div
           className="w-7 h-7 mx-auto text-white rounded-full flex items-center justify-center"
-          style={{ backgroundColor }}
+          style={{ backgroundColor: color }}
         >
-          {countText}
+          {index}
         </div>
-
         {!isLast && (
           <span className="w-[1px] flex-1 bg-gray-300 mx-auto block"></span>
         )}
       </div>
-      <div className="w-[87%] min-h-44 h-auto">
-        <div className="w-full flex items-center justify-between">
-          <div className="mb-2 h-6 flex items-center">
-            <FillLocationIcon className="h-6 w-6 mr-2" color={colorIcon} />
-            <h3 className="text-base font-bold">{schedule.data.title}</h3>
-          </div>
-          {/* <button
-                      onClick={() =>
-                        openBottomSheet(
-                          item,
-                          item.type as
-                            | "customPlace"
-                            | "place"
-                            | "move"
-                            | "memo",
-                          "read"
-                        )
-                      }
-                    >
-                      read바텀시트
-                    </button> */}
+      <div className="w-11/12 min-h-44 pb-4">
+        <div
+          className="h-6 w-full mb-2 flex items-center justify-between cursor-pointer"
+          onClick={() => showMore(schedule, schedule.type, "read")}
+        >
+          <h3 className="flex text-base font-bold">
+            <FillLocationIcon className="h-6 w-6 mr-2" color={color} />
+            <span>{schedule.data.title}</span>
+          </h3>
+          <button>*</button>
         </div>
         <div className="w-full min-h-20 py-2 px-3 relative bg-white text-sm shadow-schecule-list rounded-lg">
           {schedule.data.startTime && schedule.data.endTime && (
@@ -86,7 +80,7 @@ function Schedule({ index, schedule, isLast }: Props) {
           <ClipIcon className="absolute right-4 bottom-4" />
         </div>
       </div>
-    </li>
+    </>
   );
 }
 

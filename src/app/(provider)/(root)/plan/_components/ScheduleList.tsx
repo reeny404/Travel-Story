@@ -49,44 +49,48 @@ function ScheduleList({ planId, selectedDay }: ScheduleListProps) {
     setSelectedItem(undefined);
   };
 
+  let placeIndex: number = 0;
+
   return (
     <>
       <ul className="p-6 h-full">
         {scheduleList.map((item, index) => {
-          let placeIndex: number = 0;
           const isLast = index === scheduleList.length - 1;
+          const isSchedule =
+            item.type === "customPlace" || item.type === "place";
 
-          if (item.type === "customPlace" || item.type === "place") {
-            const schedule: SupabaseScheduleType = item as SupabaseScheduleType;
-            return (
-              <Schedule
-                key={item.id}
-                index={placeIndex}
-                schedule={schedule}
-                isLast={isLast}
-              />
-            );
-          }
-
-          if (item.type === "move") {
-            const move: SupabaseMoveType = item as SupabaseMoveType;
-            return (
-              <MoveSchedule key={item.id} moveSchedule={move} isLast={isLast} />
-            );
-          }
-
-          if (item.type === "memo") {
-            const memo: SupabaseMemoType = item as SupabaseMemoType;
-            return (
-              <Memo
-                key={memo.id}
-                memo={memo}
-                isLast={isLast}
-                planId={planId}
-                day={selectedDay}
-              />
-            );
-          }
+          return (
+            <li
+              key={item.id}
+              className="flex items-center justify-between min-h-44 h-full"
+            >
+              {isSchedule && (
+                <Schedule
+                  key={item.id}
+                  index={++placeIndex}
+                  schedule={item as SupabaseScheduleType}
+                  isLast={isLast}
+                  showMore={openBottomSheet}
+                />
+              )}
+              {item.type === "move" && (
+                <MoveSchedule
+                  key={item.id}
+                  moveSchedule={item as SupabaseMoveType}
+                  isLast={isLast}
+                />
+              )}
+              {item.type === "memo" && (
+                <Memo
+                  key={item.id}
+                  memo={item as SupabaseMemoType}
+                  isLast={isLast}
+                  planId={planId}
+                  day={selectedDay}
+                />
+              )}
+            </li>
+          );
         })}
       </ul>
       {isBottomSheetOpen && selectedItem && (
