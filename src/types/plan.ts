@@ -13,6 +13,7 @@ export type PlanInsertType = TablesInsert<"plan">;
 export type PlanFull = Plan & { schedules: Tables<"schedule">[] };
 
 export type PlanChildData = Schedule | Memo | MoveSchedule | CustomPlace;
+export type OrderList = Array<Array<Order>>
 
 export type MoveType = "도보" | "자전거" | "렌트카" | "대중교통" | "선박" | "항공";
 export type MoveSchedule = {

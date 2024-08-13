@@ -2,32 +2,28 @@
 
 import useScheduleStore from "@/stores/schedule.store";
 import {
+  BottomSheetType,
+  PlanChildType,
   SupabaseMemoType,
   SupabaseMoveType,
   SupabaseScheduleType,
+  Todo,
 } from "@/types/plan";
 import { useEffect, useState } from "react";
 import BottomSheet from "./BottomSheet";
+import { getColorChip } from "./Color";
 import CheckIcon from "./icons/CheckIcon";
 import ClipIcon from "./icons/ClipIcon";
 import FillLocationIcon from "./icons/FillLocationIcon";
 import FillMemoIcon from "./icons/FillMemoIcon";
 import TimeIcon from "./icons/TimeIcon";
 
-const colors = ["#E8F97B", "#4394ED", "#ED795A", "#29C273", "#AA82E2"];
-
-type CheckItemType = {
-  text: string;
-  isCheck: boolean;
-};
-
-function ScheduleList({
-  planId,
-  selectedDay,
-}: {
+type ScheduleListProps = {
   planId: string;
   selectedDay: number;
-}) {
+};
+
+function ScheduleList({ planId, selectedDay }: ScheduleListProps) {
   const {
     planChildren: scheduleList,
     fetchSchedule: fetchScheduleList,
@@ -35,10 +31,8 @@ function ScheduleList({
   } = useScheduleStore();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  const [type, setType] = useState<"customPlace" | "place" | "move" | "memo">(
-    "place"
-  ); // Default type
-  const [status, setStatus] = useState<"add" | "read" | "update">("read");
+  const [type, setType] = useState<PlanChildType>("place"); // Default type
+  const [status, setStatus] = useState<BottomSheetType["status"]>("read");
 
   useEffect(() => {
     fetchScheduleList(planId, selectedDay);
@@ -105,7 +99,7 @@ function ScheduleList({
           if (item.type === "customPlace" || item.type === "place") {
             const schedule: SupabaseScheduleType = item as SupabaseScheduleType;
             countText = `${++placeIndex}`;
-            backgroundColor = colors[(placeIndex - 1) % colors.length];
+            backgroundColor = getColorChip(placeIndex - 1);
             colorIcon = backgroundColor;
 
             return (
@@ -241,8 +235,8 @@ function ScheduleList({
                   <div className="w-full min-h-20 h-auto py-2 px-4 bg-white text-sm shadow-schecule-list rounded-lg">
                     <div className="flex items-center h-full">
                       <ul className="w-full">
-                        {(memo.data.check as Array<CheckItemType>)?.map(
-                          (checkItem: CheckItemType, index: number) => (
+                        {(memo.data.check as Array<Todo>)?.map(
+                          (checkItem: Todo, index: number) => (
                             <li
                               key={index}
                               className="flex items-center justify-between mb-2 h-10"

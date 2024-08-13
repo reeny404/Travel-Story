@@ -1,8 +1,6 @@
-import { Order } from "@/types/plan";
+import { Order, OrderList } from "@/types/plan";
 import { UserMetadata } from "@supabase/supabase-js";
 import { DateUtil } from "./DateUtil";
-
-export type OrderList = Array<Array<Order>>
 
 function getTitle(meta?: UserMetadata): string {
   if (!meta) {

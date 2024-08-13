@@ -1,8 +1,7 @@
 import { createClient } from "@/supabase/server";
 import { ApiResponse } from "@/types/ApiResponse";
-import { Order, PlanChildType, PlanFull } from "@/types/plan";
+import { OrderList, PlanChildType, PlanFull } from "@/types/plan";
 import { Tables } from "@/types/supabase";
-import { OrderList } from "@/utils/PlanUtil";
 import { NextRequest, NextResponse } from "next/server";
 import { getTableManager } from "./PlanChildTable";
 
@@ -79,7 +78,7 @@ export async function POST(request: NextRequest, { params: { planId } }: Params)
       throw new SyntaxError("supabase error, plan select", { cause: planSelectError })
     }
 
-    const orderList = planOrder?.orderList as Array<Array<Order>>;
+    const orderList = planOrder?.orderList as OrderList;
     orderList.at(dayIndex)?.push({ id: childData.id, type });
 
     const { data: plan, error } = await supabase
