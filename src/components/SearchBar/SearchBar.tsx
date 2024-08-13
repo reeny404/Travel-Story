@@ -1,7 +1,7 @@
 "use client";
 
+import useCountryFilterStore from "@/stores/searchFilter.store";
 import { debounce } from "lodash";
-import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import SvgIcon from "../commons/SvgIcon";
 
@@ -16,7 +16,7 @@ function SearchBar({
   initialValue = "",
   isDisabled,
 }: SearchBarProps) {
-  const router = useRouter();
+  const { countryFilter, resetCountryFilter } = useCountryFilterStore();
   const [searchTerm, setSearchTerm] = useState<string>(initialValue);
 
   useEffect(() => {
@@ -55,8 +55,25 @@ function SearchBar({
       className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-search"
       onSubmit={handleSearch}
     >
-      <div className="flex items-center w-full gap-3">
-        <SvgIcon name="search" width={20} height={20} title="search" />
+      <div className="flex items-center w-full gap-2">
+        <SvgIcon
+          name="search"
+          width={20}
+          height={20}
+          title="search"
+          className="flex-shrink-0"
+        />
+
+        {countryFilter.name && (
+          <div className="flex items-center space-x-1 ml-1">
+            <span
+              className="max-w-[7ch] text-brand-800 whitespace-nowrap cursor-pointer overflow-hidden text-ellipsis"
+              onClick={resetCountryFilter}
+            >
+              {countryFilter.name}
+            </span>
+          </div>
+        )}
 
         <input
           className="w-[90%] bg-transparent outline-none"

@@ -12,7 +12,7 @@ function SearchPage() {
     >
       <section className="min-h-[calc(100vh-52px)]">
         <div className="flex flex-col">
-          <Suspense fallback={<div />}>
+          <Suspense>
             <ClientSearch />
           </Suspense>
         </div>

@@ -29,7 +29,7 @@ const useGetData = () => {
             acc[key] = response[key].map((area: extendArea) => ({
               title: area.name || "",
               description: area.description || "",
-              imageUrl: area.imageUrl,
+              imageUrl: area.imageUrl || "/sampleImg.jpg",
               linkUrl: `/recommend/area/${area.id}` || "",
               tags: area.tags ? area.tags : getRandomTags(),
               id: area.id,
