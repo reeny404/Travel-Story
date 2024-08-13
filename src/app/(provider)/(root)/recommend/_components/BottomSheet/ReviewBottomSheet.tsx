@@ -43,7 +43,7 @@ function ReviewBottomSheet({
     setRating((prev) => (rating === idx ? prev - 1 : idx));
   }, []);
 
-  const { mutate: addReview } = useMutation({
+  const { mutate: addReview, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
       const response = await api.review.addReview(formData);
       onClose();
@@ -107,9 +107,11 @@ function ReviewBottomSheet({
             className={clsx(
               "bg-button-disable w-full h-10 text-center text-neutral-450 rounded-lg",
               {
-                "!bg-neutral-750 !text-white": textValue.length > 0,
+                "!bg-neutral-750 !text-white":
+                  textValue.length > 0 && !isPending,
               }
             )}
+            disabled={isPending}
             type="button"
             onClick={handleAdd}
           >

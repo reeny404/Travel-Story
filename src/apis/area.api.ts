@@ -16,11 +16,15 @@ class AreaAPI {
   }
 
   async getAreas(): Promise<RecommendResponse<Area[]>> {
-    const path = "/api/area";
-    const response = await this.axios.get<RecommendResponse<Area[]>>(path);
-    const data = response.data;
+    try {
+      const path = "/api/area";
+      const response = await this.axios.get<RecommendResponse<Area[]>>(path);
+      const data = response.data;
 
-    return data;
+      return data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 
   /**
@@ -29,15 +33,19 @@ class AreaAPI {
    * @returns
    */
   async getAreasById(id: number): Promise<RecommendResponse<Area>> {
-    const path = `/api/area/${id}`;
-    const response = await this.axios.get<RecommendResponse<Area>>(path, {
-      params: {
-        id,
-      },
-    });
+    try {
+      const path = `/api/area/${id}`;
+      const response = await this.axios.get<RecommendResponse<Area>>(path, {
+        params: {
+          id,
+        },
+      });
 
-    const data = response.data;
-    return data;
+      const data = response.data;
+      return data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 
   /**
@@ -49,18 +57,22 @@ class AreaAPI {
     id: number,
     limit: number | null
   ): Promise<RecommendResponse<GroupedArea>> {
-    const path = `/api/area/city`;
-    const response = await this.axios.get<RecommendResponse<GroupedArea>>(
-      path,
-      {
-        params: {
-          id,
-          limit,
-        },
-      }
-    );
-    const data = response.data;
-    return data;
+    try {
+      const path = `/api/area/city`;
+      const response = await this.axios.get<RecommendResponse<GroupedArea>>(
+        path,
+        {
+          params: {
+            id,
+            limit,
+          },
+        }
+      );
+      const data = response.data;
+      return data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 
   /**
@@ -73,20 +85,21 @@ class AreaAPI {
     id: number,
     limit: number | null
   ): Promise<RecommendResponse<GroupedArea>> {
-    const path = `/api/area/country`;
-    const response = await this.axios.get<RecommendResponse<GroupedArea>>(
-      path,
-      {
-        params: {
-          id,
-          limit,
-        },
-      }
-    );
-    if (response.data.error) {
-      console.log("getAreasByContry Error", response.data.error);
+    try {
+      const path = `/api/area/country`;
+      const response = await this.axios.get<RecommendResponse<GroupedArea>>(
+        path,
+        {
+          params: {
+            id,
+            limit,
+          },
+        }
+      );
+      return response.data;
+    } catch (error: any) {
+      throw new error();
     }
-    return response.data;
   }
 
   /**
@@ -95,6 +108,7 @@ class AreaAPI {
    *  @param countryId {string} 국가 id
    * @returns 검색 결과
    */
+
   async search(
     term: string,
     countryId?: string
@@ -109,18 +123,25 @@ class AreaAPI {
 
     const data = response.data;
     return data;
+
   }
 
   // 메인 페이지에서 사용되는 카테고리 별 관광지 정보
   async getAreasByCategory(): Promise<
     RecommendResponse<{ [key: string]: Area[] }>
   > {
-    const path = "/api/area/category";
-    const response =
-      await this.axios.get<RecommendResponse<{ [key: string]: Area[] }>>(path);
-    const data = response.data;
+    try {
+      const path = "/api/area/category";
+      const response =
+        await this.axios.get<RecommendResponse<{ [key: string]: Area[] }>>(
+          path
+        );
+      const data = response.data;
 
-    return data;
+      return data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 
   // TODO 아래 두 메서드 Plan쪽으로 옮겨야댐
@@ -133,8 +154,8 @@ class AreaAPI {
         },
       });
       return response.data.length === 0 ? null : response.data;
-    } catch (error) {
-      return console.log(error);
+    } catch (error: any) {
+      throw new error();
     }
   }
 
@@ -142,8 +163,8 @@ class AreaAPI {
     try {
       const path = `api/area/plan`;
       const response = await this.axios.post<PlanType>(path, data);
-    } catch (error) {
-      return console.log(error);
+    } catch (error: any) {
+      throw new error();
     }
   }
 
@@ -151,8 +172,8 @@ class AreaAPI {
     try {
       const path = "api/area/schedule";
       const response = await this.axios.post<Schedule>(path, data);
-    } catch (error) {
-      return console.log(error);
+    } catch (error: any) {
+      throw new error();
     }
   }
 }
