@@ -8,6 +8,7 @@ import { PlanData } from "@/types/plan";
 import { PlanUtil } from "@/utils/PlanUtil";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import BottomSheetTitle from "../BottomSheetTitle";
 
 type AddBottomSheetTitle = {
   areaId: number;
@@ -18,7 +19,7 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const { mutate: addPlan } = useMutation({
+  const { mutate: addPlan, isPending } = useMutation({
     mutationFn: async (data: PlanData) => {
       const response = await api.area.addPlan(data);
       return response;
@@ -46,15 +47,19 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
     addPlan(data);
   };
   return (
-    <div className="w-full flex justify-between items-center mb-7">
-      <h1 className="w-full h-full flex items-center p-1 text-lg outline-none bg-white text-neutral-750 font-bold">
-        {isPlan ? "어디에 추가하시겠어요?" : "새 일정을 만들어 주세요."}
-      </h1>
-      {/* 호버 opacity로 일단 땜빵.. */}
+    <div className="w-full flex justify-between items-center mb-7 px-4">
+      <BottomSheetTitle
+        title={isPlan ? "어디에 추가하시겠어요?" : "새 일정을 만들어 주세요."}
+      />
+      {isPending && (
+        <div className="absolute w-full h-full flex items-center justify-center">
+          loading
+        </div>
+      )}
       <button
         type="button"
         onClick={handleAddPlan}
-        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white bg-neutral-750 hover:bg-opacity-80 text-sm font-medium rounded-[16px]"
+        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white bg-neutral-750 hover:opacity-90 active:opacity-80 text-sm font-medium rounded-[16px]"
       >
         <Image
           src={getIconPath(ICON.add.bold)}

@@ -44,7 +44,7 @@ const ReviewDropdownMenu = ({ handleOpen, handleDelete }: DropdownMenu) => {
         />
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+        <div className="absolute right-4 -mt-1 w-24 bg-white border border-gray-100 rounded-md shadow-lg origin-top animate-dropdown">
           <ul
             onClick={() => {
               setIsOpen(false);

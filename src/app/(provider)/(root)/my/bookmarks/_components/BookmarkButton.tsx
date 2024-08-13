@@ -9,13 +9,11 @@ type BookmarkButtonProps = {
 };
 
 function BookmarkButton({ areaId }: BookmarkButtonProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks({
-    areaId: areaId,
-  });
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks();
 
   return (
     <>
-      {isBookmarked ? (
+      {isBookmarked(areaId) ? (
         <Icon
           icon={ICON.bookmark.big.on}
           size={20}

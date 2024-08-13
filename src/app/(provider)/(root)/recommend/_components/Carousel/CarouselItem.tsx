@@ -1,5 +1,3 @@
-import AreaCard from "../Cards/AreaCard";
-
 type CarouselItemType = {
   imageUrl: string;
   title: string;
@@ -16,7 +14,7 @@ function CarouselItem(item: CarouselItemType) {
   return (
     <>
       <div className="w-full">
-        <AreaCard
+        {/* <AreaCard
           title={item.title}
           rating={item.rating}
           description={item.description}
@@ -26,7 +24,7 @@ function CarouselItem(item: CarouselItemType) {
           city={item.city}
           country={item.country}
           areaName={item.areaName}
-        />
+        /> */}
       </div>
     </>
   );

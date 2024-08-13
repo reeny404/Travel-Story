@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const query = searchParams.get("query");
+  const term = searchParams.get("term");
+  const countryId = searchParams.get("country");
 
-  if (!query) {
+  if (!term) {
     return NextResponse.json({
       status: 400,
       message: "Bad Request",
@@ -16,10 +17,16 @@ export async function GET(request: NextRequest) {
 
   const supabase = createClient();
 
-  const { data, error } = await supabase
+  let query = supabase
     .from("area")
     .select("*")
-    .or(`name.ilike.%${query}%, krName.ilike.%${query}%`);
+    .or(`name.ilike.%${term}%, krName.ilike.%${term}%`);
+
+  if (countryId) {
+    query = query.eq("countryId", countryId);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     return NextResponse.json({
@@ -34,7 +41,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       status: 404,
       message: "No Data",
-      error: { status: 404, message: "No Data" },
+      error: { status: 404, message: "No Search Data" },
       data: null,
     });
   }
