@@ -57,7 +57,6 @@ export async function POST(request: NextRequest) {
       data: null,
     });
   }
-
   const { data: areaData } = await supabase
     .from("area")
     .select("lat,lng")
@@ -75,9 +74,9 @@ export async function POST(request: NextRequest) {
   const { data: insertedData } = await supabase
     .from("areaBookmark")
     .insert({ userId, areaId, lat, lng })
-    .select();
-
-  if (!insertedData || insertedData.length === 0) {
+    .select()
+    .single();
+  if (!insertedData) {
     return NextResponse.json({
       status: 404,
       message: "No Data",
@@ -85,14 +84,17 @@ export async function POST(request: NextRequest) {
       data: null,
     });
   }
-
-  return NextResponse.json(insertedData);
+  return NextResponse.json({
+    status: 200,
+    message: "Success",
+    data: insertedData,
+    error: null,
+  });
 }
 
 export async function DELETE(request: NextRequest) {
   const data = await request.json();
   const areaId = data.areaId;
-
   const supabase = createClient();
   const userId = (await AuthUtil.getUser(supabase))?.id;
   if (!userId) {
@@ -104,7 +106,12 @@ export async function DELETE(request: NextRequest) {
     .delete()
     .eq("userId", userId)
     .eq("areaId", areaId)
-    .select();
-
-  return NextResponse.json(deletedData);
+    .select()
+    .single();
+  return NextResponse.json({
+    status: 200,
+    message: "Success",
+    data: deletedData,
+    error: null,
+  });
 }

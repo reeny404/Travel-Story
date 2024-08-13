@@ -8,6 +8,7 @@ import { PlanData } from "@/types/plan";
 import { PlanUtil } from "@/utils/PlanUtil";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import BottomSheetTitle from "../BottomSheetTitle";
 
 type AddBottomSheetTitle = {
   areaId: number;
@@ -46,11 +47,11 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
     addPlan(data);
   };
   return (
-    <div className="w-full flex justify-between items-center mb-7">
-      <h1 className="w-full h-full flex items-center p-1 text-lg outline-none bg-white text-neutral-750 font-bold">
-        {isPlan ? "어디에 추가하시겠어요?" : "새 일정을 만들어 주세요."}
-      </h1>
-      {/* 호버 opacity로 일단 땜빵.. */}
+    <div className="w-full flex justify-between items-center mb-7 px-4">
+      <BottomSheetTitle
+        title={isPlan ? "어디에 추가하시겠어요?" : "새 일정을 만들어 주세요."}
+      />
+
       <button
         type="button"
         onClick={handleAddPlan}

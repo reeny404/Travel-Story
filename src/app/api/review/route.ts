@@ -156,7 +156,6 @@ export async function PUT(request: NextRequest) {
   if (existedImg.length !== 0) {
     for (let idx = 0; idx < existedImg.length; idx++) {
       imageUrls.push(existedImg[idx] as string);
-      console.log("existedImg[idx]", existedImg[idx]);
     }
   }
   if (imgFiles.length !== 0) {
@@ -235,7 +234,6 @@ export async function DELETE(request: NextRequest) {
   const data = await request.json();
   const id = data.id;
   const areaId = data.areaId;
-  console.log("areaId", areaId);
   const supabase = createClient();
   const { data: deletedData, error } = await supabase
     .from("areaReview")
