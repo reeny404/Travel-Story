@@ -10,6 +10,7 @@ export type BottomSheetType = {
 
 export type Plan = Tables<"plan">;
 export type PlanInsertType = TablesInsert<"plan">;
+export type PlanFull = Plan & { schedules: Tables<"schedule">[] };
 
 export type PlanChildData = Schedule | Memo | MoveSchedule | CustomPlace;
 

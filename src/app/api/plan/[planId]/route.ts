@@ -1,15 +1,55 @@
 import { createClient } from "@/supabase/server";
-import { PlanChildType } from "@/types/plan";
+import { ApiResponse } from "@/types/ApiResponse";
+import { Order, PlanChildType, PlanFull } from "@/types/plan";
+import { Tables } from "@/types/supabase";
+import { OrderList } from "@/utils/PlanUtil";
 import { NextRequest, NextResponse } from "next/server";
 import { getTableManager } from "./PlanChildTable";
 
-type Order = { id: string, type: PlanChildType };
-
-type PostParams = {
+type Params = {
   params: { planId: string }
 }
 
-export async function POST(request: NextRequest, { params: { planId } }: PostParams) {
+export async function GET(request: NextRequest, { params: { planId } }: Params): Promise<NextResponse<ApiResponse<PlanFull | null>>> {
+  try {
+    // day는 1부터 시작
+    const { searchParams } = new URL(request.url);
+    const day = searchParams.get("day");
+    const dayIndex = Number(day) - 1;
+
+    if (isNaN(dayIndex)) {
+      throw SyntaxError("cannot parse param.day" + dayIndex);
+    }
+
+    const supabase = createClient();
+    const { data: plan, error } = await supabase
+      .from("plan")
+      .select("*, schedules:schedule(*)")
+      .eq("id", planId)
+      .single();
+
+    if (!plan) {
+      throw new Error("cannot found data", { cause: error });
+    }
+    const { orderList, schedules } = plan;
+    const orders = (orderList as OrderList)[dayIndex] ?? [];
+    const filteredSchedules: Tables<"schedule">[] = orders.map(order => {
+      const schedule = schedules?.find(schedule => schedule.id === order.id);
+      if (!schedule?.latlng) {
+        return null;
+      }
+
+      return Object.keys(schedule.latlng).length ? schedule : null;
+    }).filter(schedule => !!schedule);
+
+    return NextResponse.json({ data: { ...plan, schedules: filteredSchedules }, error });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ data: null, error: e }, { status: 400, statusText: "something wrong" });
+  }
+}
+
+export async function POST(request: NextRequest, { params: { planId } }: Params) {
   try {
     const requestParameter = await request.json();
     const type: PlanChildType = requestParameter.type;
@@ -53,7 +93,6 @@ export async function POST(request: NextRequest, { params: { planId } }: PostPar
 
     return NextResponse.json({ plan }, {
       status: 200,
-      statusText: "OK",
     });
   } catch (e) {
     console.error(e);
