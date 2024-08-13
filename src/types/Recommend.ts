@@ -49,8 +49,13 @@ export type BookmarkWithArea = AreaBookmark & { area: Area };
 export type BookmarkAPIType = {
   areaId: number;
 };
+
+type AreaTypes = "restaurant" | "place" | "shop" | "accommodation";
+type AreaType = { type: AreaTypes };
+
 export type AreaReview = Tables<"areaReview"> & {
   imageUrls: string[];
+  area: AreaType;
 };
 
 export type Rating = {
