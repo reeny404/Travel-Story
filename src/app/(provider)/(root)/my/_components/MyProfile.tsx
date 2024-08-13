@@ -77,13 +77,14 @@ function MyProfile({ user }: { user: SupabaseUser }) {
   return (
     <section className="flex flex-col w-full items-center mt-12 mb-[29px] z-10">
       <div className="relative">
-        <Image
-          src={imageURL ?? "/icons/avatar.svg"}
-          alt="프로필"
-          width={88}
-          height={88}
-          className="rounded-full"
-        />
+        <div className="relative aspect-square w-[88px] h-[88px] rounded-full bg-neutral-200">
+          <Image
+            src={imageURL ?? "/icons/avatar.svg"}
+            alt="profile Image"
+            fill
+            className="object-cover rounded-full"
+          />
+        </div>
         <input
           type="file"
           accept="image/*"

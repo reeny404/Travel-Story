@@ -16,7 +16,7 @@ function ProgressBar() {
   }, [labelColor]);
 
   return (
-    <div className="w-full h-[2px] bg-neutral-150">
+    <div className="w-full h-[2px] mt-[52px] bg-neutral-150">
       <div
         className="bg-neutral-750 h-[2px] transition-all duration-300 ease-in-out"
         style={{ width: `${progressPercentage}%` }}
