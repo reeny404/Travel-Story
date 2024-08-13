@@ -23,12 +23,7 @@ function MyPageSection() {
     queryFn: async () => await api.auth.userProfile(user?.email as string),
   });
 
-  if (isInitialized && !isLoggedIn) {
-    router.replace("/login");
-    return;
-  }
-
-  if (!supabaseUser) {
+  if ((isInitialized && !isLoggedIn) || !supabaseUser) {
     router.replace("/login");
     return;
   }
@@ -43,7 +38,7 @@ function MyPageSection() {
           height={88}
           className="rounded-full"
         />
-        <div className="w-[100px] h-[24px] mt-4 bg-gray-300 rounded-lg"></div>
+        <div className="w-[100px] h-[24px] mt-4 bg-gray-300 rounded-lg" />
       </section>
     );
   }
