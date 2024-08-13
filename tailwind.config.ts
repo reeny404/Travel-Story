@@ -17,12 +17,12 @@ const config: Config = {
         "neutral-400/84": "rgba(255, 255, 255, 0.84)",
       },
       maxWidth: {
-        xs: "450px",
+        xs: "430px",
       },
       zIndex: {
         drawer: "1000",
         tab: "950",
-        underbar: "1000",
+        underbar: "950",
         bottomSheet: "9999",
       },
       backgroundImage: {
@@ -49,7 +49,7 @@ const config: Config = {
         "bookmark-card": "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
         "inner-bookmark": "inset 0px 0px 8px rgba(0, 0, 0, 0.25)",
         "filter-icon": "0px 4px 30px 0px rgba(0, 0, 0, 0.10)",
-        "search-bar": "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
+        search: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
         plan: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
         header: "0px 4px 20px 0px rgba(0, 0, 0, 0.04)",
         drawer: "4px 0px 20px 0px rgba(0, 0, 0, 0.16)",

@@ -104,23 +104,26 @@ class AreaAPI {
 
   /**
    *
-   * @param query 검색어
+   * @param term {string} 검색어
+   *  @param countryId {string} 국가 id
    * @returns 검색 결과
    */
-  async search(query: string): Promise<RecommendResponse<Area[]>> {
-    try {
-      const path = `/api/area/search`;
-      const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
-        params: {
-          query,
-        },
-      });
 
-      const data = response.data;
-      return data;
-    } catch (error: any) {
-      throw new error();
-    }
+  async search(
+    term: string,
+    countryId?: string
+  ): Promise<RecommendResponse<Area[]>> {
+    const path = `/api/area/search`;
+    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
+      params: {
+        term,
+        ...(countryId && { country: countryId }),
+      },
+    });
+
+    const data = response.data;
+    return data;
+
   }
 
   // 메인 페이지에서 사용되는 카테고리 별 관광지 정보

@@ -5,6 +5,7 @@ import {
   IconComponentType,
   loadSvgIconType,
   SvgIconProps,
+  SvgIconWithPreload,
 } from "@/types/SvgIcon";
 import Image from "next/image";
 import { lazy } from "react";
@@ -20,22 +21,25 @@ const loadSvgIcon = ({
   width,
   height,
 }: loadSvgIconType): IconComponentType => {
-  if (!iconCache[name]) {
-    iconCache[name] = lazy(() =>
-      import(`@/assets/icons/${name}.svg`).catch(() => {
-        return {
-          default: () => (
-            <Image
-              src="/travelstory-logo.png"
-              alt="fallback icon"
-              width={width}
-              height={height}
-            />
-          ),
-        };
-      })
-    );
+  if (iconCache[name]) {
+    return iconCache[name];
   }
+
+  iconCache[name] = lazy(() =>
+    import(`@/assets/icons/${name}.svg`).catch(() => {
+      return {
+        default: () => (
+          <Image
+            src="/travelstory-logo.png"
+            alt="fallback icon"
+            width={width}
+            height={height}
+          />
+        ),
+      };
+    })
+  );
+
   return iconCache[name];
 };
 
@@ -68,22 +72,26 @@ const SvgIcon = ({
   const fillColor = getColor(customColor, color) || color;
 
   return (
-    <button
-      className={`flex justify-center items-center cursor-pointer ${className}`}
-      style={{ width: `${width}px`, height: `${height}px` }}
-      type="button"
-    >
-      <Icon
-        width={width}
-        height={height}
-        fill={hasStroke ? "none" : fillColor}
-        stroke={hasStroke ? fillColor : "none"}
-        strokeWidth={hasStroke ? strokeWidth : "none"}
-        title={title}
-        role="image"
-        onClick={onClick}
-      />
-    </button>
+    <Icon
+      width={width}
+      height={height}
+      fill={hasStroke ? "none" : fillColor}
+      stroke={hasStroke ? fillColor : "none"}
+      strokeWidth={hasStroke ? strokeWidth : "none"}
+      title={title}
+      role="image"
+      onClick={onClick}
+      className={className}
+    />
   );
 };
-export default SvgIcon;
+
+// input 동작시점과의 충돌이 있는 곳에 사용하는 preload 기능
+(SvgIcon as SvgIconWithPreload).preload = async (name: string) => {
+  if (!iconCache[name]) {
+    const preloadIcon = await import(`@/assets/icons/${name}.svg`);
+    iconCache[name] = preloadIcon.default as IconComponentType;
+  }
+};
+
+export default SvgIcon as SvgIconWithPreload;

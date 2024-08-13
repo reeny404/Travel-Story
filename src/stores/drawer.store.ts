@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-type DrawerState = {
+type DrawerStoreType = {
   isOpen: boolean;
   openDrawer: () => void;
   closeDrawer: () => void;
 };
 
-const useDrawerStore = create<DrawerState>((set) => ({
+const useDrawerStore = create<DrawerStoreType>((set) => ({
   isOpen: false,
   openDrawer: () => set({ isOpen: true }),
   closeDrawer: () => set({ isOpen: false }),
