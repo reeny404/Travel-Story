@@ -78,14 +78,19 @@ class AreaAPI {
 
   /**
    *
-   * @param query 검색어
+   * @param term {string} 검색어
+   *  @param countryId {string} 국가 id
    * @returns 검색 결과
    */
-  async search(query: string): Promise<RecommendResponse<Area[]>> {
+  async search(
+    term: string,
+    countryId?: string
+  ): Promise<RecommendResponse<Area[]>> {
     const path = `/api/area/search`;
     const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
       params: {
-        query,
+        term,
+        ...(countryId && { country: countryId }),
       },
     });
 

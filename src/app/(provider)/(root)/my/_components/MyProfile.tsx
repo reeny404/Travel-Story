@@ -3,6 +3,7 @@ import { api } from "@/apis/api";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { MouseEvent, useRef, useState } from "react";
 
 type SupabaseUser = {
@@ -11,7 +12,7 @@ type SupabaseUser = {
 };
 
 function MyProfile() {
-  const { user } = useAuth();
+  const { user, isInitialized, isLoggedIn } = useAuth();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { data: supabaseUser, isPending } = useQuery<SupabaseUser>({
@@ -19,8 +20,14 @@ function MyProfile() {
     queryFn: async () => await api.auth.userProfile(user?.email as string),
   });
 
+  const router = useRouter();
   const profileUrl = supabaseUser?.image_url;
   const nickname = supabaseUser?.nickname;
+
+  if (isInitialized && !isLoggedIn) {
+    router.replace("/login");
+    return;
+  }
 
   // 편집버튼 누를 때
   const handleClickEdit = (

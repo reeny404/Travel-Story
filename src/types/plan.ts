@@ -1,12 +1,7 @@
 import { LatLng } from "./LatLng";
 import { Tables, TablesInsert } from "./supabase";
 
-export type PlanChildType =
-  | "customePlace"
-  | "place"
-  | "move"
-  | "memo"
-  | "spend";
+export type PlanChildType = "customPlace" | "place" | "move" | "memo" | "spend";
 
 export type BottomSheetType = {
   type: PlanChildType;

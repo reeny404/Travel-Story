@@ -1,6 +1,6 @@
-export type Tab = { kr: string; en: string; isEnabled?: boolean };
+export type TabType = { kr: string; en: string; isEnabled?: boolean };
 
-export const TABS: { default: Tab[]; areaDetail: Tab[] } = {
+export const TABS: { default: TabType[]; areaDetail: TabType[] } = {
   default: [
     { kr: "관광", en: "place", isEnabled: true },
     { kr: "숙소", en: "accommodation", isEnabled: true },

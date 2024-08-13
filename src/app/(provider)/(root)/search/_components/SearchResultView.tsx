@@ -43,15 +43,19 @@ function SearchResultView({
   }, [results, setCurrentTab]);
 
   if (isPending) {
-    return <p>로딩중입니다...</p>;
+    return <p className="px-4">로딩중입니다...</p>;
   }
 
   if (error) {
-    return <p>지금은 에러가 발생했어요! 나중에 다시 검색해주세요.</p>;
+    return (
+      <p className="px-4">
+        지금은 에러가 발생했어요! 나중에 다시 검색해주세요.
+      </p>
+    );
   }
 
   if (!results || results[0] === null) {
-    return <p>검색 결과가 없어요...</p>;
+    return <p className="px-4">검색 결과가 없어요...</p>;
   }
 
   const handleMoveDetail = (areaId: number) => {
@@ -91,6 +95,8 @@ export default SearchResultView;
 {
   /* 추후 사용 예정
         <CountryButton
+    <section className="w-full px-4">
+      {/* <CountryButton
             size="md"
             imgPath={result.imageUrl || "/sampleImg.jpg"}
             alt={result.name}

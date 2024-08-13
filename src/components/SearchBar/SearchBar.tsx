@@ -1,15 +1,22 @@
 "use client";
 
 import { debounce } from "lodash";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import SvgIcon from "../commons/SvgIcon";
 
 type SearchBarProps = {
   onSearch?: (term: string) => void;
   initialValue?: string;
+  isDisabled?: boolean;
 };
 
-function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
+function SearchBar({
+  onSearch,
+  initialValue = "",
+  isDisabled,
+}: SearchBarProps) {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string>(initialValue);
 
   useEffect(() => {
@@ -56,6 +63,7 @@ function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
           placeholder={`'파리'로 떠나보실래요?`}
           value={searchTerm}
           onChange={handleChangeTerm}
+          disabled={isDisabled}
         />
 
         {searchTerm && (

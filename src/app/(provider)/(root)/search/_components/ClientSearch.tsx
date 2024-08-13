@@ -3,6 +3,7 @@
 import { api } from "@/apis/api";
 import SvgIcon from "@/components/commons/SvgIcon";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import useCountryFilterStore from "@/stores/searchFilter.store";
 import { Area, RecommendResponse } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -15,7 +16,8 @@ import SearchResultView from "./SearchResultView";
 function ClientSearch() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialQuery = searchParams.get("query") || "";
+  const initialQuery = searchParams.get("term") || "";
+  const { countryFilter } = useCountryFilterStore();
   const [searchTerm, setSearchTerm] = useState<string>(initialQuery);
   const [searchResults, setSearchResults] = useState<Area[]>([]);
   const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
@@ -25,8 +27,8 @@ function ClientSearch() {
     isPending,
     error,
   } = useQuery<RecommendResponse<Area[]>, AxiosError>({
-    queryKey: ["searchResults", searchTerm],
-    queryFn: () => api.area.search(searchTerm),
+    queryKey: ["searchResults", searchTerm, countryFilter?.id],
+    queryFn: () => api.area.search(searchTerm, countryFilter?.id?.toString()),
     enabled: !!searchTerm,
     staleTime: 1000 * 60 * 3,
     gcTime: 1000 * 60 * 5,
@@ -43,9 +45,16 @@ function ClientSearch() {
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    if (term) {
-      router.push(`?query=${term}`);
+
+    const params = new URLSearchParams();
+    params.append("term", term);
+    if (countryFilter && countryFilter.id != null) {
+      params.append("country", countryFilter.id.toString());
+    } else {
+      params.delete("country");
     }
+
+    router.push(`/search?${params.toString()}`);
   };
 
   const handleToggleFilter = () => {

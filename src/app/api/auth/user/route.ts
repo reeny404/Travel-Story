@@ -1,6 +1,7 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
+/** 유저 정보 불러옴 */
 export async function GET(request: NextRequest) {
   const supabase = createClient();
   const { searchParams } = new URL(request.url);
@@ -37,4 +38,37 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({ message: "서버 오류", error }, { status: 500 });
   }
+}
+
+/** 온보딩에서 받은 user 취향 filter 저장  */
+export async function PATCH(request: NextRequest) {
+  const filterData = await request.json();
+  console.log(filterData);
+  const supabase = createClient();
+
+  // 유저 정보 받아오기
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return NextResponse.json(
+      { data: [] },
+      {
+        status: 200,
+        statusText: "permission denied, need login",
+      }
+    );
+  }
+
+  // filter에 업데이트
+  const { data, error } = await supabase
+    .from("users")
+    .update({ filter: filterData })
+    .eq("id", user.id);
+
+  if (error) {
+    console.error(error);
+  }
+
+  return NextResponse.json(data);
 }

@@ -21,7 +21,7 @@ function AddToPlanButton({ plan, area }: AddtoPlanButtonProps) {
 
   const handleOnClickToAdd = useCallback(() => {
     api.plan
-      .addChild(planId, Number(day), "customePlace", {
+      .addChild(planId, Number(day), "customPlace", {
         title: area.krName!,
         latlng: { lat: area.lat!, lng: area.lng! },
         areaId: area.id,

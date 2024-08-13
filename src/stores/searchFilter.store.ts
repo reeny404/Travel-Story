@@ -2,20 +2,23 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type CountryFilterType = {
-  selectedCountry: string;
-  setSelectedCountry: (country: string) => void;
-  resetSelectedCountry: () => void;
+  countryFilter: {
+    id: number | null;
+    name: string;
+  };
+  setCountryFilter: (id: number, name: string) => void;
+  resetCountryFilter: () => void;
 };
 
 const useCountryFilterStore = create<CountryFilterType>()(
   persist(
     (set) => ({
-      selectedCountry: "",
-      setSelectedCountry: (country) => set({ selectedCountry: country }),
-      resetSelectedCountry: () => set({ selectedCountry: "" }),
+      countryFilter: { id: null, name: "" },
+      setCountryFilter: (id, name) => set({ countryFilter: { id, name } }),
+      resetCountryFilter: () => set({ countryFilter: { id: null, name: "" } }),
     }),
     {
-      name: "filteredCountry",
+      name: "countryFilter",
     }
   )
 );

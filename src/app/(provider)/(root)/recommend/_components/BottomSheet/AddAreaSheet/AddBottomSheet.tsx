@@ -61,15 +61,15 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
       type: "place",
       latlng: { lat: area.lat!, lng: area.lng! },
     };
-    const insertData = getInsertData("customePlace", scheduleData, planId);
+    const insertData = getInsertData("customPlace", scheduleData, planId);
     if (!insertData) {
-      alert("고객센터로 연락해주세요 망했지 뭐");
+      alert("새로고침 후 재시도 해주세요");
       return;
     }
-    await createSchedule(planId, day ?? 1, "customePlace", insertData);
+    await createSchedule(planId, day ?? 1, "customPlace", insertData);
     setDay(null);
     onClose();
-    router.push(`/plan/${planId}`);
+    // router.push(`/plan/${planId}`);
   };
 
   useEffect(() => {

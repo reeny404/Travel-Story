@@ -9,9 +9,11 @@ function MyMenu() {
   const handleBookMarkClick = () => {
     router.push("/my/bookmarks");
   };
-
+  const handleReviewClick = () => {
+    router.push("/my/reviews");
+  };
   const handleMyTravelClick = () => {
-    router.push("/plan");
+    router.push("/plan/list");
   };
   return (
     <section className="flex w-full px-8 py-3 justify-around bg-white rounded-lg">
@@ -35,7 +37,7 @@ function MyMenu() {
         <p className="text-sm font-normal mt-2">보관함</p>
       </div>
       <div className="w-[1px] bg-neutral-300"></div>
-      <div className={pageMoveDiv}>
+      <div className={pageMoveDiv} onClick={handleReviewClick}>
         <Image
           src={"/icons/star-black.svg"}
           width={20}
