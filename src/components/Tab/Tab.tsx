@@ -6,7 +6,7 @@ import Image from "next/image";
 type TabProps = {
   currentTab: string;
   setCurrentTab: (currentTab: string) => void;
-  TABS: { kr: string; en: string }[];
+  TABS: { kr: string; en: string; isEnabled?: boolean }[];
   frameClassName?: string;
   isGray?: boolean;
 };
@@ -25,15 +25,17 @@ function Tab({
       {TABS.map((tab) => (
         <button
           key={tab.en}
+          disabled={!tab.isEnabled}
           className={clsx(
             "h-full w-full flex justify-center items-center border border-none rounded-lg",
             {
               "bg-black text-white font-semibold": tab.en === currentTab,
               "bg-white text-black": tab.en !== currentTab && !isGray,
               "bg-neutral-150 text-black": tab.en !== currentTab && isGray,
+              "opacity-50 cursor-not-allowed": !tab.isEnabled,
             }
           )}
-          onClick={() => setCurrentTab(tab.en)}
+          onClick={() => tab.isEnabled && setCurrentTab(tab.en)}
         >
           <div className="relative flex gap-x-2 items-center">
             {TABS[0].en === "place" && currentTab === tab.en && (
@@ -44,6 +46,7 @@ function Tab({
                   width={20}
                   height={20}
                   className={currentTab === "place" ? "block" : "hidden"}
+                  priority
                 />
                 <Image
                   src="/icons/accommodation-white.svg"
@@ -53,6 +56,7 @@ function Tab({
                   className={
                     currentTab === "accommodation" ? "block" : "hidden"
                   }
+                  priority
                 />
                 <Image
                   src="/icons/shop-white.svg"
@@ -60,6 +64,7 @@ function Tab({
                   width={20}
                   height={20}
                   className={currentTab === "shop" ? "block" : "hidden"}
+                  priority
                 />
                 <Image
                   src="/icons/restaurant-white.svg"
@@ -67,6 +72,7 @@ function Tab({
                   width={20}
                   height={20}
                   className={currentTab === "restaurant" ? "block" : "hidden"}
+                  priority
                 />
               </div>
             )}

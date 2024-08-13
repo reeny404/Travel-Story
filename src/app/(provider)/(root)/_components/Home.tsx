@@ -30,6 +30,13 @@ function Home() {
   //   staleTime: 1000 * 60 * 3,
   // });
 
+  const handleAvatarClick = () => {
+    if (user) {
+      return router.push("/my");
+    }
+    return router.push("/login");
+  };
+
   const handleSearch = (term: string) => {
     router.push(`/search?query=${term}`);
   };
@@ -51,13 +58,16 @@ function Home() {
             size: 20,
             onClick: handleMoveSearch,
           },
+          {
+            icon: ICON.avatar.black,
+            alt: "Mypage",
+            size: 20,
+            onClick: handleAvatarClick,
+          },
         ],
       }}
     >
-      <main
-        className="relative w-full bg-gray"
-        style={{ minHeight: "calc(100vh - 52px)" }}
-      >
+      <main className="relative w-full min-h-[calc(100vh-52px)] bg-gray">
         <div className="relative w-full h-[222px] bg-neutral-200">
           <Link href="/recommend/country/1/detail">
             <Image
@@ -68,12 +78,19 @@ function Home() {
             />
           </Link>
         </div>
+
         <div className="sticky z-10 -mt-[15px] px-4">
-          <div className="flex justify-center w-full">
-            <SearchBar onSearch={handleSearch} />
+          <div className="relative flex justify-center w-full">
+            <Link
+              className="absolute inset-y-0 left-4 right-0 w-11/12 h-full rounded-lg z-20 cursor-pointer"
+              href="/search"
+            />
+            <SearchBar onSearch={handleSearch} isDisabled={true} />
           </div>
         </div>
+
         <MyTrip />
+
         <div className="mt-7">
           <CardType title="인기 여행지" type="fire" />
           <ArchCardSlider spacing={12} slidesPerView={3.8} />
