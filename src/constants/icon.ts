@@ -87,7 +87,7 @@ export const ICON = {
   },
   ellipsis: {
     verticalBlack: "ellipsis-vertical-black",
-    white: { name: "ellipsis", ext: "svg" }
+    white: { name: "ellipsis", ext: "svg" },
   },
   filter: {
     black: "filter-black",

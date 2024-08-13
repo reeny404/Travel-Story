@@ -1,5 +1,10 @@
 import { createClient } from "@/supabase/server";
-import { AreaType, SupabaseMemoType, SupabaseMoveType, SupabaseScheduleType } from "@/types/plan";
+import {
+  AreaType,
+  SupabaseMemoType,
+  SupabaseMoveType,
+  SupabaseScheduleType,
+} from "@/types/plan";
 import { NextRequest, NextResponse } from "next/server";
 
 const TABLE_NAME = "schedule";
@@ -155,10 +160,13 @@ export async function POST(request: NextRequest) {
 }
 
 type GetParams = {
-  params: { planId: string }
-}
+  params: { planId: string };
+};
 
-export async function GET(request: NextRequest, { params: { planId } }: GetParams) {
+export async function GET(
+  request: NextRequest,
+  { params: { planId } }: GetParams
+) {
   try {
     const supabase = createClient();
     const searchParams = request.nextUrl.searchParams;
@@ -191,9 +199,7 @@ export async function GET(request: NextRequest, { params: { planId } }: GetParam
 
     // Schedule 데이터
     const scheduleIds = orderListForDay
-      .filter(
-        (entry) => entry.type === "customePlace" || entry.type === "place"
-      )
+      .filter((entry) => entry.type === "customPlace" || entry.type === "place")
       .map((entry) => entry.id);
     const { data: scheduleData = [] } = await supabase
       .from(TABLE_NAME)
@@ -220,9 +226,7 @@ export async function GET(request: NextRequest, { params: { planId } }: GetParam
 
     // Area 데이터
     const areaIds = (scheduleData || [])
-      .filter(
-        (entry) => entry.type === "place" && entry.areaId !== undefined
-      )
+      .filter((entry) => entry.type === "place" && entry.areaId !== undefined)
       .map((entry) => entry.areaId!);
 
     const { data: areaData = [] } = await supabase
@@ -232,7 +236,7 @@ export async function GET(request: NextRequest, { params: { planId } }: GetParam
 
     // 결과 데이터 결합
     const resultData = orderListForDay.map((entry) => {
-      if (entry.type === "customePlace" || entry.type === "place") {
+      if (entry.type === "customPlace" || entry.type === "place") {
         const data = scheduleData?.find((d) => d.id === entry.id) as
           | SupabaseScheduleType
           | undefined;
