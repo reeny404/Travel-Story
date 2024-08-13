@@ -3,15 +3,15 @@ import { ICON } from "@/constants/icon";
 import { Area } from "@/types/Recommend";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 const KEY: string = process.env.NEXT_PUBLIC_MAP_API_KEY!;
 
-type LocationForm = {
+type LocationFormProps = {
   area: Area;
 };
 
-function LocationForm({ area }: LocationForm) {
+const LocationForm = React.memo(({ area }: LocationFormProps) => {
   const [isInit, setIsInit] = useState<boolean>(false);
   const handleOnLoad = useCallback(() => setIsInit(true), []);
 
@@ -27,6 +27,7 @@ function LocationForm({ area }: LocationForm) {
         },
       }
     : {};
+
   return (
     <section className="mb-3 bg-[#E8F97B] rounded-lg">
       <article className="px-4 pt-8">
@@ -70,6 +71,8 @@ function LocationForm({ area }: LocationForm) {
       </article>
     </section>
   );
-}
+});
+
+LocationForm.displayName = "LocationForm";
 
 export default LocationForm;

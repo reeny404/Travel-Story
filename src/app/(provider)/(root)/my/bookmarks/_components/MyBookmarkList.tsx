@@ -1,10 +1,11 @@
 "use client";
 
 import { api } from "@/apis/api";
+
 import Tab from "@/components/Tab/Tab";
 import { TABS, TabType } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
-import { BookmarkWithArea } from "@/types/Recommend";
+import { extendBookmark } from "@/types/Recommend";
 import { useEffect, useState } from "react";
 import { MyBookmarkPageParams } from "../page";
 import BookmarkCard from "./BookmarkCard";
@@ -17,14 +18,14 @@ type PageProps = {
 
 export default function MyBookmarkList({ tabs, params }: PageProps) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.default });
-  const [bookmarks, setBookmarks] = useState<BookmarkWithArea[]>([]);
+  const [bookmarks, setBookmarks] = useState<extendBookmark[]>([]);
   useEffect(() => {
     api.bookmark.getBookmarks().then(({ data }) => {
       setBookmarks(data);
     });
   }, []);
 
-  const list: BookmarkWithArea[] = bookmarks?.length
+  const list: extendBookmark[] = bookmarks?.length
     ? bookmarks.filter((bookmark) => currentTab === bookmark.area.type)
     : [];
 
