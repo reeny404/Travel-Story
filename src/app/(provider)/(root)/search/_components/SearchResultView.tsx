@@ -13,12 +13,14 @@ type SearchResultViewProps = {
   results: Area[];
   isPending: boolean;
   error: Error | null;
+  onSearch?: (term: string) => void;
 };
 
 function SearchResultView({
   results,
   isPending,
   error,
+  onSearch,
 }: SearchResultViewProps) {
   const router = useRouter();
   const [filteredTabs, setFilteredTabs] = useState([...TABS.default]);
@@ -43,19 +45,42 @@ function SearchResultView({
   }, [results, setCurrentTab]);
 
   if (isPending) {
-    return <p className="px-4">로딩중입니다...</p>;
+    return (
+      <div className="flex flex-col justify-center items-center w-full h-[200px] px-4 mb-10 text-center">
+        로딩중입니다...
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <p className="px-4">
-        지금은 에러가 발생했어요! 나중에 다시 검색해주세요.
-      </p>
+      <div className="flex flex-col justify-center items-center px-4 my-20 text-center">
+        지금은 에러가 발생했어요! <br /> 나중에 다시 검색해주세요.
+      </div>
     );
   }
 
   if (!results || results[0] === null) {
-    return <p className="px-4">검색 결과가 없어요...</p>;
+    return (
+      <section className="flex flex-col items-center">
+        <div className="flex flex-col justify-center items-center w-full h-[200px] px-4 mb-10">
+          <p className="text-center">
+            검색결과가 없습니다. <br />
+            <span
+              className="text-lime-800 leading-6 underline cursor-pointer"
+              onClick={() => {
+                if (onSearch) {
+                  onSearch("오르세 미술관");
+                }
+              }}
+            >
+              오르세 미술관
+            </span>
+            은 어떠세요?
+          </p>
+        </div>
+      </section>
+    );
   }
 
   const handleMoveDetail = (areaId: number) => {
