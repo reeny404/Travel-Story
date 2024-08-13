@@ -77,6 +77,8 @@ export type PlanData = {
   endDate: string;
 };
 
+export type SupbasePlanChildren = SupabaseMemoType | SupabaseMoveType | SupabaseScheduleType;
+
 export type AreaType = { data: Tables<'area'> } & Order;
 export type SupabaseScheduleType = { data: Tables<'schedule'> & { area?: AreaType } } & Order;
 export type SupabaseMemoType = { data: Tables<'memo'> } & Order;
