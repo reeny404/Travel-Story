@@ -62,11 +62,12 @@ export type BookmarkAPIType = {
 };
 
 type AreaTypes = "restaurant" | "place" | "shop" | "accommodation";
-type AreaType = { type: AreaTypes };
 
 export type AreaReview = Tables<"areaReview"> & {
   imageUrls: string[];
-  area: AreaType;
+    area: {
+    type: AreaTypes;
+  };
 };
 
 export type Rating = {
