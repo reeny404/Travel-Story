@@ -10,15 +10,12 @@ function getTitle(meta?: UserMetadata): string {
   return `${nickname}님의 여행`;
 }
 
-function initOrderList(startDate: string | undefined | null, endDate: string | undefined | null): OrderList {
+function initOrderList(
+  startDate: string | undefined | null,
+  endDate: string | undefined | null
+): OrderList {
   const gapDay = DateUtil.getGapDayByString(startDate ?? "", endDate ?? "");
-  return new Array(gapDay)
-    .fill(0)
-    .map(() => new Array<Order>());
-}
-
-function addToOrderList() {
-
+  return new Array(gapDay ? gapDay : 1).fill(0).map(() => new Array<Order>());
 }
 
 const calculateDuration = (
@@ -43,8 +40,7 @@ export const PlanUtil = {
   getTitle,
   order: {
     init: initOrderList,
-    add: addToOrderList,
   },
   calculateDuration,
   formatTime,
-}
+};

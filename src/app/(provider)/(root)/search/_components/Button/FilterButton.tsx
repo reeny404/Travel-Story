@@ -26,7 +26,7 @@ function FilterButton({
       <div className="relative max-w-8 w-full max-h-8 h-full rounded-full bg-neutral-200 border border-neutral-100 overflow-hidden">
         <Image src={countryFlag} alt={country} fill className="object-cover" />
       </div>
-      <h3 className="text-lg font-semibold line-clamp-2 text-ellipsis">
+      <h3 className="text-start text-lg font-semibold line-clamp-2 text-ellipsis">
         {country}
       </h3>
     </button>

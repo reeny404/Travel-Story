@@ -2,7 +2,6 @@
 import MainLayout from "@/components/Layout/MainLayout";
 import { useLoginStepStore } from "@/stores/step.store";
 import { createClient } from "@/supabase/client";
-import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
@@ -18,7 +17,6 @@ function AuthContainer({
 }: PropsWithChildren<AuthPageProps>) {
   const supabase = createClient();
   const { progress } = useLoginStepStore();
-  const router = useRouter();
   const { nextURL } = useLoginStepStore();
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -34,40 +32,10 @@ function AuthContainer({
     }
   };
 
-  // const handleStepBack = () => {
-  //   setLabelText("");
-  //   setLabelColor("black");
-  //   setIsInputValid(true);
-  //   switch (step) {
-  //     case "email":
-  //       router.back();
-  //       break;
-  //     case "password":
-  //       setStep("email");
-  //       break;
-  //     case "add-user":
-  //       setStep("email");
-  //       break;
-  //     case "new-password":
-  //       setStep("add-user");
-  //       setIsInputValid(false);
-  //       break;
-  //     case "check-password":
-  //       setStep("new-password");
-  //       break;
-  //     case "nickname":
-  //       setStep("check-password");
-  //       break;
-  //   }
-  // };
-
   return (
     <MainLayout headerProps={{ title: "로그인", backgroundColor: "noShadow" }}>
       {progress !== 0 ? <ProgressBar /> : null}
-      <div
-        className="relative w-full px-4 pt-12 bg-white"
-        style={{ minHeight: "calc(100vh - 54px)" }}
-      >
+      <div className="relative w-full px-4 pt-[56px] bg-white">
         {/* title */}
         <h1 className="text-[24px] font-semibold mb-[68px] whitespace-pre-wrap">
           {title}
