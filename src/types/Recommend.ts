@@ -69,7 +69,6 @@ export type AreaReview = Tables<"areaReview"> & {
   area: AreaType;
 };
 
-dev
 export type Rating = {
   rating: number;
   pieces: number;
