@@ -23,21 +23,21 @@ function DrawerMyProfile() {
 
   const profileImage = myProfile?.image_url;
   const nickname = myProfile?.nickname;
-
+  console.log("profileImage", profileImage);
   return (
     <Link href={user ? "/my" : "/login"}>
       <div
         className="flex justify-between items-center px-6 py-4 cursor-pointer"
         onClick={closeDrawer}
       >
-        <div className="flex items-center">
+        <div className="relative flex items-center">
           {profileImage ? (
-            <div className="w-10 h-10 rounded-full bg-neutral-200">
+            <div className="relative aspect-square w-10 h-10 rounded-full bg-neutral-200">
               <Image
                 src={profileImage}
                 alt="profile Image"
                 fill
-                className="object-cover"
+                className="object-cover rounded-full"
               />
             </div>
           ) : (

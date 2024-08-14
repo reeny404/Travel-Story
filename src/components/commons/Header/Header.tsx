@@ -16,7 +16,7 @@ const headerStyles = cva(
         transparentFixed: "bg-transparent text-white header-fixed",
         white: "bg-white shadow-area-card sticky top-0",
         whiteFixed: "bg-white shadow-area-card header-fixed",
-        noShadow: "bg-white sticky top-0 h-[52px] z-[900]",
+        noShadow: "bg-transparent text-primary header-fixed",
       },
       titleAlign: {
         left: "justify-start",

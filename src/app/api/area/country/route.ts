@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
-  const type = searchParams.get("type");
+  const limit = searchParams.get("limit");
 
   if (!id) {
     return NextResponse.json({
@@ -21,9 +21,24 @@ export async function GET(request: NextRequest) {
     .from("area")
     .select("*")
     .eq("countryId", id)
-    // 이거 왜 as string 안해주면 타입이 string이 아니지?
-    .eq("type", type as string);
-
+    .order("type");
+  const groupedData = data?.reduce(
+    (acc, curr) => {
+      if (curr.type !== null && curr.type !== undefined) {
+        acc[curr.type] = acc[curr.type] || [];
+        // limit이 null이거나 undefined인 경우, 제한 없이 데이터를 추가합니다.
+        if (
+          limit === null ||
+          limit === undefined ||
+          acc[curr.type].length < Number(limit)
+        ) {
+          acc[curr.type].push(curr);
+        }
+      }
+      return acc;
+    },
+    {} as Record<string, any[]>
+  );
   if (error) {
     return NextResponse.json({
       status: 500,
@@ -45,7 +60,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     status: 200,
     message: "Success",
-    data: data,
+    data: groupedData,
     error: null,
   });
 }

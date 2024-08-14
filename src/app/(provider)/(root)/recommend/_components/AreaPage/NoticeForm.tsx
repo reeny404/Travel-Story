@@ -1,13 +1,14 @@
 import ImageFrame from "@/components/Frame/ImageFrame";
 import { ICON } from "@/constants/icon";
 import { Area } from "@/types/Recommend";
+import React from "react";
 import TicketPrice from "./TicketPrice";
 
-type NiticeFormProps = {
+type NoticeFormProps = {
   area: Area;
 };
 
-function NoticeForm({ area }: NiticeFormProps) {
+const NoticeForm = React.memo(({ area }: NoticeFormProps) => {
   const splitNotes = area?.info.notes!.split(".");
 
   return (
@@ -36,8 +37,6 @@ function NoticeForm({ area }: NiticeFormProps) {
           alt="euro"
           className="w-5 h-5"
         />
-        {/* 추가 정보들 여기에 조건으로 달아서 출력 */}
-
         <div className="ml-3 w-72 leading-6">
           <TicketPrice
             ticket_price={area.info.ticket_price!}
@@ -47,6 +46,8 @@ function NoticeForm({ area }: NiticeFormProps) {
       </article>
     </section>
   );
-}
+});
+
+NoticeForm.displayName = "NoticeForm";
 
 export default NoticeForm;

@@ -1,31 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { debounce } from "lodash";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import SvgIcon from "../commons/SvgIcon";
 
 type SearchBarProps = {
   onSearch?: (term: string) => void;
   initialValue?: string;
+  isDisabled?: boolean;
 };
 
-function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
-  const [searchValue, setSearchValue] = useState(initialValue);
+function SearchBar({
+  onSearch,
+  initialValue = "",
+  isDisabled,
+}: SearchBarProps) {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState<string>(initialValue);
+
+  useEffect(() => {
+    SvgIcon.preload("x");
+  }, []);
+
+  const handleChangeTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    debounceSearch(e.target.value);
+  };
+
+  const debounceSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        if (value.trim() && onSearch) {
+          onSearch(value.trim());
+        }
+      }, 300),
+    [onSearch]
+  );
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const trimmedValue = searchValue.trim();
-    if (trimmedValue && onSearch) {
-      onSearch(trimmedValue);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchValue(value);
+    debounceSearch.flush();
   };
 
   const handleEmpty = () => {
-    setSearchValue("");
+    setSearchTerm("");
     if (onSearch && window.location.pathname.includes("search")) {
       onSearch("");
     }
@@ -33,7 +52,7 @@ function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
 
   return (
     <form
-      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-search-bar"
+      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-search"
       onSubmit={handleSearch}
     >
       <div className="flex items-center w-full gap-3">
@@ -42,10 +61,12 @@ function SearchBar({ onSearch, initialValue = "" }: SearchBarProps) {
         <input
           className="w-[90%] bg-transparent outline-none"
           placeholder={`'파리'로 떠나보실래요?`}
-          value={searchValue}
-          onChange={handleInputChange}
+          value={searchTerm}
+          onChange={handleChangeTerm}
+          disabled={isDisabled}
         />
-        {searchValue && (
+
+        {searchTerm && (
           <SvgIcon
             name="x"
             width={12}

@@ -13,7 +13,8 @@ function format(type: string, time: Date): string {
   const date = time.getDate();
   const day = DAY[time.getDay()];
 
-  return type.toString()
+  return type
+    .toString()
     .replace("yyyy", year + "")
     .replace("MM", month + "")
     .replace("dd", date + "")
@@ -25,10 +26,8 @@ function format(type: string, time: Date): string {
  */
 function getGapDay(a: Date, b: Date): number {
   const day = Math.abs(a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24);
-  console.log(day, Math.ceil(day))
   return Math.ceil(day);
 }
-
 
 /**
  * @returns a,b 날짜 사이 간격(며칠 차이인지)을 알려준다.

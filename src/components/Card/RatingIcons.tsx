@@ -44,7 +44,7 @@ function RatingIcons({ rating, type }: { rating: number; type: string }) {
           height={type === "big" ? 20 : 15}
           className={clsx("object-contain")}
         />
-      ))}{" "}
+      ))}
     </div>
   );
 }
