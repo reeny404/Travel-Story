@@ -1,6 +1,7 @@
 import { createClient } from "@/supabase/server";
 import {
   AreaType,
+  Order,
   SupabaseMemoType,
   SupabaseMoveType,
   SupabaseScheduleType,
@@ -13,13 +14,8 @@ const MOVE_TABLE_NAME = "moveSchedule";
 const MEMO_TABLE_NAME = "memo";
 const AREA_TABLE_NAME = "area";
 
-type OrderListType = {
-  type: string;
-  id: string;
-};
-
 type PlanData = {
-  orderList: OrderListType[][] | null;
+  orderList: Order[][] | null;
 };
 
 export async function POST(request: NextRequest) {
@@ -104,7 +100,7 @@ export async function POST(request: NextRequest) {
     }
 
     const insertedItem = insertData?.[0];
-    const newEntry: OrderListType = {
+    const newEntry: Order = {
       type: type,
       id: insertedItem.id,
     };
@@ -126,7 +122,7 @@ export async function POST(request: NextRequest) {
     }
 
     const planDataParsed = planData as PlanData;
-    let updatedOrderList: OrderListType[][] = planDataParsed.orderList || [];
+    let updatedOrderList: Order[][] = planDataParsed.orderList || [];
 
     while (updatedOrderList.length < day) {
       updatedOrderList.push([]);

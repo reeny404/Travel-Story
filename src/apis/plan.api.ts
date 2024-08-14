@@ -28,9 +28,9 @@ export default class PlanAPI {
       });
   }
 
-  async updatePlan(planId: string, updatedData: Record<string, any>): Promise<Plan | null> {
+  async updatePlan(planId: string, type: PlanChildType, data: PlanChildData): Promise<Plan | null> {
     return await this.axios
-      .put(`/api/plan/${planId}/schedule`, updatedData)
+      .put(`/api/plan/${planId}`, { ...data, type })
       .then(({ data }) => data)
       .catch((e) => {
         console.error(e);
