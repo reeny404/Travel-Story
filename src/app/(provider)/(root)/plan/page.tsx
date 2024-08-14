@@ -1,28 +1,16 @@
-import { getIconPath } from "@/components/commons/Icon/getIconPath";
-import ImageFrame from "@/components/Frame/ImageFrame";
+import SvgIcon from "@/components/commons/SvgIcon";
 import MainLayout from "@/components/Layout/MainLayout";
-import { ICON } from "@/constants/icon";
 import { DateUtil } from "@/utils/DateUtil";
-import { useMemo } from "react";
 import CreatePlanButton from "./_components/CreatePlanButton";
 import PlanList from "./_components/PlanList";
 
 export default function PlanListPage() {
-  const arrowIconPath = useMemo(() => getIconPath(ICON.arrow.down.black), []);
   return (
     <MainLayout
       headerProps={{
         backgroundColor: "white",
         title: "내 여행 리스트",
         titleAlign: "center",
-        // rightIcons: [
-        //   {
-        //     icon: ICON.search.black,
-        //     alt: "Search",
-        //     path: "/",
-        //     size: 20,
-        //   },
-        // ],
       }}
     >
       <div className="min-h-[calc(100dvh-52px)]">
@@ -35,7 +23,7 @@ export default function PlanListPage() {
               <button className="px-3 py-0.5 flex justify-center text-sm rounded-full bg-gray-150">
                 {/* TODO 정렬 미구현 */}
                 최신순
-                <ImageFrame src={arrowIconPath} className="w-4 h-4 ml-1 " />
+                <SvgIcon name="arrow-down" width={16} height={16} />
               </button>
             </div>
           </div>
