@@ -14,9 +14,7 @@ type UnderBarProps = {
 };
 
 function UnderBar({ area }: UnderBarProps) {
-  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks({
-    areaId: area.id,
-  });
+  const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks();
 
   const { isLoggedIn } = useAuth();
   const { openModal, setNextUrl } = useModalStore();
@@ -30,19 +28,19 @@ function UnderBar({ area }: UnderBarProps) {
       setBottomSheetVisible(true);
     }
   };
-
   const handleClose = () => {
     setBottomSheetVisible(false);
   };
+  // TODO Supabase에 반영이 되지 않았을 때 버튼 호출 안되게 ㄱㄱ
 
   const toggleBookmark = () => {
     if (!isLoggedIn) {
       openModal("로그인하면 일정에 장소를 추가할 수 있어요");
     } else {
-      if (isBookmarked) {
+      if (isBookmarked(area.id)) {
         deleteBookmark.mutate(area.id);
       }
-      if (!isBookmarked) {
+      if (!isBookmarked(area.id)) {
         addBookmark.mutate(area.id);
       }
     }
@@ -60,7 +58,7 @@ function UnderBar({ area }: UnderBarProps) {
       >
         <Image
           src={
-            isBookmarked
+            isBookmarked(area.id)
               ? `/icons/${ICON.bookmark.big.on.name}.svg`
               : `/icons/${ICON.bookmark.big.off.name}.svg`
           }

@@ -3,17 +3,27 @@ import { Tables } from "./supabase";
 
 export type Country = Tables<"country">;
 
-export type IntroDataTypeRes = {
-  city: RecommendResponse<City[]>;
-  country: RecommendResponse<Country>;
-};
-export type IntroDataType = {
-  cities: { name: string; id: number }[];
+export type IntroCountryType = {
+  cities: City[];
   country: Country;
 };
-
 export type City = Tables<"city">;
 
+export type AreaBookmark = Tables<"areaBookmark">;
+export type extendBookmark = AreaBookmark & { area: Area };
+export type GroupedArea = {
+  place: Area[];
+  accommodation: Area[];
+  restaurant: Area[];
+  shop: Area[];
+};
+
+export type BookmarkAPIType = {
+  areaId: number;
+};
+export type AreaReview = Tables<"areaReview"> & {
+  imageUrls: string[];
+};
 export type Area = Tables<"area"> & {
   info: {
     location: string[];
@@ -43,6 +53,7 @@ export type extendArea = Tables<"area"> & {
   krName?: string;
 };
 
+
 export type AreaBookmark = Tables<"areaBookmark">;
 export type BookmarkWithArea = AreaBookmark & { area: Area };
 
@@ -58,6 +69,7 @@ export type AreaReview = Tables<"areaReview"> & {
   area: AreaType;
 };
 
+dev
 export type Rating = {
   rating: number;
   pieces: number;

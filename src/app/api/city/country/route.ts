@@ -18,8 +18,8 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("city")
     .select("*")
-    .eq("countryId", id);
-
+    .eq("countryId", id)
+    .limit(5);
   if (error) {
     return NextResponse.json({
       status: 500,

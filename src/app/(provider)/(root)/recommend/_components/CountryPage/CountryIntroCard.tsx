@@ -1,10 +1,10 @@
-import { IntroDataType } from "@/types/Recommend";
+import { City } from "@/types/Recommend";
 import InstroSlider from "./InstroSlider";
 
 type CounntryintroCardProps = {
   title: string;
   imageUrl: string | null;
-  cities: IntroDataType["cities"];
+  cities: City[];
   countryId: number;
 };
 
