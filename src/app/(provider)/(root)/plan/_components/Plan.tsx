@@ -1,7 +1,7 @@
 import ImageFrame from "@/components/Frame/ImageFrame";
 import Profile from "@/components/Frame/Profile";
 import { Plan as PlanType } from "@/types/plan";
-import PlanEllipsisButton from "./PlanEllipsisButton";
+import PlanEllipsisMenu from "./PlanEllipsisButton";
 
 type props = { plan: PlanType };
 
@@ -23,7 +23,7 @@ function Plan({ plan }: props) {
           <h2 className="flex-1 pb-1 text-lg font-semibold leading-6">
             {title}
           </h2>
-          <PlanEllipsisButton planId={plan.id} />
+          <PlanEllipsisMenu planId={plan.id} />
         </div>
         <p className="mb-6 text-sm text-gray-500 leading-5">
           {startDate} - {endDate}
