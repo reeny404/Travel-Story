@@ -25,7 +25,6 @@ function format(type: string, time: Date): string {
  */
 function getGapDay(a: Date, b: Date): number {
   const day = Math.abs(a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24);
-  console.log(day, Math.ceil(day))
   return Math.ceil(day);
 }
 

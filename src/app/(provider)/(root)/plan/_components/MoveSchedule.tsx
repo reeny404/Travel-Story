@@ -11,7 +11,7 @@ function MoveSchedule({ moveSchedule, isLast }: Props) {
 
   return (
     <>
-      <li className="flex flex-col w-full">
+      <div className="flex flex-col w-full">
         <div className="flex items-center w-full h-10 rounded-l-3xl rounded-r-lg bg-[#3F3F3F]">
           <div className="w-1/12 mr-[3%] flex items-center justify-center">
             <div className="w-7 h-7 bg-[#E8F97B] ml-1 text-white rounded-full flex items-center justify-center">
@@ -33,7 +33,7 @@ function MoveSchedule({ moveSchedule, isLast }: Props) {
         {!isLast && (
           <span className="ml-[5%] w-[1px] h-8 bg-gray-300 block"></span>
         )}
-      </li>
+      </div>
     </>
   );
 }
