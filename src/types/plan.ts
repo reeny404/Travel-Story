@@ -13,6 +13,7 @@ export type PlanInsertType = TablesInsert<"plan">;
 export type PlanFull = Plan & { schedules: Tables<"schedule">[] };
 
 export type PlanChildData = Schedule | Memo | MoveSchedule | CustomPlace;
+export type OrderList = Array<Array<Order>>
 
 export type MoveType = "도보" | "자전거" | "렌트카" | "대중교통" | "선박" | "항공";
 export type MoveSchedule = {
@@ -75,6 +76,8 @@ export type PlanData = {
   startDate: string;
   endDate: string;
 };
+
+export type SupbasePlanChildren = SupabaseMemoType | SupabaseMoveType | SupabaseScheduleType;
 
 export type AreaType = { data: Tables<'area'> } & Order;
 export type SupabaseScheduleType = { data: Tables<'schedule'> & { area?: AreaType } } & Order;

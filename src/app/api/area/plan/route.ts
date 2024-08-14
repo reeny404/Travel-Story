@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
   if (!data) {
     return;
   }
+
   const orderList: Order[][] = PlanUtil.order.init(startDate, endDate);
   const countryData = data[0]?.country?.krName;
   const { data: planData, error } = await supabase

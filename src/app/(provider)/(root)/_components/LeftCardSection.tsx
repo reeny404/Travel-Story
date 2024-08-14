@@ -23,7 +23,6 @@ function LeftCardSection({
   cardData,
 }: LeftCardSectionProps) {
   const [firstCard, ...restCards] = cardData || [];
-
   return (
     <section className="relative w-full">
       <div
@@ -63,7 +62,7 @@ function LeftCardSection({
                     <Image
                       src={card.imageUrl || "/sampleImg.jpg"}
                       alt={card.title}
-                      layout="fill"
+                      fill
                       className="rounded-lg object-cover"
                     />
                   </div>

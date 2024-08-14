@@ -4,6 +4,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 
 interface DataManager<T> {
   insert: (data: T) => Promise<T | null>;
+  update: (id: string, data: T) => Promise<T | null>;
 }
 
 export class PlanChild<T> implements DataManager<T> {
@@ -24,6 +25,21 @@ export class PlanChild<T> implements DataManager<T> {
 
     if (error) {
       throw new Error("insert 중 에러 발생", { cause: error });
+    }
+
+    return data;
+  }
+
+  async update(id: string, info: T): Promise<T | null> {
+    const { data, error } = await this.client
+      .from(this.tableName)
+      .update(info)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error("update 중 에러 발생", { cause: error });
     }
 
     return data;
@@ -50,8 +66,9 @@ class MoveScheduleManager extends PlanChild<Tables<"moveSchedule">> {
 
 export function getTableManager(supabase: SupabaseClient, type: PlanChildType) {
   switch (type) {
-    case "customPlace":
-      return new ScheduleManager(supabase);
+    case "customPlace": return new ScheduleManager(supabase);
+    case "memo": return new MemoManager(supabase);
+    case "move": return new MoveScheduleManager(supabase);
     default:
       return null;
   }

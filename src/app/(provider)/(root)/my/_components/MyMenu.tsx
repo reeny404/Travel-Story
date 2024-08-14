@@ -16,7 +16,7 @@ function MyMenu() {
     router.push("/plan/list");
   };
   return (
-    <section className="flex w-full px-8 py-3 justify-around bg-white rounded-lg">
+    <section className="flex w-full px-8 py-3 justify-around bg-white rounded-lg z-10">
       <div className={pageMoveDiv} onClick={handleMyTravelClick}>
         <Image
           src={"/icons/calendar-black.svg"}

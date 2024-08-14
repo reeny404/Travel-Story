@@ -123,7 +123,6 @@ class AreaAPI {
 
     const data = response.data;
     return data;
-
   }
 
   // 메인 페이지에서 사용되는 카테고리 별 관광지 정보
@@ -163,6 +162,7 @@ class AreaAPI {
     try {
       const path = `api/area/plan`;
       const response = await this.axios.post<PlanType>(path, data);
+      return response.data;
     } catch (error: any) {
       throw new error();
     }

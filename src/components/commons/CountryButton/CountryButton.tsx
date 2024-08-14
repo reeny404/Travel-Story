@@ -60,7 +60,7 @@ function CountryButton({
           <Image
             src={imgPath}
             alt={alt}
-            layout="fill"
+            fill
             className="object-cover"
           />
         </div>
