@@ -17,7 +17,6 @@ function initOrderList(
   const gapDay = DateUtil.getGapDayByString(startDate ?? "", endDate ?? "");
   return new Array(gapDay ? gapDay : 1).fill(0).map(() => new Array<Order>());
 }
-function addToOrderList() { }
 
 const calculateDuration = (
   startTime: string | null,
@@ -41,7 +40,6 @@ export const PlanUtil = {
   getTitle,
   order: {
     init: initOrderList,
-    add: addToOrderList,
   },
   calculateDuration,
   formatTime,
