@@ -1,7 +1,7 @@
 import ImageFrame from "@/components/Frame/ImageFrame";
 import Profile from "@/components/Frame/Profile";
 import { Plan as PlanType } from "@/types/plan";
-import PlanEllipsisMenu from "./PlanEllipsisButton";
+import PlanEllipsisMenu from "./PlanEllipsisMenu";
 
 type props = { plan: PlanType };
 

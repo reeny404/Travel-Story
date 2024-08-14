@@ -1,23 +1,15 @@
-import { api } from "@/apis/api";
 import SvgIcon from "@/components/commons/SvgIcon";
 import { useOverlay } from "@/contexts/overlay.context";
+import usePlanStore from "@/stores/plan.store";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { MouseEventHandler } from "react";
 
 type Props = {
   planId: string;
-  // onDelete: () => void;
 };
 
 function PlanEllipsisMenu({ planId }: Props) {
-  const { show: showOverlay } = useOverlay();
-  const handleDeletePlan: MouseEventHandler = (e) => {
-    e.stopPropagation();
-    api.plan.delete(planId).then((data) => {
-      console.log("삭제완료!!", data);
-      // onDelete();
-    });
-  };
+  const { deletePlan } = usePlanStore();
+  const { show: showOverlay, hide: hideOverlay } = useOverlay();
 
   return (
     <Menu>
@@ -37,8 +29,12 @@ function PlanEllipsisMenu({ planId }: Props) {
       >
         <MenuItem>
           <button
-            className="w-full px-3 pt-1 pb-2 flex items-center hover:bg-gray-100"
-            onClick={handleDeletePlan}
+            className="w-full px-3 py-2 flex items-center hover:bg-gray-100"
+            onClick={(e) => {
+              e.stopPropagation();
+              deletePlan(planId);
+              hideOverlay();
+            }}
           >
             삭제하기
           </button>

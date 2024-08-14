@@ -1,19 +1,24 @@
 "use client";
 
-import { api } from "@/apis/api";
-import { useQuery } from "@tanstack/react-query";
+import usePlanStore from "@/stores/plan.store";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import Plan from "./Plan";
 import Suggestion from "./Suggestion";
 
 function PlanList() {
-  const { data: plans, isPending } = useQuery({
-    queryKey: ["plan", "my"],
-    queryFn: () => api.plan.getMyPlans(),
-  });
+  const [isInit, setIsInit] = useState<boolean>(false);
+  const { plans, fetchPlans } = usePlanStore();
 
-  if (isPending) {
+  useEffect(() => {
+    if (!plans.length) {
+      fetchPlans();
+    }
+    setIsInit(true);
+  }, []);
+
+  if (!isInit) {
     return <Loading />;
   }
 
