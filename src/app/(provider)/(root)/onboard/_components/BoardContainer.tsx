@@ -31,7 +31,7 @@ function BoardContainer({ title, children }: PropsWithChildren<BoardType>) {
     if (progress === 3) {
       document.cookie = "hasTravelType=true; path=/";
       isSelectedMany.map((theme) => {
-        themes.push(travelTypes[theme].text);
+        themes.push(travelTypes[theme - 1].text);
       });
       api.auth.updateUserFilter(
         continents[country - 1].text,
