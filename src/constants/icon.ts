@@ -21,7 +21,7 @@ export const ICON = {
   },
   arrow: {
     back: {
-      black: "arrow-back-black",
+      black: { name: "arrow-back", ext: "svg" },
       white: "arrow-back-white",
     },
     right: {
