@@ -29,7 +29,7 @@ function ReviewCard({ review, onDelete }: ReviewCardProps) {
         {review.imageUrls[0] && (
           <ImageFrame
             src={review.imageUrls[0]}
-            className="w-full h-full bg-slate-200"
+            className="w-full h-full bg-neutral-750"
           />
         )}
       </div>

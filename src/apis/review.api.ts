@@ -8,48 +8,67 @@ class ReviewAPI {
     this.axios = axios;
   }
 
-  // areaId에 합치하는 리뷰들을 가져옵니다.
   async getReviews(id: number): Promise<RecommendResponse<AreaReview[]>> {
-    const path = `api/review`;
-    const response = await this.axios.get<RecommendResponse<AreaReview[]>>(
-      path,
-      {
-        params: {
-          id,
-        },
-      }
-    );
-    const data = response.data;
-    return data;
+    try {
+      const path = `api/review`;
+      const response = await this.axios.get<RecommendResponse<AreaReview[]>>(
+        path,
+        {
+          params: {
+            id,
+          },
+        }
+      );
+      const data = response.data;
+      return data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 
   async getReviewsByUser(id: string): Promise<RecommendResponse<AreaReview[]>> {
-    const path = `api/review/${id}`;
-    const response = await this.axios.get<RecommendResponse<AreaReview[]>>(
-      path,
-      {
-        params: {
-          id: id,
-        },
-      }
-    );
-    const data = response.data;
-    return data;
+    try {
+      const path = `api/review/${id}`;
+      const response = await this.axios.get<RecommendResponse<AreaReview[]>>(
+        path,
+        {
+          params: {
+            id: id,
+          },
+        }
+      );
+      const data = response.data;
+      return data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 
   async addReview(data: FormData) {
-    const path = "api/review";
-    const response = await this.axios.post(path, data);
-    return response.data;
+    try {
+      const path = "api/review";
+      const response = await this.axios.post(path, data);
+      return response.data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
   async updateReview(data: FormData) {
-    const path = "api/review";
-    const response = await this.axios.put(path, data);
-    return response.data;
+    try {
+      const path = "api/review";
+      const response = await this.axios.put(path, data);
+      return response.data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
   async deleteReview({ id, areaId }: { id: number; areaId: number }) {
-    const path = "api/review";
-    await this.axios.delete(path, { data: { id, areaId } });
+    try {
+      const path = "api/review";
+      await this.axios.delete(path, { data: { id, areaId } });
+    } catch (error: any) {
+      throw new error();
+    }
   }
 }
 

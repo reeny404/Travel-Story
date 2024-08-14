@@ -2,14 +2,16 @@ import RatingIcons from "@/components/Card/RatingIcons";
 import { Area, City } from "@/types/Recommend";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 type MainTourItemProps = {
   item: Area & City;
   itemType: string;
 };
 
-function MainTourItem({ item, itemType }: MainTourItemProps) {
+const MainTourItem = React.memo(({ item, itemType }: MainTourItemProps) => {
   const linkUrl = itemType === "city" ? "/recommend/city/" : "/recommend/area/";
+
   return (
     <section className="flex w-full items-center gap-x-3 pb-6">
       <div className="w-20 h-20 relative aspect-square">
@@ -35,6 +37,8 @@ function MainTourItem({ item, itemType }: MainTourItemProps) {
       </div>
     </section>
   );
-}
+});
+
+MainTourItem.displayName = "MainTourItem";
 
 export default MainTourItem;

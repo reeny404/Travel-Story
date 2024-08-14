@@ -9,11 +9,15 @@ class CityAPI {
   }
 
   async getCities(): Promise<RecommendResponse<City[]>> {
-    const path = "/api/city";
-    const response = await this.axios.get<RecommendResponse<City[]>>(path);
+    try {
+      const path = "/api/city";
+      const response = await this.axios.get<RecommendResponse<City[]>>(path);
 
-    const data = response.data;
-    return data;
+      const data = response.data;
+      return data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 
   /**
@@ -22,16 +26,20 @@ class CityAPI {
    * @returns
    */
   async getCityById(id: number): Promise<RecommendResponse<City>> {
-    const path = `/api/city/${id}`;
-    const response = await this.axios.get<RecommendResponse<City>>(path, {
-      params: {
-        id,
-      },
-    });
+    try {
+      const path = `/api/city/${id}`;
+      const response = await this.axios.get<RecommendResponse<City>>(path, {
+        params: {
+          id,
+        },
+      });
 
-    const data = response.data;
+      const data = response.data;
 
-    return data;
+      return data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 
   /**
@@ -40,15 +48,19 @@ class CityAPI {
    * @returns
    */
   async getCitiesByCountry(id: number): Promise<RecommendResponse<City[]>> {
-    const path = `/api/city/country`;
-    const response = await this.axios.get<RecommendResponse<City[]>>(path, {
-      params: {
-        id,
-      },
-    });
-    const data = response.data;
+    try {
+      const path = `/api/city/country`;
+      const response = await this.axios.get<RecommendResponse<City[]>>(path, {
+        params: {
+          id,
+        },
+      });
+      const data = response.data;
 
-    return data;
+      return data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 
   // TODO 한글로 검색 할 수 있도록 수정 필요
@@ -58,13 +70,17 @@ class CityAPI {
    * @returns
    */
   async search(name: string): Promise<RecommendResponse<City[]>> {
-    const path = `/api/city/search`;
-    const response = await this.axios.get<RecommendResponse<City[]>>(path, {
-      params: {
-        name,
-      },
-    });
-    return response.data;
+    try {
+      const path = `/api/city/search`;
+      const response = await this.axios.get<RecommendResponse<City[]>>(path, {
+        params: {
+          name,
+        },
+      });
+      return response.data;
+    } catch (error: any) {
+      throw new error();
+    }
   }
 }
 
