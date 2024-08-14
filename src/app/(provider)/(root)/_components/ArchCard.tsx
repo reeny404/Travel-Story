@@ -14,12 +14,7 @@ const ArchCard = ({ id, imageUrl, title, cityNames }: ArchCardProps) => {
       <Link href={`/recommend/country/${id}/detail`}>
         <div className="relative w-[88px] h-[100px] overflow-hidden">
           <div className="relative w-full h-full overflow-hidden rounded-t-full rounded-b-[800px]">
-            <Image
-              src={imageUrl}
-              alt={title}
-              layout="fill"
-              className="object-cover"
-            />
+            <Image src={imageUrl} alt={title} fill className="object-cover" />
             <div className="absolute inset-0 bg-black opacity-40 rounded-t-full rounded-b-[800px]" />
           </div>
           <div className="absolute bottom-7 w-full text-center">
