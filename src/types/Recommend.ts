@@ -9,7 +9,6 @@ export type IntroCountryType = {
 };
 export type City = Tables<"city">;
 
-export type AreaBookmark = Tables<"areaBookmark">;
 export type extendBookmark = AreaBookmark & { area: Area };
 export type GroupedArea = {
   place: Area[];
@@ -18,13 +17,6 @@ export type GroupedArea = {
   shop: Area[];
 };
 
-export type BookmarkAPIType = {
-  areaId: number;
-};
-
-export type AreaReview = Tables<"areaReview"> & {
-  imageUrls: string[];
-};
 export type Area = Tables<"area"> & {
   info: {
     location: string[];
