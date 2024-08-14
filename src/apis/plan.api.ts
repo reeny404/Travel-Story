@@ -40,7 +40,7 @@ export default class PlanAPI {
 
   async delete(planId: string): Promise<Plan | null> {
     return await this.axios
-      .put(`/api/plan/${planId}`)
+      .delete(`/api/plan/${planId}`)
       .then(({ data }) => data)
       .catch((e) => {
         console.error(e);
