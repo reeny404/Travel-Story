@@ -5,6 +5,8 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const term = searchParams.get("term");
   const countryId = searchParams.get("country");
+  const currentPage = parseInt(searchParams.get("currentPage") || "1", 10);
+  const areasPerPage = currentPage === 1 ? 3 : 5;
 
   if (!term) {
     return NextResponse.json({
@@ -20,7 +22,8 @@ export async function GET(request: NextRequest) {
   let query = supabase
     .from("area")
     .select("*")
-    .or(`name.ilike.%${term}%, krName.ilike.%${term}%`);
+    .or(`name.ilike.%${term}%, krName.ilike.%${term}%`)
+    .range((currentPage - 1) * areasPerPage, currentPage * areasPerPage - 1);
 
   if (countryId) {
     query = query.eq("countryId", countryId);

@@ -19,9 +19,11 @@ function ClientSearch() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("term") || "";
-  const { countryFilter } = useCountryFilterStore();
   const [searchTerm, setSearchTerm] = useState<string>(initialQuery);
   const [searchResults, setSearchResults] = useState<Area[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const { countryFilter } = useCountryFilterStore();
   const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
 
   const {
@@ -29,8 +31,9 @@ function ClientSearch() {
     isPending,
     error,
   } = useQuery<RecommendResponse<Area[]>, AxiosError>({
-    queryKey: ["searchResults", searchTerm, countryFilter?.id],
-    queryFn: () => api.area.search(searchTerm, countryFilter?.id?.toString()),
+    queryKey: ["searchResults", searchTerm, countryFilter?.id, currentPage],
+    queryFn: () =>
+      api.area.search(searchTerm, countryFilter?.id?.toString(), currentPage),
     enabled: !!searchTerm,
     staleTime: 1000 * 60 * 3,
     gcTime: 1000 * 60 * 5,
@@ -41,12 +44,17 @@ function ClientSearch() {
       const data = Array.isArray(searchedData.data)
         ? searchedData.data
         : [searchedData.data];
-      setSearchResults(data);
+      setSearchResults((prevResults) =>
+        currentPage === 1 ? data : [...prevResults, ...data]
+      );
     }
-  }, [searchedData]);
+  }, [searchedData, currentPage]);
+
+  console.log(searchResults);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
+    setCurrentPage(1);
 
     const params = new URLSearchParams();
     params.append("term", term);
@@ -57,6 +65,15 @@ function ClientSearch() {
     }
 
     router.push(`/search?${params.toString()}`);
+  };
+
+  const handleLoadMore = () => {
+    setCurrentPage((prevCount) => {
+      const newCount = prevCount + 1;
+      return newCount < (searchResults?.length || 0)
+        ? newCount
+        : searchResults?.length || 0;
+    });
   };
 
   const handleToggleFilter = () => {
@@ -77,13 +94,13 @@ function ClientSearch() {
       </div>
 
       {isFilterOpen && <SearchFilter onClose={handleToggleFilter} />}
-
       {searchTerm ? (
         <SearchResultView
           results={searchResults}
           isPending={isPending}
           error={error}
           onSearch={handleSearch}
+          onLoadMore={handleLoadMore}
         />
       ) : (
         <InitialSearchView onSearch={handleSearch} />

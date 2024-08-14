@@ -41,9 +41,16 @@ function SearchBar({
         if (value.trim() && onSearch) {
           onSearch(value.trim());
         }
-      }, 300),
+      }, 500),
     [onSearch]
   );
+
+  // 디바운스 처리 중 input값이 변하면 깨지는 현상 방지
+  useEffect(() => {
+    return () => {
+      debounceSearch.cancel();
+    };
+  }, [debounceSearch]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,7 +69,7 @@ function SearchBar({
   ) => {
     const pressFilteredCountry = setTimeout(() => {
       resetCountryFilter();
-    }, 1000);
+    }, 800);
 
     const clearPress = () => {
       clearTimeout(pressFilteredCountry);
