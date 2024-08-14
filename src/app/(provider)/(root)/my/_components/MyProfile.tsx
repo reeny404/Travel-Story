@@ -47,7 +47,9 @@ function MyProfile({ user }: { user: SupabaseUser }) {
   /** 닉네임 편집 */
   // 닉네임 편집 버튼 누를 때
   const handleNickClick = () => {
-    if (!isEdit) return setIsEdit(!isEdit);
+    if (!isEdit) {
+      setIsEdit(!isEdit);
+    }
   };
   // 닉네임 변경 사항 등록
   const handleNickChange = (

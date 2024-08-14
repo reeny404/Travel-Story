@@ -19,7 +19,7 @@ function MySchedule() {
 
   if (!planList || !planList.length) {
     return (
-      <section className="flex mt-12 mb-4 z-10">
+      <section className="flex w-full mt-12 mb-4 z-10">
         <MyTrip />
       </section>
     );
