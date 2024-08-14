@@ -30,6 +30,13 @@ function SearchBar({
     setSearchTerm(initialValue || "");
   }, [initialValue]);
 
+  const handleBlurSearch = () => {
+    if (searchTerm !== "") {
+      console.log(searchTerm);
+    }
+    setPlaceholder("‘'파리'로 떠나보실래요?");
+  };
+
   const handleChangeTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     debounceSearch(e.target.value);
@@ -114,7 +121,7 @@ function SearchBar({
           onChange={handleChangeTerm}
           placeholder={placeholder}
           onFocus={() => setPlaceholder("나라, 도시, 장소, 숙소")}
-          onBlur={() => setPlaceholder("‘'파리'로 떠나보실래요?")}
+          onBlur={handleBlurSearch}
           disabled={isDisabled}
         />
 

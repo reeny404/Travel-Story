@@ -1,4 +1,5 @@
 import SvgIcon from "@/components/commons/SvgIcon";
+import RecentSearch from "./RecentSearch";
 
 type InitialSearchViewProps = {
   onSearch?: (term: string) => void;
@@ -26,6 +27,7 @@ function InitialSearchView({ onSearch }: InitialSearchViewProps) {
       <p className="w-full mt-16 text-center">검색어를 입력해주세요.</p>
       {/* 추천 검색어 자리 */}
       {/* 최근 검색어 자리 */}
+      <RecentSearch />
     </main>
   );
 }
