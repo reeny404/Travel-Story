@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "gen": "npx supabase gen types typescript --project-id \"yqoupynehwgshtspamuf\" --schema public > src/types/supabase.ts"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.19.3",

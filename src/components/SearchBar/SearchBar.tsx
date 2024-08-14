@@ -1,6 +1,10 @@
 "use client";
 
+import { useAuth } from "@/contexts/auth.contexts";
+import { useRecentStore } from "@/stores/recent.store";
 import useCountryFilterStore from "@/stores/searchFilter.store";
+import { createClient } from "@/supabase/client";
+import formatDate from "@/utils/searchDate";
 import { debounce } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import SvgIcon from "../commons/SvgIcon";
@@ -20,19 +24,45 @@ function SearchBar({
   const [searchTerm, setSearchTerm] = useState<string>(initialValue);
   const [placeholder, setPlaceholder] =
     useState<string>("'파리'로 떠나보실래요?");
+  const supabase = createClient();
+  const { isInitialized, user } = useAuth();
+  const { recentSearch, setRecentSearch } = useRecentStore();
+  const [prevSearch, setPrevSearch] = useState([...recentSearch]);
 
   useEffect(() => {
     SvgIcon.preload("x");
   }, []);
+
+  useEffect(() => {
+    setPrevSearch([...recentSearch]);
+  }, [recentSearch]);
 
   // 추천 검색어 input창에 반영하기 위해 추가
   useEffect(() => {
     setSearchTerm(initialValue || "");
   }, [initialValue]);
 
-  const handleBlurSearch = () => {
-    if (searchTerm !== "") {
-      console.log(searchTerm);
+  const handleBlurSearch = async () => {
+    if (searchTerm !== "" && isInitialized && user) {
+      if (prevSearch.length === 3) {
+        prevSearch.shift();
+      }
+      const newArray = [
+        ...prevSearch,
+        { search: searchTerm, date: formatDate() },
+      ];
+      setRecentSearch(newArray);
+      await supabase.from("recents").upsert(
+        [
+          {
+            user_id: user.id,
+            search: newArray,
+          },
+        ],
+        {
+          onConflict: "id",
+        }
+      );
     }
     setPlaceholder("‘'파리'로 떠나보실래요?");
   };
