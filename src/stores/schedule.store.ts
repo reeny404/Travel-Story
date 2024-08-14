@@ -11,6 +11,7 @@ type Store = {
   fetchSchedule: (planId: string, day: number) => Promise<void>;
   createSchedule: (planId: string, day: number, type: PlanChildType, insertData: PlanChildData) => Promise<void>;
   updateScheduleCheck: (planId: string, day: number, itemId: string, checkIndex: number, isChecked: boolean) => Promise<void>;
+  updateSchedule: (planId: string, day: number, type: PlanChildType, data: PlanChildData) => Promise<void>;
 }
 
 const useScheduleStore = create<Store>()(
@@ -50,6 +51,12 @@ const useScheduleStore = create<Store>()(
           checkIndex,
           isChecked: !isChecked,
         });
+
+        const { fetchSchedule: fetchScheduleList } = get();
+        fetchScheduleList(planId, day);
+      },
+      updateSchedule: async (planId: string, day: number, type: PlanChildType, data: PlanChildData) => {
+        await api.plan.updatePlan(planId, type, data);
 
         const { fetchSchedule: fetchScheduleList } = get();
         fetchScheduleList(planId, day);

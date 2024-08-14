@@ -1,8 +1,6 @@
-import { Order } from "@/types/plan";
+import { Order, OrderList } from "@/types/plan";
 import { UserMetadata } from "@supabase/supabase-js";
 import { DateUtil } from "./DateUtil";
-
-export type OrderList = Array<Array<Order>>;
 
 function getTitle(meta?: UserMetadata): string {
   if (!meta) {
@@ -19,12 +17,30 @@ function initOrderList(
   const gapDay = DateUtil.getGapDayByString(startDate ?? "", endDate ?? "");
   return new Array(gapDay ? gapDay : 1).fill(0).map(() => new Array<Order>());
 }
-function addToOrderList() {}
+
+const calculateDuration = (
+  startTime: string | null,
+  endTime: string | null
+): string => {
+  if (startTime && endTime) {
+    const start = new Date(`2024-01-01T${startTime}`);
+    const end = new Date(`2024-01-01T${endTime}`);
+    const duration = Math.ceil((end.getTime() - start.getTime()) / 60000); // 분 단위로 계산
+    return `${duration}분`;
+  }
+  return "";
+};
+
+const formatTime = (timeString: string) => {
+  const [hours, minutes] = timeString.split(":");
+  return `${hours}:${minutes}`;
+};
 
 export const PlanUtil = {
   getTitle,
   order: {
     init: initOrderList,
-    add: addToOrderList,
   },
+  calculateDuration,
+  formatTime,
 };

@@ -6,6 +6,15 @@ import {
   Schedule,
 } from "@/types/plan";
 
+export function getUpdateData(
+  type: PlanChildType,
+  data: Record<string, any>,
+  planId: string,
+  checkList?: any): PlanChildData & { id: string } | null {
+  const newData = getInsertData(type, data, planId, checkList);
+  return newData ? { ...newData, id: data.id } : null;
+}
+
 export function getInsertData(
   type: PlanChildType,
   data: Record<string, any>,
