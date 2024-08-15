@@ -2,6 +2,7 @@
 
 import MainLayout from "@/components/Layout/MainLayout";
 import Tab from "@/components/Tab/Tab";
+import WebTap from "@/components/Tab/WebTab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
@@ -84,12 +85,19 @@ function CityDetailPage({ cityId, dehydratedState }: CityDetailPageProps) {
         viewRef={viewRef}
       />
       <div className=" container w-full h-full flex-col pt-1 ">
-        <div className="px-4">
+        <div className="px-4 md:hidden">
           <Tab
             currentTab={currentTab!}
             setCurrentTab={setCurrentTab}
             TABS={TABS.default}
             isGray={true}
+          />
+        </div>
+        <div className="hidden px-8 md:block">
+          <WebTap
+            currentTab={currentTab!}
+            setCurrentTab={setCurrentTab}
+            TABS={TABS.default}
           />
         </div>
         <div className="pt-5 pb-10">
@@ -128,6 +136,14 @@ function CityDetailPage({ cityId, dehydratedState }: CityDetailPageProps) {
         </div>
         <div className="pb-10">
           <MainTourForm areasInfo={areas!} />
+        </div>
+        <div className="pb-4">
+          <SliderSection
+            areas={areas?.restaurant!}
+            linkUrl={LinkUtils.CITY_AREA_LINK(cityId, "restaurant")}
+            title="맛집"
+            type="taco"
+          />
         </div>
       </div>
     </MainLayout>

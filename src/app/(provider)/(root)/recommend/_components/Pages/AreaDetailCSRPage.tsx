@@ -177,7 +177,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                     </h1>
                     <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-4">
                       {areas?.map((area: Area, idx) => {
-                        if (width <= 430 && idx === 4) {
+                        if (width <= 768 && idx === 4) {
                           return;
                         }
                         return (

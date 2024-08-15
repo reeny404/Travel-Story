@@ -3,6 +3,7 @@
 import MainLayout from "@/components/Layout/MainLayout";
 import ImageSlider from "@/components/Slider/SmImageSlider";
 import Tab from "@/components/Tab/Tab";
+import WebTap from "@/components/Tab/WebTab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
@@ -82,19 +83,28 @@ function CountryDetailCSRPage({
         viewRef={viewRef}
       />
       <div className=" container overflow-auto w-full h-full flex-col">
-        <div className="w-full h-[82px] mb-1 mt-5">
+        <div className="w-full h-[82px] mb-1 mt-5 md:hidden">
           {cities && (
             <ImageSlider cards={cities} spacing={0} slidesPerView={4.5} />
           )}
         </div>
-        <Tab
-          TABS={TABS.default}
-          currentTab={currentTab!}
-          setCurrentTab={setCurrentTab}
-          frameClassName="px-4"
-          isGray={true}
-        />
-        <div className="pt-5 pb-4">
+        <div className="md:hidden">
+          <Tab
+            TABS={TABS.default}
+            currentTab={currentTab!}
+            setCurrentTab={setCurrentTab}
+            frameClassName="px-4"
+            isGray={true}
+          />
+        </div>
+        <div className="hidden px-8 md:block">
+          <WebTap
+            currentTab={currentTab!}
+            setCurrentTab={setCurrentTab}
+            TABS={TABS.default}
+          />
+        </div>
+        <div className="pt-5 pb-4 md:pb-0">
           {currentTab === "place" && (
             <SliderSection
               areas={areas?.place!}
@@ -134,6 +144,14 @@ function CountryDetailCSRPage({
             <MainTourForm areasInfo={areas!} />
           </div>
         </Suspense>
+        <div className="pb-4">
+          <SliderSection
+            areas={areas?.accommodation!}
+            linkUrl={LinkUtils.COUNTRY_AREA_LINK(countryId, "accommodation")}
+            title="할인하는 숙소"
+            type="house"
+          />
+        </div>
       </div>
     </MainLayout>
   );

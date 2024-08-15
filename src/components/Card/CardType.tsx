@@ -13,7 +13,7 @@ type CardTypeProps = {
 function CardType({ type, title, linkUrl }: CardTypeProps) {
   return (
     <div
-      className={`h-full py-[10px] px-4 mb-2 flex items-center justify-between`}
+      className={`h-full py-[10px] px-4 md:px-8 mb-2 flex items-center justify-between`}
     >
       <div className="flex items-center">
         {type && (
