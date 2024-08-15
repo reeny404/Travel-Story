@@ -11,8 +11,11 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { lazy, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
+import { useWindowSize } from "../../../_hook/useWindowSize";
 import AreaDetailCard from "../AreaPage/AreaDetailCard";
+import ReviewList from "../AreaPage/ReviewList";
 import UnderBar from "../AreaPage/UnderBar";
+import WebReviewForm from "../AreaPage/WebReviewForm";
 import CardImgFrame from "../Cards/CardImgFrame";
 const SimilarAreaCard = lazy(() => import("../Cards/SimilarAreaCard"));
 const ReviewSummaryCard = lazy(() => import("../AreaPage/ReviewSummary"));
@@ -25,6 +28,8 @@ type AreaDetailCSRPage = {
 };
 function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
+  const { width } = useWindowSize();
+
   const { ref, inView } = useInView({
     threshold: 0.2,
   });
@@ -41,7 +46,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   const { data: areas } = useQuery<GroupedArea, AxiosError, Area[]>({
     queryKey: ["areas", area?.cityId],
     queryFn: async () => {
-      const { data } = await api.area.getAreasByCity(area?.cityId!, 4);
+      const { data } = await api.area.getAreasByCity(area?.cityId!, 6);
       return data;
     },
     select: (data) => {
@@ -94,12 +99,12 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
       }}
     >
       {area && (
-        <main className="h-full w-full relative container">
+        <main className="h-full w-full relative container mx-auto">
           <div ref={ref}>
             <CardImgFrame
               imageUrl={area?.imageUrl}
               alt={area.title}
-              frameClassName="-z-10 -mb-11 aspect-4/5"
+              frameClassName="-z-10 -mb-11 aspect-4/5 md:aspect-video md:-mb-4"
               imageClassName="object-cover"
               isTop={true}
               country={area.info?.location[0]}
@@ -107,8 +112,8 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               areaName={area.name}
             />
           </div>
-          <section className="w-full h-full p-4 pb-0">
-            <div className="w-full h-full bg-white rounded-t-lg">
+          <section className="w-full h-full p-4 pb-0 md:p-0">
+            <div className="w-full h-full rounded-t-lg md:rounded-t-none ">
               <AreaDetailCard
                 area={area}
                 reviewSectionRef={reviewSectionRef}
@@ -120,28 +125,31 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 setCurrentTab={setCurrentTab}
                 frameClassName="top-[56px] shadow-area-section"
               />
-              <div
-                ref={(tabEl) => {
-                  sectionRefs.current[0] = tabEl;
-                }}
-                className="mb-3 w-full h-full rounded-lg shadow-area-section"
-              >
-                <NoticeForm area={area} />
-              </div>
-              <div
-                ref={(tabEl) => {
-                  sectionRefs.current[1] = tabEl;
-                }}
-                className="mb-3 w-full h-full rounded-lg shadow-area-section"
-              >
-                <LocationForm area={area} />
+              <div className="md:flex gap-x-3 md:h-[359px]">
+                <div
+                  ref={(tabEl) => {
+                    sectionRefs.current[0] = tabEl;
+                  }}
+                  className="mb-3 w-full h-full rounded-lg shadow-area-section"
+                >
+                  <NoticeForm area={area} />
+                </div>
+
+                <div
+                  ref={(tabEl) => {
+                    sectionRefs.current[1] = tabEl;
+                  }}
+                  className="mb-3 w-full h-full rounded-lg shadow-area-section"
+                >
+                  <LocationForm area={area} />
+                </div>
               </div>
               <div
                 ref={(tabEl) => {
                   sectionRefs.current[2] = tabEl;
                   reviewSectionRef.current = tabEl;
                 }}
-                className="mb-3 w-full h-full rounded-lg shadow-area-section"
+                className="mb-3 w-full h-full md:hidden rounded-lg shadow-area-section"
               >
                 <ReviewSummaryCard
                   areaName={area.krName!}
@@ -149,21 +157,12 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ratingAmount={areaReviews?.length || 0}
                   areaId={areaId}
                 />
-                {sortedAreaReviews &&
-                  sortedAreaReviews?.map((review, idx) => {
-                    return (
-                      <AreaReviewCard
-                        key={review.id}
-                        userImageUrl={review.profileImg}
-                        name={review.nickname}
-                        imageUrl={review.imageUrls[0]}
-                        createdAt={review.createdAt}
-                        rating={review.rating!}
-                        description={review.content!}
-                        reviewInfo={review}
-                      />
-                    );
-                  })}
+                {sortedAreaReviews && (
+                  <ReviewList reviews={sortedAreaReviews} />
+                )}
+              </div>
+              <div>
+                <WebReviewForm area={area} reviews={areaReviews} />
               </div>
               {areas && (
                 <div
@@ -176,8 +175,11 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                     <h1 className="text-lg font-medium min-w-20">
                       비슷한 장소 둘러보기
                     </h1>
-                    <div className="w-full grid grid-cols-2 gap-x-3 gap-y-4">
+                    <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-4">
                       {areas?.map((area: Area, idx) => {
+                        if (width <= 430 && idx === 4) {
+                          return;
+                        }
                         return (
                           <SimilarAreaCard
                             rating={area.rating ?? 0}

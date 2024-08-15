@@ -15,7 +15,10 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
       grabCursor={true}
     >
       {cards.map((card, index) => (
-        <SwiperSlide key={index} className={`${index === 0 ? "ml-4" : ""}`}>
+        <SwiperSlide
+          key={index}
+          className={` md:max-w-[420px] md:max-h-[384px] ${index === 0 ? "ml-4" : ""}`}
+        >
           <div className="bg-white rounded-lg shadow-area-card">
             <AreaCard
               title={card.title}

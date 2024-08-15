@@ -60,12 +60,12 @@ const AreaCard = React.memo(
     const mockTags = ["친구와 함께", "문화 체험", "도심"];
 
     return (
-      <div className="relative w-full shadow-area-card rounded-lg mb-6 hover:opacity-90 active:opacity-80">
+      <div className="relative w-full  md:max-h-[384px] shadow-area-card rounded-lg mb-6 hover:opacity-90 active:opacity-80">
         <Link href={linkUrl} className="w-full relative">
           <CardImgFrame
             imageUrl={imageUrl}
             alt={title}
-            frameClassName="aspect-square"
+            frameClassName="aspect-square md:max-h-[280px] md:max-w-[420px]"
             imageClassName="object-cover rounded-t-lg"
             city={city}
             country={country}

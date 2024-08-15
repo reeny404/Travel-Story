@@ -19,12 +19,12 @@ const MOCK_TAGS = ["친구와 함께", "식도락", "힐링", "도심"];
 const SimilarAreaCard = React.memo(
   ({ title, imageUrl, linkUrl, type, rating }: SimilarAreaCardProps) => {
     return (
-      <div className="relative w-full rounded-lg pb-5">
+      <div className="relative w-full md:max-w-[312px] md:max-h-[258px] md rounded-lg pb-5">
         <Link href={linkUrl} className="w-full relative">
           <CardImgFrame
             imageUrl={imageUrl}
             alt={title}
-            frameClassName="aspect-square"
+            frameClassName="aspect-square md:aspect-video"
             imageClassName="object-cover rounded-lg"
           />
         </Link>

@@ -14,7 +14,7 @@ function DetailCard({ title, name, imageUrl, viewRef }: DetailCardProps) {
       ref={viewRef}
       className="w-full text-neu relative flex justify-center overflow-hidden"
     >
-      <div className="z-50 arch-shadow"></div>
+      <div className="z-20 arch-shadow"></div>
 
       {title && (
         <div className="absolute bottom-4 z-50">
