@@ -27,14 +27,14 @@ function SearchBar({
   const supabase = createClient();
   const { isInitialized, user } = useAuth();
   const { recentSearch, setRecentSearch } = useRecentStore();
-  const [prevSearch, setPrevSearch] = useState([...recentSearch]);
+  const [prevSearch, setPrevSearch] = useState(recentSearch);
 
   useEffect(() => {
     SvgIcon.preload("x");
   }, []);
 
   useEffect(() => {
-    setPrevSearch([...recentSearch]);
+    setPrevSearch(recentSearch);
   }, [recentSearch]);
 
   // 추천 검색어 input창에 반영하기 위해 추가
@@ -44,13 +44,13 @@ function SearchBar({
 
   const handleBlurSearch = async () => {
     if (searchTerm !== "" && isInitialized && user) {
-      if (prevSearch.length === 3) {
+      console.log(prevSearch);
+      if (prevSearch && prevSearch.length === 3) {
         prevSearch.shift();
       }
-      const newArray = [
-        ...prevSearch,
-        { search: searchTerm, date: formatDate() },
-      ];
+      const newArray = prevSearch
+        ? [...prevSearch, { search: searchTerm, date: formatDate() }]
+        : [{ search: searchTerm, date: formatDate() }];
       setRecentSearch(newArray);
       await supabase.from("recents").upsert(
         [

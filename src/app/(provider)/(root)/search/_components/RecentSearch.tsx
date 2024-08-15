@@ -40,6 +40,7 @@ function RecentSearch() {
       return index !== idx;
     });
     setRecent(deleteRecent);
+    setRecentSearch(deleteRecent || []);
     await supabase.from("recents").upsert(
       [
         {
