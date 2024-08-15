@@ -44,7 +44,6 @@ function SearchBar({
 
   const handleBlurSearch = async () => {
     if (searchTerm !== "" && isInitialized && user) {
-      console.log(prevSearch);
       if (prevSearch && prevSearch.length === 3) {
         prevSearch.shift();
       }

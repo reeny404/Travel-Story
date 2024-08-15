@@ -21,9 +21,7 @@ function ProviderLayout({ children }: PropsWithChildren) {
         if (error) {
           console.error(error);
         }
-        console.log(data);
         if (data && data[0].area) {
-          console.log(data[0].area);
           setRecentArea(data[0].area);
         }
       }

@@ -43,7 +43,6 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
       prevArea = prevArea.filter((area) => {
         return area !== areaId;
       });
-      console.log(prevArea);
       if (prevArea.length === 5) {
         prevArea.shift();
       }
