@@ -446,7 +446,7 @@ export type Database = {
       };
       recents: {
         Row: {
-          area: Json | null;
+          area: number[] | null;
           created_at: string;
           id: number;
           search: { search: string; date: string }[];
