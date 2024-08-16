@@ -1,30 +1,36 @@
 "use client";
 
-import { api } from "@/apis/api";
-import { useQuery } from "@tanstack/react-query";
+import usePlanStore from "@/stores/plan.store";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import Loading from "./Loading";
 import Plan from "./Plan";
 import Suggestion from "./Suggestion";
 
 function PlanList() {
-  const { data: list, isPending } = useQuery({
-    queryKey: ["plan", "my"],
-    queryFn: () => api.plan.getMyPlans(),
-  });
+  const [isInit, setIsInit] = useState<boolean>(false);
+  const { plans, fetchPlans } = usePlanStore();
 
-  if (isPending) {
-    return <p className="mx-auto pt-10 text-center">로딩 중...</p>;
+  useEffect(() => {
+    if (!plans.length) {
+      fetchPlans();
+    }
+    setIsInit(true);
+  }, []);
+
+  if (!isInit) {
+    return <Loading />;
   }
 
-  if (!list || !list.length) {
+  if (!plans?.length) {
     return <Suggestion />;
   }
 
   return (
     <div className="flex flex-col space-y-4">
-      {list.map((item) => (
-        <Link key={item.id} href={`/plan/${item.id}`}>
-          <Plan plan={item}></Plan>
+      {plans.map((plan) => (
+        <Link key={plan.id} href={`/plan/${plan.id}`}>
+          <Plan plan={plan}></Plan>
         </Link>
       ))}
     </div>
