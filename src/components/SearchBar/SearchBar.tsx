@@ -84,7 +84,7 @@ function SearchBar({
 
   return (
     <form
-      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-search"
+      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-default"
       onSubmit={handleSearch}
     >
       <div className="flex items-center w-full gap-2">

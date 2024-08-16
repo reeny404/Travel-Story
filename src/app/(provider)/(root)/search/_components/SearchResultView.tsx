@@ -97,7 +97,7 @@ function SearchResultView({
         TABS={filteredTabs}
         currentTab={currentTab!}
         setCurrentTab={setCurrentTab}
-        frameClassName="top-[56px] shadow-area-section"
+        frameClassName="top-[56px] shadow-default"
       />
       {filteredResults.map((result) => (
         <AreaTagCard

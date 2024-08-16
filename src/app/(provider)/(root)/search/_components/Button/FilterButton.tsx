@@ -15,7 +15,7 @@ function FilterButton({
 }: FilterButtonProps) {
   return (
     <button
-      className={`flex items-center max-h-[69.6px] h-full p-4 gap-3 rounded-lg shadow-search ${
+      className={`flex items-center max-h-[69.6px] h-full p-4 gap-3 rounded-lg shadow-default ${
         isSelected
           ? "border border-brand-600 bg-gradient-to-t from-brand-200"
           : "border bg-transparent"

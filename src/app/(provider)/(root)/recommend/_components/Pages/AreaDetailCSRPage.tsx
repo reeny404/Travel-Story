@@ -118,13 +118,13 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 TABS={TABS.areaDetail}
                 currentTab={currentTab!}
                 setCurrentTab={setCurrentTab}
-                frameClassName="top-[56px] shadow-area-section"
+                frameClassName="top-[56px] shadow-default"
               />
               <div
                 ref={(tabEl) => {
                   sectionRefs.current[0] = tabEl;
                 }}
-                className="mb-3 w-full h-full rounded-lg shadow-area-section"
+                className="mb-3 w-full h-full rounded-lg shadow-default"
               >
                 <NoticeForm area={area} />
               </div>
@@ -132,7 +132,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 ref={(tabEl) => {
                   sectionRefs.current[1] = tabEl;
                 }}
-                className="mb-3 w-full h-full rounded-lg shadow-area-section"
+                className="mb-3 w-full h-full rounded-lg shadow-default"
               >
                 <LocationForm area={area} />
               </div>
@@ -141,7 +141,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   sectionRefs.current[2] = tabEl;
                   reviewSectionRef.current = tabEl;
                 }}
-                className="mb-3 w-full h-full rounded-lg shadow-area-section"
+                className="mb-3 w-full h-full rounded-lg shadow-default"
               >
                 <ReviewSummaryCard
                   areaName={area.krName!}
@@ -170,7 +170,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ref={(tabEl) => {
                     sectionRefs.current[3] = tabEl;
                   }}
-                  className="mb-9 pt-8 pb-7 px-4 w-full h-full rounded-lg shadow-area-section"
+                  className="mb-9 pt-8 pb-7 px-4 w-full h-full rounded-lg shadow-default"
                 >
                   <section className="w-full flex flex-col gap-y-7">
                     <h1 className="text-lg font-medium min-w-20">
