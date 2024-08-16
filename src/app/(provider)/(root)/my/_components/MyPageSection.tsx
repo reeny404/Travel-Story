@@ -46,7 +46,9 @@ function MyPageSection() {
   }
 
   if ((!isInitialized && !user) || !supabaseUser) {
-    return <p>loading...</p>;
+    return (
+      <p className="grid w-full h-screen place-items-center">loading...</p>
+    );
   }
   return (
     <main className="relative aspect-square flex flex-col w-full h-screen px-5 pt-12 overflow-hidden">
