@@ -100,6 +100,17 @@ class AuthAPI {
     }
   }
 
+  async updateProfile(data: FormData) {
+    try {
+      const response = await this.axios.patch("/api/auth/update/profile", data);
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      console.error("프로필 업데이트 중 오류: ", error);
+    }
+  }
+
   async updateUserFilter(
     continents: string,
     travelMate: string,

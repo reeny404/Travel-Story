@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "@/apis/api";
 import useScheduleStore from "@/stores/schedule.store";
 import { BottomSheetType, Todo } from "@/types/plan";
 import { useEffect, useRef, useState } from "react";
@@ -9,7 +8,7 @@ import BottomSheetImages from "../_components/BottomSheetImages";
 import BottomSheetInput from "../_components/BottomSheetInput";
 import BottomSheetTitle from "../_components/BottomSheetTitle";
 import UpdateButton from "../_components/UpdateButton";
-import { getInsertData } from "./getInsertData";
+import { getInsertData, getUpdateData } from "./getInsertData";
 
 type BottomSheetProps = BottomSheetType & {
   item?: any;
@@ -28,7 +27,7 @@ function BottomSheet({
   day,
   id,
 }: BottomSheetProps) {
-  const { createSchedule } = useScheduleStore();
+  const { createSchedule, updateSchedule } = useScheduleStore();
 
   const [status, setStatus] = useState(initialStatus);
   const [isClosing, setIsClosing] = useState(false);
@@ -50,6 +49,7 @@ function BottomSheet({
   useEffect(() => {
     if (status === "read" && item) {
       setFormData({
+        id: item.data.id,
         title: item.data.title,
         memo: item.data.memo,
         startTime: item.data.startTime,
@@ -86,35 +86,36 @@ function BottomSheet({
   }, []);
 
   const getFormData = () => {
-    const formData = new FormData(formRef.current!);
+    // 동일한 key값의 data가 있으면 엎어쓸 확률이 있음
+    // ref에서 가져오던 useState 값을 가져오던 하나로 통일 필요
+    const refData = new FormData(formRef.current!);
     const data: Record<string, any> = {};
-    formData.forEach((value, key) => {
+    refData.forEach((value, key) => {
       data[key] = value;
     });
+
+    Object.keys(formData)
+      .filter((key: string) => !!formData[key])
+      .forEach((key) => {
+        data[key] = data[key] ?? formData[key];
+      });
     return data;
   };
 
   const handleUpdate = async () => {
-    const data = getFormData();
-    data.images = images;
-    data.planId = planId;
-    data.type = type;
-    data.day = day;
-    if (type === "memo") {
-      data.checkList = checkList;
-    }
-    data.id = id;
     try {
-      const response = await api.plan.updatePlan(planId, data);
-
-      if (!response) {
-        console.error("Error updating data");
+      const data = getFormData();
+      const newData = getUpdateData(type, data, planId, checkList);
+      if (!newData) {
+        console.warn("insert용 데이터 생성 불가");
         return;
       }
+      await updateSchedule(planId, day, type, newData);
     } catch (error) {
       console.error("Error updating data:", error);
+    } finally {
+      handleClose();
     }
-    handleClose();
   };
 
   const handleRead = () => {
@@ -123,14 +124,7 @@ function BottomSheet({
 
   const handleAdd = async () => {
     try {
-      // 동일한 key값의 data가 있으면 엎어쓸 확률이 있음
-      // ref에서 가져오던 useState 값을 가져오던 하나로 통일 필요
       const data = getFormData();
-      Object.keys(formData)
-        .filter((key: string) => !!formData[key])
-        .forEach((key) => {
-          data[key] = data[key] ?? formData[key];
-        });
       const insertData = getInsertData(type, data, planId, checkList);
       if (!insertData) {
         console.warn("insert용 데이터 생성 불가");
@@ -140,8 +134,9 @@ function BottomSheet({
       await createSchedule(planId, day, type, insertData);
     } catch (error) {
       console.error("Error adding data:", error);
+    } finally {
+      handleClose();
     }
-    handleClose();
   };
 
   return (

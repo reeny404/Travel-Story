@@ -19,7 +19,12 @@ function NewPlanBase({ data: plan, setData }: MyPlanDefaultProps) {
     : new Date();
   const endDate: Date = plan.endDate ? new Date(plan.endDate) : new Date();
   const setTitle = (text: string) => {
-    setData({ ...plan, title: text });
+    setData({
+      ...plan,
+      title: text,
+      startDate: DateUtil.format("yyyy-MM-dd", startDate),
+      endDate: DateUtil.format("yyyy-MM-dd", endDate),
+    });
   };
 
   return (
