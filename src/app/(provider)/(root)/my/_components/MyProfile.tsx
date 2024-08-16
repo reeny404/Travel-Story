@@ -4,7 +4,7 @@ import SvgIcon from "@/components/commons/SvgIcon";
 import { useAuthStore } from "@/stores/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, MouseEvent, useRef, useState } from "react";
 
 type ResponseType = { data: { publicUrl: string } };
 
@@ -20,10 +20,6 @@ function MyProfile({ user }: { user: SupabaseUser }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { putImage } = useAuthStore();
   const [imageURL, setImageURL] = useState<string>(user.image_url);
-
-  useEffect(() => {
-    console.log(user);
-  }, []);
 
   const profileUpdate = async (file: File): Promise<ResponseType> => {
     const formData = new FormData();
