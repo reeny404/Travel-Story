@@ -17,6 +17,7 @@ export type AreaCardProps = {
   city: string;
   country: string;
   areaName: string;
+  tags: string[];
   isBookmarked?: boolean | undefined;
   addBookmark?: () => void;
   deleteBookmark?: () => void;
@@ -36,13 +37,13 @@ const AreaCard = React.memo(
     isBookmarked,
     addBookmark,
     deleteBookmark,
+    tags,
   }: AreaCardProps) => {
     const { openModal } = useModalStore();
     const { isLoggedIn } = useAuth();
     const [bookmarked, setBookmarked] = useState<boolean | undefined>(
       isBookmarked
     );
-
     const toggleBookmark = () => {
       if (!isLoggedIn) {
         openModal("로그인하면 일정에 장소를 추가할 수 있어요");
@@ -78,7 +79,7 @@ const AreaCard = React.memo(
           </p>
           <div className="w-full h-5 flex px-4 ">
             <SingleRatingIcon rating={rating!} />
-            <PrimaryTagList tagList={mockTags} />
+            <PrimaryTagList tagList={tags ?? mockTags} />
           </div>
         </div>
         <div className="absolute p-[10px] top-2 right-2 hover:cursor-pointer">

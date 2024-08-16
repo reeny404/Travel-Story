@@ -25,6 +25,7 @@ export type AreaReview = Tables<"areaReview"> & {
   imageUrls: string[];
 };
 export type Area = Tables<"area"> & {
+  tags: string[];
   info: {
     location: string[];
     name: string;

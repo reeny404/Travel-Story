@@ -82,7 +82,7 @@ function CountryDetailCSRPage({
         imageUrl={country?.imageUrl!}
         viewRef={viewRef}
       />
-      <div className=" container overflow-auto w-full h-full flex-col">
+      <div className=" container mx-auto overflow-auto w-full h-full flex-col md:pb-[169px]">
         <div className="w-full h-[82px] mb-1 mt-5 md:hidden">
           {cities && (
             <ImageSlider cards={cities} spacing={0} slidesPerView={4.5} />
@@ -97,7 +97,7 @@ function CountryDetailCSRPage({
             isGray={true}
           />
         </div>
-        <div className="hidden px-8 md:block">
+        <div className="hidden px-8 md:block shadow-area-section w-screen max-w-[1366px]">
           <WebTap
             currentTab={currentTab!}
             setCurrentTab={setCurrentTab}
@@ -140,16 +140,24 @@ function CountryDetailCSRPage({
           )}
         </div>
         <Suspense fallback={<div>Loading...</div>}>
-          <div className="pb-10">
+          <div className="pb-10 md:pb-7">
             <MainTourForm areasInfo={areas!} />
           </div>
         </Suspense>
-        <div className="pb-4">
+        <div className="pb-4 md:pb-0">
           <SliderSection
             areas={areas?.accommodation!}
             linkUrl={LinkUtils.COUNTRY_AREA_LINK(countryId, "accommodation")}
             title="할인하는 숙소"
             type="house"
+          />
+        </div>
+        <div className="pb-4 md:pb-0">
+          <SliderSection
+            areas={areas?.restaurant!}
+            linkUrl={LinkUtils.COUNTRY_AREA_LINK(countryId, "accommodation")}
+            title="맛집 투어"
+            type="dinner"
           />
         </div>
       </div>

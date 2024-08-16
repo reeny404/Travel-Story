@@ -5,7 +5,7 @@ export type SlideCardProps = {
   description: string;
   imageUrl: string;
   linkUrl: string;
-  tags?: string[] | undefined;
+  tags: string[] | undefined;
   id: number;
   city: string;
   country: string;

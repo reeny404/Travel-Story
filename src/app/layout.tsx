@@ -18,7 +18,7 @@ function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${pretendardFont.className} w-full min-h-svh max-w-[430px] md:max-w-[1366px] mx-auto`}
+        className={`${pretendardFont.className} w-full min-h-svh md:max-w-[1366px] mx-auto`}
       >
         {children}
       </body>

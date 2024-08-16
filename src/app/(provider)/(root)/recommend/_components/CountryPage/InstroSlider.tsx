@@ -31,7 +31,7 @@ function InstroSlider(country: IntroSliderProps) {
           <div className="absolute ws-full -z-10 inset-0 bg-black opacity-40"></div>
           <picture>
             <Image
-              src={country.imageUrl!}
+              src={country.imageUrl! ?? "/"}
               alt={country.title}
               fill
               priority

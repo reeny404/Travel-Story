@@ -18,7 +18,7 @@ function WebTap({
 }: WebTapProps) {
   return (
     <div
-      className={`w-full h-11 flex justify-start items-center gap-x-10 my-3 rounded-lg ${frameClassName}`}
+      className={`w-full h-11 flex justify-start items-center gap-x-10 ${frameClassName}`}
     >
       {TABS.map((tab) => (
         <button

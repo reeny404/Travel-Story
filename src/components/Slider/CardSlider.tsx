@@ -33,6 +33,7 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
               isBookmarked={isBookmarked(card.id)}
               addBookmark={() => addBookmark.mutate(card.id)}
               deleteBookmark={() => deleteBookmark.mutate(card.id)}
+              tags={card.tags!}
             />
           </div>
         </SwiperSlide>
