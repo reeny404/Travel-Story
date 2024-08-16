@@ -16,10 +16,6 @@ const config: Config = {
         ...COLOR,
         "neutral-400/84": "rgba(255, 255, 255, 0.84)",
       },
-      maxWidth: {
-        xs: "430px",
-        xl: "1366px"
-      },
       zIndex: {
         drawer: "50",
         tab: "30",
@@ -36,11 +32,8 @@ const config: Config = {
           "linear-gradient(180deg, rgba(0, 0, 0, 0.00)0%, rgba(0, 0, 0, 0.80)100%)",
       },
       screens: {
-        xs: "450px",
-        sm: "640px",
+        sm: "344px",
         md: "768px",
-        lg: "1024px",
-        xl: "1280px",
       },
       boxShadow: {
         default: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
