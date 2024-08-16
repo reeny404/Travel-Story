@@ -23,7 +23,6 @@ function InitialSearchView({ onSearch }: InitialSearchViewProps) {
         </div>
         <SvgIcon name="angle-right" width={15} height={15} title="angle" />
       </div>
-
       <p className="w-full mt-16 text-center">검색어를 입력해주세요.</p>
       {/* 추천 검색어 자리 */}
       {/* 최근 검색어 자리 */}

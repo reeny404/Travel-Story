@@ -6,7 +6,12 @@ import SvgIcon from "@/components/commons/SvgIcon";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import useCountryFilterStore from "@/stores/searchFilter.store";
-import { Area, RecommendResponse } from "@/types/Recommend";
+import { Area } from "@/types/Recommend";
+import {
+  FoldStateType,
+  SearchResponse,
+  SearchResultsType,
+} from "@/types/search";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,13 +20,38 @@ import InitialSearchView from "./InitialSearchView";
 import SearchFilter from "./SearchFilter";
 import SearchResultView from "./SearchResultView";
 
+const INITIAL_ITEMS = 3;
+const ITEMS_PER_PAGE = 5;
+
 function ClientSearch() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("term") || "";
   const [searchTerm, setSearchTerm] = useState<string>(initialQuery);
-  const [searchResults, setSearchResults] = useState<Area[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchResults, setSearchResults] = useState({
+    place: [] as Area[],
+    restaurant: [] as Area[],
+    accommodation: [] as Area[],
+    shop: [] as Area[],
+  });
+  const [currentPage, setCurrentPage] = useState<{ [key: string]: number }>({
+    place: 1,
+    restaurant: 1,
+    accommodation: 1,
+    shop: 1,
+  });
+  const [isFolded, setIsFolded] = useState<FoldStateType>({
+    place: false,
+    restaurant: false,
+    accommodation: false,
+    shop: false,
+  });
+  const [totalResults, setTotalResults] = useState({
+    place: 0,
+    restaurant: 0,
+    accommodation: 0,
+    shop: 0,
+  });
 
   const { countryFilter } = useCountryFilterStore();
   const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
@@ -30,34 +60,59 @@ function ClientSearch() {
     data: searchedData,
     isPending,
     error,
-  } = useQuery<RecommendResponse<Area[]>, AxiosError>({
-    queryKey: ["searchResults", searchTerm, countryFilter?.id, currentPage],
+  } = useQuery<SearchResponse<SearchResultsType>, AxiosError>({
+    queryKey: ["searchResults", searchTerm, countryFilter?.id],
     queryFn: () =>
-      api.area.search(searchTerm, countryFilter?.id?.toString(), currentPage),
+      api.area.search(
+        searchTerm,
+        countryFilter?.id?.toString(),
+        1,
+        INITIAL_ITEMS,
+        ""
+      ),
     enabled: !!searchTerm,
     staleTime: 1000 * 60 * 3,
     gcTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
-    if (searchedData) {
-      const data = Array.isArray(searchedData.data)
-        ? searchedData.data
-        : [searchedData.data];
-      setSearchResults((prevResults) =>
-        currentPage === 1 ? data : [...prevResults, ...data]
-      );
-    }
-  }, [searchedData, currentPage]);
+    if (searchedData && searchedData.data) {
+      const responseData = searchedData.data;
+      const totalData = searchedData.total; // 총 개수 정보
 
-  console.log(searchResults);
+      setSearchResults({
+        place: responseData.place || [],
+        restaurant: responseData.restaurant || [],
+        accommodation: responseData.accommodation || [],
+        shop: responseData.shop || [],
+      });
+
+      setTotalResults({
+        place: totalData.place,
+        restaurant: totalData.restaurant,
+        accommodation: totalData.accommodation,
+        shop: totalData.shop,
+      });
+    }
+  }, [searchedData]);
+
+  // searchResults가 업데이트된 후 상태 확인
+  useEffect(() => {
+    console.log("searchResults 업데이트 후:", searchResults);
+  }, [searchResults]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    setCurrentPage(1);
+    setCurrentPage({
+      place: 1,
+      restaurant: 1,
+      accommodation: 1,
+      shop: 1,
+    });
 
     const params = new URLSearchParams();
     params.append("term", term);
+
     if (countryFilter && countryFilter.id != null) {
       params.append("country", countryFilter.id.toString());
     } else {
@@ -67,13 +122,67 @@ function ClientSearch() {
     router.push(`/search?${params.toString()}`);
   };
 
-  const handleLoadMore = () => {
-    setCurrentPage((prevCount) => {
-      const newCount = prevCount + 1;
-      return newCount < (searchResults?.length || 0)
-        ? newCount
-        : searchResults?.length || 0;
-    });
+  const handleLoadMore = (category: keyof SearchResultsType) => {
+    const nextPage = currentPage[category] + 1;
+
+    setCurrentPage((prevPages) => ({
+      ...prevPages,
+      [category]: nextPage,
+    }));
+
+    api.area
+      .search(
+        searchTerm,
+        countryFilter?.id?.toString(),
+        nextPage,
+        ITEMS_PER_PAGE,
+        category
+      )
+      .then((response) => {
+        const categoryData = response.data[category];
+
+        setSearchResults((prevResults) => {
+          const updatedResults = [
+            ...prevResults[category],
+            ...categoryData.filter(
+              (newResult) =>
+                !prevResults[category].some(
+                  (currentResult) => currentResult.id === newResult.id
+                )
+            ),
+          ];
+
+          setIsFolded((prevFolded) => ({
+            ...prevFolded,
+            [category]: updatedResults.length >= totalResults[category],
+          }));
+
+          return {
+            ...prevResults,
+            [category]: updatedResults,
+          };
+        });
+      })
+      .catch((error) => {
+        console.error("데이터 로드 중 오류 발생:", error);
+      });
+  };
+
+  const handleFold = (category: keyof typeof searchResults) => {
+    setSearchResults((prevResults) => ({
+      ...prevResults,
+      [category]: prevResults[category].slice(0, INITIAL_ITEMS),
+    }));
+
+    setCurrentPage((prevPages) => ({
+      ...prevPages,
+      [category]: 1,
+    }));
+
+    setIsFolded((prev) => ({
+      ...prev,
+      [category]: false,
+    }));
   };
 
   const handleToggleFilter = () => {
@@ -94,6 +203,7 @@ function ClientSearch() {
       </div>
 
       {isFilterOpen && <SearchFilter onClose={handleToggleFilter} />}
+
       {searchTerm ? (
         <SearchResultView
           results={searchResults}
@@ -101,6 +211,9 @@ function ClientSearch() {
           error={error}
           onSearch={handleSearch}
           onLoadMore={handleLoadMore}
+          onFold={handleFold}
+          isFolded={isFolded}
+          totalResults={totalResults}
         />
       ) : (
         <InitialSearchView onSearch={handleSearch} />

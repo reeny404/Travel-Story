@@ -1,4 +1,5 @@
 import { Area, RecommendResponse } from "@/types/Recommend";
+import { SearchResponse, SearchResultsType } from "@/types/search";
 import { Tables } from "@/types/supabase";
 import { AxiosError, AxiosInstance } from "axios";
 type RatingResponse = {
@@ -80,21 +81,31 @@ class AreaAPI {
    *
    * @param term {string} 검색어
    * @param countryId {string} 국가 id
+   * @param currentPage {number} 현재 페이지 (더보기 클릭 시 증가)
+   * @param limit {number} 한번에 가져올 데이터 수 (초기 3개, 이후 5개씩)
+   * @param category {string} 카테고리별 필터 (place, restaurant, etc.)
    * @returns 검색 결과
    */
   async search(
     term: string,
     countryId?: string,
-    currentPage?: number
-  ): Promise<RecommendResponse<Area[]>> {
+    currentPage: number = 1,
+    limit: number = 3,
+    category: string = ""
+  ): Promise<SearchResponse<SearchResultsType>> {
     const path = `/api/area/search`;
-    const response = await this.axios.get<RecommendResponse<Area[]>>(path, {
-      params: {
-        term,
-        ...(countryId && { country: countryId }),
-        currentPage,
-      },
-    });
+    const response = await this.axios.get<SearchResponse<SearchResultsType>>(
+      path,
+      {
+        params: {
+          term,
+          country: countryId,
+          currentPage,
+          limit,
+          category,
+        },
+      }
+    );
 
     const data = response.data;
     return data;

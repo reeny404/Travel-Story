@@ -41,7 +41,7 @@ function SearchBar({
         if (value.trim() && onSearch) {
           onSearch(value.trim());
         }
-      }, 500),
+      }, 400),
     [onSearch]
   );
 
