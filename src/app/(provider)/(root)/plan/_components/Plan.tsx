@@ -1,8 +1,9 @@
 import ImageFrame from "@/components/Frame/ImageFrame";
 import Profile from "@/components/Frame/Profile";
-import { Tables } from "@/types/supabase";
+import { Plan as PlanType } from "@/types/plan";
+import PlanEllipsisMenu from "./PlanEllipsisMenu";
 
-type props = { plan: Tables<"plan"> };
+type props = { plan: PlanType };
 
 function Plan({ plan }: props) {
   const { title, imagesUrl, startDate, endDate } = plan;
@@ -19,14 +20,10 @@ function Plan({ plan }: props) {
       </div>
       <div className="flex flex-col flex-1 py-3">
         <div className="flex justify-between items-center">
-          <h2 className="pb-1 text-lg font-semibold leading-6">{title}</h2>
-          <button className="ml-auto mb-auto">
-            <ImageFrame
-              src="/icon/ellipsisVertical.svg"
-              alt="더보기"
-              className="w-4 h-4"
-            />
-          </button>
+          <h2 className="flex-1 pb-1 text-lg font-semibold leading-6">
+            {title}
+          </h2>
+          <PlanEllipsisMenu planId={plan.id} />
         </div>
         <p className="mb-6 text-sm text-gray-500 leading-5">
           {startDate} - {endDate}

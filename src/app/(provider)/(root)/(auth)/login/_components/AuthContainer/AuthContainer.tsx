@@ -1,7 +1,9 @@
 "use client";
 import MainLayout from "@/components/Layout/MainLayout";
+import { ICON } from "@/constants/icon";
 import { useLoginStepStore } from "@/stores/step.store";
 import { createClient } from "@/supabase/client";
+import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
@@ -15,6 +17,7 @@ function AuthContainer({
   isSocialHidden = false,
   children,
 }: PropsWithChildren<AuthPageProps>) {
+  const router = useRouter();
   const supabase = createClient();
   const { progress } = useLoginStepStore();
   const { nextURL } = useLoginStepStore();
@@ -33,8 +36,21 @@ function AuthContainer({
   };
 
   return (
-    <MainLayout headerProps={{ title: "로그인", backgroundColor: "noShadow" }}>
-      <ProgressBar />
+    <MainLayout
+      headerProps={{
+        title: "로그인",
+        backgroundColor: "noShadow",
+        leftIcons: [
+          {
+            icon: ICON.arrow.back.black,
+            alt: "back",
+            size: 20,
+            onClick: router.back,
+          },
+        ],
+      }}
+    >
+      {progress !== 0 ? <ProgressBar /> : null}
       <div className="relative w-full px-4 pt-[56px] bg-white">
         {/* title */}
         <h1 className="text-[24px] font-semibold mb-[68px] whitespace-pre-wrap">
