@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
         supabase
           .from("area")
           .select("*", { count: "exact", head: true })
-          .ilike("name", `%${term}%`)
+          .or(`name.ilike.%${term}%,krName.ilike.%${term}%`)
           .eq("type", category)
       );
 
@@ -60,6 +60,7 @@ export async function GET(request: NextRequest) {
     // 특정 카테고리만 검색
     if (category) {
       const { data, total } = await fetchSearchResultData(category);
+
       return NextResponse.json({
         status: 200,
         message: "Success",

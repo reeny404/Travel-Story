@@ -71,6 +71,8 @@ function ClientSearch() {
       const responseData = searchedData.data;
       const totalData = searchedData.total;
 
+      console.log("총 검색 결과:", totalData);
+
       setSearchResults({
         place: responseData.place || [],
         restaurant: responseData.restaurant || [],

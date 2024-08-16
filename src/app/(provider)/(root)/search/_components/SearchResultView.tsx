@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const INITIAL_ITEMS = 3;
+
 function SearchResultView({
   results,
   isPending,
@@ -131,14 +132,23 @@ function SearchResultView({
       return null;
     }
 
+    // 검색 이후 추가 데이터가 없을 경우 숨기기
+    if (
+      currentResultsInCategory <= INITIAL_ITEMS &&
+      currentResultsInCategory === totalResultsInCategory
+    ) {
+      return null;
+    }
+
     const handleSearchButtonClick =
-      currentResultsInCategory >= totalResultsInCategory
-        ? () => onFold(category)
-        : () => onLoadMore(category);
+      currentResultsInCategory < totalResultsInCategory
+        ? () => onLoadMore(category)
+        : () => onFold(category);
+
     const buttonText =
-      currentResultsInCategory >= totalResultsInCategory
-        ? "접기"
-        : "비슷한 장소 더 보기";
+      currentResultsInCategory < totalResultsInCategory
+        ? "비슷한 장소 더 보기"
+        : "접기";
 
     return (
       <button
