@@ -6,6 +6,7 @@ export async function GET(
   route: { params: { id: string } }
 ) {
   const id = route.params.id;
+
   if (!id) {
     return NextResponse.json({
       status: 400,
@@ -19,7 +20,14 @@ export async function GET(
 
   const { data, error } = await supabase
     .from("areaReview")
-    .select("*")
+    .select(
+      `
+      *,
+      area:areaId (
+        type
+      )
+    `
+    )
     .eq("userId", id);
 
   if (error) {
