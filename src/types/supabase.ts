@@ -539,19 +539,19 @@ export type Database = {
       users: {
         Row: {
           created_at: string;
-          email: string | null;
+          email: string;
           filter: Json | null;
           id: string;
-          image_url: string | null;
-          nickname: string | null;
+          image_url: string;
+          nickname: string;
         };
         Insert: {
           created_at?: string;
-          email?: string | null;
+          email?: string;
           filter?: Json | null;
           id?: string;
-          image_url?: string | null;
-          nickname?: string | null;
+          image_url?: string;
+          nickname?: string;
         };
         Update: {
           created_at?: string;

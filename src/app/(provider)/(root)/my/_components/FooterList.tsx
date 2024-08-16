@@ -20,9 +20,6 @@ function FooterList() {
 
   return (
     <section className="w-full mt-3 px-4 z-10">
-      <p className={lineStyle}>고객센터</p>
-      <p className={lineStyle}>이용약관</p>
-      <p className={lineStyle}>개인정보처리방침</p>
       <p className={lineStyle} onClick={(e) => handleLogoutClick(e)}>
         로그아웃
       </p>

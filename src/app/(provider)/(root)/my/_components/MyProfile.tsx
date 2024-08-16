@@ -4,24 +4,26 @@ import SvgIcon from "@/components/commons/SvgIcon";
 import { useAuthStore } from "@/stores/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { ChangeEvent, MouseEvent, useRef, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
+
+type ResponseType = { data: { publicUrl: string } };
 
 type SupabaseUser = {
   id: string;
   email: string;
-  image_url: string;
   nickname: string;
+  image_url: string;
 };
-
-type ResponseType = { data: { publicUrl: string } };
 
 function MyProfile({ user }: { user: SupabaseUser }) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { putImage } = useAuthStore();
-  const [imageURL, setImageURL] = useState<string | null>(
-    user?.image_url || ""
-  );
+  const [imageURL, setImageURL] = useState<string>(user.image_url);
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
   const profileUpdate = async (file: File): Promise<ResponseType> => {
     const formData = new FormData();
@@ -41,8 +43,6 @@ function MyProfile({ user }: { user: SupabaseUser }) {
   const mutation = useMutation({
     mutationFn: profileUpdate,
   });
-
-  if (!user) return;
 
   /** 닉네임 편집 */
   // 닉네임 편집 버튼 누를 때
@@ -107,7 +107,7 @@ function MyProfile({ user }: { user: SupabaseUser }) {
         <form className="w-fit h-fit">
           <input
             ref={inputRef}
-            defaultValue={user.nickname}
+            defaultValue={user.nickname || ""}
             className="w-[150px] mt-4 py-1 px-3 rounded-lg outline-none"
           />
           <button

@@ -1,75 +1,76 @@
 "use client";
-import { api } from "@/apis/api";
 import { useAuth } from "@/contexts/auth.contexts";
-import { useAuthStore } from "@/stores/auth.store";
-import { useQuery } from "@tanstack/react-query";
+import { createClient } from "@/supabase/client";
+import { Database } from "@/types/supabase";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import RecentArea from "../../search/_components/RecentArea";
 import FooterList from "./FooterList";
 import MyMenu from "./MyMenu";
 import MyProfile from "./MyProfile";
 import MySchedule from "./MySchedule";
 
-type SupabaseUser = {
-  id: string;
-  email: string;
-  image_url: string;
-  nickname: string;
-};
+type SupabaseUser = Database["public"]["Tables"]["users"]["Row"];
 
 function MyPageSection() {
   const { user, isInitialized, isLoggedIn } = useAuth();
   const router = useRouter();
-  const { user: users, putImage } = useAuthStore();
+  const supabase = createClient();
+  const [supabaseUser, setSupabaseUser] = useState<SupabaseUser>();
 
-  const {
-    data: supabaseUser,
-    isPending,
-    isSuccess,
-  } = useQuery<SupabaseUser>({
-    queryKey: ["users"],
-    queryFn: async () => await api.auth.userProfile(user?.email as string),
-  });
+  useEffect(() => {
+    const getUserTable = async () => {
+      if (isInitialized && user) {
+        const { data, error } = await supabase
+          .from("users")
+          .select("*")
+          .eq("id", user.id)
+          .single();
 
-  if (isSuccess) {
-    putImage(supabaseUser.image_url);
-  }
+        if (error) {
+          console.error(error);
+        }
+        if (data) {
+          setSupabaseUser(data);
+        }
+      }
+    };
 
-  if ((isInitialized && !isLoggedIn) || !supabaseUser) {
+    getUserTable();
+  }, [isInitialized, user]);
+
+  if (isInitialized && !isLoggedIn) {
     router.replace("/login");
     return;
   }
 
-  if (isPending) {
-    return (
-      <section className="flex flex-col w-full items-center mt-[21px] mb-[29px]">
-        <Image
-          src={"/icons/avatar.svg"}
-          alt="프로필"
-          width={88}
-          height={88}
-          className="rounded-full"
-        />
-        <div className="w-[100px] h-[24px] mt-4 bg-gray-300 rounded-lg" />
-      </section>
-    );
+  if ((!isInitialized && !user) || !supabaseUser) {
+    return <p>loading...</p>;
   }
-
   return (
     <main className="relative aspect-square flex flex-col w-full h-screen px-5 pt-12 overflow-hidden">
       <div className="absolute w-full h-full top-0 left-0 bg-neutral-100 z-10 opacity-50" />
       <Image
-        src={`${users.image_url}`}
+        src={supabaseUser.image_url || "/icons/avatar.svg"}
         alt="background"
         fill
         className="z-0 blur-sm object-cover"
       />
-      <MyProfile user={supabaseUser} />
+      <MyProfile
+        user={{
+          id: supabaseUser.id,
+          email: supabaseUser.email,
+          nickname: supabaseUser.nickname,
+          image_url: supabaseUser.image_url,
+        }}
+      />
       <MySchedule />
       <MyMenu />
-      <section className="w-full p-[10px] mt-10 text-white bg-neutral-650 rounded-lg z-10">
+      <section className="w-full p-[10px] mt-10 mb-8 text-white bg-neutral-650 rounded-lg z-10">
         [공지] 공지사항
       </section>
+      <RecentArea />
       <FooterList />
     </main>
   );
