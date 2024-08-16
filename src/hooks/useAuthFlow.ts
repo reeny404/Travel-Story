@@ -119,7 +119,7 @@ function useAuthFlow() {
       return setLabelText("오류가 발생했습니다. 다시 시도해주세요.");
     }
     const response = await api.auth.signUp(user.email, user.password, nickname);
-    setUser(response.data.session.user);
+    setUser(response.data?.session.user);
     if (isTypeExist) {
       return router.replace(nextURL);
     }

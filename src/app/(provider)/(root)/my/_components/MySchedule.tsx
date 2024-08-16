@@ -1,43 +1,61 @@
 "use client";
-import { api } from "@/apis/api";
 import Icon from "@/components/commons/Icon";
 import { ICON } from "@/constants/icon";
-import { Plan } from "@/types/plan";
-import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/contexts/auth.contexts";
+import { createClient } from "@/supabase/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyTrip from "../../_components/MyTrip";
 
 function MySchedule() {
   const router = useRouter();
-  const [recentPlan, setRecentPlan] = useState<Plan>();
+  const supabase = createClient();
+  const [recentPlan, setRecentPlan] = useState<{
+    id: string;
+    title: string;
+  } | null>();
+  const { isInitialized, user } = useAuth();
 
-  const { data: planList, isPending } = useQuery({
-    queryKey: ["plan", "my"],
-    queryFn: () => api.plan.getMyPlans(),
-  });
+  useEffect(() => {
+    const getMyPlan = async () => {
+      if (isInitialized && user) {
+        const { data, error } = await supabase
+          .from("plan")
+          .select("id, title")
+          .eq("userId", user.id);
 
-  if (!planList || !planList.length) {
+        if (error) {
+          console.error(error);
+        }
+        if (data) {
+          setRecentPlan(data[data.length - 1]);
+        }
+      }
+    };
+    getMyPlan();
+  }, []);
+
+  if (!recentPlan) {
     return (
-      <section className="flex mt-12 mb-4 z-10">
+      <div className="mb-4 z-10">
         <MyTrip />
-      </section>
+      </div>
     );
   }
 
   // 최신 일정 클릭
   const handlePlanClick = () => {
-    router.push(`plan/${planList[0].id}`);
+    router.push(`plan/${recentPlan.id}`);
   };
 
   // 최신 일정의 지도 클릭
   const handleMapClick = () => {
-    router.push(`plan/${planList[0].id}/route`);
+    router.push(`plan/${recentPlan.id}/route`);
   };
 
   // 최신 일정의 가계부 클릭
   const handleAccountClick = () => {
-    router.push(`plan/${planList[0].id}/account`);
+    router.push(`plan/${recentPlan.id}/account`);
   };
 
   return (
@@ -47,7 +65,7 @@ function MySchedule() {
         className="flex-grow h-11 px-5 py-[10px] bg-brand-300 rounded-lg cursor-pointer"
       >
         <p className="w-fit text-lg leading-6 font-semibold">
-          {planList[0].title}
+          {recentPlan.title}
         </p>
       </div>
       <div

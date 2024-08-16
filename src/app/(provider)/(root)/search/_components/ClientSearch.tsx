@@ -12,6 +12,7 @@ import { AxiosError } from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import InitialSearchView from "./InitialSearchView";
+import RecentArea from "./RecentArea";
 import SearchFilter from "./SearchFilter";
 import SearchResultView from "./SearchResultView";
 
@@ -92,6 +93,7 @@ function ClientSearch() {
         <CardType title="추천 여행지" />
         <ArchCardSlider spacing={12} slidesPerView={3.8} />
       </div>
+      <RecentArea />
     </>
   );
 }
