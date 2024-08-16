@@ -20,6 +20,7 @@ function MainTourSlider({ cards }: SliderProps) {
               city={card.city}
               country={card.country}
               areaName={card.areaName}
+              tags={card.tags!}
             />
             {card.tags && <PrimaryTagList tagList={card.tags} />}
           </div>
