@@ -30,6 +30,14 @@ const headerStyles = cva(
   }
 );
 
+export type HeaderIcon = {
+  icon: IconType;
+  alt: string;
+  size: number;
+  path?: string;
+  onClick?: () => void;
+};
+
 export type HeaderProps = {
   backgroundColor?:
     | "transparent"
@@ -39,19 +47,15 @@ export type HeaderProps = {
     | "noShadow";
   title?: string;
   titleAlign?: "left" | "center";
-  rightIcons?: {
-    icon: IconType;
-    alt: string;
-    size: number;
-    path?: string;
-    onClick?: () => void;
-  }[];
+  leftIcons?: HeaderIcon[];
+  rightIcons?: HeaderIcon[];
 };
 
 function Header({
   backgroundColor,
   title = "TravelStory",
   titleAlign = "center",
+  leftIcons,
   rightIcons,
 }: HeaderProps) {
   const router = useRouter();
@@ -71,17 +75,29 @@ function Header({
   return (
     <header className={headerStyles({ backgroundColor, titleAlign })}>
       <div className="flex items-center pl-[5px]">
-        <Icon
-          icon={
-            backgroundColor === "transparent" ||
-            backgroundColor === "transparentFixed"
-              ? ICON.menu.burgerWhite
-              : ICON.menu.burgerBlack
-          }
-          alt="drawer"
-          size={20}
-          onClick={openDrawer}
-        />
+        {leftIcons ? (
+          leftIcons.map((icon, index) => (
+            <Icon
+              key={index}
+              icon={icon.icon}
+              alt={icon.alt}
+              size={icon.size}
+              onClick={() => handleIconClick(icon.path, icon.onClick)}
+            />
+          ))
+        ) : (
+          <Icon
+            icon={
+              backgroundColor === "transparent" ||
+              backgroundColor === "transparentFixed"
+                ? ICON.menu.burgerWhite
+                : ICON.menu.burgerBlack
+            }
+            alt="drawer"
+            size={20}
+            onClick={openDrawer}
+          />
+        )}
         {titleAlign === "left" && (
           <h2 className="text-[18px] font-semibold ml-2 ">{title}</h2>
         )}
