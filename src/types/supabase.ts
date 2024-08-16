@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -331,7 +331,7 @@ export type Database = {
           createdAt: string;
           id: string;
           planId: string | null;
-          title: string | null;
+          title: string;
         };
         Insert: {
           check?: Json | null;
@@ -339,7 +339,7 @@ export type Database = {
           createdAt?: string;
           id?: string;
           planId?: string | null;
-          title?: string | null;
+          title?: string;
         };
         Update: {
           check?: Json | null;
@@ -347,7 +347,7 @@ export type Database = {
           createdAt?: string;
           id?: string;
           planId?: string | null;
-          title?: string | null;
+          title?: string;
         };
         Relationships: [
           {
@@ -404,40 +404,72 @@ export type Database = {
         Row: {
           country: string | null;
           createdAt: string;
-          endDate: string | null;
+          endDate: string;
           id: string;
           imagesUrl: string | null;
-          orderList: Json | null;
-          startDate: string | null;
-          title: string | null;
+          orderList: Json;
+          startDate: string;
+          title: string;
           userId: string | null;
         };
         Insert: {
           country?: string | null;
           createdAt?: string;
-          endDate?: string | null;
+          endDate?: string;
           id?: string;
           imagesUrl?: string | null;
-          orderList?: Json | null;
-          startDate?: string | null;
-          title?: string | null;
+          orderList?: Json;
+          startDate?: string;
+          title?: string;
           userId?: string | null;
         };
         Update: {
           country?: string | null;
           createdAt?: string;
-          endDate?: string | null;
+          endDate?: string;
           id?: string;
           imagesUrl?: string | null;
-          orderList?: Json | null;
-          startDate?: string | null;
-          title?: string | null;
+          orderList?: Json;
+          startDate?: string;
+          title?: string;
           userId?: string | null;
         };
         Relationships: [
           {
             foreignKeyName: "plan_userId_fkey";
             columns: ["userId"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      recents: {
+        Row: {
+          area: number[] | null;
+          created_at: string;
+          id: number;
+          search: { search: string; date: string }[];
+          user_id: string | null;
+        };
+        Insert: {
+          area?: Json | null;
+          created_at?: string;
+          id?: number;
+          search?: Json | null;
+          user_id?: string | null;
+        };
+        Update: {
+          area?: Json | null;
+          created_at?: string;
+          id?: number;
+          search?: Json | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "recents_user_id_fkey";
+            columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];
@@ -456,7 +488,7 @@ export type Database = {
           place: string | null;
           planId: string | null;
           startTime: string | null;
-          title: string | null;
+          title: string;
           type: string | null;
         };
         Insert: {
@@ -470,7 +502,7 @@ export type Database = {
           place?: string | null;
           planId?: string | null;
           startTime?: string | null;
-          title?: string | null;
+          title?: string;
           type?: string | null;
         };
         Update: {
@@ -484,7 +516,7 @@ export type Database = {
           place?: string | null;
           planId?: string | null;
           startTime?: string | null;
-          title?: string | null;
+          title?: string;
           type?: string | null;
         };
         Relationships: [
@@ -507,25 +539,27 @@ export type Database = {
       users: {
         Row: {
           created_at: string;
-          email: string | null;
+          email: string;
+          filter: Json | null;
           id: string;
-          image_url: string | null;
-          nickname: string | null;
+          image_url: string;
+          nickname: string;
         };
         Insert: {
           created_at?: string;
-          email?: string | null;
+          email?: string;
+          filter?: Json | null;
           id?: string;
-          image_url?: string | null;
-          nickname?: string | null;
+          image_url?: string;
+          nickname?: string;
         };
         Update: {
           created_at?: string;
           email?: string | null;
+          filter?: Json | null;
           id?: string;
           image_url?: string | null;
           nickname?: string | null;
-          filter?: Json | null;
         };
         Relationships: [];
       };

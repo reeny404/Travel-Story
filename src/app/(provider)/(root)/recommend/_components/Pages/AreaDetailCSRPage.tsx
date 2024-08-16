@@ -6,7 +6,10 @@ import Tab from "@/components/Tab/Tab";
 import WebTap from "@/components/Tab/WebTab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
+import { useAuth } from "@/contexts/auth.contexts";
 import { useTab } from "@/hooks/useTab";
+import { useRecentStore } from "@/stores/recent.store";
+import { createClient } from "@/supabase/client";
 import { Area, AreaReview, GroupedArea } from "@/types/Recommend";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -37,6 +40,40 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
   });
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const reviewSectionRef = useRef<HTMLDivElement | null>(null);
+  const supabase = createClient();
+  const { isInitialized, user } = useAuth();
+  const { recentArea, setRecentArea } = useRecentStore();
+
+  useEffect(() => {
+    const upsertArea = async () => {
+      let prevArea = [...recentArea];
+      prevArea = prevArea.filter((area) => {
+        return area !== areaId;
+      });
+      if (prevArea.length === 5) {
+        prevArea.shift();
+      }
+      const areaArray = [...prevArea, areaId];
+      setRecentArea(areaArray);
+      if (isInitialized && user) {
+        const { data, error } = await supabase.from("recents").upsert(
+          [
+            {
+              user_id: user.id,
+              area: areaArray,
+            },
+          ],
+          {
+            onConflict: "id",
+          }
+        );
+        if (error) {
+          console.error(error);
+        }
+      }
+    };
+    upsertArea();
+  }, []);
 
   const { data: area, isLoading } = useQuery<Area>({
     queryKey: ["area", areaId],
