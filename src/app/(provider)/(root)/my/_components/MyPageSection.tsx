@@ -58,14 +58,13 @@ function MyPageSection() {
   console.log(users.image_url);
   return (
     <main className="relative aspect-square flex flex-col w-full h-screen px-5 pt-12 overflow-hidden">
-      <div className="absolute w-full h-full top-0 left-0 bg-neutral-100 z-10 opacity-50" />
-      <Image
+      {/* <Image
         src={`${users.image_url}`}
         alt="background"
         layout="fill"
         objectFit="cover"
         className="z-0 blur-sm"
-      />
+      /> */}
       <MyProfile user={supabaseUser} />
       <MySchedule />
       <MyMenu />

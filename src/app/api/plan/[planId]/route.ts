@@ -3,16 +3,20 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { OrderList, PlanChildType, PlanFull } from "@/types/plan";
 import { Tables } from "@/types/supabase";
 import { NextRequest, NextResponse } from "next/server";
+import { AuthUtil } from "../../auth/AuthUtil";
 import { getTableManager } from "./PlanChildTable";
 
 type Params = {
-  params: { planId: string }
-}
+  params: { planId: string };
+};
 
 /**
  * planId, day 기준으로 plan 하위 테이블들 조회
  */
-export async function GET(request: NextRequest, { params: { planId } }: Params): Promise<NextResponse<ApiResponse<PlanFull | null>>> {
+export async function GET(
+  request: NextRequest,
+  { params: { planId } }: Params
+): Promise<NextResponse<ApiResponse<PlanFull | null>>> {
   try {
     // day는 1부터 시작
     const { searchParams } = new URL(request.url);
@@ -35,26 +39,39 @@ export async function GET(request: NextRequest, { params: { planId } }: Params):
     }
     const { orderList, schedules } = plan;
     const orders = (orderList as OrderList)[dayIndex] ?? [];
-    const filteredSchedules: Tables<"schedule">[] = orders.map(order => {
-      const schedule = schedules?.find(schedule => schedule.id === order.id);
-      if (!schedule?.latlng) {
-        return null;
-      }
+    const filteredSchedules: Tables<"schedule">[] = orders
+      .map((order) => {
+        const schedule = schedules?.find(
+          (schedule) => schedule.id === order.id
+        );
+        if (!schedule?.latlng) {
+          return null;
+        }
 
-      return Object.keys(schedule.latlng).length ? schedule : null;
-    }).filter(schedule => !!schedule);
+        return Object.keys(schedule.latlng).length ? schedule : null;
+      })
+      .filter((schedule) => !!schedule);
 
-    return NextResponse.json({ data: { ...plan, schedules: filteredSchedules }, error });
+    return NextResponse.json({
+      data: { ...plan, schedules: filteredSchedules },
+      error,
+    });
   } catch (e) {
     console.error(e);
-    return NextResponse.json({ data: null, error: e }, { status: 400, statusText: "something wrong" });
+    return NextResponse.json(
+      { data: null, error: e },
+      { status: 400, statusText: "something wrong" }
+    );
   }
 }
 
 /**
  * plan 하위 테이블(schedule, memo, moveSchedule 등) insert
  */
-export async function POST(request: NextRequest, { params: { planId } }: Params) {
+export async function POST(
+  request: NextRequest,
+  { params: { planId } }: Params
+) {
   try {
     const requestParameter = await request.json();
     const type: PlanChildType = requestParameter.type;
@@ -81,7 +98,9 @@ export async function POST(request: NextRequest, { params: { planId } }: Params)
       .single();
 
     if (planSelectError) {
-      throw new SyntaxError("supabase error, plan select", { cause: planSelectError })
+      throw new SyntaxError("supabase error, plan select", {
+        cause: planSelectError,
+      });
     }
 
     const orderList = planOrder?.orderList as OrderList;
@@ -93,27 +112,33 @@ export async function POST(request: NextRequest, { params: { planId } }: Params)
       .eq("id", planId);
 
     if (error) {
-      throw new SyntaxError("supabase error, plan update", { cause: error })
+      throw new SyntaxError("supabase error, plan update", { cause: error });
     }
 
-    return NextResponse.json({ plan }, {
-      status: 200,
-    });
+    return NextResponse.json(
+      { plan },
+      {
+        status: 200,
+      }
+    );
   } catch (e) {
     console.error(e);
-    return NextResponse.json({ error: e }, {
-      status: 400,
-    })
+    return NextResponse.json(
+      { error: e },
+      {
+        status: 400,
+      }
+    );
   }
 }
 
 /**
  * plan 하위 테이블의 특정 row 수정
+ * // TODO 위치 옮겨야할 듯
  */
-export async function PUT(request: NextRequest, { params: { planId } }: Params) {
+export async function PUT(request: NextRequest) {
   try {
     const newData = await request.json();
-    console.log(newData);
 
     const supabase = createClient();
     const type: PlanChildType = newData.type;
@@ -124,13 +149,38 @@ export async function PUT(request: NextRequest, { params: { planId } }: Params) 
 
     const data = await manager.update(newData.id, newData);
 
-    return NextResponse.json({ data }, {
-      status: 200,
-    });
+    return NextResponse.json(
+      { data },
+      {
+        status: 200,
+      }
+    );
   } catch (e) {
     console.error(e);
-    return NextResponse.json({ error: e }, {
-      status: 400,
-    })
+    return NextResponse.json(
+      { error: e },
+      {
+        status: 400,
+      }
+    );
   }
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params: { planId } }: Params
+) {
+  const supabase = createClient();
+  const userId = (await AuthUtil.getUser(supabase))?.id;
+  if (!userId) {
+    return NextResponse.json({}, { status: 403, statusText: "need login" });
+  }
+
+  const { data, error } = await supabase
+    .from("plan")
+    .delete()
+    .eq("id", planId)
+    .eq("userId", userId);
+
+  return NextResponse.json({ data, error });
 }

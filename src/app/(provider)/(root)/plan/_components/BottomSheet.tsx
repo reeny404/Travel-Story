@@ -1,7 +1,13 @@
 "use client";
 
 import useScheduleStore from "@/stores/schedule.store";
-import { BottomSheetType, Todo } from "@/types/plan";
+import {
+  BottomSheetType,
+  SupabaseMoveType,
+  SupabaseScheduleType,
+  SupbasePlanChildren,
+  Todo,
+} from "@/types/plan";
 import { useEffect, useRef, useState } from "react";
 import BottomSheetCheckList from "../_components/BottomSheetCheckList";
 import BottomSheetImages from "../_components/BottomSheetImages";
@@ -11,11 +17,17 @@ import UpdateButton from "../_components/UpdateButton";
 import { getInsertData, getUpdateData } from "./getInsertData";
 
 type BottomSheetProps = BottomSheetType & {
-  item?: any;
+  item?: SupbasePlanChildren;
   onClose: () => void;
   planId: string;
   day: number;
   id?: string;
+};
+
+const hasImagesUrl = (
+  data?: SupbasePlanChildren
+): data is SupabaseScheduleType | SupabaseMoveType => {
+  return data ? "imagesUrl" in data.data : false;
 };
 
 function BottomSheet({
@@ -32,7 +44,9 @@ function BottomSheet({
   const [status, setStatus] = useState(initialStatus);
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>(
+    hasImagesUrl(item) ? (item.data.imagesUrl as string[]) : []
+  );
   const [checkList, setCheckList] = useState<Todo[]>(
     type === "memo" ? [{ text: "사진 찍기", isCheck: false }] : []
   );
@@ -48,15 +62,7 @@ function BottomSheet({
 
   useEffect(() => {
     if (status === "read" && item) {
-      setFormData({
-        id: item.data.id,
-        title: item.data.title,
-        memo: item.data.memo,
-        startTime: item.data.startTime,
-        endTime: item.data.endTime,
-        spend: item.data.spend,
-        place: item.data.place,
-      });
+      setFormData(item.data);
     }
   }, [item, status]);
 
@@ -99,6 +105,8 @@ function BottomSheet({
       .forEach((key) => {
         data[key] = data[key] ?? formData[key];
       });
+    data.images = images;
+
     return data;
   };
 
@@ -107,7 +115,7 @@ function BottomSheet({
       const data = getFormData();
       const newData = getUpdateData(type, data, planId, checkList);
       if (!newData) {
-        console.warn("insert용 데이터 생성 불가");
+        console.warn("update 데이터 생성 불가");
         return;
       }
       await updateSchedule(planId, day, type, newData);
@@ -137,6 +145,9 @@ function BottomSheet({
     } finally {
       handleClose();
     }
+  };
+  const handleAddImage = (url: string) => {
+    setImages((prev) => [...prev, url]);
   };
 
   return (
@@ -202,7 +213,7 @@ function BottomSheet({
             type={type}
             status={status}
             images={images}
-            setImages={setImages}
+            addImage={handleAddImage}
           />
         )}
 

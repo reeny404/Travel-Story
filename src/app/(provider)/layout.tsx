@@ -1,6 +1,7 @@
 "use client";
 
 import { AuthProvider } from "@/contexts/auth.contexts";
+import { OverlayProvider } from "@/contexts/overlay.context";
 import QueryProvider from "@/providers/query.provider";
 import { usePathStore } from "@/stores/path.store";
 import { usePathname } from "next/navigation";
@@ -10,6 +11,7 @@ function ProviderLayout({ children }: PropsWithChildren) {
   const path = usePathname();
   const { setPrevPath } = usePathStore();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => storePathValues, [path]);
 
   const storePathValues = () => {
@@ -18,7 +20,9 @@ function ProviderLayout({ children }: PropsWithChildren) {
 
   return (
     <QueryProvider>
-      <AuthProvider>{children}</AuthProvider>
+      <AuthProvider>
+        <OverlayProvider>{children}</OverlayProvider>
+      </AuthProvider>
     </QueryProvider>
   );
 }
