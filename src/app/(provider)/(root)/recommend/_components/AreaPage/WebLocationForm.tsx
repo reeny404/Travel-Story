@@ -7,11 +7,11 @@ import React, { useCallback, useState } from "react";
 
 const KEY: string = process.env.NEXT_PUBLIC_MAP_API_KEY!;
 
-type LocationFormProps = {
+type WebLocationFormProps = {
   area: Area;
 };
 
-const LocationForm = React.memo(({ area }: LocationFormProps) => {
+const WebLocationForm = React.memo(({ area }: WebLocationFormProps) => {
   const [isInit, setIsInit] = useState<boolean>(false);
   const handleOnLoad = useCallback(() => setIsInit(true), []);
 
@@ -29,10 +29,32 @@ const LocationForm = React.memo(({ area }: LocationFormProps) => {
     : {};
 
   return (
-    <section className="mb-3 h-full bg-[#E8F97B] rounded-lg md:hidden">
-      <article className="px-4 pt-8">
-        <h1 className="pb-7 text-lg font-medium">위치</h1>
-        <div className="h-[203px] md:h-[150px] rounded-lg">
+    <section className="hidden h-full bg-[#E8F97B] rounded-lg md:block">
+      <article className="flex flex-nowrap items-center h-full px-8 py-8">
+        <div className="flex flex-col max-w-[312px]">
+          <h1 className="pb-7 text-xl font-medium">위치</h1>
+          <div className="pb-8 flex items-start">
+            <Image
+              src={`/icons/${ICON.location.black.name}.svg`}
+              alt="location"
+              width={20}
+              height={20}
+              className="object-contain"
+            />
+            <p className="ml-3">{area.info.address}</p>
+          </div>
+          <div className="pb-11 md:pb-8 flex items-start">
+            <Image
+              src={`/icons/${ICON.call.black}.svg`}
+              alt="location"
+              width={20}
+              height={20}
+              className="object-contain"
+            />
+            <p className="ml-3">{area.info.phoneNumber}</p>
+          </div>
+        </div>
+        <div className="flex-grow h-[211px] rounded-lg">
           <LoadScript googleMapsApiKey={KEY} onLoad={handleOnLoad}>
             <GoogleMap
               mapContainerStyle={{
@@ -51,33 +73,11 @@ const LocationForm = React.memo(({ area }: LocationFormProps) => {
             </GoogleMap>
           </LoadScript>
         </div>
-        <div className="md:flex">
-          <div className="py-8 flex items-start md:w-1/2">
-            <Image
-              src={`/icons/${ICON.location.black.name}.svg`}
-              alt="location"
-              width={20}
-              height={20}
-              className="object-contain"
-            />
-            <p className="ml-3">{area.info.address}</p>
-          </div>
-          <div className="pb-11 md:py-8 flex items-start md:w-1/2">
-            <Image
-              src={`/icons/${ICON.call.black}.svg`}
-              alt="location"
-              width={20}
-              height={20}
-              className="object-contain"
-            />
-            <p className="ml-3">{area.info.phoneNumber}</p>
-          </div>
-        </div>
       </article>
     </section>
   );
 });
 
-LocationForm.displayName = "LocationForm";
+WebLocationForm.displayName = "WebLocationForm";
 
-export default LocationForm;
+export default WebLocationForm;

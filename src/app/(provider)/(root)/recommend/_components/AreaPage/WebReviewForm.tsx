@@ -14,7 +14,7 @@ function WebReviewForm({ area, reviews }: WebReviewForm) {
         <header className=" w-full flex justify-between mb-5">
           <span className="text-lg font-bold">리뷰</span>
         </header>
-        <div className="flex w-full gap-x-6">
+        <div className="flex flex-row-reverse justify-between w-full gap-x-6">
           <ReviewSummaryCard
             areaName={area.krName!}
             rating={area.rating ?? 0}

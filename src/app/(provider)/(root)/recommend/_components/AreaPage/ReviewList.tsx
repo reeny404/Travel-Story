@@ -10,6 +10,9 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
     <>
       {reviews &&
         reviews.map((review, idx) => {
+          if (idx >= 3) {
+            return;
+          }
           return (
             <AreaReviewCard
               key={review.id}

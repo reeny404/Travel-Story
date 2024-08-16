@@ -68,7 +68,7 @@ const ReviewSummaryCard = React.memo(
             </div>
             <p className="text-xs ">{`(${ratingAmount})`}</p>
           </div>
-          <div className="w-full md:h-[136px] flex flex-col gap-y-1 justify-center py-5 px-4 md:p-8 border-[0.6px] border-[#DFDFDF] md:bg-[#F6F6F6] md:border-none rounded-lg">
+          <div className="w-full md:h-[136px] flex flex-col gap-y-1 justify-center py-5 px-1 md:p-8 border-[0.6px] border-[#DFDFDF] md:bg-[#F6F6F6] md:border-none rounded-lg">
             <div className=" min-w-[135px] flex text-sm font-semibold relative">
               <Image
                 src="/icons/emoji-dinner.svg"

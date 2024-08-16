@@ -64,7 +64,7 @@ const AreaReviewCard = React.memo(
       }
     };
     return (
-      <section className="w-full md:w-[348px] md:h-[340px] flex flex-col px-4 md:px-0">
+      <section className="w-full md:w-[311px] md:h-[340px] flex flex-col px-4 md:px-0">
         {isBottomSheetVisible && (
           <BottomSheet
             areaName={reviewInfo.areaName}

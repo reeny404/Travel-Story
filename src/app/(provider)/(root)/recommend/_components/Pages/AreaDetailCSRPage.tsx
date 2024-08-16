@@ -3,6 +3,7 @@
 import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
 import Tab from "@/components/Tab/Tab";
+import WebTap from "@/components/Tab/WebTab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
@@ -15,6 +16,7 @@ import { useWindowSize } from "../../../_hook/useWindowSize";
 import AreaDetailCard from "../AreaPage/AreaDetailCard";
 import ReviewList from "../AreaPage/ReviewList";
 import UnderBar from "../AreaPage/UnderBar";
+import WebLocationForm from "../AreaPage/WebLocationForm";
 import WebReviewForm from "../AreaPage/WebReviewForm";
 import CardImgFrame from "../Cards/CardImgFrame";
 const SimilarAreaCard = lazy(() => import("../Cards/SimilarAreaCard"));
@@ -123,14 +125,21 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 TABS={TABS.areaDetail}
                 currentTab={currentTab!}
                 setCurrentTab={setCurrentTab}
-                frameClassName="top-[56px] shadow-area-section"
+                frameClassName="top-[56px] shadow-area-section md:hidden"
               />
-              <div className="md:flex gap-x-3 md:h-[359px]">
+              <div className="hidden md:block shadow-area-section w-full my-6">
+                <WebTap
+                  currentTab={currentTab!}
+                  setCurrentTab={setCurrentTab}
+                  TABS={TABS.areaDetail}
+                />
+              </div>
+              <div className="md:flex gap-x-5 md:h-[283px] ">
                 <div
                   ref={(tabEl) => {
                     sectionRefs.current[0] = tabEl;
                   }}
-                  className="mb-3 w-full h-full rounded-lg shadow-area-section"
+                  className="mb-3 w-full h-full rounded-lg shadow-area-section md:max-w-[334px]"
                 >
                   <NoticeForm area={area} />
                 </div>
@@ -142,6 +151,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   className="mb-3 w-full h-full rounded-lg shadow-area-section"
                 >
                   <LocationForm area={area} />
+                  <WebLocationForm area={area} />
                 </div>
               </div>
               <div
@@ -149,7 +159,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   sectionRefs.current[2] = tabEl;
                   reviewSectionRef.current = tabEl;
                 }}
-                className="mb-3 w-full h-full md:hidden rounded-lg shadow-area-section"
+                className="w-full h-full md:hidden rounded-lg shadow-area-section"
               >
                 <ReviewSummaryCard
                   areaName={area.krName!}
@@ -175,7 +185,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                     <h1 className="text-lg font-medium min-w-20">
                       비슷한 장소 둘러보기
                     </h1>
-                    <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-4">
+                    <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-4 md:gap-8">
                       {areas?.map((area: Area, idx) => {
                         if (width <= 768 && idx === 4) {
                           return;
