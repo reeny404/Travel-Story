@@ -43,7 +43,6 @@ function RecentArea() {
         console.error(error);
       }
       if (data) {
-        console.log(data);
         setRecentList(data);
       }
     };
