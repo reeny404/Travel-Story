@@ -34,7 +34,7 @@ function AuthContainer({
 
   return (
     <MainLayout headerProps={{ title: "로그인", backgroundColor: "noShadow" }}>
-      {progress !== 0 ? <ProgressBar /> : null}
+      <ProgressBar />
       <div className="relative w-full px-4 pt-[56px] bg-white">
         {/* title */}
         <h1 className="text-[24px] font-semibold mb-[68px] whitespace-pre-wrap">
