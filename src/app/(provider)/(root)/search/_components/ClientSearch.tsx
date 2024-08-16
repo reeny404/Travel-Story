@@ -7,11 +7,7 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import useCountryFilterStore from "@/stores/searchFilter.store";
 import { Area } from "@/types/Recommend";
-import {
-  FoldStateType,
-  SearchResponse,
-  SearchResultsType,
-} from "@/types/search";
+import { SearchResponse, SearchResultsType } from "@/types/search";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -40,12 +36,7 @@ function ClientSearch() {
     accommodation: 1,
     shop: 1,
   });
-  const [isFolded, setIsFolded] = useState<FoldStateType>({
-    place: false,
-    restaurant: false,
-    accommodation: false,
-    shop: false,
-  });
+
   const [totalResults, setTotalResults] = useState({
     place: 0,
     restaurant: 0,
@@ -78,7 +69,7 @@ function ClientSearch() {
   useEffect(() => {
     if (searchedData && searchedData.data) {
       const responseData = searchedData.data;
-      const totalData = searchedData.total; // 총 개수 정보
+      const totalData = searchedData.total;
 
       setSearchResults({
         place: responseData.place || [],
@@ -95,11 +86,6 @@ function ClientSearch() {
       });
     }
   }, [searchedData]);
-
-  // searchResults가 업데이트된 후 상태 확인
-  useEffect(() => {
-    console.log("searchResults 업데이트 후:", searchResults);
-  }, [searchResults]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -152,11 +138,6 @@ function ClientSearch() {
             ),
           ];
 
-          setIsFolded((prevFolded) => ({
-            ...prevFolded,
-            [category]: updatedResults.length >= totalResults[category],
-          }));
-
           return {
             ...prevResults,
             [category]: updatedResults,
@@ -177,11 +158,6 @@ function ClientSearch() {
     setCurrentPage((prevPages) => ({
       ...prevPages,
       [category]: 1,
-    }));
-
-    setIsFolded((prev) => ({
-      ...prev,
-      [category]: false,
     }));
   };
 
@@ -212,7 +188,6 @@ function ClientSearch() {
           onSearch={handleSearch}
           onLoadMore={handleLoadMore}
           onFold={handleFold}
-          isFolded={isFolded}
           totalResults={totalResults}
         />
       ) : (

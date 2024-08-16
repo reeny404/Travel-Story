@@ -1,3 +1,4 @@
+import { TABS } from "@/constants/tabs";
 import { createClient } from "@/supabase/server";
 import { Area } from "@/types/Recommend";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,8 +9,11 @@ export async function GET(request: NextRequest) {
   const countryId = searchParams.get("country");
   const category = searchParams.get("category");
   const currentPage = parseInt(searchParams.get("currentPage") || "1", 10);
-  const limit = parseInt(searchParams.get("limit") || "3", 10);
-  const offset = (currentPage - 1) * limit;
+  const limit = parseInt(
+    searchParams.get("limit") || (currentPage === 1 ? "3" : "5"),
+    10
+  );
+  const offset = currentPage === 1 ? 0 : 3 + (currentPage - 2) * 5;
 
   if (!term) {
     return NextResponse.json({
@@ -24,123 +28,66 @@ export async function GET(request: NextRequest) {
 
   try {
     const applyCountryFilter = (query: any) => {
-      if (countryId) {
-        return query.eq("countryId", countryId);
-      }
-      return query;
+      return countryId ? query.eq("countryId", countryId) : query;
     };
 
-    const queries = {
-      place: applyCountryFilter(
+    const fetchSearchResultData = async (category: string) => {
+      const dataQuery = applyCountryFilter(
         supabase
           .from("area")
           .select("*")
           .or(`name.ilike.%${term}%,krName.ilike.%${term}%`)
-          .eq("type", "place")
+          .eq("type", category)
           .range(offset, offset + limit - 1)
-      ),
+      );
 
-      restaurant: applyCountryFilter(
+      const totalQuery = applyCountryFilter(
         supabase
           .from("area")
-          .select("*")
-          .or(`name.ilike.%${term}%,krName.ilike.%${term}%`)
-          .eq("type", "restaurant")
-          .range(offset, offset + limit - 1)
-      ),
+          .select("*", { count: "exact", head: true })
+          .ilike("name", `%${term}%`)
+          .eq("type", category)
+      );
 
-      accommodation: applyCountryFilter(
-        supabase
-          .from("area")
-          .select("*")
-          .or(`name.ilike.%${term}%,krName.ilike.%${term}%`)
-          .eq("type", "accommodation")
-          .range(offset, offset + limit - 1)
-      ),
+      const [data, total] = await Promise.all([dataQuery, totalQuery]);
 
-      shop: applyCountryFilter(
-        supabase
-          .from("area")
-          .select("*")
-          .or(`name.ilike.%${term}%,krName.ilike.%${term}%`)
-          .eq("type", "shop")
-          .range(offset, offset + limit - 1)
-      ),
+      return {
+        data: data.data as Area[],
+        total: total.count || 0,
+      };
     };
 
-    const [placeData, restaurantData, accommodationData, shopData] =
-      await Promise.all([
-        queries.place,
-        queries.restaurant,
-        queries.accommodation,
-        queries.shop,
-      ]);
-
-    const errors = [
-      placeData.error,
-      restaurantData.error,
-      accommodationData.error,
-      shopData.error,
-    ].filter(Boolean);
-    if (errors.length > 0) {
-      throw new Error("Error fetching data");
+    // 특정 카테고리만 검색
+    if (category) {
+      const { data, total } = await fetchSearchResultData(category);
+      return NextResponse.json({
+        status: 200,
+        message: "Success",
+        data: { [category]: data },
+        total: { [category]: total },
+        error: null,
+      });
     }
 
-    const searchResultData = {
-      place: placeData.data as Area[],
-      restaurant: restaurantData.data as Area[],
-      accommodation: accommodationData.data as Area[],
-      shop: shopData.data as Area[],
-    };
-    console.log(
-      `현재 페이지: ${currentPage}, 오프셋: ${offset}, 제한: ${limit}`
+    // 전체 카테고리 검색
+    const categories = TABS.default.map((type) => type.en);
+    const results = await Promise.all(categories.map(fetchSearchResultData));
+
+    const searchResultData = results.reduce(
+      (acc, result, index) => ({
+        ...acc,
+        [categories[index]]: result.data,
+      }),
+      {}
     );
 
-    const totalResultsQueries = {
-      place: applyCountryFilter(
-        supabase
-          .from("area")
-          .select("*", { count: "exact", head: true })
-          .ilike("name", `%${term}%`)
-          .eq("type", "place")
-      ),
-      restaurant: applyCountryFilter(
-        supabase
-          .from("area")
-          .select("*", { count: "exact", head: true })
-          .ilike("name", `%${term}%`)
-          .eq("type", "restaurant")
-      ),
-      accommodation: applyCountryFilter(
-        supabase
-          .from("area")
-          .select("*", { count: "exact", head: true })
-          .ilike("name", `%${term}%`)
-          .eq("type", "accommodation")
-      ),
-      shop: applyCountryFilter(
-        supabase
-          .from("area")
-          .select("*", { count: "exact", head: true })
-          .ilike("name", `%${term}%`)
-          .eq("type", "shop")
-      ),
-    };
-
-    const [placeTotal, restaurantTotal, accommodationTotal, shopTotal] =
-      await Promise.all([
-        totalResultsQueries.place,
-        totalResultsQueries.restaurant,
-        totalResultsQueries.accommodation,
-        totalResultsQueries.shop,
-      ]);
-
-    const totalResults = {
-      place: placeTotal.count || 0,
-      restaurant: restaurantTotal.count || 0,
-      accommodation: accommodationTotal.count || 0,
-      shop: shopTotal.count || 0,
-    };
+    const totalResults = results.reduce(
+      (acc, result, index) => ({
+        ...acc,
+        [categories[index]]: result.total,
+      }),
+      {}
+    );
 
     return NextResponse.json({
       status: 200,

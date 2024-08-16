@@ -8,13 +8,6 @@ export type SearchResultsType = {
   shop: Area[];
 };
 
-export type FoldStateType = {
-  place: boolean;
-  restaurant: boolean;
-  accommodation: boolean;
-  shop: boolean;
-};
-
 export type TotalResultsType = {
   place: number;
   restaurant: number;
@@ -29,7 +22,6 @@ export type SearchResultViewProps = {
   onSearch: (term: string) => void;
   onLoadMore: (category: keyof SearchResultsType) => void;
   onFold: (category: keyof SearchResultsType) => void;
-  isFolded: FoldStateType;
   totalResults: TotalResultsType;
 };
 

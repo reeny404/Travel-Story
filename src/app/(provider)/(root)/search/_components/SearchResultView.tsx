@@ -21,7 +21,6 @@ function SearchResultView({
   onSearch,
   onLoadMore,
   onFold,
-  isFolded,
   totalResults,
 }: SearchResultViewProps) {
   const [filteredTabs, setFilteredTabs] = useState([...TABS.default]);
@@ -122,46 +121,31 @@ function SearchResultView({
     );
   }
 
+  // 검색결과 버튼
   const loadMoreOrFoldButton = (category: keyof SearchResultsType) => {
-    const isFoldedCategory = isFolded?.[category];
     const totalResultsInCategory = totalResults?.[category] || 0;
     const currentResultsInCategory = results?.[category]?.length || 0;
 
-    // 1. 데이터가 없을 경우 버튼 숨기기
+    // 검색 결과가 없으면 버튼 숨기기
     if (currentResultsInCategory === 0) {
       return null;
     }
 
-    // 2. 데이터가 INITIAL_ITEMS 이하이고, 전체 데이터가 INITIAL_ITEMS와 같으면 더보기 버튼 숨기기
-    if (
-      currentResultsInCategory <= INITIAL_ITEMS &&
-      currentResultsInCategory === totalResultsInCategory
-    ) {
-      return null;
-    }
+    const handleSearchButtonClick =
+      currentResultsInCategory >= totalResultsInCategory
+        ? () => onFold(category)
+        : () => onLoadMore(category);
+    const buttonText =
+      currentResultsInCategory >= totalResultsInCategory
+        ? "접기"
+        : "비슷한 장소 더 보기";
 
-    // 3. 전체 데이터를 다 불러왔을 때는 접기 버튼만 보여주기
-    console.log("current", currentResultsInCategory);
-    console.log("total", totalResultsInCategory);
-
-    if (currentResultsInCategory >= totalResultsInCategory) {
-      return (
-        <button
-          className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150"
-          onClick={() => onFold(category)}
-        >
-          접기
-        </button>
-      );
-    }
-
-    // 4. 더 많은 데이터를 불러올 수 있을 경우 더보기 버튼 표시
     return (
       <button
         className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150"
-        onClick={() => onLoadMore(category)}
+        onClick={handleSearchButtonClick}
       >
-        비슷한 장소 더 보기
+        {buttonText}
       </button>
     );
   };
