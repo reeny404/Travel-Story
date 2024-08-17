@@ -6,7 +6,8 @@ import SvgIcon from "@/components/commons/SvgIcon";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import useCountryFilterStore from "@/stores/searchFilter.store";
-import { Area, RecommendResponse } from "@/types/Recommend";
+import { Area } from "@/types/Recommend";
+import { SearchResponse, SearchResultsType } from "@/types/search";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -16,41 +17,91 @@ import RecentArea from "./RecentArea";
 import SearchFilter from "./SearchFilter";
 import SearchResultView from "./SearchResultView";
 
+const INITIAL_ITEMS = 3;
+const ITEMS_PER_PAGE = 5;
+
 function ClientSearch() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("term") || "";
-  const { countryFilter } = useCountryFilterStore();
   const [searchTerm, setSearchTerm] = useState<string>(initialQuery);
-  const [searchResults, setSearchResults] = useState<Area[]>([]);
+  const [searchResults, setSearchResults] = useState({
+    place: [] as Area[],
+    restaurant: [] as Area[],
+    accommodation: [] as Area[],
+    shop: [] as Area[],
+  });
+  const [currentPage, setCurrentPage] = useState<{ [key: string]: number }>({
+    place: 1,
+    restaurant: 1,
+    accommodation: 1,
+    shop: 1,
+  });
+
+  const [totalResults, setTotalResults] = useState({
+    place: 0,
+    restaurant: 0,
+    accommodation: 0,
+    shop: 0,
+  });
+
+  const { countryFilter } = useCountryFilterStore();
   const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
 
   const {
     data: searchedData,
     isPending,
     error,
-  } = useQuery<RecommendResponse<Area[]>, AxiosError>({
+  } = useQuery<SearchResponse<SearchResultsType>, AxiosError>({
     queryKey: ["searchResults", searchTerm, countryFilter?.id],
-    queryFn: () => api.area.search(searchTerm, countryFilter?.id?.toString()),
+    queryFn: () =>
+      api.area.search(
+        searchTerm,
+        countryFilter?.id?.toString(),
+        1,
+        INITIAL_ITEMS,
+        ""
+      ),
     enabled: !!searchTerm,
     staleTime: 1000 * 60 * 3,
     gcTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
-    if (searchedData) {
-      const data = Array.isArray(searchedData.data)
-        ? searchedData.data
-        : [searchedData.data];
-      setSearchResults(data);
+    if (searchedData && searchedData.data) {
+      const responseData = searchedData.data;
+      const totalData = searchedData.total;
+
+      console.log("총 검색 결과:", totalData);
+
+      setSearchResults({
+        place: responseData.place || [],
+        restaurant: responseData.restaurant || [],
+        accommodation: responseData.accommodation || [],
+        shop: responseData.shop || [],
+      });
+
+      setTotalResults({
+        place: totalData.place,
+        restaurant: totalData.restaurant,
+        accommodation: totalData.accommodation,
+        shop: totalData.shop,
+      });
     }
   }, [searchedData]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
+    setCurrentPage({
+      place: 1,
+      restaurant: 1,
+      accommodation: 1,
+      shop: 1,
+    });
 
     const params = new URLSearchParams();
     params.append("term", term);
+
     if (countryFilter && countryFilter.id != null) {
       params.append("country", countryFilter.id.toString());
     } else {
@@ -58,6 +109,59 @@ function ClientSearch() {
     }
 
     router.push(`/search?${params.toString()}`);
+  };
+
+  const handleLoadMore = (category: keyof SearchResultsType) => {
+    const nextPage = currentPage[category] + 1;
+
+    setCurrentPage((prevPages) => ({
+      ...prevPages,
+      [category]: nextPage,
+    }));
+
+    api.area
+      .search(
+        searchTerm,
+        countryFilter?.id?.toString(),
+        nextPage,
+        ITEMS_PER_PAGE,
+        category
+      )
+      .then((response) => {
+        const categoryData = response.data[category];
+
+        setSearchResults((prevResults) => {
+          const updatedResults = [
+            ...prevResults[category],
+            ...categoryData.filter(
+              (newResult: Area) =>
+                !prevResults[category].some(
+                  (currentResult) => currentResult.id === newResult.id
+                )
+            ),
+          ];
+
+          return {
+            ...prevResults,
+            [category]: updatedResults,
+          };
+        });
+      })
+      .catch((error) => {
+        console.error("데이터 로드 중 오류 발생:", error);
+      });
+  };
+
+  const handleFold = (category: keyof typeof searchResults) => {
+    setSearchResults((prevResults) => ({
+      ...prevResults,
+      [category]: prevResults[category].slice(0, INITIAL_ITEMS),
+    }));
+
+    setCurrentPage((prevPages) => ({
+      ...prevPages,
+      [category]: 1,
+    }));
   };
 
   const handleToggleFilter = () => {
@@ -85,6 +189,9 @@ function ClientSearch() {
           isPending={isPending}
           error={error}
           onSearch={handleSearch}
+          onLoadMore={handleLoadMore}
+          onFold={handleFold}
+          totalResults={totalResults}
         />
       ) : (
         <InitialSearchView onSearch={handleSearch} />
