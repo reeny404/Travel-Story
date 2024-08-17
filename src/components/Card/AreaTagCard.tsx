@@ -20,13 +20,13 @@ function AreaTagCard(props: AreaTagCardProps) {
 
   return (
     <div
-      className="flex items-center w-full py-3 cursor-pointer"
+      className="flex items-center w-full py-3 cursor-pointer sm:flex-col"
       onClick={onClick}
     >
-      <div className="relative flex-none w-[84px] h-[84px] mr-3 bg-neutral-200 rounded-lg overflow-hidden">
+      <div className="relative flex-none w-[84px] h-[84px] mr-3 bg-neutral-200 rounded-lg overflow-hidden aspect-square sm:max-w-[300px] sm:w-full sm:max-h-[300px] sm:h-full sm:mr-0">
         <Image src={image} alt={alt} fill className="object-cover" />
       </div>
-      <div className="flex flex-col justify-center items-start text-sm">
+      <div className="flex flex-col justify-center items-start text-sm sm:max-w-[300px] sm:w-full sm:max-h-[300px] sm:h-full sm:justify-start sm:mt-3 sm:pb-5">
         <h2 className="text-base font-semibold text-ellipsis line-clamp-1 mb-1">
           {title}
         </h2>
@@ -43,7 +43,7 @@ function AreaTagCard(props: AreaTagCardProps) {
             <h4 className="text-neutral-500">{rating}</h4>
           </div>
         </div>
-        <h4 className="w-[95%] mt-2 text-neutral-600 text-ellipsis line-clamp-1">
+        <h4 className="w-[95%] mt-2 text-neutral-600 text-ellipsis line-clamp-1 sm:hidden">
           {desc}
         </h4>
       </div>

@@ -47,7 +47,7 @@ function SearchFilter({ onClose }: SearchFilterProps) {
   };
 
   return (
-    <aside className="fixed top-0 max-w-xs w-full h-full bg-white shadow-drawer z-drawer transform transition-transform duration-500 ease-in-out">
+    <aside className="fixed top-0 max-w-sm w-full h-full bg-white shadow-drawer z-drawer transform transition-transform duration-500 ease-in-out">
       <header className="flex justify-end items-center px-4">
         <h2 className="absolute left-1/2 transform -translate-x-1/2 font-medium">
           국가 필터

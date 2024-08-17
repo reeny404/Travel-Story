@@ -32,7 +32,7 @@ function Tab({
               "bg-black text-white font-semibold": tab.en === currentTab,
               "bg-white text-black": tab.en !== currentTab && !isGray,
               "bg-neutral-150 text-black": tab.en !== currentTab && isGray,
-              "opacity-50 cursor-not-allowed": !tab.isEnabled,
+              "bg-white opacity-80 cursor-not-allowed": !tab.isEnabled,
             }
           )}
           onClick={() => tab.isEnabled && setCurrentTab(tab.en)}

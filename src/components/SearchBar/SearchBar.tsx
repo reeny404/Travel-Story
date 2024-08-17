@@ -127,10 +127,10 @@ function SearchBar({
 
   return (
     <form
-      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-search"
+      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-search sm:max-w-[600px] sm:w-full sm:h-12 sm:p-4"
       onSubmit={handleSearch}
     >
-      <div className="flex items-center w-full gap-2">
+      <div className="flex items-center w-full gap-2 sm:gap-3 ">
         <SvgIcon
           name="search"
           width={20}
@@ -140,7 +140,7 @@ function SearchBar({
         />
 
         {countryFilter.name && (
-          <div className="flex items-center space-x-1 ml-1">
+          <div className="flex items-center space-x-1 ml-1 sm:ml-2">
             <h5
               className="max-w-[7ch] text-brand-800 whitespace-nowrap cursor-pointer overflow-hidden text-ellipsis active:scale-95"
               onMouseDown={handleRemoveFilter}
@@ -167,7 +167,7 @@ function SearchBar({
             width={12}
             height={12}
             title="cancel"
-            className="cursor-pointer transition-transform duration-300 ease-in-out"
+            className="ml-1 cursor-pointer transition-transform duration-300 ease-in-out sm:ml-2"
             onClick={handleEmptySearchBar}
           />
         )}

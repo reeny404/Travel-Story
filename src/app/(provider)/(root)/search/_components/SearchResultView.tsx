@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import RecentArea from "./RecentArea";
 
 const INITIAL_ITEMS = 3;
 
@@ -151,17 +152,19 @@ function SearchResultView({
         : "접기";
 
     return (
-      <button
-        className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150"
-        onClick={handleSearchButtonClick}
-      >
-        {buttonText}
-      </button>
+      <div className="flex justify-center sm:justify-center">
+        <button
+          className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150 sm:w-[190px] sm:h-12 sm:px-7 sm:py-3 sm:border-neutral-350 sm:mt-10"
+          onClick={handleSearchButtonClick}
+        >
+          {buttonText}
+        </button>
+      </div>
     );
   };
 
   return (
-    <main className="w-full px-4">
+    <main className="w-full px-4 sm:px-8">
       <Tab
         TABS={filteredTabs}
         currentTab={currentTab!}
@@ -170,23 +173,27 @@ function SearchResultView({
         }
         frameClassName="top-[56px] shadow-area-section"
       />
-      {filteredResults.map((result, index) => (
-        <Link
-          href={`/recommend/area/${result.id}`}
-          key={`${result.id}-${index}`}
-        >
-          <AreaTagCard
-            key={result.id}
-            image={result.imageUrl || "/sampleImg.jpg"}
-            alt={result.name}
-            title={result.krName ?? ""}
-            tag={getKrCategory(result.type ?? "")}
-            rating={result.rating ?? ""}
-            desc={result.description}
-          />
-        </Link>
-      ))}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm: md:grid-cols-3 lg:md:grid-cols-4 sm:gap-8">
+        {filteredResults.map((result, index) => (
+          <Link
+            href={`/recommend/area/${result.id}`}
+            key={`${result.id}-${index}`}
+          >
+            <AreaTagCard
+              key={result.id}
+              image={result.imageUrl || "/sampleImg.jpg"}
+              alt={result.name}
+              title={result.krName ?? ""}
+              tag={getKrCategory(result.type ?? "")}
+              rating={result.rating ?? ""}
+              desc={result.description}
+            />
+          </Link>
+        ))}
+      </div>
       {loadMoreOrFoldButton(validTab)}
+
+      <RecentArea />
 
       {nearbyPlace && nearbyPlace.length > 0 && (
         <div className="mt-8 ">

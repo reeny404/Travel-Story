@@ -55,7 +55,7 @@ function RecentArea() {
   };
 
   return (
-    <div className="w-full text-primary font-semibold z-10">
+    <div className="w-full text-primary font-semibold mt-8 z-10">
       <p className="px-4 py-[10px]">최근 본 장소</p>
       <Swiper spaceBetween={12} slidesPerView={2.9} grabCursor={true}>
         <div className="flex w-full h-[184px]">
