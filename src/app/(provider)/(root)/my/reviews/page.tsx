@@ -1,5 +1,5 @@
 import MainLayout from "@/components/Layout/MainLayout";
-import MyReviewSection from "./_components/MyReviewSection";
+import MyReviewList from "./_components/MyReviewList";
 
 function Reviews() {
   return (
@@ -11,7 +11,7 @@ function Reviews() {
       }}
     >
       <></>
-      <MyReviewSection />
+      <MyReviewList />
     </MainLayout>
   );
 }

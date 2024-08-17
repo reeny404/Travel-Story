@@ -1,5 +1,5 @@
 import { api } from "@/apis/api";
-import { continents, travelMates, travelTypes } from "@/constants/onboard";
+import { CONTINENTS, TRAVEL_MATES, TRAVEL_TYPES } from "@/constants/onboard";
 import { useOnboardStore } from "@/stores/onboard.store";
 import { useLoginStepStore } from "@/stores/step.store";
 import { useRouter } from "next/navigation";
@@ -31,11 +31,11 @@ function BoardContainer({ title, children }: PropsWithChildren<BoardType>) {
     if (progress === 3) {
       document.cookie = "hasTravelType=true; path=/";
       isSelectedMany.map((theme) => {
-        themes.push(travelTypes[theme - 1].text);
+        themes.push(TRAVEL_TYPES[theme - 1].text);
       });
       api.auth.updateUserFilter(
-        continents[country - 1].text,
-        travelMates[travelMate - 1].label,
+        CONTINENTS[country - 1].text,
+        TRAVEL_MATES[travelMate - 1].label,
         themes
       );
       return router.replace(nextURL);

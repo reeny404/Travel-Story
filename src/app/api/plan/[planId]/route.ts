@@ -3,6 +3,7 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { OrderList, PlanChildType, PlanFull } from "@/types/plan";
 import { Tables } from "@/types/supabase";
 import { NextRequest, NextResponse } from "next/server";
+import { AuthUtil } from "../../auth/AuthUtil";
 import { getTableManager } from "./PlanChildTable";
 
 type Params = {
@@ -109,11 +110,11 @@ export async function POST(request: NextRequest, { params: { planId } }: Params)
 
 /**
  * plan 하위 테이블의 특정 row 수정
+ * // TODO 위치 옮겨야할 듯
  */
-export async function PUT(request: NextRequest, { params: { planId } }: Params) {
+export async function PUT(request: NextRequest) {
   try {
     const newData = await request.json();
-    console.log(newData);
 
     const supabase = createClient();
     const type: PlanChildType = newData.type;
@@ -133,4 +134,20 @@ export async function PUT(request: NextRequest, { params: { planId } }: Params) 
       status: 400,
     })
   }
+}
+
+export async function DELETE(request: NextRequest, { params: { planId } }: Params) {
+  const supabase = createClient();
+  const userId = (await AuthUtil.getUser(supabase))?.id;
+  if (!userId) {
+    return NextResponse.json({}, { status: 403, statusText: "need login" });
+  }
+
+  const { data, error } = await supabase
+    .from("plan")
+    .delete()
+    .eq("id", planId)
+    .eq("userId", userId);
+
+  return NextResponse.json({ data, error });
 }

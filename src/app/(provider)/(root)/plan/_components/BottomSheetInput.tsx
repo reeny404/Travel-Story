@@ -22,8 +22,8 @@ export default function BottomSheetInput({
   endTime = "",
 }: BottomSheetInputType) {
   const [inputValue, setInputValue] = useState(value);
-  const [inputStartTime, setInputStartTime] = useState(startTime);
-  const [inputEndTime, setInputEndTime] = useState(endTime);
+  const [inputStartTime, setInputStartTime] = useState(startTime ?? "");
+  const [inputEndTime, setInputEndTime] = useState(endTime ?? "");
   const [placeholder, setPlaceholder] = useState("");
   const [IconComponent, setIconComponent] = useState<React.FC<{
     className?: string;
@@ -107,7 +107,7 @@ export default function BottomSheetInput({
           className="outline-0 w-22 border-[1px] text-sm border-gray appearance-none"
           type="time"
           name="startTime"
-          value={inputStartTime}
+          value={inputStartTime ?? ""}
           disabled={isDisabled}
           onChange={handleStartTimeChange}
           placeholder={placeholder}
@@ -117,7 +117,7 @@ export default function BottomSheetInput({
           className="outline-0 w-22 border-[1px] text-center text-sm border-gray appearance-none"
           type="time"
           name="endTime"
-          value={inputEndTime}
+          value={inputEndTime ?? ""}
           disabled={isDisabled}
           onChange={handleEndTimeChange}
           placeholder={placeholder}

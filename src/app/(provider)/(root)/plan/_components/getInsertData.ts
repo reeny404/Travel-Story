@@ -57,6 +57,7 @@ export function getInsertData(
       startTime: data.startTime,
       endTime: data.endTime,
       place: data.place,
+      imagesUrl: data.images ?? [],
     } as Schedule;
 
     if (isExcepTime) {

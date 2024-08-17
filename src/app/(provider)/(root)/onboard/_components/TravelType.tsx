@@ -1,4 +1,4 @@
-import { travelTypes } from "@/constants/onboard";
+import { TRAVEL_TYPES } from "@/constants/onboard";
 import BoardContainer from "./BoardContainer";
 import ContinentButton from "./SelectButton/ContinentButton";
 
@@ -6,7 +6,7 @@ function TravelType() {
   return (
     <BoardContainer title={"어떻게\n보내실 건가요?"}>
       <div className="grid grid-cols-3 w-full px-4 gap-4">
-        {travelTypes.map((button, index) => {
+        {TRAVEL_TYPES.map((button, index) => {
           return (
             <ContinentButton
               key={index}
