@@ -29,7 +29,7 @@ const WebLocationForm = React.memo(({ area }: WebLocationFormProps) => {
     : {};
 
   return (
-    <section className="hidden h-full bg-[#E8F97B] rounded-lg md:block">
+    <section className="hidden h-full bg-[#E8F97B] rounded-lg lg:block">
       <article className="flex flex-nowrap items-center h-full px-8 py-8">
         <div className="flex flex-col max-w-[312px]">
           <h1 className="pb-7 text-xl font-medium">위치</h1>

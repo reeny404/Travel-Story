@@ -29,7 +29,7 @@ const LocationForm = React.memo(({ area }: LocationFormProps) => {
     : {};
 
   return (
-    <section className="mb-3 h-full bg-[#E8F97B] rounded-lg md:hidden">
+    <section className="mb-3 h-full bg-[#E8F97B] rounded-lg lg:hidden">
       <article className="px-4 pt-8">
         <h1 className="pb-7 text-lg font-medium">위치</h1>
         <div className="h-[203px] md:h-[150px] rounded-lg">

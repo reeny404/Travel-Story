@@ -143,7 +143,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
             <CardImgFrame
               imageUrl={area?.imageUrl}
               alt={area.title}
-              frameClassName="-z-10 -mb-11 aspect-4/5 md:aspect-video md:-mb-4"
+              frameClassName="-z-10 -mb-11 aspect-4/5 sm:aspect-video sm:-mb-4"
               imageClassName="object-cover"
               isTop={true}
               country={area.info?.location[0]}
@@ -151,8 +151,8 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
               areaName={area.name}
             />
           </div>
-          <section className="w-full h-full p-4 pb-0 md:p-0">
-            <div className="w-full h-full rounded-t-lg md:rounded-t-none ">
+          <section className="w-full h-full p-4 pb-0 sm:p-0">
+            <div className="w-full h-full rounded-t-lg sm:rounded-t-none ">
               <AreaDetailCard
                 area={area}
                 reviewSectionRef={reviewSectionRef}
@@ -171,12 +171,12 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   TABS={TABS.areaDetail}
                 />
               </div>
-              <div className="md:flex gap-x-5 md:h-[283px] ">
+              <div className="lg:flex gap-x-5 lg:h-[283px] ">
                 <div
                   ref={(tabEl) => {
                     sectionRefs.current[0] = tabEl;
                   }}
-                  className="mb-3 w-full h-full rounded-lg shadow-area-section md:max-w-[334px]"
+                  className="mb-3 w-full h-full rounded-lg shadow-area-section lg:max-w-[334px]"
                 >
                   <NoticeForm area={area} />
                 </div>
@@ -205,11 +205,15 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   areaId={areaId}
                 />
                 {sortedAreaReviews && (
-                  <ReviewList reviews={sortedAreaReviews} />
+                  <ReviewList width={width} reviews={sortedAreaReviews} />
                 )}
               </div>
               <div>
-                <WebReviewForm area={area} reviews={areaReviews} />
+                <WebReviewForm
+                  width={width}
+                  area={area}
+                  reviews={areaReviews}
+                />
               </div>
               {areas && (
                 <div
@@ -222,7 +226,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                     <h1 className="text-lg font-medium min-w-20">
                       비슷한 장소 둘러보기
                     </h1>
-                    <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-4 md:gap-8">
+                    <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-4 sm:gap-8">
                       {areas?.map((area: Area, idx) => {
                         if (width <= 768 && idx === 4) {
                           return;

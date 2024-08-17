@@ -1,19 +1,28 @@
 import { AreaReview } from "@/types/Recommend";
-import AreaReviewCard from "./AreaReviewCard"; // AreaReviewCard 경로를 실제 위치로 변경해야 합니다.
+import AreaReviewCard from "./AreaReviewCard";
 
 type ReviewListProps = {
   reviews: AreaReview[];
+  width: number;
 };
 
-const ReviewList = ({ reviews }: ReviewListProps) => {
+const ReviewList = ({ reviews, width }: ReviewListProps) => {
+  let maxReviewsToShow = 1;
+
+  if (width >= 1280) {
+    maxReviewsToShow = 3;
+  } else if (width >= 1024) {
+    maxReviewsToShow = 2;
+  } else if (width >= 768) {
+    maxReviewsToShow = 1;
+  }
+
   return (
     <>
       {reviews &&
-        reviews.map((review, idx) => {
-          if (idx >= 3) {
-            return;
-          }
-          return (
+        reviews
+          .slice(0, maxReviewsToShow)
+          .map((review) => (
             <AreaReviewCard
               key={review.id}
               userImageUrl={review.profileImg}
@@ -24,8 +33,7 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
               description={review.content!}
               reviewInfo={review}
             />
-          );
-        })}
+          ))}
     </>
   );
 };
