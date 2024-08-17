@@ -10,6 +10,7 @@ import ClipIcon from "./icons/ClipIcon";
 import FillLocationIcon from "./icons/FillLocationIcon";
 import FillMemoIcon from "./icons/FillMemoIcon";
 import TimeIcon from "./icons/TimeIcon";
+import Line from "./Line";
 
 type Props = {
   index: number;
@@ -34,9 +35,7 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
         >
           {index}
         </div>
-        {!isLast && (
-          <span className="w-[1px] flex-1 bg-gray-300 mx-auto block"></span>
-        )}
+        <Line hide={isLast} />
       </div>
       <div className="w-11/12 min-h-44 pb-4">
         <div
@@ -45,7 +44,9 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
         >
           <h3 className="flex text-base font-bold">
             <FillLocationIcon className="h-6 w-6 mr-2" color={color} />
-            <span>{schedule.data.title}</span>
+            <span className="text-ellipsis text-nowrap overflow-hidden">
+              {schedule.data.title}
+            </span>
           </h3>
           <button>*</button>
         </div>
@@ -70,12 +71,16 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
           {schedule.data.memo && !schedule.data.startTime && (
             <div className="flex items-center mb-3">
               <FillMemoIcon className="mr-2" />
-              <p>{schedule.data.memo}</p>
+              <p className="text-ellipsis text-nowrap overflow-hidden">
+                {schedule.data.memo}
+              </p>
             </div>
           )}
           <div className="flex items-center mb-3">
             <FillLocationIcon className="mr-2" />
-            <p>{schedule.data.place}</p>
+            <p className="text-ellipsis text-nowrap overflow-hidden">
+              {schedule.data.place}
+            </p>
           </div>
           <ClipIcon className="absolute right-4 bottom-4" />
         </div>

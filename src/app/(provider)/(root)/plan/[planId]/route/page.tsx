@@ -19,7 +19,7 @@ function PlanRoutePage({ params: { planId } }: RoutePageProps) {
   const [plan, setPlan] = useState<PlanFull | null>(null);
 
   useEffect(() => {
-    getPlanFull(planId, 1).then((data) => setPlan(data));
+    api.plan.find(planId, 1).then((data) => setPlan(data));
   }, [planId]);
 
   const onTagClick = useCallback(
@@ -30,7 +30,7 @@ function PlanRoutePage({ params: { planId } }: RoutePageProps) {
         return;
       }
 
-      getPlanFull(planId, dayIndex).then((data) => setPlan(data));
+      api.plan.find(planId, dayIndex).then((data) => setPlan(data));
     },
     [planId]
   );
@@ -102,7 +102,3 @@ function PlanRoutePage({ params: { planId } }: RoutePageProps) {
 }
 
 export default PlanRoutePage;
-
-const getPlanFull = async (planId: string, day: number): Promise<PlanFull> => {
-  return await api.plan.getRoutes(planId, day);
-};

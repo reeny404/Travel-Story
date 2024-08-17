@@ -26,8 +26,13 @@ function CheckList({ memoId, checkList, planId, day }: Props) {
   return (
     <ul className="w-full">
       {checkList?.map((check: Todo, i: number) => (
-        <li key={i} className="flex items-center justify-between mb-2 h-10">
-          <p className="flex-grow">{check.text}</p>
+        <li
+          key={i}
+          className="flex items-center justify-between space-x-2 mb-2 h-10"
+        >
+          <p className="flex-grow text-ellipsis text-nowrap overflow-hidden">
+            {check.text}
+          </p>
           <span
             className={clsx(
               "w-4 h-4 flex items-center justify-center rounded-full cursor-pointer",

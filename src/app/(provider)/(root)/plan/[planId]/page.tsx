@@ -1,63 +1,62 @@
 "use client";
-import PlanAPI from "@/apis/plan.api";
+import { api } from "@/apis/api";
+import { HeaderProps } from "@/components/commons/Header/Header";
+import Icon from "@/components/commons/Icon";
+import SvgIcon from "@/components/commons/SvgIcon";
 import Profile from "@/components/Frame/Profile";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
-import { BottomSheetType } from "@/types/plan";
-import { Tables } from "@/types/supabase";
+import { BottomSheetType, PlanFull } from "@/types/plan";
 import { DateUtil } from "@/utils/DateUtil";
-import axios from "axios";
+import { isMobile } from "@/utils/isMobile";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import BottomSheet from "../_components/BottomSheet";
 import CreateScheduleButton from "../_components/CreateScheduleButton";
 import DayMenu from "../_components/DayMenu";
+import Loading from "../_components/Loading";
 import ScheduleList from "../_components/ScheduleList";
 
-const api = new PlanAPI(axios);
 type PlanDetailPageProps = { params: { planId: string } };
 
 function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
   const { openDrawer } = useDrawerStore();
-  const router = useRouter();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [bottomSheetConfig, setBottomSheetConfig] = useState<BottomSheetType>({
     type: "customPlace",
     status: "add",
   });
   const [selectedDay, setSelectedDay] = useState(1);
+  const [plan, setPlan] = useState<PlanFull | null>(null);
   const [days, setDays] = useState<number[]>([]);
-  const [title, setTitle] = useState<string>("");
   const [formattedDates, setFormattedDates] = useState<string>("");
 
   useEffect(() => {
-    const fetchPlanData = async () => {
-      try {
-        const planData: Tables<"plan">[] = await api.getMyPlans(); // PlanAPI를 통해 데이터 가져오기
-        const plan = planData.find((p: Tables<"plan">) => p.id === planId);
-
-        if (plan) {
-          // startDate 및 endDate가 문자열임을 가정하고 변환
-          const startDate = new Date(plan.startDate as string);
-          const endDate = new Date(plan.endDate as string);
-          const daysCount = DateUtil.getGapDay(startDate, endDate);
-
-          const daysArray = Array.from({ length: daysCount }, (_, i) => i + 1);
-          setDays(daysArray);
-          setTitle(plan.title ?? "");
-
-          const formattedStartDate = DateUtil.format("yyyy.MM.dd", startDate);
-          const formattedEndDate = DateUtil.format("yyyy.MM.dd", endDate);
-          setFormattedDates(`${formattedStartDate} - ${formattedEndDate}`);
+    api.plan
+      .find(planId, 1)
+      .then((plan) => {
+        if (!plan) {
+          return;
         }
-      } catch (error) {
-        console.error("Error fetching plan data:", error);
-      }
-    };
 
-    fetchPlanData();
+        setPlan(plan);
+        // startDate 및 endDate가 문자열임을 가정하고 변환
+        const startDate = new Date(plan.startDate as string);
+        const endDate = new Date(plan.endDate as string);
+        const daysCount = DateUtil.getGapDay(startDate, endDate);
+
+        const daysArray = Array.from({ length: daysCount }, (_, i) => i + 1);
+        setDays(daysArray);
+
+        const formattedStartDate = DateUtil.format("yyyy.MM.dd", startDate);
+        const formattedEndDate = DateUtil.format("yyyy.MM.dd", endDate);
+        setFormattedDates(`${formattedStartDate} - ${formattedEndDate}`);
+      })
+      .catch((error) => {
+        console.error("Error fetching plan data:", error);
+      });
   }, [planId]);
 
   const handleOpen = (
@@ -83,39 +82,81 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
     []
   );
 
-  if (!planId) {
-    return <div>Loading...</div>;
+  const headerProps: HeaderProps = useMemo(() => {
+    return {
+      backgroundColor: "transparent",
+      title: plan?.title ?? "",
+      titleAlign: "left",
+      rightIcons: [
+        {
+          icon: ICON.map.white,
+          alt: "map",
+          size: 24,
+          path: `/plan/${planId}/route`,
+        },
+        {
+          icon: ICON.ellipsis.white,
+          alt: "더보기",
+          size: 24,
+          onClick: () => alert("구현 중입니다."),
+        },
+      ],
+    };
+  }, [planId, plan]);
+
+  if (!plan) {
+    return <Loading />;
   }
 
   return (
-    <MainLayout
-      headerProps={{
-        backgroundColor: "transparent",
-        title: title,
-        titleAlign: "left",
-        rightIcons: [
-          {
-            icon: ICON.map.white,
-            alt: "map",
-            size: 24,
-            path: `/plan/${planId}/route`,
-          },
-          {
-            icon: ICON.ellipsis.white,
-            alt: "더보기",
-            size: 24,
-            onClick: () => alert("구현 중입니다."),
-          },
-        ],
-      }}
-    >
-      <div className="min-h-screen bg-gray-50 relative -top-[52px]">
-        <div className="relative w-full h-72 px-4 py-3 bg-gray-200">
+    <MainLayout headerProps={headerProps}>
+      <div className="hidden md:flex min-h-12 justify-between items-center">
+        <div className="flex items-center text-lg font-semibold">
+          <Icon
+            icon={ICON.menu.burgerBlack}
+            alt="drawer"
+            size={20}
+            onClick={openDrawer}
+          />
+          {plan?.title}
+        </div>
+        <div className="flex space-x-8 text-sm font-normal pr-4">
+          <Link
+            href={`/plan/${planId}/route`}
+            className="flex items-center space-x-2.5 px-1"
+          >
+            <SvgIcon name="map" color="black" width={16} height={16} />
+            <span>지도 보기</span>
+          </Link>
+          <button className="flex items-center space-x-2.5 px-1">
+            <SvgIcon name="map" color="black" width={16} height={16} />
+            <span>스케줄 편집</span>
+          </button>
+          <button className="flex items-center space-x-2.5 px-1">
+            <SvgIcon name="map" color="black" width={16} height={16} />
+            <span>이미지로 저장</span>
+          </button>
+          <button className="flex items-center space-x-2.5 px-1">
+            <SvgIcon name="map" color="black" width={16} height={16} />
+            <span>내 여행 정보</span>
+          </button>
+        </div>
+      </div>
+      <div className="hidden md:block absolute h-[300px] w-screen left-0 right-0">
+        <Image
+          src="/plan/planBanner.png"
+          alt="desktop-banner"
+          fill
+          className="object-cover"
+        />
+      </div>
+      <div className="min-h-screen bg-gray-50 relative -top-[52px] md:top-[300px]">
+        <section className="w-full sm:h-72 md:h-0 px-4 py-3 relative md:bottom-6">
           <Image
             src="/plan/planBanner.png"
-            alt="planBanner"
+            alt="mobile-banner"
             fill
-            className="object-cover"
+            className="object-cover block md:hidden"
           />
           <p className="absolute left-4 bottom-3 rounded-2xl py-[2px] px-4 border border-white text-white">
             {formattedDates}
@@ -126,13 +167,30 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
               className="w-9 h-9"
             />
           </div>
-        </div>
-        <DayMenu
-          days={days}
-          selectedDay={selectedDay}
-          onDaySelect={handleDaySelect}
-        />
-        <ScheduleList planId={planId} selectedDay={selectedDay} />
+        </section>
+        <section className="md:relative md:-top-6 flex justify-between">
+          <DayMenu
+            days={days}
+            selectedDay={selectedDay}
+            onDaySelect={handleDaySelect}
+          />
+        </section>
+        <article className="flex">
+          {isMobile() ? (
+            <ScheduleList planId={planId} selectedDay={selectedDay} />
+          ) : (
+            <>
+              {days.map((day) => (
+                <div
+                  key={day}
+                  className={day % 2 ? "bg-gray-50" : "bg-gray-100"}
+                >
+                  <ScheduleList planId={planId} selectedDay={day} />
+                </div>
+              ))}
+            </>
+          )}
+        </article>
         {isBottomSheetVisible && (
           <BottomSheet
             type={bottomSheetConfig.type}

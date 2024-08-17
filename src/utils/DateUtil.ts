@@ -3,9 +3,13 @@ const DAY = ["일", "월", "화", "수", "목", "금", "토"];
 /**
  * @returns Date 타입을 포맷에 맞는 날짜 규격으로 내려준다.
  */
-function format(type: string, time: Date): string {
+function format(type: string, time: Date | string): string {
   if (!time) {
     return "";
+  }
+
+  if (typeof time == 'string') {
+    time = new Date(time);
   }
 
   const year = time.getFullYear();

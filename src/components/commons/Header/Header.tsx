@@ -8,7 +8,7 @@ import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
 const headerStyles = cva(
-  "w-full max-w-[430px] h-[52px] flex items-center justify-between relative z-30",
+  "w-full h-[52px] flex items-center justify-between relative z-30",
   {
     variants: {
       backgroundColor: {

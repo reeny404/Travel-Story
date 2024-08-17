@@ -1,5 +1,6 @@
 import { SupabaseMoveType } from "@/types/plan";
 import { PlanUtil } from "@/utils/PlanUtil";
+import Line from "./Line";
 
 type Props = {
   moveSchedule: SupabaseMoveType;
@@ -30,9 +31,7 @@ function MoveSchedule({ moveSchedule, isLast }: Props) {
             </span>
           </div>
         </div>
-        {!isLast && (
-          <span className="ml-[5%] w-[1px] h-8 bg-gray-300 block"></span>
-        )}
+        <Line hide={isLast} />
       </div>
     </>
   );
