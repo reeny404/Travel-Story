@@ -46,7 +46,7 @@ export function BottomSheet({
   return (
     <div
       className={clsx(
-        "fixed top-0 left-0 w-full h-full z-bottomSheet bg-black transition-opacity duration-300",
+        "fixed top-0 left-0 w-full h-full z-40 bg-black transition-opacity duration-300",
         {
           "bg-opacity-0": isOpening,
           "bg-opacity-50": !isOpening,

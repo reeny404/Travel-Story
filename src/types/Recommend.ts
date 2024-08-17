@@ -18,6 +18,7 @@ export type GroupedArea = {
 };
 
 export type Area = Tables<"area"> & {
+  tags: string[];
   info: {
     location: string[];
     name: string;

@@ -35,7 +35,7 @@ const ReviewSummaryCard = React.memo(
     const BottomSheet = createReviewBottomSheet();
 
     return (
-      <section className="w-full h-full pb-8 px-4">
+      <section className="w-full md:w-[216px] h-full md:h-[340px] pb-8 px-4 md:p-0">
         {isBottomSheetVisible && (
           <BottomSheet
             areaName={areaName}
@@ -44,7 +44,7 @@ const ReviewSummaryCard = React.memo(
             id={user?.id!}
           />
         )}
-        <header className="w-full flex justify-between mb-7 pt-8 relative aspect-auto">
+        <header className="w-full flex md:hidden justify-between mb-7 pt-8 md:pt-0 relative aspect-auto">
           <span className="text-lg font-bold">리뷰</span>
           <button
             onClick={handleOpen}
@@ -60,15 +60,15 @@ const ReviewSummaryCard = React.memo(
             <span className="text-[#C4E00B]">리뷰작성</span>
           </button>
         </header>
-        <article className="flex h-[126px]  gap-x-3 ">
-          <div className="flex flex-col p-6 min-w-[132px] items-center justify-center rounded-lg bg-[#F6F6F6]">
+        <article className="flex h-[126px] md:h-full  gap-x-3 md:flex-col md:gap-y-3">
+          <div className="flex flex-col p-6 md:p-8 min-w-[132px] md:h-[136px] items-center justify-center rounded-lg bg-[#F6F6F6] md:border-[#DFDFDF] md:border md:bg-white">
             <p className="text-[32px] mb-4">{rating}</p>
             <div className="mb-1">
               <RatingIcons type="small" rating={rating} />
             </div>
             <p className="text-xs ">{`(${ratingAmount})`}</p>
           </div>
-          <div className="w-full flex flex-col gap-y-1 justify-center py-5 px-4 border-[0.6px] border-[#DFDFDF] rounded-lg">
+          <div className="w-full md:h-[136px] flex flex-col gap-y-1 justify-center py-5 px-1 md:p-8 border-[0.6px] border-[#DFDFDF] md:bg-[#F6F6F6] md:border-none rounded-lg">
             <div className=" min-w-[135px] flex text-sm font-semibold relative">
               <Image
                 src="/icons/emoji-dinner.svg"
@@ -100,6 +100,19 @@ const ReviewSummaryCard = React.memo(
               <span className="pl-3">인테리어가 멋져요</span>
             </div>
           </div>
+          <button
+            onClick={handleOpen}
+            className="bg-[#383838] hidden md:flex text-white w-full justify-center gap-x-2 items-center border border-black rounded-lg h-[44px]"
+          >
+            <Image
+              src={`/icons/${ICON.areaCalender.big.area}.svg`}
+              alt="calender"
+              width={20}
+              height={20}
+              className="hover:cursor-pointer object-contain"
+            />
+            <p>리뷰쓰기</p>
+          </button>
         </article>
       </section>
     );
