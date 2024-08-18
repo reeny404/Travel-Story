@@ -65,7 +65,7 @@ function AuthContainer({
       ) : (
         <div className={`w-full h-[2px] mt-[52px]`}></div>
       )}
-      <div className="relative w-full px-4 pt-[56px] bg-white sm:w-[412px] sm:mx-auto sm:px-[38.5px]">
+      <div className="relative w-full min-h-[calc(100dvh-54px)] px-4 pt-[56px] bg-white sm:w-[412px] sm:mx-auto sm:px-[38.5px]">
         {/* title */}
         <h1
           className={`text-[24px] font-semibold mb-[68px] whitespace-pre-wrap ${step === null ? "text-center" : ""}`}

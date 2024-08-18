@@ -94,7 +94,7 @@ function AuthForm({
       </label>
       <button
         disabled={isInputValid}
-        className="w-full h-[48px] bg-neutral-750 text-white text-center text-[18px] rounded-md mt-[96px] disabled:bg-[#CECECE]"
+        className="absolute w-[90%] bottom-2 sm:w-full h-[48px] sm:static bg-neutral-750 text-white text-center text-[18px] rounded-md mt-[96px] disabled:bg-[#CECECE]"
       >
         계속하기
       </button>
