@@ -46,7 +46,7 @@ export function BottomSheet({
   return (
     <div
       className={clsx(
-        "fixed top-0 left-0 w-full h-full z-40 bg-black transition-opacity duration-300",
+        "fixed md:hidden top-0 left-0 w-full h-full z-40 bg-black transition-opacity duration-300",
         {
           "bg-opacity-0": isOpening,
           "bg-opacity-50": !isOpening,
@@ -57,7 +57,7 @@ export function BottomSheet({
       <form
         ref={formRef}
         className={clsx(
-          "absolute bottom-0 left-0 w-full pt-7 rounded-t-3xl shadow-bottom-sheet bg-white transition-transform duration-300",
+          "absolute md:hidden bottom-0 left-0 w-full pt-7 rounded-t-3xl shadow-bottom-sheet bg-white transition-transform duration-300",
           {
             "translate-y-full": isClosing || isOpening,
             "translate-y-0": !isClosing && !isOpening,

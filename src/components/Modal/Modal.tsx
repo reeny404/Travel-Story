@@ -10,7 +10,7 @@ function Modal() {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[9999] px-5">
+    <div className="fixed inset-0 flex items-center justify-center z-50 px-5">
       <div className="fixed inset-0 bg-black opacity-50 "></div>
 
       <article className="relative bg-white px-7 py-8 border border-gray-300 rounded-lg shadow-lg max-w-md w-full z-10">
