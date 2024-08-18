@@ -13,17 +13,16 @@ const MainTourItem = React.memo(({ item, itemType }: MainTourItemProps) => {
   const linkUrl = itemType === "city" ? "/recommend/city/" : "/recommend/area/";
 
   return (
-    <section className="flex w-full items-center gap-x-3 pb-6">
-      <div className="w-20 h-20 relative aspect-square">
+    <section className="flex w-full items-center pb-6 pl-4 md:pl-8 gap-x-3 md:w-[466px]">
+      <div className="min-w-20 min-h-20 relative aspect-square">
         <Image
           src={item.imageUrl!}
           alt="recomendPlace"
           fill
-          sizes="width:auto, height:auto"
           className="object-cover rounded-lg"
         />
       </div>
-      <div className="flex flex-col w-3/4">
+      <div className="flex flex-col">
         <Link
           href={`${linkUrl}${item.id}`}
           className="text-[15px] font-bold text-ellipsis overflow-x-hidden whitespace-nowrap line-clamp-1"

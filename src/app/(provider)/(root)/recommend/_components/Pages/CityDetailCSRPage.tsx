@@ -2,6 +2,7 @@
 
 import MainLayout from "@/components/Layout/MainLayout";
 import Tab from "@/components/Tab/Tab";
+import WebTap from "@/components/Tab/WebTab";
 import { ICON } from "@/constants/icon";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
@@ -83,8 +84,8 @@ function CityDetailPage({ cityId, dehydratedState }: CityDetailPageProps) {
         imageUrl={city?.imageUrl!}
         viewRef={viewRef}
       />
-      <div className=" container w-full h-full flex-col pt-1 ">
-        <div className="px-4">
+      <div className=" container mx-auto w-full h-full flex-col pt-1 md:pb-[169px] ">
+        <div className="px-4 md:hidden">
           <Tab
             currentTab={currentTab!}
             setCurrentTab={setCurrentTab}
@@ -92,7 +93,14 @@ function CityDetailPage({ cityId, dehydratedState }: CityDetailPageProps) {
             isGray={true}
           />
         </div>
-        <div className="pt-5 pb-10">
+        <div className="hidden px-8 md:block shadow-area-section w-screen max-w-[1366px]">
+          <WebTap
+            currentTab={currentTab!}
+            setCurrentTab={setCurrentTab}
+            TABS={TABS.default}
+          />
+        </div>
+        <div className="pt-5 pb-10 md:pb-0">
           {currentTab === "place" && (
             <SliderSection
               areas={areas?.place!}
@@ -128,6 +136,30 @@ function CityDetailPage({ cityId, dehydratedState }: CityDetailPageProps) {
         </div>
         <div className="pb-10">
           <MainTourForm areasInfo={areas!} />
+        </div>
+        <div className="pb-4 md:pb-0">
+          <SliderSection
+            areas={areas?.restaurant!}
+            linkUrl={LinkUtils.CITY_AREA_LINK(cityId, "restaurant")}
+            title="맛집 탐방"
+            type="dinner"
+          />
+        </div>
+        <div className="pb-4 md:pb-0">
+          <SliderSection
+            areas={areas?.shop!}
+            linkUrl={LinkUtils.CITY_AREA_LINK(cityId, "restaurant")}
+            title="친구와 함께"
+            type="sparkles"
+          />
+        </div>
+        <div className="pb-4 md:pb-0">
+          <SliderSection
+            areas={areas?.place!}
+            linkUrl={LinkUtils.CITY_AREA_LINK(cityId, "restaurant")}
+            title="핫 플레이스"
+            type="fire"
+          />
         </div>
       </div>
     </MainLayout>

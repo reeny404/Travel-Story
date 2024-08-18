@@ -17,10 +17,10 @@ const config: Config = {
         "neutral-400/84": "rgba(255, 255, 255, 0.84)",
       },
       zIndex: {
-        drawer: "50",
         tab: "30",
         underbar: "30",
         bottomSheet: "40",
+        drawer: "50",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

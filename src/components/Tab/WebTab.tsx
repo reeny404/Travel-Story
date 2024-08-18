@@ -3,74 +3,69 @@
 import clsx from "clsx";
 import Image from "next/image";
 
-type TabProps = {
+type WebTapProps = {
   currentTab: string;
   setCurrentTab: (currentTab: string) => void;
   TABS: { kr: string; en: string; isEnabled?: boolean }[];
   frameClassName?: string;
-  isGray?: boolean;
 };
 
-function Tab({
+function WebTap({
   currentTab,
   setCurrentTab,
   TABS,
   frameClassName,
-  isGray,
-}: TabProps) {
+}: WebTapProps) {
   return (
     <div
-      className={`w-full h-11 flex justify-around items-center gap-x-2 z-20 my-3 rounded-lg sticky ${frameClassName}`}
+      className={`w-full h-11 flex justify-start items-center gap-x-10 ${frameClassName}`}
     >
       {TABS.map((tab) => (
         <button
           key={tab.en}
           disabled={!tab.isEnabled}
           className={clsx(
-            "h-full w-full flex justify-center items-center border border-none rounded-lg",
+            "h-full w-[104px] px-6 flex justify-center items-center border border-none font-light rounded-lg",
             {
-              "bg-black text-white font-semibold": tab.en === currentTab,
-              "bg-white text-black": tab.en !== currentTab && !isGray,
-              "bg-neutral-150 text-black": tab.en !== currentTab && isGray,
-              "opacity-50 cursor-not-allowed": !tab.isEnabled,
+              "font-medium": currentTab === tab.en,
             }
           )}
           onClick={() => tab.isEnabled && setCurrentTab(tab.en)}
         >
-          <div className="relative flex gap-x-2 items-center">
+          <div className="relative flex gap-x-3 items-center">
             {TABS[0].en === "place" && currentTab === tab.en && (
-              <div className="relative w-5 h-5">
+              <div className="relative">
                 <Image
-                  src="/icons/place-white.svg"
+                  src="/icons/place-none.svg"
                   alt="place"
-                  width={20}
-                  height={20}
+                  width={16}
+                  height={16}
                   className={currentTab === "place" ? "block" : "hidden"}
                   priority
                 />
                 <Image
-                  src="/icons/accommodation-white.svg"
+                  src="/icons/accommodation-none.svg"
                   alt="accommodation"
-                  width={20}
-                  height={20}
+                  width={16}
+                  height={16}
                   className={
                     currentTab === "accommodation" ? "block" : "hidden"
                   }
                   priority
                 />
                 <Image
-                  src="/icons/shop-white.svg"
+                  src="/icons/shop-none.svg"
                   alt="shop"
-                  width={20}
-                  height={20}
+                  width={16}
+                  height={16}
                   className={currentTab === "shop" ? "block" : "hidden"}
                   priority
                 />
                 <Image
-                  src="/icons/restaurant-white.svg"
+                  src="/icons/restaurant-none.svg"
                   alt="restaurant"
-                  width={20}
-                  height={20}
+                  width={16}
+                  height={16}
                   className={currentTab === "restaurant" ? "block" : "hidden"}
                   priority
                 />
@@ -84,4 +79,4 @@ function Tab({
   );
 }
 
-export default Tab;
+export default WebTap;
