@@ -54,17 +54,14 @@ function ScheduleList({ planId, selectedDay }: ScheduleListProps) {
 
   return (
     <>
-      <ul className={clsx("h-full md:w-[400px]", { "p-6": schedules.length })}>
+      <ol className={clsx("h-full md:w-[400px]", { "p-6": schedules.length })}>
         {schedules.map((item, index) => {
           const isLast = index === schedules.length - 1;
           const isSchedule =
             item.type === "customPlace" || item.type === "place";
 
           return (
-            <li
-              key={item.id}
-              className="flex items-center justify-between min-h-44 h-auto"
-            >
+            <li key={item.id} className="flex justify-between min-h-20">
               {isSchedule && (
                 <Schedule
                   key={item.id}
@@ -93,7 +90,7 @@ function ScheduleList({ planId, selectedDay }: ScheduleListProps) {
             </li>
           );
         })}
-      </ul>
+      </ol>
       {isBottomSheetOpen && selectedItem && (
         <BottomSheet
           item={selectedItem}

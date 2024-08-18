@@ -10,7 +10,6 @@ import ClipIcon from "./icons/ClipIcon";
 import FillLocationIcon from "./icons/FillLocationIcon";
 import FillMemoIcon from "./icons/FillMemoIcon";
 import TimeIcon from "./icons/TimeIcon";
-import Line from "./Line";
 
 type Props = {
   index: number;
@@ -28,29 +27,27 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
 
   return (
     <>
-      <div className="w-1/12 min-h-44 mr-[3%] flex flex-col h-full">
+      <div className="w-7 mr-[3%] grid grid-flow-row grid-rows-schedule">
         <div
           className="w-7 h-7 mx-auto text-white rounded-full flex items-center justify-center"
           style={{ backgroundColor: color }}
         >
           {index}
         </div>
-        <Line hide={isLast} />
+        {!isLast && <div className="w-[1px] bg-gray-300 mx-auto my-0" />}
       </div>
-      <div className="w-11/12 min-h-44 pb-4">
+      <div className="flex-1 ml-3 pb-4">
         <div
           className="h-6 w-full mb-2 flex items-center justify-between cursor-pointer"
           onClick={() => showMore(schedule, schedule.type, "read")}
         >
           <h3 className="flex text-base font-bold">
             <FillLocationIcon className="h-6 w-6 mr-2" color={color} />
-            <span className="text-ellipsis text-nowrap overflow-hidden">
-              {schedule.data.title}
-            </span>
+            <span className="">{schedule.data.title}</span>
           </h3>
           <button>*</button>
         </div>
-        <div className="w-full min-h-20 py-2 px-3 relative bg-white text-sm shadow-schecule-list rounded-lg">
+        <div className="w-full min-h-20 py-2 px-3 relative bg-white text-sm shadow-default rounded-lg">
           {schedule.data.startTime && schedule.data.endTime && (
             <div className="flex items-center h-5 justify-between mb-3">
               <div className="flex items-center">
@@ -71,16 +68,12 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
           {schedule.data.memo && !schedule.data.startTime && (
             <div className="flex items-center mb-3">
               <FillMemoIcon className="mr-2" />
-              <p className="text-ellipsis text-nowrap overflow-hidden">
-                {schedule.data.memo}
-              </p>
+              <p className="">{schedule.data.memo}</p>
             </div>
           )}
           <div className="flex items-center mb-3">
             <FillLocationIcon className="mr-2" />
-            <p className="text-ellipsis text-nowrap overflow-hidden">
-              {schedule.data.place}
-            </p>
+            <p className="">{schedule.data.place}</p>
           </div>
           <ClipIcon className="absolute right-4 bottom-4" />
         </div>

@@ -38,7 +38,6 @@ const config: Config = {
       boxShadow: {
         default: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
         "bottom-sheet": "0px -4px 20px 0px rgba(0, 0, 0, 0.25)",
-        "schecule-list": "0px 4px 20px 0px #00000014",
         "area-card": "0px 4px 12px 0px rgba(0, 0, 0, 0.12)",
         "bookmark-card": "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
         "inner-bookmark": "inset 0px 0px 8px rgba(0, 0, 0, 0.25)",
@@ -49,6 +48,10 @@ const config: Config = {
       aspectRatio: {
         "4/5": "4 / 5",
       },
+      gridTemplateRows: {
+        schedule: "1.75rem 1fr",
+        "move-schedule": "2.5rem 1fr"
+      }
     },
   },
 };
