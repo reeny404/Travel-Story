@@ -18,10 +18,21 @@ const BadgeVariant = cva("px-3 py-1 rounded-full hover:brightness-90", {
   },
 });
 
-type BadgeProps = PropsWithChildren & VariantProps<typeof BadgeVariant>;
+type BadgeProps = PropsWithChildren &
+  VariantProps<typeof BadgeVariant> & {
+    onClick?: () => void;
+  };
 
-function Badge({ intent, outline, children }: BadgeProps) {
-  return <div className={BadgeVariant({ intent, outline })}>{children}</div>;
+function Badge({ intent, outline, children, onClick }: BadgeProps) {
+  return (
+    <div
+      className={BadgeVariant({ intent, outline })}
+      onClick={onClick}
+      style={{ cursor: "pointer" }}
+    >
+      {children}
+    </div>
+  );
 }
 
 export default Badge;
