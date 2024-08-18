@@ -1,6 +1,9 @@
 import SvgIcon from "@/components/commons/SvgIcon";
+import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import { useRecentStore } from "@/stores/recent.store";
+import RecentArea from "./RecentArea";
 import RecentSearch from "./RecentSearch";
+import SearchPageTitle from "./SearchPageTitle";
 
 type InitialSearchViewProps = {
   onSearch?: (term: string) => void;
@@ -27,13 +30,17 @@ function InitialSearchView({ onSearch }: InitialSearchViewProps) {
         </div>
         <SvgIcon name="angle-right" width={15} height={15} title="angle" />
       </div>
-      {/* 최근 검색어 자리 */}
+
       {recentSearch ? (
         <RecentSearch />
       ) : (
         <p className="w-full mt-16 text-center">검색어를 입력해주세요.</p>
       )}
-      {/* 추천 검색어 자리 */}
+      <div className="w-full my-2">
+        <SearchPageTitle title="인기 여행지" className="pl-4" />
+        <ArchCardSlider />
+        <RecentArea className="pl-4 mb-11" />
+      </div>
     </main>
   );
 }

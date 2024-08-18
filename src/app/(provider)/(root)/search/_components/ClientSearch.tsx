@@ -1,10 +1,8 @@
 "use client";
 
 import { api } from "@/apis/api";
-import CardType from "@/components/Card/CardType";
 import SvgIcon from "@/components/commons/SvgIcon";
 import SearchBar from "@/components/SearchBar/SearchBar";
-import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import useCountryFilterStore from "@/stores/searchFilter.store";
 import { Area } from "@/types/Recommend";
 import { SearchResponse, SearchResultsType } from "@/types/search";
@@ -197,14 +195,11 @@ function ClientSearch() {
           onLoadMore={handleLoadMore}
           onFold={handleFold}
           totalResults={totalResults}
+          searchTerm={searchTerm}
         />
       ) : (
         <InitialSearchView onSearch={handleSearch} />
       )}
-      <div className="w-full my-8">
-        <CardType title="추천 여행지" />
-        <ArchCardSlider spacing={12} slidesPerView={3.8} />
-      </div>
     </>
   );
 }

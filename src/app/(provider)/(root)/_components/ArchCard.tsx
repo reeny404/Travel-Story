@@ -12,7 +12,7 @@ const ArchCard = ({ id, imageUrl, title, cityNames }: ArchCardProps) => {
   return (
     <div className="flex flex-col items-center">
       <Link href={`/recommend/country/${id}/detail`}>
-        <div className="relative w-[88px] h-[100px] overflow-hidden">
+        <div className="relative w-[88px] h-[100px] overflow-hidden lg:w-[140px] lg:h-[159.09px]">
           <div className="relative w-full h-full overflow-hidden rounded-t-full rounded-b-[800px]">
             <Image src={imageUrl} alt={title} fill className="object-cover" />
             <div className="absolute inset-0 bg-black opacity-40 rounded-t-full rounded-b-[800px]" />

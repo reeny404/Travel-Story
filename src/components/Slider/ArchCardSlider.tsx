@@ -1,49 +1,32 @@
 import ArchCard from "@/app/(provider)/(root)/_components/ArchCard";
+import { POPULAR_DESTINATIONS } from "@/constants/popular";
 import { ArchSliderProps } from "@/types/Slider";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const popularDestinations = [
-  {
-    id: 1,
-    imageUrl: "/country/france.jpg",
-    title: "프랑스",
-    cityNames: "파리 · 마르세유 · 릴 · 보르도",
-  },
-  {
-    id: 2,
-    imageUrl: "/country/japan.jpg",
-    title: "일본",
-    cityNames: "도쿄 · 후쿠오카 · 교토 · 오사카",
-  },
-  {
-    id: 4,
-    imageUrl: "/country/italy.jpg",
-    title: "이탈리아",
-    cityNames: "바티칸 · 나폴리 · 피렌체 · 로마",
-  },
-  {
-    id: 5,
-    imageUrl: "/country/spain.jpg",
-    title: "스페인",
-    cityNames: "마드리드 · 세비야 · 바르셀로나",
-  },
-  {
-    id: 7,
-    imageUrl: "/country/australia.jpg",
-    title: "호주",
-    cityNames: "시드니 · 멜버른 · 브리즈번",
-  },
-];
 // spacing: 카드 간 간격, slidesPerView: 한 화면에 보일 카드의 개수
 function ArchCardSlider({ spacing, slidesPerView, cards }: ArchSliderProps) {
   return (
     <Swiper
-      spaceBetween={spacing}
-      slidesPerView={slidesPerView}
+      spaceBetween={12}
+      slidesPerView={3.8}
       grabCursor={true}
+      breakpoints={{
+        431: {
+          slidesPerView: 3,
+          spaceBetween: 12,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 12,
+        },
+        1280: {
+          slidesPerView: 8,
+          spaceBetween: 30,
+        },
+      }}
     >
-      {popularDestinations.map((card, index) => (
+      {POPULAR_DESTINATIONS.map((card, index) => (
         <SwiperSlide key={index} className={`${index === 0 ? "ml-4" : ""}`}>
           <div className="rounded-lg">
             <ArchCard

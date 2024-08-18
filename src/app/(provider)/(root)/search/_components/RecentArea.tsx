@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import SearchPageTitle from "./SearchPageTitle";
 
 type RecentArea = {
   id: number;
@@ -13,7 +14,7 @@ type RecentArea = {
   imageUrl: string | null;
 }[];
 
-function RecentArea() {
+function RecentArea({ className }: { className?: string }) {
   const supabase = createClient();
   const { isInitialized, user } = useAuth();
   const [recentList, setRecentList] = useState<RecentArea>();
@@ -55,11 +56,11 @@ function RecentArea() {
   };
 
   return (
-    <div className="w-full text-primary font-semibold mt-8 z-10">
-      <p className="px-4 py-[10px]">최근 본 장소</p>
+    <div className={`w-full text-primary font-semibold mt-8 z-10 ${className}`}>
+      <SearchPageTitle title="최근 본 장소" />
       <Swiper spaceBetween={12} slidesPerView={2.9} grabCursor={true}>
         <div className="flex w-full h-[184px]">
-          {recentList ? (
+          {recentList && recentList.length > 0 ? (
             recentList.map((item, index) => {
               return (
                 <SwiperSlide
@@ -85,7 +86,9 @@ function RecentArea() {
             })
           ) : (
             <div className="w-full h-full grid place-items-center bg-white bg-opacity-30 rounded-lg">
-              <p className="font-medium">최근 본 장소가 없습니다</p>
+              <p className="text-sm font-medium md:text-base">
+                최근 본 장소가 없습니다.
+              </p>
             </div>
           )}
         </div>

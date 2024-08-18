@@ -27,7 +27,7 @@ function CardType({ type, title, linkUrl }: CardTypeProps) {
             />
           </div>
         )}
-        <div className="font-semibold items-center">{title}</div>
+        <div className="font-medium items-center">{title}</div>
       </div>
       {linkUrl && (
         <Link href={linkUrl} className="h-full flex items-center ">
