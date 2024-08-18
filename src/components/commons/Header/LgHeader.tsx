@@ -1,9 +1,11 @@
 "use client";
 
 import { api } from "@/apis/api";
+import SearchFilter from "@/app/(provider)/(root)/search/_components/SearchFilter";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { dmSerifDisplayFont } from "@/constants/fonts";
 import { useAuth } from "@/contexts/auth.contexts";
+import useDrawerStore from "@/stores/drawer.store";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,6 +13,9 @@ import SvgIcon from "../SvgIcon";
 
 function LgHeader() {
   const { isInitialized, isLoggedIn, setUser } = useAuth();
+  const { isOpen, closeDrawer } = useDrawerStore();
+  const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
+
   const [isPlanBold, setIsPlanBold] = useState(false);
   const [isAreaBold, setIsAreaBold] = useState(false);
 
@@ -48,6 +53,10 @@ function LgHeader() {
     }
   };
 
+  const handleToggleFilter = () => {
+    setIsFiterOpen((prev) => !prev);
+  };
+
   return (
     <header className="w-full items-center px-8 hidden sm:block">
       <div className="flex flex-row items-center h-8 text-[12px] space-x-6">
@@ -63,7 +72,7 @@ function LgHeader() {
         )}
       </div>
       <div className="flex flex-row w-full pt-3 pb-6 items-center justify-between">
-        <Link href={"/"}>
+        <Link href="/">
           <h1
             className={`${dmSerifDisplayFont.className} text-[28px] leading-[38px] whitespace-nowrap`}
           >
@@ -75,9 +84,11 @@ function LgHeader() {
           <button
             className="p-[10px] bg-white rounded-lg shadow-filter-icon hover:opacity-85 active:transform active:scale-95 cursor-pointer active:bg-gray-150"
             type="button"
+            onClick={handleToggleFilter}
           >
             <SvgIcon name="slider" width={18} height={18} title="filter" />
           </button>
+          {isFilterOpen && <SearchFilter onClose={handleToggleFilter} />}
         </div>
         <div className="flex flex-row items-center text-xl py-3 w-fit font-light">
           <button

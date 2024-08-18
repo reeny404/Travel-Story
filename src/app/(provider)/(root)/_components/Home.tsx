@@ -93,7 +93,7 @@ function Home() {
 
         <div className="mt-7">
           <CardType title="인기 여행지" type="fire" />
-          <ArchCardSlider spacing={12} slidesPerView={3.8} />
+          <ArchCardSlider />
         </div>
         <RightCardSection
           title="Tourist spot"

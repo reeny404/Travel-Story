@@ -15,10 +15,10 @@ function MainTourForm({ areasInfo }: MainTourFormProps) {
   const { width } = useWindowSize();
   const mainTourAreas = useMemo(
     () => [
-      ...areasInfo?.place!,
-      ...areasInfo?.accommodation!,
-      ...areasInfo?.restaurant!,
-      ...areasInfo?.shop!,
+      ...(areasInfo?.place || []),
+      ...(areasInfo?.accommodation || []),
+      ...(areasInfo?.restaurant || []),
+      ...(areasInfo?.shop || []),
     ],
     [areasInfo]
   );

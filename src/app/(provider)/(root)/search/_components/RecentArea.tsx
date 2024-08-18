@@ -27,9 +27,11 @@ function RecentArea({ className }: { className?: string }) {
           .from("recents")
           .select("area")
           .eq("id", user.id);
+
         if (error) {
           console.error(error);
         }
+
         const recentList = data?.[0]?.area ?? [];
         return recentList;
       }
@@ -40,6 +42,7 @@ function RecentArea({ className }: { className?: string }) {
         .from("area")
         .select("id, krName,imageUrl")
         .in("id", recentArea);
+
       if (error) {
         console.error(error);
       }
@@ -56,19 +59,41 @@ function RecentArea({ className }: { className?: string }) {
   };
 
   return (
-    <div className={`w-full text-primary font-semibold mt-8 z-10 ${className}`}>
-      <SearchPageTitle title="최근 본 장소" />
-      <Swiper spaceBetween={12} slidesPerView={2.9} grabCursor={true}>
-        <div className="flex w-full h-[184px]">
+    <div className={`w-full text-primary font-semibold mt-8 z-10`}>
+      <SearchPageTitle title="최근 본 장소" className={className} />
+      <Swiper
+        spaceBetween={12}
+        slidesPerView={2.8}
+        grabCursor={true}
+        breakpoints={{
+          550: {
+            slidesPerView: 3.8,
+            spaceBetween: 12,
+          },
+          768: {
+            slidesPerView: 4.5,
+            spaceBetween: 18,
+          },
+          1024: {
+            slidesPerView: 5,
+            spaceBetween: 24,
+          },
+          1280: {
+            slidesPerView: 6,
+            spaceBetween: 32,
+          },
+        }}
+      >
+        <div className="flex w-full h-[184px] md:pl-8">
           {recentList && recentList.length > 0 ? (
             recentList.map((item, index) => {
               return (
                 <SwiperSlide
                   key={index}
-                  className={`${index === 0 ? "ml-4" : ""}`}
+                  className={`${index === 0 ? "ml-4 md:ml-8" : ""}`}
                 >
                   <div
-                    className="relative h-[184px] w-[124px] cursor-pointer"
+                    className="relative w-[124px] h-[184px] cursor-pointer sm:w-[130px] sm:h-[205px] md:w-[160px] md:h-[252px] lg:w-[190px] lg:h-[300px]"
                     onClick={() => handleClickCard(index)}
                   >
                     <Image
@@ -77,7 +102,7 @@ function RecentArea({ className }: { className?: string }) {
                       fill
                       className="object-cover rounded-lg"
                     />
-                    <p className="absolute w-full px-4 bottom-4 text-white font-semibold overflow-hidden text-ellipsis">
+                    <p className="absolute w-full px-4 bottom-4 text-white font-semibold overflow-hidden text-ellipsis md:text-lg lg:text-xl">
                       {item.krName}
                     </p>
                   </div>

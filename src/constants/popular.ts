@@ -15,7 +15,7 @@ export const POPULAR_DESTINATIONS = [
     id: 3,
     imageUrl: "/country/germany.jpg",
     title: "독일",
-    cityNames: "베를린 · 뮌헨 · 함부르크 · 쾰른",
+    cityNames: "베를린 · 함부르크 · 뮌헨 · 쾰른",
   },
   {
     id: 4,
@@ -45,6 +45,6 @@ export const POPULAR_DESTINATIONS = [
     id: 11,
     imageUrl: "/country/thailand.jpg",
     title: "태국",
-    cityNames: "방콕 · 치앙마이 · 파타야 ·푸켓",
+    cityNames: "방콕 · 치앙마이 · 파타야 · 푸켓",
   },
 ];

@@ -1,12 +1,15 @@
 "use client";
 
+import { useWindowSize } from "@/app/(provider)/(root)/_hook/useWindowSize";
 import useDrawerStore from "@/stores/drawer.store";
-import { useEffect, useRef } from "react";
-import BackDrop from "./BackDrop";
+import { preventBodyScroll } from "@/utils/preventBodyScroll";
+import { useCallback, useEffect, useRef } from "react";
 import CategoryList from "./CategoryList";
+import DrawerBackDrop from "./DrawerBackDrop";
 import DrawerMyProfile from "./DrawerMyProfile";
 
 function Drawer() {
+  const windowSize = useWindowSize();
   const { isOpen, closeDrawer } = useDrawerStore();
   const drawerRef = useRef<HTMLDivElement>(null);
   const startXRef = useRef<number | null>(null);
@@ -52,30 +55,32 @@ function Drawer() {
   };
 
   // 부드럽게 drawer 닫기
-  const handleCloseWithSlide = () => {
+  const handleCloseWithSlide = useCallback(() => {
     if (drawerRef.current) {
       drawerRef.current.style.transition = "transform 0.5s ease-out";
       drawerRef.current.style.transform = "translateX(-100%)";
     }
     setTimeout(() => closeDrawer(), 500);
-  };
+  }, [closeDrawer]);
 
   // 뒷배경 스크롤 방지 기능
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    preventBodyScroll(isOpen);
 
     return () => {
-      document.body.style.overflow = "";
+      preventBodyScroll(false);
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (windowSize.width > 430 && isOpen) {
+      handleCloseWithSlide();
+    }
+  }, [windowSize.width, isOpen, handleCloseWithSlide]);
+
   return (
     <>
-      {isOpen && <BackDrop onClose={handleCloseWithSlide} />}
+      {isOpen && <DrawerBackDrop onClose={handleCloseWithSlide} />}
       <aside
         ref={drawerRef}
         className={`fixed top-0 max-w-[391px] w-full h-full pt-4 bg-neutral-400/84 shadow-drawer z-drawer backdrop-blur-[14px] rounded-r-lg transform transition-transform duration-500 ease-in-out ${

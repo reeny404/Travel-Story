@@ -17,6 +17,7 @@ const config: Config = {
         "neutral-400/84": "rgba(255, 255, 255, 0.84)",
       },
       zIndex: {
+        modal: "40",
         drawer: "1000",
       },
       backgroundImage: {
@@ -34,6 +35,7 @@ const config: Config = {
         lg: "1280px",
       },
       boxShadow: {
+        default: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
         "bottom-sheet": "0px -4px 20px 0px rgba(0, 0, 0, 0.25)",
         "schecule-list": "0px 4px 20px 0px #00000014",
         "area-card": "0px 4px 12px 0px rgba(0, 0, 0, 0.12)",
