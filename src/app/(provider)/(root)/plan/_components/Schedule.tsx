@@ -25,6 +25,8 @@ type Props = {
 function Schedule({ index, schedule, isLast, showMore }: Props) {
   const color = getColorChip(index - 1);
 
+  const { title, type, startTime, endTime, memo, place } = schedule.data;
+
   return (
     <>
       <div className="w-7 mr-[3%] grid grid-flow-row grid-rows-schedule">
@@ -36,45 +38,43 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
         </div>
         {!isLast && <div className="w-[1px] bg-gray-300 mx-auto my-0" />}
       </div>
-      <div className="flex-1 ml-3 pb-4">
+      <div className="flex-1 ml-3 pb-8">
         <div
           className="h-6 w-full mb-2 flex items-center justify-between cursor-pointer"
           onClick={() => showMore(schedule, schedule.type, "read")}
         >
           <h3 className="flex text-base font-bold">
             <FillLocationIcon className="h-6 w-6 mr-2" color={color} />
-            <span className="">{schedule.data.title}</span>
+            <span>{title}</span>
           </h3>
           <button>*</button>
         </div>
-        <div className="w-full min-h-20 py-2 px-3 relative bg-white text-sm shadow-default rounded-lg">
-          {schedule.data.startTime && schedule.data.endTime && (
+        <div className="w-full min-h-20 p-3 relative bg-white text-sm shadow-default rounded-lg space-y-3 leading-5">
+          {startTime && endTime && (
             <div className="flex items-center h-5 justify-between mb-3">
               <div className="flex items-center">
                 <TimeIcon className="mr-2" />
-                <p>
-                  {PlanUtil.formatTime(schedule.data.startTime)} -{" "}
-                  {PlanUtil.formatTime(schedule.data.endTime)}
-                </p>
+                <span>
+                  {`${PlanUtil.formatTime(startTime)} - ${PlanUtil.formatTime(endTime)}`}
+                </span>
               </div>
               <p className="pl-4 h-full text-sm text-[#828282] leading-5 ">
-                {PlanUtil.calculateDuration(
-                  schedule.data.startTime,
-                  schedule.data.endTime
-                )}
+                {PlanUtil.calculateDuration(startTime, endTime)}
               </p>
             </div>
           )}
-          {schedule.data.memo && !schedule.data.startTime && (
-            <div className="flex items-center mb-3">
-              <FillMemoIcon className="mr-2" />
-              <p className="">{schedule.data.memo}</p>
+          {memo && (
+            <div className="grid grid-flow-col space-x-2">
+              <FillMemoIcon className="w-5 h-5" />
+              <span>{memo}</span>
             </div>
           )}
-          <div className="flex items-center mb-3">
-            <FillLocationIcon className="mr-2" />
-            <p className="">{schedule.data.place}</p>
-          </div>
+          {place && (
+            <div className="grid grid-flow-col space-x-2">
+              <FillLocationIcon className="w-6 h-6 relative -left-0.5" />
+              <span>{place}</span>
+            </div>
+          )}
           <ClipIcon className="absolute right-4 bottom-4" />
         </div>
       </div>

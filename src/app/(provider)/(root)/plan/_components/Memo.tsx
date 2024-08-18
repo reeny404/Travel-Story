@@ -10,7 +10,6 @@ type Props = {
 };
 
 function Memo({ memo, isLast, planId, day }: Props) {
-  console.log(isLast);
   return (
     <>
       <div className="grid grid-flow-row grid-rows-schedule">
@@ -19,11 +18,11 @@ function Memo({ memo, isLast, planId, day }: Props) {
         </div>
         {!isLast && <div className="w-[1px] bg-gray-300 mx-auto my-0" />}
       </div>
-      <div className="flex-1 ml-3 box-border">
+      <div className="flex-1 ml-9 box-border">
         <div className="w-full flex items-center justify-between mb-2">
           <h3 className="text-base font-bold pr-4">{memo.data.title}</h3>
         </div>
-        <div className="w-full min-h-20 py-2 px-4 bg-white text-sm shadow-default rounded-lg">
+        <div className="w-full min-h-20 py-2 px-4 bg-white text-sm shadow-default rounded-lg mb-8">
           <CheckList
             planId={planId}
             day={day}
