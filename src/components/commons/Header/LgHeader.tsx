@@ -6,24 +6,14 @@ import { dmSerifDisplayFont } from "@/constants/fonts";
 import { useAuth } from "@/contexts/auth.contexts";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import SvgIcon from "../SvgIcon";
 
 function LgHeader() {
   const { isInitialized, isLoggedIn, setUser } = useAuth();
-  const [isPlanBold, setIsPlanBold] = useState(false);
-  const [isAreaBold, setIsAreaBold] = useState(false);
-
   const router = useRouter();
   const path = usePathname();
-
-  useEffect(() => {
-    const recommend = path.includes("recommend") || path === "/";
-    const myPlan = path.includes("plan");
-
-    setIsAreaBold(recommend);
-    setIsPlanBold(myPlan);
-  }, [path]);
+  const isPlanBold = path.includes("plan");
+  const isAreaBold = path.includes("recommend") || path === "/";
 
   const handleIsLoginUser = (value: string) => {
     if (isInitialized && isLoggedIn) {
@@ -50,7 +40,7 @@ function LgHeader() {
 
   return (
     <header className="w-full items-center px-8 hidden sm:block">
-      <div className="flex flex-row items-center h-8 text-[12px] space-x-6">
+      <div className="flex flex-row items-center h-8 text-xs space-x-6">
         <div className="flex-grow" />
         <button onClick={() => handleIsLoginUser("my")}>마이페이지</button>
         <button onClick={() => handleIsLoginUser("my/bookmarks")}>
