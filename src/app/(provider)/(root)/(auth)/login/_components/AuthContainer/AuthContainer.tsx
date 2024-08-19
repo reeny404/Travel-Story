@@ -1,4 +1,5 @@
 "use client";
+import SvgIcon from "@/components/commons/SvgIcon";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import { useLoginStepStore } from "@/stores/step.store";
@@ -85,9 +86,12 @@ function AuthContainer({
             <div className="mt-4">
               <button
                 onClick={handleKakaoLogin}
-                className="w-full h-[48px] bg-[#F9E000] rounded-md"
+                className="flex relative items-center justify-center w-full h-[48px] px-5 bg-[#F9E000] rounded-md "
               >
-                카카오로 계속하기
+                <SvgIcon name="kakao-talk" className="absolute left-5" />
+                <p className="text-primary font-medium text-base">
+                  카카오로 계속하기
+                </p>
               </button>
             </div>
           </div>
