@@ -39,7 +39,7 @@ function LgHeader() {
   };
 
   return (
-    <header className="w-full items-center px-8 hidden sm:block">
+    <header className="w-full items-center px-8 hidden md:block">
       <div className="flex flex-row items-center h-8 text-xs space-x-6">
         <div className="flex-grow" />
         <button onClick={() => handleIsLoginUser("my")}>마이페이지</button>
@@ -52,7 +52,7 @@ function LgHeader() {
           <button onClick={handleLogin}>로그인</button>
         )}
       </div>
-      <div className="flex flex-row w-full pt-3 pb-6 items-center justify-between">
+      <div className="flex flex-row w-full pt-3 pb-6 items-center lg:justify-between md:justify-center md:space-x-8">
         <Link href={"/"}>
           <h1
             className={`${dmSerifDisplayFont.className} text-[28px] leading-[38px] whitespace-nowrap`}
@@ -69,7 +69,7 @@ function LgHeader() {
             <SvgIcon name="slider" width={18} height={18} title="filter" />
           </button>
         </div>
-        <div className="flex flex-row items-center text-xl py-3 w-fit font-light">
+        <div className="flex-row items-center text-xl py-3 w-fit font-light block md:hidden lg:flex">
           <button
             onClick={handleHomeClick}
             className={`${isAreaBold ? "font-medium" : ""}`}

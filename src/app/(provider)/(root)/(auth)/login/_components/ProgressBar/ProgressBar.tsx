@@ -17,7 +17,7 @@ function ProgressBar() {
 
   return (
     <div
-      className={`w-full h-[2px] mt-[52px] sm:hidden ${progress === 0 ? "bg-transparent" : "bg-neutral-150"}`}
+      className={`w-full h-[2px] mt-[52px] md:hidden ${progress === 0 ? "bg-transparent" : "bg-neutral-150"}`}
     >
       <div
         className="bg-neutral-750 h-[2px] transition-all duration-300 ease-in-out"

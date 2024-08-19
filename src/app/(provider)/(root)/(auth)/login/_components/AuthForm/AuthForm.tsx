@@ -76,7 +76,7 @@ function AuthForm({
             autoComplete="new-password"
             defaultValue={value}
             readOnly={value ? true : false}
-            className={`w-full h-[48px] text-[20px] text-black border-b border-black bg-transparent focus:outline-none focus:border-[#D5EF2D] placeholder:text-gray-300 sm:border sm:rounded-lg sm:px-4 sm:border-neutral-200 ${labelColor !== "black" ? borderColor : ""}`}
+            className={`w-full h-[48px] text-[20px] text-black border-b border-black bg-transparent focus:outline-none focus:border-[#D5EF2D] placeholder:text-gray-300 md:border md:rounded-lg md:px-4 md:border-neutral-200 ${labelColor !== "black" ? borderColor : ""}`}
           />
           {isPassword && (
             <Image
@@ -94,7 +94,7 @@ function AuthForm({
       </label>
       <button
         disabled={isInputValid}
-        className="absolute w-[90%] bottom-2 sm:w-full h-[48px] sm:static bg-neutral-750 text-white text-center text-[18px] rounded-md mt-[96px] disabled:bg-[#CECECE]"
+        className="w-full h-[48px] bg-neutral-750 text-white text-center text-[18px] rounded-md mt-[96px] disabled:bg-[#CECECE]"
       >
         계속하기
       </button>
