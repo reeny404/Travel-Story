@@ -64,7 +64,7 @@ const AreaReviewCard = React.memo(
       }
     };
     return (
-      <section className="w-full flex flex-col px-4">
+      <section className="w-full md:w-[311px] md:h-[340px] flex flex-col px-4 md:px-0">
         {isBottomSheetVisible && (
           <BottomSheet
             areaName={reviewInfo.areaName}
@@ -103,7 +103,7 @@ const AreaReviewCard = React.memo(
         <div className="mt-7">
           <RatingIcons type="small" rating={rating} />
         </div>
-        <p className="w-full mt-3 text-xs text-ellipsis line-clamp-3 ">
+        <p className="w-full mt-3 h-[72px] text-xs text-ellipsis line-clamp-3 ">
           {description}
         </p>
         {imageUrl && (
@@ -111,9 +111,9 @@ const AreaReviewCard = React.memo(
             imageUrl={imageUrl ?? "/"}
             alt="reviewImg"
             width="w-full"
-            height="h-[220px]"
-            frameClassName="relative aspect-auto mt-3 mb-12 hover:cursor-pointer "
-            imageClassName="object-cover rounded-lg"
+            height="h-[220px] "
+            frameClassName="relative aspect-auto mt-3 mb-12 md:mb-0 hover:cursor-pointer "
+            imageClassName="object-cover rounded-lg "
           />
         )}
       </section>

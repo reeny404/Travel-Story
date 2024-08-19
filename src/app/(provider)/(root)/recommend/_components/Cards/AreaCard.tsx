@@ -17,6 +17,7 @@ export type AreaCardProps = {
   city: string;
   country: string;
   areaName: string;
+  tags: string[];
   isBookmarked?: boolean | undefined;
   addBookmark?: () => void;
   deleteBookmark?: () => void;
@@ -36,13 +37,13 @@ const AreaCard = React.memo(
     isBookmarked,
     addBookmark,
     deleteBookmark,
+    tags,
   }: AreaCardProps) => {
     const { openModal } = useModalStore();
     const { isLoggedIn } = useAuth();
     const [bookmarked, setBookmarked] = useState<boolean | undefined>(
       isBookmarked
     );
-
     const toggleBookmark = () => {
       if (!isLoggedIn) {
         openModal("로그인하면 일정에 장소를 추가할 수 있어요");
@@ -60,12 +61,12 @@ const AreaCard = React.memo(
     const mockTags = ["친구와 함께", "문화 체험", "도심"];
 
     return (
-      <div className="relative w-full shadow-area-card rounded-lg mb-6 hover:opacity-90 active:opacity-80">
+      <div className="relative w-full h-full shadow-area-card rounded-lg mb-6 hover:opacity-90 active:opacity-80">
         <Link href={linkUrl} className="w-full relative">
           <CardImgFrame
             imageUrl={imageUrl}
             alt={title}
-            frameClassName="aspect-square"
+            frameClassName="aspect-square md:max-h-[280px] md:max-w-[303px]"
             imageClassName="object-cover rounded-t-lg"
             city={city}
             country={country}
@@ -78,7 +79,7 @@ const AreaCard = React.memo(
           </p>
           <div className="w-full h-5 flex px-4 ">
             <SingleRatingIcon rating={rating!} />
-            <PrimaryTagList tagList={mockTags} />
+            <PrimaryTagList tagList={tags ?? mockTags} />
           </div>
         </div>
         <div className="absolute p-[10px] top-2 right-2 hover:cursor-pointer">
