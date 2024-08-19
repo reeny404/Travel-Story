@@ -41,7 +41,7 @@ function getGapDayByString(start?: string | null, end?: string | null): number {
     return 1;
   }
 
-  const startDate = start ? new Date(end) : new Date();
+  const startDate = start ? new Date(start) : new Date();
   const endDate = end ? new Date(end) : new Date();
   return getGapDay(startDate, endDate);
 }
