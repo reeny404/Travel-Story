@@ -1,6 +1,6 @@
 import MainLayout from "@/components/Layout/MainLayout";
 import { Suspense } from "react";
-import ClientSearch from "./_components/ClientSearch"; // 일반적으로 임포트
+import ClientSearchWrapper from "./_components/ClientSearchWrapper";
 
 function SearchPage() {
   return (
@@ -9,11 +9,12 @@ function SearchPage() {
         backgroundColor: "white",
         title: "어디로 떠나시나요?",
       }}
+      noHeader
     >
-      <section className="min-h-[calc(100vh-52px)]">
+      <section className="min-h-[calc(100vh-52px)] sm:h-full">
         <div className="flex flex-col">
           <Suspense>
-            <ClientSearch />
+            <ClientSearchWrapper />
           </Suspense>
         </div>
       </section>

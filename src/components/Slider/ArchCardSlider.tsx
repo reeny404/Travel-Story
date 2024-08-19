@@ -1,3 +1,5 @@
+"use client";
+
 import ArchCard from "@/app/(provider)/(root)/_components/ArchCard";
 import { useWindowSize } from "@/app/(provider)/(root)/_hook/useWindowSize";
 import { POPULAR_DESTINATIONS } from "@/constants/popular";
@@ -7,14 +9,19 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 function ArchCardSlider({ isInitial }: { isInitial?: boolean }) {
-  const [spaceBetween, setSpaceBetween] = useState(12);
+  const [spaceBetween, setSpaceBetween] = useState<number>(12);
   const windowSize = useWindowSize();
+  const [swiperStyle, setSwiperStyle] = useState<React.CSSProperties>({
+    overflow: "hidden",
+  });
 
   useEffect(() => {
     if (!windowSize.width) return;
+    setSwiperStyle({ overflow: "hidden" });
 
-    if (windowSize.width >= 1380) {
+    if (windowSize.width >= 1280) {
       setSpaceBetween(28);
+      setSwiperStyle({ overflow: "visible" });
       return;
     }
 
@@ -33,16 +40,16 @@ function ArchCardSlider({ isInitial }: { isInitial?: boolean }) {
 
   return (
     <Swiper
-      spaceBetween={12}
+      spaceBetween={spaceBetween}
       slidesPerView={3.8}
       grabCursor={true}
       breakpoints={{
-        431: {
-          slidesPerView: 3,
+        500: {
+          slidesPerView: 4.8,
           spaceBetween: 12,
         },
         768: {
-          slidesPerView: 3,
+          slidesPerView: 6,
           spaceBetween: 12,
         },
         1280: {
@@ -50,6 +57,7 @@ function ArchCardSlider({ isInitial }: { isInitial?: boolean }) {
           spaceBetween: 30,
         },
       }}
+      style={swiperStyle}
     >
       {POPULAR_DESTINATIONS.map((card, index) => (
         <SwiperSlide

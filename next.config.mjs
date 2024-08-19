@@ -2,32 +2,10 @@
 const nextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "yqoupynehwgshtspamuf.supabase.co",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "yougpvynehwgstpamuf.supabaser.co",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "t1.kakaocdn.net",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "k.kakaocdn.net",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "3000",
-        pathname: "/**",
-      },
+      { hostname: "yqoupynehwgshtspamuf.supabase.co" },
+      { hostname: "yougpvynehwgstpamuf.supabaser.co" },
+      { hostname: "t1.kakaocdn.net" },
+      { hostname: "k.kakaocdn.net" },
     ],
   },
   webpack(config) {

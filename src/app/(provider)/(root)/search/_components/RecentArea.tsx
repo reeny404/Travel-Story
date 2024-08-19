@@ -106,7 +106,7 @@ function RecentArea({ className, isInitial }: RecentAreaProps) {
                     onClick={() => handleClickCard(index)}
                   >
                     <Image
-                      src={item.imageUrl || ""}
+                      src={item.imageUrl || "/sampleImg.jpg"}
                       alt="장소 사진"
                       fill
                       className="object-cover rounded-lg"

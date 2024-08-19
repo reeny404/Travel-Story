@@ -6,15 +6,16 @@ import LgHeader from "../commons/Header/LgHeader";
 type MainLayoutProps = {
   children: React.ReactNode;
   headerProps?: HeaderProps;
+  noHeader?: boolean;
 };
 
-function MainLayout({ children, headerProps }: MainLayoutProps) {
+function MainLayout({ children, headerProps, noHeader }: MainLayoutProps) {
   return (
     <>
       {headerProps && (
         <>
           <Header {...headerProps} />
-          <LgHeader />
+          {!noHeader && <LgHeader />}
         </>
       )}
       <ClientDrawer />
