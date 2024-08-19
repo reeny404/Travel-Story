@@ -18,7 +18,7 @@ function Memo({ memo, isLast, planId, day }: Props) {
         </div>
         {!isLast && <div className="w-[1px] bg-gray-300 mx-auto my-0" />}
       </div>
-      <div className="flex-1 ml-9 box-border">
+      <div className="flex-1 ml-5 box-border">
         <div className="w-full flex items-center justify-between mb-2">
           <h3 className="text-base font-bold pr-4">{memo.data.title}</h3>
         </div>

@@ -125,26 +125,14 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
             href={`/plan/${planId}/route`}
             className="flex items-center space-x-2.5 px-1"
           >
-            <SvgIcon name="map" color="black" width={16} height={16} />
+            <SvgIcon name="map" width={16} height={16} />
             <span>지도 보기</span>
           </Link>
-          <button className="flex items-center space-x-2.5 px-1">
-            <SvgIcon name="map" color="black" width={16} height={16} />
-            <span>스케줄 편집</span>
-          </button>
-          <button className="flex items-center space-x-2.5 px-1">
-            <SvgIcon name="map" color="black" width={16} height={16} />
-            <span>이미지로 저장</span>
-          </button>
-          <button className="flex items-center space-x-2.5 px-1">
-            <SvgIcon name="map" color="black" width={16} height={16} />
-            <span>내 여행 정보</span>
-          </button>
         </div>
       </div>
       <div className="hidden md:block absolute h-[300px] w-screen left-0 right-0">
         <Image
-          src="/plan/planBanner.png"
+          src="/plan/banner.jpg"
           alt="desktop-banner"
           fill
           className="object-cover"
@@ -153,7 +141,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
       <div className="min-h-screen bg-gray-50 relative -top-[52px] md:top-[300px]">
         <section className="w-full sm:h-72 md:h-0 px-4 py-3 relative md:bottom-6">
           <Image
-            src="/plan/planBanner.png"
+            src="/plan/banner.jpg"
             alt="mobile-banner"
             fill
             className="object-cover block md:hidden"

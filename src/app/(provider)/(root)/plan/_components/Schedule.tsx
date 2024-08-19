@@ -1,3 +1,4 @@
+import SvgIcon from "@/components/commons/SvgIcon";
 import {
   BottomSheetType,
   PlanChildType,
@@ -8,8 +9,6 @@ import { PlanUtil } from "@/utils/PlanUtil";
 import { getColorChip } from "./Color";
 import ClipIcon from "./icons/ClipIcon";
 import FillLocationIcon from "./icons/FillLocationIcon";
-import FillMemoIcon from "./icons/FillMemoIcon";
-import TimeIcon from "./icons/TimeIcon";
 
 type Props = {
   index: number;
@@ -25,7 +24,7 @@ type Props = {
 function Schedule({ index, schedule, isLast, showMore }: Props) {
   const color = getColorChip(index - 1);
 
-  const { title, type, startTime, endTime, memo, place } = schedule.data;
+  const { title, startTime, endTime, memo, place, imagesUrl } = schedule.data;
 
   return (
     <>
@@ -49,33 +48,41 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
           </h3>
           <button>*</button>
         </div>
-        <div className="w-full min-h-20 p-3 relative bg-white text-sm shadow-default rounded-lg space-y-3 leading-5">
+        <div className="w-full p-3 bg-white text-sm shadow-default rounded-lg space-y-3 leading-5">
           {startTime && endTime && (
-            <div className="flex items-center h-5 justify-between mb-3">
-              <div className="flex items-center">
-                <TimeIcon className="mr-2" />
+            <div className="flex items-center justify-between">
+              <div className="grid grid-flow-col space-x-2">
+                <SvgIcon name="time" width={20} height={20} color="gray-400" />
                 <span>
                   {`${PlanUtil.formatTime(startTime)} - ${PlanUtil.formatTime(endTime)}`}
                 </span>
               </div>
-              <p className="pl-4 h-full text-sm text-[#828282] leading-5 ">
+              <p className="text-sm text-[#828282] leading-5 ">
                 {PlanUtil.calculateDuration(startTime, endTime)}
               </p>
             </div>
           )}
           {memo && (
             <div className="grid grid-flow-col space-x-2">
-              <FillMemoIcon className="w-5 h-5" />
-              <span>{memo}</span>
+              <SvgIcon name="memo" width={20} height={20} color="gray-400" />
+              <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
+                {memo}
+              </span>
             </div>
           )}
           {place && (
             <div className="grid grid-flow-col space-x-2">
-              <FillLocationIcon className="w-6 h-6 relative -left-0.5" />
+              <SvgIcon
+                name="location"
+                className="w-6 h-6 relative -left-0.5"
+                color="gray-400"
+              />
               <span>{place}</span>
             </div>
           )}
-          <ClipIcon className="absolute right-4 bottom-4" />
+          <div className="w-full flex justify-end">
+            {imagesUrl && <ClipIcon className="right-4 bottom-4" />}
+          </div>
         </div>
       </div>
     </>
