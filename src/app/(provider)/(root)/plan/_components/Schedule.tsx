@@ -46,7 +46,6 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
             <FillLocationIcon className="h-6 w-6 mr-2" color={color} />
             <span>{title}</span>
           </h3>
-          <button>*</button>
         </div>
         <div className="w-full p-3 bg-white text-sm shadow-default rounded-lg space-y-3 leading-5">
           {startTime && endTime && (
