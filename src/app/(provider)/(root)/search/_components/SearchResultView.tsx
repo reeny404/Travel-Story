@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useWindowSize } from "../../_hook/useWindowSize";
 import RecentArea from "./RecentArea";
 import SearchPageTitle from "./SearchPageTitle";
 
@@ -28,6 +29,7 @@ function SearchResultView({
   totalResults,
   searchTerm,
 }: SearchResultViewProps) {
+  const { width } = useWindowSize();
   const [filteredTabs, setFilteredTabs] = useState([...TABS.default]);
   const [nearbyPlaceCount, setNearbyPlaceCount] = useState<number>(3);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });

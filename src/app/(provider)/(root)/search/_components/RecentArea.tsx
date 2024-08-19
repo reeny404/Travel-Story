@@ -1,6 +1,7 @@
 "use client";
 import { useAuth } from "@/contexts/auth.contexts";
 import { createClient } from "@/supabase/client";
+import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,7 +15,12 @@ type RecentArea = {
   imageUrl: string | null;
 }[];
 
-function RecentArea({ className }: { className?: string }) {
+type RecentAreaProps = {
+  className?: string;
+  isInitial?: boolean;
+};
+
+function RecentArea({ className, isInitial }: RecentAreaProps) {
   const supabase = createClient();
   const { isInitialized, user } = useAuth();
   const [recentList, setRecentList] = useState<RecentArea>();
@@ -59,7 +65,7 @@ function RecentArea({ className }: { className?: string }) {
   };
 
   return (
-    <div className={`w-full text-primary font-semibold mt-8 z-10`}>
+    <div className={`w-full text-primary font-semibold z-10`}>
       <SearchPageTitle title="최근 본 장소" className={className} />
       <Swiper
         spaceBetween={12}
@@ -90,7 +96,10 @@ function RecentArea({ className }: { className?: string }) {
               return (
                 <SwiperSlide
                   key={index}
-                  className={`${index === 0 ? "ml-4 md:ml-8" : ""}`}
+                  className={clsx({
+                    "ml-4": index === 0,
+                    "md:ml-8": index === 0 && !isInitial,
+                  })}
                 >
                   <div
                     className="relative w-[124px] h-[184px] cursor-pointer sm:w-[130px] sm:h-[205px] md:w-[160px] md:h-[252px] lg:w-[190px] lg:h-[300px]"

@@ -1,7 +1,6 @@
 import { Area } from "@/types/Recommend";
 
 export const getSliderProps = (slides: Area[]) => {
-  console.log("slides", slides);
   return slides?.map((slide) => {
     return {
       title: slide.title,

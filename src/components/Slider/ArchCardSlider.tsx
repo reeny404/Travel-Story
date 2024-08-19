@@ -1,11 +1,12 @@
 import ArchCard from "@/app/(provider)/(root)/_components/ArchCard";
 import { useWindowSize } from "@/app/(provider)/(root)/_hook/useWindowSize";
 import { POPULAR_DESTINATIONS } from "@/constants/popular";
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-function ArchCardSlider() {
+function ArchCardSlider({ isInitial }: { isInitial?: boolean }) {
   const [spaceBetween, setSpaceBetween] = useState(12);
   const windowSize = useWindowSize();
 
@@ -53,7 +54,10 @@ function ArchCardSlider() {
       {POPULAR_DESTINATIONS.map((card, index) => (
         <SwiperSlide
           key={index}
-          className={`${index === 0 ? "ml-4 md:ml-8" : ""}`}
+          className={clsx({
+            "ml-4": index === 0,
+            "md:ml-8": index === 0 && !isInitial,
+          })}
         >
           <div className="rounded-lg">
             <ArchCard

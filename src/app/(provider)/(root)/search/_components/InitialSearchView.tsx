@@ -29,8 +29,8 @@ function InitialSearchView({ onSearch }: InitialSearchViewProps) {
       )}
       <section className="w-full my-2 pb-6 md:pb-12">
         <SearchPageTitle title="인기 여행지" className="pl-4" />
-        <ArchCardSlider />
-        <RecentArea className="pl-4" />
+        <ArchCardSlider isInitial />
+        <RecentArea className="pl-4" isInitial />
       </section>
     </main>
   );
