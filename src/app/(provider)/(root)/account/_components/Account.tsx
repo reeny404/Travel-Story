@@ -1,4 +1,4 @@
-import ImageFrame from "@/components/Frame/ImageFrame";
+import SvgIcon from "@/components/commons/SvgIcon";
 import { Tables } from "@/types/supabase";
 
 type props = { plan: Tables<"plan"> };
@@ -14,11 +14,7 @@ function Account({ plan }: props) {
             {title} (가계부)
           </h2>
           <button className="ml-auto mb-auto">
-            <ImageFrame
-              src="/icon/ellipsisVertical.svg"
-              alt="더보기"
-              className="w-4 h-4"
-            />
+            <SvgIcon name="arrow-down" width={16} height={16} />
           </button>
         </div>
         <p className="text-sm text-gray-500 leading-5">

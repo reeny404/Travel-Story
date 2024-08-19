@@ -1,7 +1,7 @@
 "use client";
 
 import { getIconPath } from "@/components/commons/Icon/getIconPath";
-import ImageFrame from "@/components/Frame/ImageFrame";
+import SvgIcon from "@/components/commons/SvgIcon";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import { DateUtil } from "@/utils/DateUtil";
@@ -31,10 +31,10 @@ export default function AccountListPage() {
               {DateUtil.format("yyyy년 MM월 dd일", new Date())}
             </span>
             <div className="flex items-center space-x-2">
-              <button className="px-3 py-0.5 flex justify-center text-sm rounded-full bg-gray-150">
+              <button className="px-3 py-0.5 flex items-center justify-center text-sm rounded-full bg-gray-150">
                 {/* TODO 정렬 미구현 */}
                 최신순
-                <ImageFrame src={arrowIconPath} className="w-4 h-4 ml-1 " />
+                <SvgIcon name="arrow-down" width={16} height={16} />
               </button>
             </div>
           </div>
