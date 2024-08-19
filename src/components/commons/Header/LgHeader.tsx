@@ -78,7 +78,7 @@ function LgHeader() {
           </button>
           <div className="mx-4 w-[1px] h-4 bg-neutral-300" />
           <button
-            onClick={() => handleIsLoginUser("plan/recent")}
+            onClick={() => handleIsLoginUser("plan/")}
             className={`${isPlanBold ? "font-medium" : ""}`}
           >
             내 여행 플래너
