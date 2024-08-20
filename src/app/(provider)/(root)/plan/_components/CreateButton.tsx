@@ -12,8 +12,6 @@ type Props = {
 };
 
 function CreateButton({ Icon, onClick, href, color }: Props) {
-  if (href) {
-  }
   return (
     <div
       className={clsx(

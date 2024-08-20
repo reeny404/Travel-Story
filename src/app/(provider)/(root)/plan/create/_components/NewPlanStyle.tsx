@@ -3,10 +3,10 @@ import { PlanInsertType } from "@/types/plan";
 
 type NewPlanStyleProps = {
   data: PlanInsertType;
-  setData: (data: PlanInsertType) => void;
+  set: (data: PlanInsertType) => void;
 };
 
-function NewPlanStyle({ data: plan, setData }: NewPlanStyleProps) {
+function NewPlanStyle({ data: plan, set: setData }: NewPlanStyleProps) {
   // TODO 아직 DB 셋팅을 안해서 props 미사용한 채로 냅둠
   return (
     <section className="px-4">
