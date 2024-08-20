@@ -1,4 +1,3 @@
-import SvgIcon from "@/components/commons/SvgIcon";
 import MainLayout from "@/components/Layout/MainLayout";
 import { DateUtil } from "@/utils/DateUtil";
 import CreatePlanButton from "./_components/CreatePlanButton";
@@ -20,11 +19,11 @@ export default function PlanListPage() {
               {DateUtil.format("yyyy년 MM월 dd일", new Date())}
             </span>
             <div className="flex items-center space-x-2">
-              <button className="px-3 py-0.5 flex justify-center text-sm rounded-full bg-gray-150">
-                {/* TODO 정렬 미구현 */}
-                최신순
-                <SvgIcon name="arrow-down" width={16} height={16} />
-              </button>
+              {/* <button className="px-3 py-0.5 flex justify-center text-sm rounded-full bg-gray-150"> */}
+              {/* TODO 정렬 미구현 */}
+              {/* 최신순 */}
+              {/* <SvgIcon name="arrow-down" width={16} height={16} /> */}
+              {/* </button> */}
             </div>
           </div>
           <PlanList />

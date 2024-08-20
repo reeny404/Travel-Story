@@ -15,7 +15,7 @@ import NewPlanStyle from "./_components/NewPlanStyle";
 function CreatePlanIntroPage() {
   const titles: string[] = useMemo(() => ["기본 정보", "여행 성격"], []);
   const [selectedTab, setSelectedTab] = useState<string>(titles[0]);
-  const [plan, setPlanData] = useState<PlanInsertType>({});
+  const [insertData, setInsertData] = useState<PlanInsertType>({});
   const { countryFilter } = useCountryFilterStore();
   const router = useRouter();
 
@@ -28,7 +28,7 @@ function CreatePlanIntroPage() {
   const onClickToCreatePlan = () => {
     api.plan
       .create({
-        ...plan,
+        ...insertData,
         country: countryFilter.name,
       })
       .then(() => {
@@ -70,9 +70,9 @@ function CreatePlanIntroPage() {
       </section>
       <section className="py-4">
         {selectedTab === titles[0] ? (
-          <NewPlanBase data={plan} set={setPlanData} />
+          <NewPlanBase data={insertData} set={setInsertData} />
         ) : (
-          <NewPlanStyle data={plan} set={setPlanData} />
+          <NewPlanStyle data={insertData} set={setInsertData} />
         )}
       </section>
       <div className="w-full py-10 flex justify-center">

@@ -55,6 +55,7 @@ function ScheduleList({ planId, selectedDay }: ScheduleListProps) {
   return (
     <>
       <ol className={clsx("h-full md:w-[400px]", { "p-6": schedules.length })}>
+        {!schedules.length && <div></div>}
         {schedules.map((item, index) => {
           const isLast = index === schedules.length - 1;
           const isSchedule =
