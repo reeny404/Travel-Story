@@ -51,8 +51,6 @@ function AccountBookPage({ params: { planId } }: AccountBookProps) {
         </div>
       </div>
       <div className="min-h-[calc(100dvh-52px)]">
-        {}
-
         {list?.length ? (
           list?.map((item: any, index: number) => (
             <Link
