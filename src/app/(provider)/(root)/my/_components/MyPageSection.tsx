@@ -62,9 +62,9 @@ function MyPageSection() {
       <MyProfile
         user={{
           id: supabaseUser.id,
-          email: supabaseUser.email,
-          nickname: supabaseUser.nickname,
-          image_url: supabaseUser.image_url,
+          email: supabaseUser.email ?? "",
+          nickname: supabaseUser.nickname ?? "",
+          image_url: supabaseUser.image_url ?? "",
         }}
       />
       <MySchedule />
