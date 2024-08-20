@@ -1,48 +1,87 @@
 "use client";
 
+import { api } from "@/apis/api";
 import AreaTagCard from "@/components/Card/AreaTagCard";
 import Tab from "@/components/Tab/Tab";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
-import { Area } from "@/types/Recommend";
+import { Area, RecommendResponse } from "@/types/Recommend";
+import { SearchResultsType, SearchResultViewProps } from "@/types/search";
 import { getKrCategory } from "@/utils/getKrCategory";
-import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type SearchResultViewProps = {
-  results: Area[];
-  isPending: boolean;
-  error: Error | null;
-  onSearch?: (term: string) => void;
-};
+const INITIAL_ITEMS = 3;
 
 function SearchResultView({
   results,
   isPending,
   error,
   onSearch,
+  onLoadMore,
+  onFold,
+  totalResults,
 }: SearchResultViewProps) {
-  const router = useRouter();
   const [filteredTabs, setFilteredTabs] = useState([...TABS.default]);
+  const [nearbyPlaceCount, setNearbyPlaceCount] = useState<number>(3);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
 
+  const validTab = (currentTab || "place") as keyof SearchResultsType;
+  const filteredResults = results[validTab] || [];
+  const firstResult = filteredResults.length > 0 ? filteredResults[0] : null;
+
+  const { data: nearbyPlace } = useQuery<
+    RecommendResponse<Area[]>,
+    AxiosError,
+    Area[]
+  >({
+    queryKey: ["nearbyPlace", firstResult?.cityId],
+    queryFn: () => api.area.getAllAreasByCity(firstResult?.cityId!),
+    select: (data) => data?.data,
+    staleTime: 1000 * 60 * 3,
+    enabled: !!firstResult,
+  });
+
+  const handleLoadMore = () => {
+    setNearbyPlaceCount((prevCount) => {
+      const newCount = prevCount + 5;
+      return newCount < (nearbyPlace?.length || 0)
+        ? newCount
+        : nearbyPlace?.length || 0;
+    });
+  };
+
+  const handleFoldButton = () => {
+    setNearbyPlaceCount(3);
+  };
+
+  const isLoadEnd = () => {
+    return nearbyPlaceCount >= (nearbyPlace?.length || 0);
+  };
+
   useEffect(() => {
-    if (results && results.length > 0) {
+    if (results && Object.values(results).some((arr) => arr.length > 0)) {
       const updatedTabs = TABS.default.map((tab) => ({
         ...tab,
-        isEnabled: results.some(
-          (result) => result && result.type && result.type === tab.en
-        ),
+        isEnabled: results[tab.en as keyof SearchResultsType]?.length > 0,
       }));
 
       setFilteredTabs(updatedTabs);
 
-      const firstEnabledTab = updatedTabs.find((tab) => tab.isEnabled);
-      if (firstEnabledTab) {
-        setCurrentTab(firstEnabledTab.en);
+      // 첫 검색결과 표기 화면때만 기본 탭 설정
+      if (
+        !currentTab ||
+        !results[currentTab as keyof SearchResultsType]?.length
+      ) {
+        const firstEnabledTab = updatedTabs.find((tab) => tab.isEnabled);
+        if (firstEnabledTab) {
+          setCurrentTab(firstEnabledTab.en as keyof SearchResultsType);
+        }
       }
     }
-  }, [results, setCurrentTab]);
+  }, [results, currentTab, setCurrentTab]);
 
   if (isPending) {
     return (
@@ -60,7 +99,7 @@ function SearchResultView({
     );
   }
 
-  if (!results || results[0] === null) {
+  if (!filteredResults || filteredResults.length === 0) {
     return (
       <section className="flex flex-col items-center">
         <div className="flex flex-col justify-center items-center w-full h-[200px] px-4 mb-10">
@@ -83,52 +122,97 @@ function SearchResultView({
     );
   }
 
-  const handleMoveDetail = (areaId: number) => {
-    router.push(`/recommend/area/${areaId}`);
-  };
+  // 검색결과 버튼
+  const loadMoreOrFoldButton = (category: keyof SearchResultsType) => {
+    const totalResultsInCategory = totalResults?.[category] || 0;
+    const currentResultsInCategory = results?.[category]?.length || 0;
 
-  const filteredResults = results.filter(
-    (result) => result?.type && result.type === currentTab
-  );
+    // 검색 결과가 없으면 버튼 숨기기
+    if (currentResultsInCategory === 0) {
+      return null;
+    }
+
+    // 검색 이후 추가 데이터가 없을 경우 숨기기
+    if (
+      currentResultsInCategory <= INITIAL_ITEMS &&
+      currentResultsInCategory === totalResultsInCategory
+    ) {
+      return null;
+    }
+
+    const handleSearchButtonClick =
+      currentResultsInCategory < totalResultsInCategory
+        ? () => onLoadMore(category)
+        : () => onFold(category);
+
+    const buttonText =
+      currentResultsInCategory < totalResultsInCategory
+        ? "비슷한 장소 더 보기"
+        : "접기";
+
+    return (
+      <button
+        className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150"
+        onClick={handleSearchButtonClick}
+      >
+        {buttonText}
+      </button>
+    );
+  };
 
   return (
     <main className="w-full px-4">
       <Tab
         TABS={filteredTabs}
         currentTab={currentTab!}
-        setCurrentTab={setCurrentTab}
+        setCurrentTab={(tab: string) =>
+          setCurrentTab(tab as keyof SearchResultsType)
+        }
         frameClassName="top-[56px] shadow-area-section"
       />
-      {filteredResults.map((result) => (
-        <AreaTagCard
-          key={result.id}
-          image={result.imageUrl || "/sampleImg.jpg"}
-          alt={result.name}
-          title={result.krName ?? ""}
-          tag={getKrCategory(result.type ?? "")}
-          rating={result.rating ?? ""}
-          desc={result.description}
-          onClick={() => handleMoveDetail(result.id)}
-        />
+      {filteredResults.map((result, index) => (
+        <Link
+          href={`/recommend/area/${result.id}`}
+          key={`${result.id}-${index}`}
+        >
+          <AreaTagCard
+            key={result.id}
+            image={result.imageUrl || "/sampleImg.jpg"}
+            alt={result.name}
+            title={result.krName ?? ""}
+            tag={getKrCategory(result.type ?? "")}
+            rating={result.rating ?? ""}
+            desc={result.description}
+          />
+        </Link>
       ))}
+      {loadMoreOrFoldButton(validTab)}
+
+      {nearbyPlace && nearbyPlace.length > 0 && (
+        <div className="mt-8 ">
+          <h3 className="py-[10px] font-semibold">근처 가볼만한 곳</h3>
+          {nearbyPlace.slice(0, nearbyPlaceCount).map((place) => (
+            <Link href={`/recommend/area/${place.id}`} key={place.id}>
+              <AreaTagCard
+                image={place.imageUrl || "/sampleImg.jpg"}
+                alt={place.name}
+                title={place.krName ?? ""}
+                tag={getKrCategory(place.type ?? "")}
+                rating={place.rating ?? ""}
+                desc={place.description}
+              />
+            </Link>
+          ))}
+          <button
+            className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150"
+            onClick={isLoadEnd() ? handleFoldButton : handleLoadMore}
+          >
+            {isLoadEnd() ? "접기" : "더 둘러보기"}
+          </button>
+        </div>
+      )}
     </main>
   );
 }
 
 export default SearchResultView;
-
-{
-  /* 추후 사용 예정
-        <CountryButton
-    <section className="w-full px-4">
-      {/* <CountryButton
-            size="md"
-            imgPath={result.imageUrl || "/sampleImg.jpg"}
-            alt={result.name}
-            imgSize="sm"
-            countryName={result.krName ?? ""}
-            desc={result.name}
-            onClick={() => handleMoveDetail(result.id)}
-            isCountry
-          /> */
-}

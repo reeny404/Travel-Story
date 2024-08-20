@@ -15,8 +15,11 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
       grabCursor={true}
     >
       {cards.map((card, index) => (
-        <SwiperSlide key={index} className={`${index === 0 ? "ml-4" : ""}`}>
-          <div className="bg-white rounded-lg shadow-area-card">
+        <SwiperSlide
+          key={index}
+          className={`md:max-w-[303px] md:pb-3 ${index === 0 ? "ml-4 md:ml-8" : ""}`}
+        >
+          <div className="bg-white rounded-lg shadow-area-card ">
             <AreaCard
               title={card.title}
               description={card.description}
@@ -30,6 +33,7 @@ function CardSlider({ spacing, slidesPerView, cards }: SliderProps) {
               isBookmarked={isBookmarked(card.id)}
               addBookmark={() => addBookmark.mutate(card.id)}
               deleteBookmark={() => deleteBookmark.mutate(card.id)}
+              tags={card.tags!}
             />
           </div>
         </SwiperSlide>

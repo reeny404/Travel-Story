@@ -68,7 +68,7 @@ function BottomSheetImages({
             onClick={() => {
               handleDelete(images, imgFile, index);
             }}
-            className="relative w-12 h-12 text-gray-300 flex items-center justify-center bg-neutral-150 rounded-lg aspect-square"
+            className="relative w-12 h-12 md:h-16 md:w-16 text-gray-300 flex items-center justify-center bg-neutral-150 rounded-lg aspect-square"
           >
             <Image
               src={imageSrc}
@@ -81,9 +81,9 @@ function BottomSheetImages({
 
         <li
           className={clsx(
-            `h-12 flex items-center justify-center bg-neutral-150 rounded-lg`,
+            `h-12 md:h-16 flex items-center justify-center bg-neutral-150 rounded-lg`,
             {
-              "w-12": images.length > 0,
+              "w-12 md:w-16": images.length > 0,
             }
           )}
         >

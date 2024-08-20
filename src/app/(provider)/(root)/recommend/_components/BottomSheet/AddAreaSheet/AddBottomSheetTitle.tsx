@@ -13,9 +13,10 @@ import BottomSheetTitle from "../BottomSheetTitle";
 type AddBottomSheetTitle = {
   areaId: number;
   isPlan: boolean;
+  onClose: () => void;
 };
 
-function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
+function AddBottomSheetTitle({ areaId, isPlan, onClose }: AddBottomSheetTitle) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
@@ -50,6 +51,7 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
     <div className="w-full flex justify-between items-center mb-7 px-4">
       <BottomSheetTitle
         title={isPlan ? "어디에 추가하시겠어요?" : "새 일정을 만들어 주세요."}
+        onClose={onClose}
       />
       {isPending && (
         <div className="absolute w-full h-full flex items-center justify-center">
@@ -59,7 +61,7 @@ function AddBottomSheetTitle({ areaId, isPlan }: AddBottomSheetTitle) {
       <button
         type="button"
         onClick={handleAddPlan}
-        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 text-white bg-neutral-750 hover:opacity-90 active:opacity-80 text-sm font-medium rounded-[16px]"
+        className="flex items-center gap-x-1 min-w-[88px] h-7 pl-2 md:ml-2 text-white bg-neutral-750 hover:opacity-90 active:opacity-80 text-sm font-medium rounded-[16px]"
       >
         <Image
           src={getIconPath(ICON.add.bold)}

@@ -20,7 +20,7 @@ function Tab({
 }: TabProps) {
   return (
     <div
-      className={`w-full h-11 flex justify-around items-center gap-x-2 z-tab my-3 rounded-lg sticky ${frameClassName}`}
+      className={`w-full h-11 flex justify-around items-center gap-x-2 z-20 my-3 rounded-lg sticky ${frameClassName}`}
     >
       {TABS.map((tab) => (
         <button

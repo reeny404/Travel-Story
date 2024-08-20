@@ -4,6 +4,7 @@ import { Area, City, GroupedArea } from "@/types/Recommend";
 import { seperateArr } from "@/utils/seperateArr";
 import { lazy, useCallback, useMemo } from "react";
 import { v4 } from "uuid";
+import { useWindowSize } from "../../../_hook/useWindowSize";
 const MainTourItem = lazy(() => import("./MainTourItem"));
 
 type MainTourFormProps = {
@@ -11,6 +12,7 @@ type MainTourFormProps = {
 };
 
 function MainTourForm({ areasInfo }: MainTourFormProps) {
+  const { width } = useWindowSize();
   const mainTourAreas = useMemo(
     () => [
       ...areasInfo?.place!,
@@ -21,10 +23,10 @@ function MainTourForm({ areasInfo }: MainTourFormProps) {
     [areasInfo]
   );
 
-  const seperatedInfo = useMemo(
-    () => seperateArr(mainTourAreas, 3),
-    [mainTourAreas]
-  );
+  const seperatedInfo = useMemo(() => {
+    const seperatePoint = width > 768 ? 2 : 3;
+    return seperateArr(mainTourAreas, seperatePoint);
+  }, [mainTourAreas, width]);
 
   const generateItems = useCallback((info: City[] & Area[]) => {
     return (
@@ -42,7 +44,7 @@ function MainTourForm({ areasInfo }: MainTourFormProps) {
   );
 
   return (
-    <div className="w-full bg-[#F5F5F5] flex flex-col py-4">
+    <div className="w-full bg-[#F5F5F5] md:bg-white flex flex-col py-4">
       <CardType title="주요 관광지" type="fire" />
       <Carousel slides={carouselItems} />
     </div>

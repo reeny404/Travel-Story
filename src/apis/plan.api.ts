@@ -1,4 +1,10 @@
-import { Plan, PlanChildData, PlanChildType, PlanFull, PlanInsertType } from "@/types/plan";
+import {
+  Plan,
+  PlanChildData,
+  PlanChildType,
+  PlanFull,
+  PlanInsertType,
+} from "@/types/plan";
 import { AxiosInstance } from "axios";
 
 export default class PlanAPI {
@@ -28,7 +34,11 @@ export default class PlanAPI {
       });
   }
 
-  async updatePlan(planId: string, type: PlanChildType, data: PlanChildData): Promise<Plan | null> {
+  async updatePlan(
+    planId: string,
+    type: PlanChildType,
+    data: PlanChildData
+  ): Promise<Plan | null> {
     return await this.axios
       .put(`/api/plan/${planId}`, { ...data, type })
       .then(({ data }) => data)
@@ -48,7 +58,10 @@ export default class PlanAPI {
       });
   }
 
-  async addPlan(planId: string, newData: Record<string, any>): Promise<Plan | null> {
+  async addPlan(
+    planId: string,
+    newData: Record<string, any>
+  ): Promise<Plan | null> {
     return await this.axios
       .post(`/api/plan/${planId}/schedule`, newData)
       .then(({ data }) => data)
@@ -61,14 +74,19 @@ export default class PlanAPI {
   /**
    * create schedule or moveSchedule or ....
    */
-  async addChild(planId: string, dayIndex: number, type: PlanChildType, newData: PlanChildData): Promise<Plan | null> {
+  async addChild(
+    planId: string,
+    dayIndex: number,
+    type: PlanChildType,
+    newData: PlanChildData
+  ): Promise<Plan | null> {
     return await this.axios
       .post(`/api/plan/${planId}`, { type, dayIndex, data: newData })
       .then(({ data }) => data)
       .catch((e) => console.error(e));
   }
 
-  async getRoutes(planId: string, day: number = 1): Promise<PlanFull> {
+  async find(planId: string, day: number = 1): Promise<PlanFull> {
     return await this.axios
       .get(`/api/plan/${planId}?day=${day}`)
       .then(({ data }) => data.data)

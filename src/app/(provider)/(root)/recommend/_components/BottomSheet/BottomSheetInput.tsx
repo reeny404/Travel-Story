@@ -19,7 +19,7 @@ export default function BottomSheetInput({
 
   return (
     <textarea
-      className="border-[1.25px] border-neutral-200 text-neutral-400 rounded-lg p-4 h-36"
+      className="border-[1.25px] border-neutral-200 text-neutral-400 rounded-lg p-4 h-36 md:h-[324px]"
       value={textValue}
       onChange={handleChange}
       placeholder={placeholder}

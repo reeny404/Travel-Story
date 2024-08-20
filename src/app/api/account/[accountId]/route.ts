@@ -9,17 +9,20 @@ type Parameter = { params: { accountId: number } };
 
 /**
  * accountId 로 조회한 가계부 수정하기
- * 
+ *
  * @param accountId
  */
-export async function PUT(request: NextRequest, { params: { accountId } }: Parameter) {
+export async function PUT(
+  request: NextRequest,
+  { params: { accountId } }: Parameter
+) {
   // TODO 세션 사용자 정보와 account 작성자 같은지 체크
-  const { amount, type, payType, desc: content }: Account = await request.json();
+  const { amount, type, payType, desc }: Account = await request.json();
 
   const supabase = createClient();
   const { data, error } = await supabase
     .from(ACCOUNT_BOOK)
-    .update({ amount, type, payType, content })
+    .update({ amount, type, payType, desc })
     .eq(PK_ACCOUNT_ID, accountId)
     .select()
     .single();
@@ -29,10 +32,13 @@ export async function PUT(request: NextRequest, { params: { accountId } }: Param
 
 /**
  * accountId 로 조회한 가계부 삭제하기
- * 
+ *
  * @param accountId
  */
-export async function DELETE(request: NextRequest, { params: { accountId } }: Parameter) {
+export async function DELETE(
+  request: NextRequest,
+  { params: { accountId } }: Parameter
+) {
   // TODO 우선 userId를 받고 나중엔 세션 정보 쓰도록 변경 필요
   // TODO 세션 사용자 정보와 account 작성자 같은지 체크
 
@@ -40,8 +46,8 @@ export async function DELETE(request: NextRequest, { params: { accountId } }: Pa
   const { error } = await supabase
     .from(ACCOUNT_BOOK)
     .delete()
-    .eq(PK_ACCOUNT_ID, accountId)
+    .eq(PK_ACCOUNT_ID, accountId);
   // .eq("userId", userId);
 
-  return NextResponse.json({ error }, { status: (!error ? 200 : 403) });
+  return NextResponse.json({ error }, { status: !error ? 200 : 403 });
 }

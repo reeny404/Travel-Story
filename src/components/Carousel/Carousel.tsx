@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode } from "react";
-import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -13,19 +12,11 @@ type CarouselProps = { slides: ReactNode[] | string[] };
 const Carousel = ({ slides }: CarouselProps) => {
   return (
     <section>
-      <Swiper
-        className="rounded-sm"
-        modules={[Autoplay]}
-        loop={true}
-        grabCursor={true}
-        autoplay={{
-          delay: 3500,
-        }}
-      >
+      <Swiper className="rounded-sm" loop={true} grabCursor={true}>
         {slides?.map((slide, idx) => {
           return (
-            <SwiperSlide key={idx}>
-              <div className="px-4">{slide}</div>
+            <SwiperSlide key={idx} className={`md:max-w-[466px]`}>
+              {slide}
             </SwiperSlide>
           );
         })}

@@ -9,6 +9,7 @@ import {
   SupabaseScheduleType,
   SupbasePlanChildren,
 } from "@/types/plan";
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 import BottomSheet from "./BottomSheet";
 import Memo from "./Memo";
@@ -21,15 +22,14 @@ type ScheduleListProps = {
 };
 
 function ScheduleList({ planId, selectedDay }: ScheduleListProps) {
-  const { planChildren: scheduleList, fetchSchedule: fetchScheduleList } =
-    useScheduleStore();
+  const { plan, fetchPlan } = useScheduleStore();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<SupbasePlanChildren>();
   const [type, setType] = useState<PlanChildType>("place"); // Default type
   const [status, setStatus] = useState<BottomSheetType["status"]>("read");
 
   useEffect(() => {
-    fetchScheduleList(planId, selectedDay);
+    fetchPlan(planId, selectedDay);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [planId, selectedDay]);
 
@@ -50,20 +50,18 @@ function ScheduleList({ planId, selectedDay }: ScheduleListProps) {
   };
 
   let placeIndex: number = 0;
+  const schedules = plan[selectedDay - 1]?.schedules ?? [];
 
   return (
     <>
-      <ul className="p-6 h-full">
-        {scheduleList.map((item, index) => {
-          const isLast = index === scheduleList.length - 1;
+      <ol className={clsx("h-full md:w-[400px]", { "p-6": schedules.length })}>
+        {schedules.map((item, index) => {
+          const isLast = index === schedules.length - 1;
           const isSchedule =
             item.type === "customPlace" || item.type === "place";
 
           return (
-            <li
-              key={item.id}
-              className="flex items-center justify-between min-h-44 h-full"
-            >
+            <li key={item.id} className="flex justify-between min-h-20">
               {isSchedule && (
                 <Schedule
                   key={item.id}
@@ -92,7 +90,7 @@ function ScheduleList({ planId, selectedDay }: ScheduleListProps) {
             </li>
           );
         })}
-      </ul>
+      </ol>
       {isBottomSheetOpen && selectedItem && (
         <BottomSheet
           item={selectedItem}

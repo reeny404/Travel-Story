@@ -60,6 +60,7 @@ function CityAreaTypeCSRPage({ cityId, areaType }: CityAreaTypeCSRPageProps) {
               addBookmark={() => addBookmark.mutate(area.id)}
               deleteBookmark={() => deleteBookmark.mutate(area.id)}
               isBookmarked={isBookmarked(area.id)}
+              tags={area.tags}
             />
           );
         })}

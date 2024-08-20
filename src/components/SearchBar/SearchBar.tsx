@@ -77,9 +77,16 @@ function SearchBar({
         if (value.trim() && onSearch) {
           onSearch(value.trim());
         }
-      }, 300),
+      }, 400),
     [onSearch]
   );
+
+  // 디바운스 처리 중 input값이 변하면 깨지는 현상 방지
+  useEffect(() => {
+    return () => {
+      debounceSearch.cancel();
+    };
+  }, [debounceSearch]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -98,7 +105,7 @@ function SearchBar({
   ) => {
     const pressFilteredCountry = setTimeout(() => {
       resetCountryFilter();
-    }, 1000);
+    }, 800);
 
     const clearPress = () => {
       clearTimeout(pressFilteredCountry);
@@ -120,7 +127,7 @@ function SearchBar({
 
   return (
     <form
-      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-search"
+      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-default"
       onSubmit={handleSearch}
     >
       <div className="flex items-center w-full gap-2">

@@ -1,4 +1,5 @@
 "use client";
+import SvgIcon from "@/components/commons/SvgIcon";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import { useLoginStepStore } from "@/stores/step.store";
@@ -65,9 +66,11 @@ function AuthContainer({
       ) : (
         <div className={`w-full h-[2px] mt-[52px]`}></div>
       )}
-      <div className="relative w-full px-4 pt-[56px] bg-white">
+      <div className="relative w-full min-h-[calc(100dvh-54px)] px-4 pt-[56px] bg-white sm:w-[412px] sm:mx-auto sm:px-[38.5px]">
         {/* title */}
-        <h1 className="text-[24px] font-semibold mb-[68px] whitespace-pre-wrap">
+        <h1
+          className={`text-[24px] font-semibold mb-[68px] whitespace-pre-wrap ${step === null ? "text-center" : ""}`}
+        >
           {title}
         </h1>
         {/* 이메일 로그인 */}
@@ -83,9 +86,12 @@ function AuthContainer({
             <div className="mt-4">
               <button
                 onClick={handleKakaoLogin}
-                className="w-full h-[48px] bg-[#F9E000] rounded-md"
+                className="flex relative items-center justify-center w-full h-[48px] px-5 bg-[#F9E000] rounded-md "
               >
-                카카오로 계속하기
+                <SvgIcon name="kakao-talk" className="absolute left-5" />
+                <p className="text-primary font-medium text-base">
+                  카카오로 계속하기
+                </p>
               </button>
             </div>
           </div>
