@@ -37,7 +37,7 @@ function MySchedule() {
     getMyPlan();
   }, [isInitialized]);
 
-  if (!recentPlan) {
+  if (!recentPlan || !user) {
     return (
       <div className="mb-4 z-10">
         <MyTrip />
@@ -65,22 +65,24 @@ function MySchedule() {
 
   return (
     <section
-      className={`${path === "/my" ? "flex mt-12 mb-4 z-10" : "flex mx-4 mt-10 bg-primary rounded-lg text-white"}`}
+      className={`${path === "/my" ? "flex mt-12 mb-4 z-10 md:ml-8 md:order-2 md:mt-0 md:mb-0 md:h-full" : "flex mx-4 mt-10 bg-primary rounded-lg text-white"}`}
     >
       <div
         onClick={handlePlanClick}
-        className={`${path === "/my" ? "flex-grow h-11 px-5 py-[10px] bg-brand-300 rounded-lg cursor-pointer" : "flex flex-col flex-grow bg-transparent justify-center px-4"}`}
+        className={`${path === "/my" ? "flex-grow h-11 px-5 py-[10px] bg-brand-300 rounded-lg cursor-pointer md:h-full md:w-[360px] md:py-0 md:flex md:items-center" : "flex flex-col flex-grow bg-transparent justify-center px-4"}`}
       >
-        <p
-          className={`${path === "/my" ? "w-fit text-lg leading-6 font-semibold" : "text-xl font-semibold"}`}
-        >
-          {recentPlan.title}
-        </p>
-        {path === "/" ? (
-          <p className="text-base font-normal text-neutral-400 pt-2">{`${year} ${startMonth}.${startDay}-${endMonth}.${endDay}`}</p>
-        ) : null}
+        <div className="md:flex md:flex-col">
+          <p
+            className={`${path === "/my" ? "w-fit text-lg leading-6 font-semibold" : "text-xl font-semibold"}`}
+          >
+            {recentPlan.title}
+          </p>
+          <p className="hidden md:block text-base font-normal text-neutral-400 pt-2 md:text-neutral-500">{`${year} ${startMonth}.${startDay}-${endMonth}.${endDay}`}</p>
+        </div>
       </div>
-      <div className={`${path === "/my" ? "flex" : "flex flex-col"}`}>
+      <div
+        className={`${path === "/my" ? "flex" : "flex flex-col"} md:flex md:flex-col md:justify-between`}
+      >
         <div
           className={`w-11 h-11 rounded-lg ml-2 grid place-items-center ${path === "/my" ? "bg-white" : "bg-transparent"}`}
           onClick={handleMapClick}

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 
 type RecentArea = {
   id: number;
@@ -57,38 +58,37 @@ function RecentArea() {
   return (
     <div className="w-full text-primary font-semibold z-10">
       <p className="px-4 py-[10px]">최근 본 장소</p>
-      <Swiper spaceBetween={12} slidesPerView={2.9} grabCursor={true}>
-        <div className="flex w-full h-[184px]">
-          {recentList ? (
-            recentList.map((item, index) => {
-              return (
-                <SwiperSlide
-                  key={index}
-                  className={`${index === 0 ? "ml-4" : ""}`}
+      <Swiper spaceBetween={12} slidesPerView="auto" grabCursor={true}>
+        {recentList ? (
+          recentList.map((item, index) => {
+            return (
+              <SwiperSlide
+                key={index}
+                className={`${index === 0 ? "ml-4" : ""}`}
+                style={{ width: "124px" }}
+              >
+                <div
+                  className="relative w-[124px] h-[184px] cursor-pointer"
+                  onClick={() => handleClickCard(index)}
                 >
-                  <div
-                    className="relative h-[184px] w-[124px] cursor-pointer"
-                    onClick={() => handleClickCard(index)}
-                  >
-                    <Image
-                      src={item.imageUrl || ""}
-                      alt="장소 사진"
-                      fill
-                      className="object-cover rounded-lg"
-                    />
-                    <p className="absolute w-full px-4 bottom-4 text-white font-semibold overflow-hidden text-ellipsis">
-                      {item.krName}
-                    </p>
-                  </div>
-                </SwiperSlide>
-              );
-            })
-          ) : (
-            <div className="w-full h-full grid place-items-center bg-white bg-opacity-30 rounded-lg">
-              <p className="font-medium">최근 본 장소가 없습니다</p>
-            </div>
-          )}
-        </div>
+                  <Image
+                    src={item.imageUrl || ""}
+                    alt="장소 사진"
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                  <p className="absolute w-full px-4 bottom-4 text-white font-semibold overflow-hidden text-ellipsis">
+                    {item.krName}
+                  </p>
+                </div>
+              </SwiperSlide>
+            );
+          })
+        ) : (
+          <div className="w-full h-full grid place-items-center bg-white bg-opacity-30 rounded-lg">
+            <p className="font-medium">최근 본 장소가 없습니다</p>
+          </div>
+        )}
       </Swiper>
     </div>
   );
