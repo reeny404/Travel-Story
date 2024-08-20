@@ -10,7 +10,6 @@ function Reviews() {
         titleAlign: "center",
       }}
     >
-      <></>
       <MyReviewList />
     </MainLayout>
   );
