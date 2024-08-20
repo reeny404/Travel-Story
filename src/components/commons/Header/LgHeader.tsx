@@ -9,7 +9,7 @@ import useDrawerStore from "@/stores/drawer.store";
 import useCountryFilterStore from "@/stores/searchFilter.store";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SvgIcon from "../SvgIcon";
 
 function LgHeader({ onSearch }: { onSearch?: (term: string) => void }) {
@@ -17,19 +17,10 @@ function LgHeader({ onSearch }: { onSearch?: (term: string) => void }) {
   const { isOpen, closeDrawer } = useDrawerStore();
   const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
 
-  const [isPlanBold, setIsPlanBold] = useState(false);
-  const [isAreaBold, setIsAreaBold] = useState(false);
-
   const router = useRouter();
   const path = usePathname();
-
-  useEffect(() => {
-    const recommend = path.includes("recommend") || path === "/";
-    const myPlan = path.includes("plan");
-
-    setIsAreaBold(recommend);
-    setIsPlanBold(myPlan);
-  }, [path]);
+  const isPlanBold = path.includes("plan");
+  const isAreaBold = path.includes("recommend") || path === "/";
 
   const handleIsLoginUser = (value: string) => {
     if (isInitialized && isLoggedIn) {
@@ -80,7 +71,7 @@ function LgHeader({ onSearch }: { onSearch?: (term: string) => void }) {
 
   return (
     <header className="w-full items-center px-8 hidden md:block">
-      <div className="flex flex-row items-center h-8 text-[12px] space-x-6">
+      <div className="flex flex-row items-center h-8 text-xs space-x-6">
         <div className="flex-grow" />
         <button onClick={() => handleIsLoginUser("my")}>마이페이지</button>
         <button onClick={() => handleIsLoginUser("my/bookmarks")}>
@@ -92,8 +83,8 @@ function LgHeader({ onSearch }: { onSearch?: (term: string) => void }) {
           <button onClick={handleLogin}>로그인</button>
         )}
       </div>
-      <div className="flex flex-row w-full pt-3 pb-6 items-center justify-between">
-        <Link href="/">
+      <div className="flex flex-row w-full pt-3 pb-6 items-center lg:justify-between md:justify-center md:space-x-8">
+        <Link href={"/"}>
           <h1
             className={`${dmSerifDisplayFont.className} text-[28px] leading-[38px] whitespace-nowrap`}
           >
@@ -111,7 +102,7 @@ function LgHeader({ onSearch }: { onSearch?: (term: string) => void }) {
           </button>
           {isFilterOpen && <SearchFilter onClose={handleToggleFilter} />}
         </div>
-        <div className="flex flex-row items-center text-xl py-3 w-fit font-light">
+        <div className="flex-row items-center text-xl py-3 w-fit font-light block md:hidden lg:flex">
           <button
             onClick={handleHomeClick}
             className={`${isAreaBold ? "font-medium" : ""}`}
@@ -120,7 +111,7 @@ function LgHeader({ onSearch }: { onSearch?: (term: string) => void }) {
           </button>
           <div className="mx-4 w-[1px] h-4 bg-neutral-300" />
           <button
-            onClick={() => handleIsLoginUser("plan/recent")}
+            onClick={() => handleIsLoginUser("plan/")}
             className={`${isPlanBold ? "font-medium" : ""}`}
           >
             내 여행 플래너

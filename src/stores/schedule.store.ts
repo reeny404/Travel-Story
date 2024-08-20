@@ -2,30 +2,42 @@ import { api } from "@/apis/api";
 import { PlanChildData, PlanChildType, SupabaseMemoType, SupabaseMoveType, SupabaseScheduleType } from "@/types/plan";
 import axios from "axios";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
 
-type DataType = SupabaseScheduleType | SupabaseMoveType | SupabaseMemoType;
+type Day = {
+  day: number;
+  schedules: Array<SupabaseScheduleType | SupabaseMoveType | SupabaseMemoType>;
+}
+
 
 type Store = {
-  planChildren: DataType[];
-  fetchSchedule: (planId: string, day: number) => Promise<void>;
+  plan: Day[];
+  fetchPlan: (planId: string, day: number, refresh?: boolean) => Promise<void>;
   createSchedule: (planId: string, day: number, type: PlanChildType, insertData: PlanChildData) => Promise<void>;
   updateScheduleCheck: (planId: string, day: number, itemId: string, checkIndex: number, isChecked: boolean) => Promise<void>;
   updateSchedule: (planId: string, day: number, type: PlanChildType, data: PlanChildData) => Promise<void>;
 }
 
 const useScheduleStore = create<Store>()(
-  persist(
+  immer(
     (set, get) => ({
-      planChildren: [],
-      fetchSchedule: async (planId: string, day: number) => {
+      plan: [],
+      fetchPlan: async (planId: string, day: number, refresh?: boolean) => {
         try {
+          const { plan: planChildren } = get();
+          if (!refresh && planChildren[day - 1]?.schedules?.length) {
+            return;
+          }
+
           const response = await axios.get(`/api/plan/${planId}/schedule`, {
             params: { day },
           });
 
-          set({
-            planChildren: response.data.data
+          set((prev) => {
+            prev.plan[day - 1] = {
+              day: day,
+              schedules: response.data.data
+            };
           })
         } catch (error) {
           console.error("일정 데이터를 가져오는 중 오류 발생:", error);
@@ -39,8 +51,8 @@ const useScheduleStore = create<Store>()(
             return;
           }
 
-          const { fetchSchedule: fetchScheduleList } = get();
-          fetchScheduleList(planId, day);
+          const { fetchPlan: fetchScheduleList } = get();
+          fetchScheduleList(planId, day, true);
         } catch (error) {
           console.error("Error adding data:", error);
         }
@@ -52,19 +64,16 @@ const useScheduleStore = create<Store>()(
           isChecked: !isChecked,
         });
 
-        const { fetchSchedule: fetchScheduleList } = get();
-        fetchScheduleList(planId, day);
+        const { fetchPlan: fetchScheduleList } = get();
+        fetchScheduleList(planId, day, true);
       },
       updateSchedule: async (planId: string, day: number, type: PlanChildType, data: PlanChildData) => {
         await api.plan.updatePlan(planId, type, data);
 
-        const { fetchSchedule: fetchScheduleList } = get();
-        fetchScheduleList(planId, day);
+        const { fetchPlan: fetchScheduleList } = get();
+        fetchScheduleList(planId, day, true);
       }
-    }),
-    {
-      name: "scheduleStore",
-    }
+    })
   )
 );
 

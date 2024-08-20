@@ -50,7 +50,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
       prevArea = prevArea.filter((area) => {
         return area !== areaId;
       });
-      if (prevArea.length === 5) {
+      if (prevArea.length === 10) {
         prevArea.shift();
       }
       const areaArray = [...prevArea, areaId];
@@ -162,9 +162,9 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                 TABS={TABS.areaDetail}
                 currentTab={currentTab!}
                 setCurrentTab={setCurrentTab}
-                frameClassName="top-[56px] shadow-area-section md:hidden"
+                frameClassName="top-[56px] shadow-default md:hidden"
               />
-              <div className="hidden md:block shadow-area-section w-full my-6">
+              <div className="hidden md:block shadow-default w-full my-6">
                 <WebTap
                   currentTab={currentTab!}
                   setCurrentTab={setCurrentTab}
@@ -176,7 +176,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ref={(tabEl) => {
                     sectionRefs.current[0] = tabEl;
                   }}
-                  className="mb-3 w-full h-full rounded-lg shadow-area-section lg:max-w-[334px]"
+                  className="mb-3 w-full h-full rounded-lg shadow-default lg:max-w-[334px]"
                 >
                   <NoticeForm area={area} />
                 </div>
@@ -185,7 +185,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ref={(tabEl) => {
                     sectionRefs.current[1] = tabEl;
                   }}
-                  className="mb-3 w-full h-full rounded-lg shadow-area-section"
+                  className="mb-3 w-full h-full rounded-lg shadow-default"
                 >
                   <LocationForm area={area} />
                   <WebLocationForm area={area} />
@@ -196,7 +196,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   sectionRefs.current[2] = tabEl;
                   reviewSectionRef.current = tabEl;
                 }}
-                className="w-full h-full md:hidden rounded-lg shadow-area-section"
+                className="w-full h-full md:hidden rounded-lg shadow-default"
               >
                 <ReviewSummaryCard
                   areaName={area.krName!}
@@ -220,7 +220,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                   ref={(tabEl) => {
                     sectionRefs.current[3] = tabEl;
                   }}
-                  className="mb-9 pt-8 pb-7 px-4 w-full h-full rounded-lg shadow-area-section"
+                  className="mb-9 pt-8 pb-7 px-4 w-full h-full rounded-lg shadow-default"
                 >
                   <section className="w-full flex flex-col gap-y-7">
                     <h1 className="text-lg font-medium min-w-20">

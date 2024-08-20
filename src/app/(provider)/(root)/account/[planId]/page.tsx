@@ -51,23 +51,31 @@ function AccountBookPage({ params: { planId } }: AccountBookProps) {
         </div>
       </div>
       <div className="min-h-[calc(100dvh-52px)]">
-        {list?.map((item: any, index: number) => (
-          <Link
-            href={`/accountDetail/` + item.scheduleId}
-            key={index}
-            className="border-b border-neutral-200 h-16 flex items-center justify-between px-3"
-          >
-            <div className="flex items-center">
-              <h3>{item.area}</h3>
-              <span className="block px-3 ph-2 ml-2 text-sm border border-info-600 text-info-600 rounded-lg">
-                {item.payType}
-              </span>
-            </div>
-            <p>
-              <span>{item.amount}</span>원
-            </p>
-          </Link>
-        ))}
+        {}
+
+        {list?.length ? (
+          list?.map((item: any, index: number) => (
+            <Link
+              href={`/accountDetail/` + item.scheduleId}
+              key={index}
+              className="border-b border-neutral-200 h-16 flex items-center justify-between px-3"
+            >
+              <div className="flex items-center">
+                <h3>{item.area}</h3>
+                <span className="block px-3 ph-2 ml-2 text-sm border border-info-600 text-info-600 rounded-lg">
+                  {item.payType}
+                </span>
+              </div>
+              <p>
+                <span>{item.amount}</span>원
+              </p>
+            </Link>
+          ))
+        ) : (
+          <div className="text-center leading-10">
+            <p>가계부를 내 여행에서 만들어주세요!</p>
+          </div>
+        )}
       </div>
     </MainLayout>
   );

@@ -4,6 +4,8 @@ import { AreaReview, ImgFileType } from "@/types/Recommend";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
+import { useWindowSize } from "../../../_hook/useWindowSize";
+import { ReviewModal } from "../ReviewModal";
 import { BottomSheet } from "./BottomSheet";
 import BottomSheetImages from "./BottomSheetImages";
 import BottomSheetInput from "./BottomSheetInput";
@@ -18,6 +20,7 @@ type EditSheetProps = {
 type editType = {};
 function EditBottomSheet<T>({ onClose, reviewInfo }: EditSheetProps & T) {
   const [imgFile, setImgFile] = useState<ImgFileType[]>([]);
+  const { width } = useWindowSize();
   const [textValue, setTextValue] = useState<string>(reviewInfo.content! ?? "");
   const [rating, setRating] = useState<number>(reviewInfo.rating ?? 0);
   const queryClient = useQueryClient();
@@ -72,44 +75,47 @@ function EditBottomSheet<T>({ onClose, reviewInfo }: EditSheetProps & T) {
       console.error("Error updating data:", error);
     }
   };
-  //
-  return (
-    <BottomSheet onClose={onClose} height="660px">
-      <section className="relative w-full h-full flex flex-col">
-        <article className="relative w-full flex px-5 flex-col gap-y-8 ">
-          <BottomSheetTitle title="리뷰작성" />
-          <BottomSheetRating
-            rating={rating}
-            handleRatingClick={handleRatingClick}
-          />
 
-          <div className="w-full flex flex-col gap-y-3">
-            <BottomSheetInput
-              textValue={textValue}
-              setTextValue={setTextValue}
-            />
-            <BottomSheetImages
-              imgFile={imgFile}
-              setImgFile={setImgFile}
-              initializeImages={true}
-            />
-          </div>
-        </article>
-        <div className="absolute bottom-6 w-full px-5">
-          <button
-            className={clsx(
-              "bg-button-disable w-full h-10 text-center text-neutral-450 rounded-lg",
-              {
-                "!bg-neutral-750 !text-white": textValue.length > 0,
-              }
-            )}
-            type="button"
-            onClick={handleUpdate}
-          >
-            {textValue.length === 0 ? "작성을 완료해주세요" : "리뷰 수정하기"}
-          </button>
+  const Content = (
+    <section className="relative w-full h-full flex flex-col">
+      <article className="relative w-full flex px-5 flex-col gap-y-8 ">
+        <BottomSheetTitle title="리뷰작성" onClose={onClose} />
+        <BottomSheetRating
+          rating={rating}
+          handleRatingClick={handleRatingClick}
+        />
+
+        <div className="w-full flex flex-col gap-y-3">
+          <BottomSheetInput textValue={textValue} setTextValue={setTextValue} />
+          <BottomSheetImages
+            imgFile={imgFile}
+            setImgFile={setImgFile}
+            initializeImages={true}
+          />
         </div>
-      </section>
+      </article>
+      <div className="absolute bottom-6 w-full px-5">
+        <button
+          className={clsx(
+            "bg-button-disable w-full h-10 text-center text-neutral-450 rounded-lg",
+            {
+              "!bg-neutral-750 !text-white": textValue.length > 0,
+            }
+          )}
+          type="button"
+          onClick={handleUpdate}
+        >
+          {textValue.length === 0 ? "작성을 완료해주세요" : "리뷰 수정하기"}
+        </button>
+      </div>
+    </section>
+  );
+
+  return width >= 768 ? (
+    <ReviewModal onClose={onClose}>{Content}</ReviewModal>
+  ) : (
+    <BottomSheet onClose={onClose} height="660px">
+      {Content}
     </BottomSheet>
   );
 }
