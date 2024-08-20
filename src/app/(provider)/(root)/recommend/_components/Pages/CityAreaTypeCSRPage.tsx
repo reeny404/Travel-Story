@@ -43,7 +43,7 @@ function CityAreaTypeCSRPage({ cityId, areaType }: CityAreaTypeCSRPageProps) {
         ],
       }}
     >
-      <div className="container overflow-x-hidden h-full w-full flex-col gap-y-6 p-4">
+      <div className="container overflow-x-hidden h-full w-full flex-col gap-y-6 p-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-8 mx-auto">
         {areas?.map((area, idx) => {
           return (
             <AreaCard

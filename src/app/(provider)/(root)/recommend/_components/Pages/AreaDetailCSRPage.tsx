@@ -236,7 +236,11 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
                             rating={area.rating ?? 0}
                             key={area.id}
                             title={area.krName!}
-                            imageUrl={area.imageUrl ?? "/"}
+                            imageUrl={
+                              !area.imageUrl || area.imageUrl === ""
+                                ? "/defaultImage.webp"
+                                : area.imageUrl!
+                            }
                             linkUrl={`/recommend/area/${area.id}`}
                             type={area.type!}
                           />

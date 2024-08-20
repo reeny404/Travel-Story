@@ -51,7 +51,6 @@ export class AccountAPI {
   }
 
   async deleteAccount(id: string): Promise<void> {
-    console.log(id);
     try {
       await this.axios.delete(`/api/account/${id}`);
     } catch (e) {
@@ -62,7 +61,6 @@ export class AccountAPI {
   }
 
   async getSchedule(scheduleId: string) {
-    console.log(scheduleId);
     return await this.axios
       .get(`/api/schedule/${scheduleId}`)
       .then(({ data }) => data)
