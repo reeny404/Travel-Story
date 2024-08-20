@@ -16,7 +16,11 @@ const MainTourItem = React.memo(({ item, itemType }: MainTourItemProps) => {
     <section className="flex w-full items-center pb-6 pl-4 md:pl-8 gap-x-3 md:w-[466px]">
       <div className="min-w-20 min-h-20 relative aspect-square">
         <Image
-          src={item.imageUrl!}
+          src={
+            !item.imageUrl || item.imageUrl === ""
+              ? "/defaultImage.webp"
+              : item.imageUrl
+          }
           alt="recomendPlace"
           fill
           className="object-cover rounded-lg"
