@@ -8,6 +8,7 @@ import {
   SupbasePlanChildren,
   Todo,
 } from "@/types/plan";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import BottomSheetCheckList from "../_components/BottomSheetCheckList";
 import BottomSheetImages from "../_components/BottomSheetImages";
@@ -218,12 +219,23 @@ function BottomSheet({
           />
         )}
 
-        <UpdateButton
-          status={status}
-          onUpdate={handleUpdate}
-          onAdd={handleAdd}
-          onRead={handleRead}
-        />
+        <div className="flex items-center gap-x-2 mt-auto">
+          <UpdateButton
+            status={status}
+            onUpdate={handleUpdate}
+            onAdd={handleAdd}
+            onRead={handleRead}
+          />
+
+          {(type === "place" || type === "customPlace") && (
+            <Link
+              className="block w-full mx-auto py-2 text-center border text-black  rounded-lg"
+              href={"/accountdetail/" + formData.id}
+            >
+              가계부 추가
+            </Link>
+          )}
+        </div>
       </form>
     </div>
   );

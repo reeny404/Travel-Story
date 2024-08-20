@@ -22,7 +22,7 @@ function WebReviewForm({ area, reviews, width }: WebReviewForm) {
             ratingAmount={reviews?.length || 0}
             areaId={area.id}
           />
-          <div className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 mx-auto">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 ">
             {reviews && <ReviewList width={width} reviews={reviews} />}
           </div>
         </div>

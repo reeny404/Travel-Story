@@ -6,11 +6,12 @@ import { LatLng } from "@/types/LatLng";
 import { PlanFull } from "@/types/plan";
 import { DateUtil } from "@/utils/DateUtil";
 import clsx from "clsx";
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Loading from "../../_components/Loading";
 import Map from "./_components/Map";
+import { NotFoundRoute } from "./_components/NotFoundRoute";
 import RouteCard from "./_components/RouteCard";
 
 type RoutePageProps = { params: { planId: string } };
@@ -19,7 +20,7 @@ function PlanRoutePage({ params: { planId } }: RoutePageProps) {
   const [plan, setPlan] = useState<PlanFull | null>(null);
 
   useEffect(() => {
-    getPlanFull(planId, 1).then((data) => setPlan(data));
+    api.plan.find(planId, 1).then((data) => setPlan(data));
   }, [planId]);
 
   const onTagClick = useCallback(
@@ -30,46 +31,35 @@ function PlanRoutePage({ params: { planId } }: RoutePageProps) {
         return;
       }
 
-      getPlanFull(planId, dayIndex).then((data) => setPlan(data));
+      api.plan.find(planId, dayIndex).then((data) => setPlan(data));
     },
     [planId]
   );
 
+  if (!plan) {
+    return <Loading />;
+  }
+
   const tags: string[] = new Array(
-    DateUtil.getGapDayByString(plan?.startDate, plan?.endDate) || 1
+    DateUtil.getGapDayByString(plan.startDate, plan.endDate)
   )
     .fill(0)
     .map((_, i) => `${i + 1}일차`);
-
-  if (!plan) {
-    return (
-      <div className="h-screen flex justify-center items-center">
-        로딩 중입니다.
-      </div>
-    );
-  }
 
   const { schedules } = plan;
   const routes: LatLng[] = plan?.schedules.map(
     (schedule) => schedule.latlng as LatLng
   );
 
-  if (schedules.length === 0) {
-    return (
-      <div className="h-screen space-y-4 flex flex-col justify-center items-center">
-        <span>경로를 그릴 수 있는 위치 정보가 없습니다.</span>
-        <span>일정을 보다 풍부하게 꾸며주세요</span>
-        <Link href={`/plan/${planId}`} className="px-4 py-2 bg-lime-400">
-          추가 계획하기
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <section>
       <h2 className="hidden">여행 계획에 따른 지도 경로 보기</h2>
-      {routes.length && <Map locations={routes}></Map>}
+      <Map locations={routes} />
+      {!schedules.length && (
+        <div className="fixed top-1/3 left-1/2 -translate-x-1/2 bg-white rounded-lg shadow-default">
+          <NotFoundRoute planId={planId} />
+        </div>
+      )}
       <div className="h-0 relative bottom-52">
         <Swiper
           spaceBetween={10}
@@ -102,7 +92,3 @@ function PlanRoutePage({ params: { planId } }: RoutePageProps) {
 }
 
 export default PlanRoutePage;
-
-const getPlanFull = async (planId: string, day: number): Promise<PlanFull> => {
-  return await api.plan.getRoutes(planId, day);
-};

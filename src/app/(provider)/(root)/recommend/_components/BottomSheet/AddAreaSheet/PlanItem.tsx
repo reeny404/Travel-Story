@@ -25,7 +25,7 @@ function PlanItem({
       onClick={() => {
         setClickedPlan(idx);
       }}
-      className={clsx("w-full p-4 shadow-area-section rounded-lg", {
+      className={clsx("w-full p-4 shadow-default rounded-lg", {
         "border-brand-600 border-2": clickedPlan === idx,
       })}
     >

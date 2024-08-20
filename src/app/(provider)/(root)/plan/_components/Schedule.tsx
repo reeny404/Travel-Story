@@ -1,3 +1,4 @@
+import SvgIcon from "@/components/commons/SvgIcon";
 import {
   BottomSheetType,
   PlanChildType,
@@ -8,8 +9,6 @@ import { PlanUtil } from "@/utils/PlanUtil";
 import { getColorChip } from "./Color";
 import ClipIcon from "./icons/ClipIcon";
 import FillLocationIcon from "./icons/FillLocationIcon";
-import FillMemoIcon from "./icons/FillMemoIcon";
-import TimeIcon from "./icons/TimeIcon";
 
 type Props = {
   index: number;
@@ -25,59 +24,64 @@ type Props = {
 function Schedule({ index, schedule, isLast, showMore }: Props) {
   const color = getColorChip(index - 1);
 
+  const { title, startTime, endTime, memo, place, imagesUrl } = schedule.data;
+
   return (
     <>
-      <div className="w-1/12 min-h-44 mr-[3%] flex flex-col h-full">
+      <div className="w-7 mr-[3%] grid grid-flow-row grid-rows-schedule">
         <div
           className="w-7 h-7 mx-auto text-white rounded-full flex items-center justify-center"
           style={{ backgroundColor: color }}
         >
           {index}
         </div>
-        {!isLast && (
-          <span className="w-[1px] flex-1 bg-gray-300 mx-auto block"></span>
-        )}
+        {!isLast && <div className="w-[1px] bg-gray-300 mx-auto my-0" />}
       </div>
-      <div className="w-11/12 min-h-44 pb-4">
+      <div className="flex-1 ml-3 pb-8">
         <div
           className="h-6 w-full mb-2 flex items-center justify-between cursor-pointer"
           onClick={() => showMore(schedule, schedule.type, "read")}
         >
           <h3 className="flex text-base font-bold">
             <FillLocationIcon className="h-6 w-6 mr-2" color={color} />
-            <span>{schedule.data.title}</span>
+            <span>{title}</span>
           </h3>
-          <button>*</button>
         </div>
-        <div className="w-full min-h-20 py-2 px-3 relative bg-white text-sm shadow-schecule-list rounded-lg">
-          {schedule.data.startTime && schedule.data.endTime && (
-            <div className="flex items-center h-5 justify-between mb-3">
-              <div className="flex items-center">
-                <TimeIcon className="mr-2" />
-                <p>
-                  {PlanUtil.formatTime(schedule.data.startTime)} -{" "}
-                  {PlanUtil.formatTime(schedule.data.endTime)}
-                </p>
+        <div className="w-full p-3 bg-white text-sm shadow-default rounded-lg space-y-3 leading-5">
+          {startTime && endTime && (
+            <div className="flex items-center justify-between">
+              <div className="grid grid-flow-col space-x-2">
+                <SvgIcon name="time" width={20} height={20} color="gray-400" />
+                <span>
+                  {`${PlanUtil.formatTime(startTime)} - ${PlanUtil.formatTime(endTime)}`}
+                </span>
               </div>
-              <p className="pl-4 h-full text-sm text-[#828282] leading-5 ">
-                {PlanUtil.calculateDuration(
-                  schedule.data.startTime,
-                  schedule.data.endTime
-                )}
+              <p className="text-sm text-[#828282] leading-5 ">
+                {PlanUtil.calculateDuration(startTime, endTime)}
               </p>
             </div>
           )}
-          {schedule.data.memo && !schedule.data.startTime && (
-            <div className="flex items-center mb-3">
-              <FillMemoIcon className="mr-2" />
-              <p>{schedule.data.memo}</p>
+          {memo && (
+            <div className="grid grid-flow-col space-x-2">
+              <SvgIcon name="memo" width={20} height={20} color="gray-400" />
+              <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
+                {memo}
+              </span>
             </div>
           )}
-          <div className="flex items-center mb-3">
-            <FillLocationIcon className="mr-2" />
-            <p>{schedule.data.place}</p>
+          {place && (
+            <div className="grid grid-flow-col space-x-2">
+              <SvgIcon
+                name="location"
+                className="w-6 h-6 relative -left-0.5"
+                color="gray-400"
+              />
+              <span>{place}</span>
+            </div>
+          )}
+          <div className="w-full flex justify-end">
+            {imagesUrl && <ClipIcon className="right-4 bottom-4" />}
           </div>
-          <ClipIcon className="absolute right-4 bottom-4" />
         </div>
       </div>
     </>

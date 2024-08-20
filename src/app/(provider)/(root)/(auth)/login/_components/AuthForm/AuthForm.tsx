@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 import Image from "next/image";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 
 type AuthFormProps = {
   label: string;
@@ -28,10 +28,21 @@ function AuthForm({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const textColor = clsx({
-    "text-black": labelColor === "black",
+    "text-primary": labelColor === "black",
     "text-danger-500": labelColor === "red",
     "text-info-600": labelColor === "green",
   });
+
+  const borderColor = clsx({
+    "focus:border-danger-500": labelColor === "red",
+    "focus:border-info-600": labelColor === "green",
+  });
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   // input change마다 상태가 바뀌게하는 함수
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +76,7 @@ function AuthForm({
             autoComplete="new-password"
             defaultValue={value}
             readOnly={value ? true : false}
-            className="w-full h-[48px] text-[20px] text-black border-b border-black bg-transparent focus:outline-none focus:border-[#D5EF2D] placeholder:text-gray-300"
+            className={`w-full h-[48px] text-[20px] text-black border-b border-black bg-transparent focus:outline-none focus:border-[#D5EF2D] placeholder:text-gray-300 md:border md:rounded-lg md:px-4 md:border-neutral-200 ${labelColor !== "black" ? borderColor : ""}`}
           />
           {isPassword && (
             <Image
