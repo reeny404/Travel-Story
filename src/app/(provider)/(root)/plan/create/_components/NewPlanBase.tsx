@@ -79,7 +79,10 @@ function NewPlanBase({ data: plan, set }: MyPlanDefaultProps) {
           >
             <SvgIcon name="slider" width={16} height={16} title="filter" />
           </button>
-          <div className="px-5 py-2 flex space-x-3 items-center border border-neutral-300 rounded-lg">
+          <div
+            className="px-5 py-2 flex space-x-3 items-center border border-neutral-300 rounded-lg"
+            onClick={handleToggleFilter(true)}
+          >
             <ImageFrame src={flagImg} className="w-5 h-5" />
             <span>{countryFilter.name}</span>
           </div>
