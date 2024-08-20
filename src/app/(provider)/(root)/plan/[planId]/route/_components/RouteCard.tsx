@@ -45,6 +45,8 @@ function RouteCard({ index, schedule }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schedule]);
 
+  const { title, type, place } = schedule;
+
   return (
     <div className="p-3 space-y-3 flex flex-col bg-white rounded-md shadow-md">
       <div className="flex justify-between items-center">
@@ -55,9 +57,7 @@ function RouteCard({ index, schedule }: Props) {
         >
           {index}
         </div>
-        <div className="flex-1 indent-2 text-lg font-bold">
-          {schedule.title}
-        </div>
+        <div className="flex-1 indent-2 text-lg font-bold">{title}</div>
         <ImageFrame src={getIconPath(ICON.share.black)} className="w-4 h-4" />
       </div>
       <div className="flex space-x-3 leading-5">
@@ -81,7 +81,7 @@ function RouteCard({ index, schedule }: Props) {
             <span
             // className={clsx(IconType[schedule.type].color, "leading-5")}
             >
-              {schedule.type}
+              {type}
             </span>
             <span className="text-gray-400"> | </span>
             <span className="text-olive-800">영업중</span>
@@ -93,10 +93,7 @@ function RouteCard({ index, schedule }: Props) {
                 className="w-5 h-5"
               />
             </span>
-            <span className="leading-6">
-              {/* {schedule.address} */}
-              주소 블라블라
-            </span>
+            <span className="leading-6">{place}</span>
           </span>
         </div>
       </div>

@@ -86,7 +86,7 @@ export default class PlanAPI {
       .catch((e) => console.error(e));
   }
 
-  async getRoutes(planId: string, day: number = 1): Promise<PlanFull> {
+  async find(planId: string, day: number = 1): Promise<PlanFull> {
     return await this.axios
       .get(`/api/plan/${planId}?day=${day}`)
       .then(({ data }) => data.data)

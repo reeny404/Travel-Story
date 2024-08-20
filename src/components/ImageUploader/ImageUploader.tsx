@@ -45,20 +45,20 @@ export function ImageUploader({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  images = images ?? [];
+
   return (
     <div className="flex items-end gap-x-5">
-      {images.length
-        ? images.map((image, i) => (
-            <div key={i} className="relative w-12 h-12 aspect-auto">
-              <Image
-                src={image}
-                alt="uploadedImage"
-                fill
-                className="rounded-xl object-cover"
-              />
-            </div>
-          ))
-        : ""}
+      {images.map((image, i) => (
+        <div key={i} className="relative w-12 h-12 aspect-auto">
+          <Image
+            src={image}
+            alt="uploadedImage"
+            fill
+            className="rounded-xl object-cover"
+          />
+        </div>
+      ))}
       <input
         type="file"
         accept="image/*"

@@ -1,6 +1,10 @@
 import { LatLng } from "@/types/LatLng";
 
-function calculateCenter(positions: LatLng[]): LatLng {
+function calculateCenter(positions: LatLng[]): LatLng | null {
+  if (!positions.length) {
+    return null;
+  }
+
   let lat = 0
   let lng = 0;
   const totalCount = positions.length;

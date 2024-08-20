@@ -1,22 +1,8 @@
 "use client";
-import { BottomSheetType } from "@/types/plan";
+import { BottomSheetType, MoveType } from "@/types/plan";
 import React, { useEffect, useState } from "react";
-import AirplaneIcon from "./icons/AirplaneIcon";
-import BicycleIcon from "./icons/BicycleIcon";
-import CarIcon from "./icons/CarIcon";
-import PublicTransportIcon from "./icons/PublicTransportIcon";
-import ShipIcon from "./icons/ShipIcon";
-import WalkingIcon from "./icons/WalkingIcon";
+import { MOVE_ICONS } from "./icons/MoveIcon";
 import TransportOption from "./TransportOption";
-
-const icons = [
-  WalkingIcon,
-  BicycleIcon,
-  CarIcon,
-  PublicTransportIcon,
-  ShipIcon,
-  AirplaneIcon,
-];
 
 function BottomSheetTitle({
   type,
@@ -62,6 +48,15 @@ function BottomSheetTitle({
     setTitleValue(title);
   }, [title]);
 
+  const types: MoveType[] = [
+    "도보",
+    "자전거",
+    "렌트카",
+    "대중교통",
+    "선박",
+    "항공",
+  ];
+
   return (
     <div>
       <input
@@ -75,17 +70,15 @@ function BottomSheetTitle({
       />
       {type === "move" && (
         <ul className="mb-2 mx-auto grid grid-cols-3 gap-y-5">
-          {["도보", "자전거", "렌트카", "대중교통", "선박", "항공"].map(
-            (option, index) => (
-              <TransportOption
-                key={option}
-                label={option}
-                icon={icons[index]}
-                onClick={handleMoveTitleChange}
-                isSelected={selectedTransport === option}
-              />
-            )
-          )}
+          {types.map((type) => (
+            <TransportOption
+              key={type}
+              label={type}
+              icon={MOVE_ICONS[type]}
+              onClick={handleMoveTitleChange}
+              isSelected={selectedTransport === type}
+            />
+          ))}
         </ul>
       )}
     </div>

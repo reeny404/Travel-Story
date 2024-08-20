@@ -7,13 +7,14 @@ type props = { plan: PlanType };
 
 function Plan({ plan }: props) {
   const { title, imagesUrl, startDate, endDate } = plan;
+  const img: string | null = imagesUrl ? imagesUrl[0] : null;
 
   return (
-    <div className="min-h-32 p-3 space-x-4 flex items-center bg-white rounded-md shadow-plan hover:shadow-md">
+    <div className="min-h-32 p-3 space-x-4 flex items-center bg-white rounded-md shadow-default hover:shadow-md">
       <div className="w-24 h-full bg-gray-200 flex items-center justify-center rounded-lg">
         <ImageFrame
-          src={imagesUrl}
-          alt="plnaImg"
+          src={img ?? "/plan/banner.jpg"}
+          alt="thumbnail"
           className="w-24 min-h-32 aspect-4/5"
           round="lg"
         />
