@@ -59,9 +59,7 @@ export const ICON = {
     black: { name: "calendar-black", ext: "svg" },
   },
   cancel: {
-    black: "cancel-black",
-    gray: "cancel-gray",
-    white: "cancel-white",
+    black: { name: "cancel", ext: "svg" }
   },
   car: { white: { name: "car", ext: "svg" } },
   checkmark: {

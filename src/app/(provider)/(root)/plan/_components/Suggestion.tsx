@@ -2,9 +2,10 @@ import Link from "next/link";
 
 function Suggestion() {
   return (
-    <p className="flex flex-col pt-10 items-center leading-10 text-center">
-      <span className="text-sm">예정 중인 여행이 없어요</span>
+    <p className="flex flex-col my-10 items-center leading-10 text-center">
       <span className="pt-32 pb-2 text-lg font-semibold leading-9">
+        <span className="text-sm font-light">예정 중인 여행이 없어요</span>
+        <br />
         <span className="text-xl">자유</span>와{" "}
         <span className="text-xl">낭만</span>이 가득한{" "}
         <span className="text-xl transition-all hover:text-2xl">프랑스</span>로

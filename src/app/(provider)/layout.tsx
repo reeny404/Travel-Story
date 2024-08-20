@@ -25,7 +25,7 @@ function ProviderLayout({ children }: PropsWithChildren) {
           console.error(error);
         }
         const recentList = data?.[0]?.area ?? [];
-        setRecentArea(recentList);
+        setRecentArea(recentList as number[]);
       }
     };
     getRecentArea();

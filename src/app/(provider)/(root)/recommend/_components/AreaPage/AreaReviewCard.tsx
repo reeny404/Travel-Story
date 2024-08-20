@@ -108,7 +108,9 @@ const AreaReviewCard = React.memo(
         </p>
         {imageUrl && (
           <VanilaImgFrame
-            imageUrl={imageUrl ?? "/"}
+            imageUrl={
+              !imageUrl || imageUrl === "" ? "/defaultImage.webp" : imageUrl!
+            }
             alt="reviewImg"
             width="w-full"
             height="h-[220px] "

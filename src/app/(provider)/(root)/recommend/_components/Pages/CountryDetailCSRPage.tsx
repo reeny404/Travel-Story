@@ -83,7 +83,7 @@ function CountryDetailCSRPage({
         viewRef={viewRef}
       />
       <div className=" container mx-auto overflow-auto w-full h-full flex-col md:pb-[169px]">
-        <div className="w-full h-[82px] mb-1 mt-5 md:hidden">
+        <div className="w-full h-[82px] mb-1 mt-5">
           {cities && (
             <ImageSlider cards={cities} spacing={0} slidesPerView={4.5} />
           )}

@@ -1,23 +1,12 @@
-"use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function MyMenu() {
-  const router = useRouter();
   const pageMoveDiv = "flex flex-col items-center cursor-pointer h-fit";
 
-  const handleBookMarkClick = () => {
-    router.push("/my/bookmarks");
-  };
-  const handleReviewClick = () => {
-    router.push("/my/reviews");
-  };
-  const handleMyTravelClick = () => {
-    router.push("/plan/list");
-  };
   return (
-    <section className="flex w-full px-8 py-3 justify-evenly md:justify-evenly bg-white rounded-lg z-10 order-2 md:order-1 md:h-full md:items-center">
-      <div className={pageMoveDiv} onClick={handleMyTravelClick}>
+    <section className="flex w-full px-8 py-3 justify-around bg-white rounded-lg z-10">
+      <Link className={pageMoveDiv} href="/plan">
         <Image
           src={"/icons/calendar-black.svg"}
           width={20}
@@ -25,9 +14,9 @@ function MyMenu() {
           alt="icon"
         />
         <p className="text-sm font-normal mt-2">내 여행</p>
-      </div>
+      </Link>
       <div className="w-[1px] bg-neutral-300 h-[44px]"></div>
-      <div className={pageMoveDiv} onClick={handleBookMarkClick}>
+      <Link className={pageMoveDiv} href="/my/bookmarks">
         <Image
           src={"/icons/lgBookmark-off.svg"}
           width={20}
@@ -35,9 +24,9 @@ function MyMenu() {
           alt="icon"
         />
         <p className="text-sm font-normal mt-2">보관함</p>
-      </div>
+      </Link>
       <div className="w-[1px] bg-neutral-300 h-[44px]"></div>
-      <div className={pageMoveDiv} onClick={handleReviewClick}>
+      <Link className={pageMoveDiv} href="/my/reviews">
         <Image
           src={"/icons/star-black.svg"}
           width={20}
@@ -45,7 +34,7 @@ function MyMenu() {
           alt="icon"
         />
         <p className="text-sm font-normal mt-2">내 리뷰</p>
-      </div>
+      </Link>
     </section>
   );
 }
