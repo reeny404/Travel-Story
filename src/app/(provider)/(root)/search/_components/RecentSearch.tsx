@@ -1,16 +1,15 @@
-"use client";
 import SvgIcon from "@/components/commons/SvgIcon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useRecentStore } from "@/stores/recent.store";
 import { createClient } from "@/supabase/client";
-import { RecnetSearch } from "@/types/recent";
 import { useEffect, useState } from "react";
 
 function RecentSearch() {
   const supabase = createClient();
   const { user, isInitialized, isLoggedIn } = useAuth();
   const { setRecentSearch } = useRecentStore();
-  const [recent, setRecent] = useState<RecnetSearch[]>();
+  const [recent, setRecent] =
+    useState<Array<{ search: string; date: string }>>();
 
   useEffect(() => {
     async function getRecentSearch() {
@@ -19,15 +18,15 @@ function RecentSearch() {
           .from("recents")
           .select("search")
           .eq("user_id", user.id)
-          .single<RecnetSearch[]>();
+          .single();
 
         if (error) {
           console.error(error);
           return;
         }
         if (data) {
-          setRecentSearch(data);
-          setRecent(data);
+          setRecentSearch(data.search);
+          setRecent(data.search);
         }
       }
     }
@@ -41,18 +40,17 @@ function RecentSearch() {
     });
     setRecent(deleteRecent);
     setRecentSearch(deleteRecent || []);
-    // update 안에 무엇이 들어가야하는건지, 의도를 알 수 없어 주석처리했습니다
-    // await supabase.from("recents").upsert(
-    //   [
-    //     {
-    //       user_id: user?.id,
-    //       search: deleteRecent,
-    //     },
-    //   ],
-    //   {
-    //     onConflict: "id",
-    //   }
-    // );
+    await supabase.from("recents").upsert(
+      [
+        {
+          user_id: user?.id,
+          search: deleteRecent,
+        },
+      ],
+      {
+        onConflict: "id",
+      }
+    );
   };
 
   return (

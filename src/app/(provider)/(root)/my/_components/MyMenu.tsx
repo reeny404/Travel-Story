@@ -5,7 +5,7 @@ function MyMenu() {
   const pageMoveDiv = "flex flex-col items-center cursor-pointer h-fit";
 
   return (
-    <section className="flex w-full px-8 py-3 justify-around bg-white rounded-lg z-10">
+    <section className="flex w-full px-8 py-3 justify-around bg-white rounded-lg z-10 md:h-full md:items-center">
       <Link className={pageMoveDiv} href="/plan">
         <Image
           src={"/icons/calendar-black.svg"}
