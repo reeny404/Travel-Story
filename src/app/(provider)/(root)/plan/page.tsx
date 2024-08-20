@@ -13,7 +13,7 @@ export default function PlanListPage() {
       }}
     >
       <div className="min-h-[calc(100dvh-52px)] md:bg-gray-50">
-        <div className="max-w-[850px] mx-auto p-4 md:relative md:top-20 ">
+        <div className="max-w-[850px] mx-auto p-4 md:pt-20">
           <div className="flex items-center justify-between mb-4">
             <span className="text-lg leading-6">
               {DateUtil.format("yyyy년 MM월 dd일", new Date())}

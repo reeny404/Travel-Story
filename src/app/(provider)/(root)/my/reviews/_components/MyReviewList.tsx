@@ -50,7 +50,7 @@ function MyReviewList() {
   };
 
   return (
-    <>
+    <div className="min-h-[435px]">
       <section className="py-1 px-4">
         <Tab
           TABS={TABS.default}
@@ -68,7 +68,7 @@ function MyReviewList() {
           />
         ))}
       </section>
-    </>
+    </div>
   );
 }
 

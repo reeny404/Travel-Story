@@ -1,6 +1,5 @@
 "use client";
 import { api } from "@/apis/api";
-import { HeaderProps } from "@/components/commons/Header/Header";
 import Icon from "@/components/commons/Icon";
 import SvgIcon from "@/components/commons/SvgIcon";
 import Profile from "@/components/Frame/Profile";
@@ -9,10 +8,9 @@ import { ICON } from "@/constants/icon";
 import useDrawerStore from "@/stores/drawer.store";
 import { BottomSheetType, PlanFull } from "@/types/plan";
 import { DateUtil } from "@/utils/DateUtil";
-import { isMobile } from "@/utils/isMobile";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import BottomSheet from "../_components/BottomSheet";
 import CreateScheduleButton from "../_components/CreateScheduleButton";
 import DayMenu from "../_components/DayMenu";
@@ -82,34 +80,32 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
     []
   );
 
-  const headerProps: HeaderProps = useMemo(() => {
-    return {
-      backgroundColor: "transparent",
-      title: plan?.title ?? "",
-      titleAlign: "left",
-      rightIcons: [
-        {
-          icon: ICON.map.white,
-          alt: "map",
-          size: 24,
-          path: `/plan/${planId}/route`,
-        },
-        {
-          icon: ICON.ellipsis.white,
-          alt: "더보기",
-          size: 24,
-          onClick: () => alert("구현 중입니다."),
-        },
-      ],
-    };
-  }, [planId, plan]);
-
   if (!plan) {
     return <Loading />;
   }
 
   return (
-    <MainLayout headerProps={headerProps}>
+    <MainLayout
+      headerProps={{
+        backgroundColor: "transparent",
+        title: plan?.title ?? "",
+        titleAlign: "left",
+        rightIcons: [
+          {
+            icon: ICON.map.white,
+            alt: "map",
+            size: 24,
+            path: `/plan/${planId}/route`,
+          },
+          {
+            icon: ICON.ellipsis.white,
+            alt: "더보기",
+            size: 24,
+            onClick: () => alert("구현 중입니다."),
+          },
+        ],
+      }}
+    >
       <div className="hidden md:flex min-h-12 justify-between items-center">
         <div className="flex items-center text-lg font-semibold">
           <Icon
@@ -130,7 +126,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           </Link>
         </div>
       </div>
-      <div className="hidden md:block absolute h-[300px] w-screen left-0 right-0">
+      <div className="hidden md:block w-screen h-[300px] absolute top-40 left-0 right-0">
         <Image
           src="/plan/banner.jpg"
           alt="desktop-banner"
@@ -164,20 +160,19 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           />
         </section>
         <article className="flex">
-          {isMobile() ? (
+          <div className="md:hidden">
             <ScheduleList planId={planId} selectedDay={selectedDay} />
-          ) : (
-            <>
-              {days.map((day) => (
-                <div
-                  key={day}
-                  className={day === selectedDay ? "bg-gray-50" : "bg-gray-100"}
-                >
-                  <ScheduleList planId={planId} selectedDay={day} />
-                </div>
-              ))}
-            </>
-          )}
+          </div>
+          <div className="hidden md:block">
+            {days.map((day) => (
+              <div
+                key={day}
+                className={day === selectedDay ? "bg-gray-50" : "bg-gray-100"}
+              >
+                <ScheduleList planId={planId} selectedDay={day} />
+              </div>
+            ))}
+          </div>
         </article>
         {isBottomSheetVisible && (
           <BottomSheet
