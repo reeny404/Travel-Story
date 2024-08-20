@@ -20,7 +20,7 @@ function RecentArea() {
   const router = useRouter();
 
   useEffect(() => {
-    const getRecentArea = async () => {
+    const getRecentArea = async (): Promise<number[] | undefined> => {
       if (isInitialized && user) {
         const { data, error } = await supabase
           .from("recents")
@@ -30,9 +30,11 @@ function RecentArea() {
           console.error(error);
         }
         const recentList = data?.[0]?.area ?? [];
-        return recentList;
+        return recentList as number[];
       }
+      return undefined;
     };
+
     const getAreaData = async () => {
       const recentArea = (await getRecentArea()) ?? [];
       const { data, error } = await supabase
