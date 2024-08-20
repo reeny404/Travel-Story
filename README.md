@@ -9,7 +9,7 @@
 
 ### [👊 프로젝트 노션 바로가기](https://www.notion.so/teamsparta/1-B1-cf05aab3c68a4955a33a2c82d764ff06)
 
-### [👊 원페이지 바로가기](https://joyfive.notion.site/ee0519f495c74049ac3a7c4a7691d8d3)
+### [👊 웹페이지 바로가기](final-project-b1.vercel.app)
 
 ### [💜 프론트엔드 깃허브 바로가기](https://github.com/0dytpq0/final-project-b1)
 
