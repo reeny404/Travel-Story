@@ -34,6 +34,7 @@ const config: Config = {
       screens: {
         sm: "344px",
         md: "768px",
+        lg: "1280px",
       },
       boxShadow: {
         default: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",

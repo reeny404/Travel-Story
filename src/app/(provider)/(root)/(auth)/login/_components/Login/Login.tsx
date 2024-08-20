@@ -42,7 +42,7 @@ function Login() {
     <>
       {step === "email" && (
         <AuthContainer
-          title={"로그인하면 \n일정이 저장돼요."}
+          title={"트래블 스토리와 함께 \n떠나보세요!"}
           isSocialHidden={true}
         >
           <AuthForm

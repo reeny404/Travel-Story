@@ -50,7 +50,7 @@ function AreaDetailCSRPage({ areaId }: AreaDetailCSRPage) {
       prevArea = prevArea.filter((area) => {
         return area !== areaId;
       });
-      if (prevArea.length === 5) {
+      if (prevArea.length === 10) {
         prevArea.shift();
       }
       const areaArray = [...prevArea, areaId];
