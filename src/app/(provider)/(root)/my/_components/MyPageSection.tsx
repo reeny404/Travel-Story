@@ -65,9 +65,9 @@ function MyPageSection() {
         <MyProfile
           user={{
             id: supabaseUser.id,
-            email: supabaseUser.email,
-            nickname: supabaseUser.nickname,
-            image_url: supabaseUser.image_url,
+            email: supabaseUser.email || "",
+            nickname: supabaseUser.nickname || "",
+            image_url: supabaseUser.image_url || "",
           }}
         />
         <div className="md:flex md:flex-row md:h-[96px] md:items-center flex flex-col">
