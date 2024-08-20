@@ -392,12 +392,11 @@ export type Database = {
           id: string
           imagesUrl: string | null
           keywords: Json
+          mate: string
           orderList: Json
-          season: string
           startDate: string
           title: string
           userId: string | null
-          with: string
         }
         Insert: {
           country?: string | null
@@ -406,12 +405,11 @@ export type Database = {
           id?: string
           imagesUrl?: string | null
           keywords?: Json
+          mate?: string
           orderList?: Json
-          season?: string
           startDate?: string
           title?: string
           userId?: string | null
-          with?: string
         }
         Update: {
           country?: string | null
@@ -420,12 +418,11 @@ export type Database = {
           id?: string
           imagesUrl?: string | null
           keywords?: Json
+          mate?: string
           orderList?: Json
-          season?: string
           startDate?: string
           title?: string
           userId?: string | null
-          with?: string
         }
         Relationships: [
           {

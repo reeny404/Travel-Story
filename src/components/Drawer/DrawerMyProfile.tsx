@@ -23,7 +23,6 @@ function DrawerMyProfile() {
 
   const profileImage = myProfile?.image_url;
   const nickname = myProfile?.nickname;
-  console.log("profileImage", profileImage);
   return (
     <Link href={user ? "/my" : "/login"}>
       <div

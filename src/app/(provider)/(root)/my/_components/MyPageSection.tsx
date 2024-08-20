@@ -54,7 +54,7 @@ function MyPageSection() {
     <main className="relative aspect-square flex flex-col w-full h-screen px-5 pt-12 overflow-hidden">
       <div className="absolute w-full h-full top-0 left-0 bg-neutral-100 z-10 opacity-50" />
       <Image
-        src={supabaseUser.image_url || "/icons/avatar.svg"}
+        src={supabaseUser.image_url ?? "/icons/avatar.svg"}
         alt="background"
         fill
         className="z-0 blur-sm object-cover"
@@ -62,9 +62,9 @@ function MyPageSection() {
       <MyProfile
         user={{
           id: supabaseUser.id,
-          email: supabaseUser.email,
-          nickname: supabaseUser.nickname,
-          image_url: supabaseUser.image_url,
+          email: supabaseUser.email ?? "",
+          nickname: supabaseUser.nickname ?? "",
+          image_url: supabaseUser.image_url ?? "",
         }}
       />
       <MySchedule />
