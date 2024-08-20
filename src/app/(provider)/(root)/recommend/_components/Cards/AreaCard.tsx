@@ -66,7 +66,7 @@ const AreaCard = React.memo(
           <CardImgFrame
             imageUrl={imageUrl}
             alt={title}
-            frameClassName="aspect-square md:max-h-[280px] md:max-w-[303px]"
+            frameClassName="aspect-square md:max-h-[302px] md:max-w-[302px]"
             imageClassName="object-cover rounded-t-lg"
             city={city}
             country={country}
@@ -74,7 +74,7 @@ const AreaCard = React.memo(
           />
         </Link>
         <div className="pb-5">
-          <p className="px-4 pt-4 mb-2 text-sm text-ellipsis line-clamp-2 leading-5">
+          <p className="px-4 pt-4 mb-2 text-sm text-ellipsis line-clamp-2 leading-5 md:mb-4">
             {description}
           </p>
           <div className="w-full h-5 flex px-4 ">

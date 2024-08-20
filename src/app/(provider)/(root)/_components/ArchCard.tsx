@@ -24,7 +24,9 @@ const ArchCard = ({ id, imageUrl, title, cityNames }: ArchCardProps) => {
           </div>
         </div>
       </Link>
-      <p className="text-center mt-2 text-xs text-gray-600">{cityNames}</p>
+      <p className="text-center mt-2 text-xs text-gray-600 md:text-base">
+        {cityNames}
+      </p>
     </div>
   );
 };

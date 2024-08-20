@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useGetData from "../_hook/useGetData";
+import { useWindowSize } from "../_hook/useWindowSize";
 import Footer from "./Footer";
 import LeftCardSection from "./LeftCardSection";
 import MyTrip from "./MyTrip";
@@ -19,6 +20,8 @@ function Home() {
   const { user } = useAuth();
   const router = useRouter();
   const cardData = useGetData();
+  const { width } = useWindowSize();
+
   // 중간발표 이후 추가기능 부분
   // const {
   //   data: popularCountries,
@@ -68,38 +71,42 @@ function Home() {
       }}
     >
       <main className="relative w-full min-h-[calc(100vh-52px)] bg-gray">
-        <div className="relative w-full h-[222px] bg-neutral-200">
+        <section className="relative w-full h-[222px] bg-neutral-200 md:w-full md:h-[700px]">
           <Link href="/recommend/country/1/detail">
             <Image
-              src="/banners/banner1_x3.png"
+              src="/banners/main-banner1.svg"
               alt="banner"
               fill
               className="object-cover"
             />
           </Link>
-        </div>
+        </section>
 
-        <div className="sticky z-10 -mt-[15px] px-4">
-          <div className="relative flex justify-center w-full">
-            <Link
-              className="absolute inset-y-0 left-4 right-0 w-11/12 h-full rounded-lg z-20 cursor-pointer"
-              href="/search"
-            />
-            <SearchBar onSearch={handleSearch} isDisabled={true} />
-          </div>
-        </div>
+        {width > 0 && width <= 768 ? (
+          <>
+            <div className="sticky z-10 -mt-[15px] px-4">
+              <div className="relative flex justify-center w-full">
+                <Link
+                  className="absolute inset-y-0 left-4 right-0 w-11/12 h-full rounded-lg z-20 cursor-pointer"
+                  href="/search"
+                />
+                <SearchBar onSearch={handleSearch} isDisabled={true} />
+              </div>
+            </div>
 
-        <MyTrip />
-
-        <div className="mt-7">
+            <MyTrip />
+          </>
+        ) : null}
+        <section className="mt-7">
           <CardType title="인기 여행지" type="fire" />
           <ArchCardSlider />
-        </div>
+        </section>
         <RightCardSection
           title="Tourist spot"
           subTitle="그 나라만의 특별한 여행지"
           textColor="black"
-          theme="bg-lime-300"
+          textTheme="lime-700"
+          cardBackgroundColor="bg-lime-300"
           krCategory="관광지"
           cardData={cardData.place}
         />
@@ -113,7 +120,8 @@ function Home() {
         <RightCardSection
           title="Restaruant"
           subTitle="여행지에는 어떤 맛집이 있을까?"
-          theme="bg-danger-400"
+          textTheme="danger-400"
+          cardBackgroundColor="bg-danger-400"
           krCategory="식당"
           cardData={cardData.restaurant}
         />

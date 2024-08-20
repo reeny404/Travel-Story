@@ -30,7 +30,7 @@ const config: Config = {
           "linear-gradient(180deg, rgba(0, 0, 0, 0.00)0%, rgba(0, 0, 0, 0.80)100%)",
       },
       screens: {
-        sm: "431px",
+        sm: "450px",
         md: "768px",
         lg: "1280px",
       },
