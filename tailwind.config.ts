@@ -53,6 +53,17 @@ const config: Config = {
       },
     },
   },
+  safelist: [
+    {
+      pattern: /text-(brand|info|success|danger|neutral)-[0-9]{2,3}/,
+    },
+    {
+      pattern: /bg-(brand|info|success|danger|neutral)-[0-9]{2,3}/,
+    },
+    {
+      pattern: /border-(brand|info|success|danger|neutral)-[0-9]{2,3}/,
+    },
+  ],
 };
 
 export default config;

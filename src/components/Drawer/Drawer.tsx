@@ -73,7 +73,7 @@ function Drawer() {
   }, [isOpen]);
 
   useEffect(() => {
-    if (windowSize.width > 430 && isOpen) {
+    if (windowSize.width >= 768 && isOpen) {
       handleCloseWithSlide();
     }
   }, [windowSize.width, isOpen, handleCloseWithSlide]);

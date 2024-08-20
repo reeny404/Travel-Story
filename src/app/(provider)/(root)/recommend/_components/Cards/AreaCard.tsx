@@ -66,7 +66,7 @@ const AreaCard = React.memo(
           <CardImgFrame
             imageUrl={imageUrl}
             alt={title}
-            frameClassName="aspect-square md:max-h-[302px] md:max-w-[302px]"
+            frameClassName="aspect-square w-full h-[280px] md:max-w-[302px] md:w-full md:max-h-[302px] md:h-full"
             imageClassName="object-cover rounded-t-lg"
             city={city}
             country={country}

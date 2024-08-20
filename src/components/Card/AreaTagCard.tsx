@@ -1,7 +1,9 @@
+import { useWindowSize } from "@/app/(provider)/(root)/_hook/useWindowSize";
 import { CATEGORY_LIST } from "@/constants/category";
 import { AreaTagCardProps, CategoryProps } from "@/types/Card";
 import Image from "next/image";
 import RatingIcons from "./RatingIcons";
+import SingleRatingIcon from "./SingleRatingIcon";
 
 export function Category({ tag }: CategoryProps) {
   const { icon, color, label } = CATEGORY_LIST[tag];
@@ -16,6 +18,7 @@ export function Category({ tag }: CategoryProps) {
 
 function AreaTagCard(props: AreaTagCardProps) {
   const { image, alt, title, tag, rating, desc, onClick } = props;
+  const { width } = useWindowSize();
 
   return (
     <div
@@ -32,7 +35,11 @@ function AreaTagCard(props: AreaTagCardProps) {
         <div className="flex flex-1 justify-between w-full">
           <Category tag={tag} />
           <div className="flex gap-1">
-            <RatingIcons rating={+rating} type="small" />
+            {width >= 768 ? (
+              <RatingIcons rating={+rating} type="small" />
+            ) : (
+              <SingleRatingIcon rating={+rating} />
+            )}
           </div>
         </div>
         <h4 className="w-[95%] mt-2 text-neutral-600 text-ellipsis line-clamp-1 md:hidden">

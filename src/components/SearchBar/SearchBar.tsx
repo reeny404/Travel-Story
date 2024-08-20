@@ -40,7 +40,7 @@ function SearchBar({
 
   // 추천 검색어 input창에 반영하기 위해 추가
   useEffect(() => {
-    setSearchTerm(initialValue || "");
+    setSearchTerm(initialValue);
   }, [initialValue]);
 
   const handleBlurSearch = async () => {

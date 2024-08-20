@@ -6,12 +6,12 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useGetData from "../_hook/useGetData";
 import { useWindowSize } from "../_hook/useWindowSize";
 import Footer from "./Footer";
+import HomeBanner from "./HomeBanner";
 import LeftCardSection from "./LeftCardSection";
 import MyTrip from "./MyTrip";
 import RightCardSection from "./RightCardSection";
@@ -71,16 +71,7 @@ function Home() {
       }}
     >
       <main className="relative w-full min-h-[calc(100vh-52px)] bg-gray">
-        <section className="relative w-full h-[222px] bg-neutral-200 md:w-full md:h-[700px]">
-          <Link href="/recommend/country/1/detail">
-            <Image
-              src="/banners/main-banner1.svg"
-              alt="banner"
-              fill
-              className="object-cover"
-            />
-          </Link>
-        </section>
+        <HomeBanner />
 
         {width > 0 && width < 768 ? (
           <>
@@ -102,11 +93,7 @@ function Home() {
           <ArchCardSlider />
         </section>
         <RightCardSection
-          title="Tourist spot"
-          subTitle="그 나라만의 특별한 여행지"
-          textColor="black"
-          textTheme="lime-700"
-          cardBackgroundColor="bg-lime-300"
+          textColor="primary"
           krCategory="관광지"
           cardData={cardData.place}
         />
@@ -117,19 +104,12 @@ function Home() {
           krCategory="숙소"
           cardData={cardData.accommodation}
         />
-        <RightCardSection
-          title="Restaruant"
-          subTitle="여행지에는 어떤 맛집이 있을까?"
-          textTheme="danger-400"
-          cardBackgroundColor="bg-danger-400"
-          krCategory="식당"
-          cardData={cardData.restaurant}
-        />
+        <RightCardSection krCategory="식당" cardData={cardData.restaurant} />
         <LeftCardSection
           title="Shopping"
           subTitle="여행지의 추억을 불러일으키는 기념품"
           theme="bg-purple-400"
-          krCategory="관광지"
+          krCategory="쇼핑"
           cardData={cardData.shop}
         />
         <Footer />
