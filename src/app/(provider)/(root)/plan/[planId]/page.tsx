@@ -171,7 +171,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
               {days.map((day) => (
                 <div
                   key={day}
-                  className={day % 2 ? "bg-gray-50" : "bg-gray-100"}
+                  className={day === selectedDay ? "bg-gray-50" : "bg-gray-100"}
                 >
                   <ScheduleList planId={planId} selectedDay={day} />
                 </div>
