@@ -14,7 +14,7 @@ function ImageSlider({ spacing, slidesPerView, cards }: SmImageSliderProps) {
       {cards?.map((card, index) => (
         <SwiperSlide
           key={index}
-          className={`${index === 0 ? "ml-4" : ""} !w-[72px] mr-2`}
+          className={`${index === 0 ? "ml-4" : ""} w-full max-w-[72px] md:max-w-[245px] mr-2 md:mr-6`}
         >
           <CityImage
             id={card.id}
