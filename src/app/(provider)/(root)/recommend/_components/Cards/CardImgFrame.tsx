@@ -28,7 +28,7 @@ const CardImgFrame = React.memo(
     return (
       <div className={`w-full relative ${frameClassName}`}>
         <Image
-          src={imageUrl! ?? "/"}
+          src={!imageUrl || imageUrl === "" ? "/defaultImage.webp" : imageUrl!}
           alt={alt}
           fill
           priority={priority}
