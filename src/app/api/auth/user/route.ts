@@ -43,7 +43,6 @@ export async function GET(request: NextRequest) {
 /** 온보딩에서 받은 user 취향 filter 저장  */
 export async function PATCH(request: NextRequest) {
   const filterData = await request.json();
-  console.log(filterData);
   const supabase = createClient();
 
   // 유저 정보 받아오기
