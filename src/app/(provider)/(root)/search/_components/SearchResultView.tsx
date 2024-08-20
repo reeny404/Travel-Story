@@ -159,7 +159,7 @@ function SearchResultView({
     return (
       <div className="flex justify-center">
         <button
-          className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150 sm:w-[190px] sm:h-12 sm:px-7 sm:py-3 sm:border-neutral-350 sm:mt-10"
+          className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150 md:w-[190px] md:h-12 md:px-7 md:py-3 md:border-neutral-350 md:mt-10"
           onClick={handleSearchButtonClick}
         >
           {buttonText}
@@ -185,7 +185,7 @@ function SearchResultView({
           isHidden
           isTop
         />
-        <div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:md:grid-cols-4 sm:gap-8">
+        <div className="grid grid-flow-row grid-cols-1 md:grid-cols-3 lg:md:grid-cols-4 md:gap-8">
           {filteredResults.map((result, index) => (
             <Link
               href={`/recommend/area/${result.id}`}
@@ -210,7 +210,7 @@ function SearchResultView({
 
       <section className="px-4 md:px-8">
         <SearchPageTitle title="근처 가볼만 한 곳" />
-        <div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:md:grid-cols-4 sm:gap-8">
+        <div className="grid grid-flow-row grid-cols-1 md:grid-cols-3 lg:md:grid-cols-4 md:gap-8">
           {nearbyPlace && nearbyPlace.length > 0 && (
             <>
               {nearbyPlace.slice(0, nearbyPlaceCount).map((place, index) => (
@@ -234,7 +234,7 @@ function SearchResultView({
 
         <div className="flex justify-center">
           <button
-            className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150 sm:w-[190px] sm:h-12 sm:px-7 sm:py-3 sm:border-neutral-350 sm:mt-10"
+            className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150 md:w-[190px] md:h-12 md:px-7 md:py-3 md:border-neutral-350 md:mt-10"
             onClick={isLoadEnd() ? handleFoldButton : handleLoadMore}
           >
             {isLoadEnd() ? "접기" : "더 둘러보기"}
@@ -242,47 +242,7 @@ function SearchResultView({
         </div>
       </section>
 
-      {/*check point */}
-      {/* <RecentArea />
-
-      <SearchPageTitle title="근처 가볼만 한 곳" />
-      <div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:md:grid-cols-4 sm:gap-8">
-        {nearbyPlace && nearbyPlace.length > 0 && (
-          <>
-            {nearbyPlace.slice(0, nearbyPlaceCount).map((place, index) => (
-              <Link
-                href={`/recommend/area/${place.id}`}
-                key={`${place.id}-${index}`}
-              >
-                <AreaTagCard
-                  image={place.imageUrl || "/sampleImg.jpg"}
-                  alt={place.name}
-                  title={place.krName ?? ""}
-                  tag={getKrCategory(place.type ?? "")}
-                  rating={place.rating ?? ""}
-                  desc={place.description}
-                />
-              </Link>
-            ))}
-          </>
-        )}
-      </div>
-
-      <div className="flex justify-center">
-        <button
-          className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150 sm:w-[190px] sm:h-12 sm:px-7 sm:py-3 sm:border-neutral-350 sm:mt-10"
-          onClick={isLoadEnd() ? handleFoldButton : handleLoadMore}
-        >
-          {isLoadEnd() ? "접기" : "더 둘러보기"}
-        </button>
-      </div>
-
-      <div className="w-full my-2">
-        <SearchPageTitle title="인기 여행지" className="pl-4" />
-        <ArchCardSlider spacing={12} slidesPerView={3.8} />
-      </div> */}
-
-      <section className="w-full mt-2 sm:mb-6 md:mb-12 lg:mb-16">
+      <section className="w-full mt-2 md:mb-12 lg:mb-16">
         <SearchPageTitle title="인기 여행지" className="pl-4 md:pl-8" />
         <ArchCardSlider />
       </section>

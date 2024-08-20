@@ -40,7 +40,7 @@ function RightCardSection({
           >
             {title}
             {/* 텍스트의 일정 지점부터 색상 덮어쓰기 */}
-            {width > 0 && width > 768 ? (
+            {width > 0 && width >= 768 ? (
               <span
                 className={`md:absolute md:left-0 md:top-0 md:w-full md:h-full md:text-${textColor}`}
                 style={{

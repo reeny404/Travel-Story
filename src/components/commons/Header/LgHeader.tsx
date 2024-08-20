@@ -79,7 +79,7 @@ function LgHeader({ onSearch }: { onSearch?: (term: string) => void }) {
   };
 
   return (
-    <header className="w-full items-center px-8 hidden sm:block">
+    <header className="w-full items-center px-8 hidden md:block">
       <div className="flex flex-row items-center h-8 text-[12px] space-x-6">
         <div className="flex-grow" />
         <button onClick={() => handleIsLoginUser("my")}>마이페이지</button>

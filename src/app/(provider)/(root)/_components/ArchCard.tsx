@@ -10,9 +10,9 @@ type ArchCardProps = {
 
 const ArchCard = ({ id, imageUrl, title, cityNames }: ArchCardProps) => {
   return (
-    <div className="flex flex-col items-center sm:w-[100px] md:w-[113px] lg:w-[125.5px]">
+    <div className="flex flex-col w-[88px] items-center md:w-[113px] lg:w-[125.5px]">
       <Link href={`/recommend/country/${id}/detail`}>
-        <div className="relative w-[88px] h-[100px] overflow-hidden sm:w-[100px] sm:h-[117px] md:w-[113px] md:h-[129px] lg:w-[125.5px] lg:h-[143.74px]">
+        <div className="relative w-[88px] h-[100px] overflow-hidden md:w-[113px] md:h-[129px] lg:w-[125.5px] lg:h-[143.74px]">
           <div className="relative w-full h-full overflow-hidden rounded-t-full rounded-b-[800px]">
             <Image src={imageUrl} alt={title} fill className="object-cover" />
             <div className="absolute inset-0 bg-black opacity-40 rounded-t-full rounded-b-[800px]" />

@@ -82,7 +82,7 @@ function Home() {
           </Link>
         </section>
 
-        {width > 0 && width <= 768 ? (
+        {width > 0 && width < 768 ? (
           <>
             <div className="sticky z-10 -mt-[15px] px-4">
               <div className="relative flex justify-center w-full">

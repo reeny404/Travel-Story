@@ -8,7 +8,7 @@ import { cva } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
 const headerStyles = cva(
-  "w-full h-[52px] flex items-center justify-between relative z-30 sm:hidden",
+  "w-full h-[52px] flex items-center justify-between relative z-30 md:hidden",
   {
     variants: {
       backgroundColor: {
@@ -103,7 +103,7 @@ function Header({
         )}
       </div>
       {titleAlign === "center" && (
-        <h2 className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap overflow-hidden text-ellipsis font-medium sm:max-w-[170px]">
+        <h2 className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap overflow-hidden text-ellipsis font-medium md:max-w-[170px]">
           {title}
         </h2>
       )}

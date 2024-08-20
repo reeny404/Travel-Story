@@ -102,7 +102,7 @@ function RecentArea({ className, isInitial }: RecentAreaProps) {
                   })}
                 >
                   <div
-                    className="relative w-[124px] h-[184px] cursor-pointer sm:w-[130px] sm:h-[205px] md:w-[160px] md:h-[252px] lg:w-[190px] lg:h-[300px]"
+                    className="relative w-[124px] h-[184px] cursor-pointer md:w-[160px] md:h-[252px] lg:w-[190px] lg:h-[300px]"
                     onClick={() => handleClickCard(index)}
                   >
                     <Image

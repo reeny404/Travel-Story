@@ -24,7 +24,7 @@ function MainTourForm({ areasInfo }: MainTourFormProps) {
   );
 
   const seperatedInfo = useMemo(() => {
-    const seperatePoint = width > 768 ? 2 : 3;
+    const seperatePoint = width >= 768 ? 2 : 3;
     return seperateArr(mainTourAreas, seperatePoint);
   }, [mainTourAreas, width]);
 

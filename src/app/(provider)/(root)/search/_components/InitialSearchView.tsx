@@ -1,8 +1,8 @@
 import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import { useRecentStore } from "@/stores/recent.store";
-import RecommendSearchTerm from "../RecommendSearchTerm";
 import RecentArea from "./RecentArea";
 import RecentSearch from "./RecentSearch";
+import RecommendSearchTerm from "./RecommendSearchTerm";
 import SearchPageTitle from "./SearchPageTitle";
 
 type InitialSearchViewProps = {

@@ -187,7 +187,7 @@ function ClientSearch({ headerSearchTerm }: { headerSearchTerm: string }) {
                 name="slider"
                 width={18}
                 height={18}
-                className="sm:w-[20px] sm:h-[20px]"
+                className="md:w-[20px] md:h-[20px]"
                 title="filter"
               />
             </button>
