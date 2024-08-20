@@ -64,6 +64,7 @@ function NewPlanStyle({ data: plan, set }: NewPlanStyleProps) {
             {tarvelTypes.length ? (
               tarvelTypes.map((type) => (
                 <button
+                  key={type}
                   className="px-4 py-2 flex rounded-lg border border-neutral-350"
                   onClick={() => setShowStylePage("keyword")}
                 >
