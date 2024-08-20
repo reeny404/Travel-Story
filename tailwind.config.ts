@@ -17,7 +17,10 @@ const config: Config = {
         "neutral-400/84": "rgba(255, 255, 255, 0.84)",
       },
       zIndex: {
-        drawer: "1000",
+        tab: "30",
+        underbar: "30",
+        bottomSheet: "40",
+        drawer: "50",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -34,21 +37,22 @@ const config: Config = {
         lg: "1280px",
       },
       boxShadow: {
+        default: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
         "bottom-sheet": "0px -4px 20px 0px rgba(0, 0, 0, 0.25)",
-        "schecule-list": "0px 4px 20px 0px #00000014",
         "area-card": "0px 4px 12px 0px rgba(0, 0, 0, 0.12)",
-        "area-section": "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
         "bookmark-card": "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
         "inner-bookmark": "inset 0px 0px 8px rgba(0, 0, 0, 0.25)",
         "filter-icon": "0px 4px 30px 0px rgba(0, 0, 0, 0.10)",
-        search: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
-        plan: "0px 4px 20px 0px rgba(0, 0, 0, 0.08)",
         header: "0px 4px 20px 0px rgba(0, 0, 0, 0.04)",
         drawer: "4px 0px 20px 0px rgba(0, 0, 0, 0.16)",
       },
       aspectRatio: {
         "4/5": "4 / 5",
       },
+      gridTemplateRows: {
+        schedule: "1.75rem 1fr",
+        "move-schedule": "2.5rem 1fr"
+      }
     },
   },
 };
