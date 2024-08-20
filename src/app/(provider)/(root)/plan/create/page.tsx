@@ -4,20 +4,20 @@ import { api } from "@/apis/api";
 import MainLayout from "@/components/Layout/MainLayout";
 import { ICON } from "@/constants/icon";
 import { useAuth } from "@/contexts/auth.contexts";
+import useCountryFilterStore from "@/stores/searchFilter.store";
 import { PlanInsertType } from "@/types/plan";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import SearchFilter from "../../search/_components/SearchFilter";
 import NewPlanBase from "./_components/NewPlanBase";
 import NewPlanStyle from "./_components/NewPlanStyle";
 
 function CreatePlanIntroPage() {
-  const router = useRouter();
   const titles: string[] = useMemo(() => ["기본 정보", "여행 성격"], []);
   const [selectedTab, setSelectedTab] = useState<string>(titles[0]);
   const [plan, setPlanData] = useState<PlanInsertType>({});
-  const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
+  const { countryFilter } = useCountryFilterStore();
+  const router = useRouter();
 
   const { isInitialized, isLoggedIn } = useAuth();
   if (isInitialized && !isLoggedIn) {
@@ -26,9 +26,14 @@ function CreatePlanIntroPage() {
   }
 
   const onClickToCreatePlan = () => {
-    api.plan.create(plan).then(() => {
-      router.push("/plan");
-    });
+    api.plan
+      .create({
+        ...plan,
+        country: countryFilter.name,
+      })
+      .then(() => {
+        router.push("/plan");
+      });
   };
 
   return (
@@ -78,8 +83,6 @@ function CreatePlanIntroPage() {
           내 여행 생성
         </button>
       </div>
-
-      {isFilterOpen && <SearchFilter onClose={() => {}} />}
     </MainLayout>
   );
 }

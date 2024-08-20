@@ -1,6 +1,8 @@
 "use client";
 
 import SvgIcon from "@/components/commons/SvgIcon";
+import ImageFrame from "@/components/Frame/ImageFrame";
+import { COUNTRY_LIST } from "@/constants/country";
 import useCountryFilterStore from "@/stores/searchFilter.store";
 import { PlanInsertType } from "@/types/plan";
 import { DateUtil } from "@/utils/DateUtil";
@@ -16,8 +18,11 @@ type MyPlanDefaultProps = {
 function NewPlanBase({ data: plan, set }: MyPlanDefaultProps) {
   const { countryFilter } = useCountryFilterStore();
   const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
-
   const handleToggleFilter = (open: boolean) => () => setIsFiterOpen(open);
+
+  const flagImg: string = COUNTRY_LIST.find(
+    (country) => country.krName === countryFilter.name
+  )?.imageUrl!;
 
   const startDate: Date = plan.startDate
     ? new Date(plan.startDate)
@@ -67,14 +72,17 @@ function NewPlanBase({ data: plan, set }: MyPlanDefaultProps) {
         <label htmlFor="travel-mate" className="font-semibold">
           여행지
         </label>
-        <div className="flex items-center spax">
+        <div className="flex items-center space-x-2">
           <button
             className="p-2.5 flex justify-center items-center hover:brightness-105"
             onClick={handleToggleFilter(true)}
           >
             <SvgIcon name="slider" width={16} height={16} title="filter" />
           </button>
-          <div>{countryFilter.name}</div>
+          <div className="px-5 py-2 flex space-x-3 items-center border border-neutral-300 rounded-lg">
+            <ImageFrame src={flagImg} className="w-5 h-5" />
+            <span>{countryFilter.name}</span>
+          </div>
         </div>
       </div>
       {isFilterOpen && <SearchFilter onClose={handleToggleFilter(false)} />}
