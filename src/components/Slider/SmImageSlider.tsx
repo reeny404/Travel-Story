@@ -19,7 +19,11 @@ function ImageSlider({ spacing, slidesPerView, cards }: SmImageSliderProps) {
           >
             <CityImage
               id={card.id}
-              imageUrl={card.imageUrl!}
+              imageUrl={
+                !card.imageUrl || card.imageUrl === ""
+                  ? "/defaultImage.webp"
+                  : card.imageUrl
+              }
               name={card.krName!}
             />
           </SwiperSlide>
