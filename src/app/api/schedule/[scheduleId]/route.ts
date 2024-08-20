@@ -15,7 +15,6 @@ export async function GET(
   { params }: { params: { scheduleId: string } }
 ) {
   const scheduleId = params?.scheduleId;
-  console.log(scheduleId);
   const supabase = createClient();
   const { data, error } = await supabase
     .from(SCHEDULE)
