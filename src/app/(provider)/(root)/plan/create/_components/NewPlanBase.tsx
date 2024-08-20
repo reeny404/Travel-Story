@@ -7,6 +7,7 @@ import { DateUtil } from "@/utils/DateUtil";
 import { useState } from "react";
 import SearchFilter from "../../../search/_components/SearchFilter";
 import Input from "./Input";
+import NewPlanCalender from "./NewPlanCalender";
 
 type MyPlanDefaultProps = {
   data: PlanInsertType;
@@ -18,7 +19,6 @@ function NewPlanBase({ data: plan, set }: MyPlanDefaultProps) {
   const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
 
   const handleToggleFilter = (open: boolean) => () => setIsFiterOpen(open);
-
   const startDate: Date = plan.startDate
     ? new Date(plan.startDate)
     : new Date();
@@ -59,10 +59,10 @@ function NewPlanBase({ data: plan, set }: MyPlanDefaultProps) {
           </span>
         </div>
       </div>
-      {/* <div className="w-full h-96 bg-gray-200"> */}
-      {/* TODO 캘린더로 여행 기간 설정할 수 있도록 */}
-      {/* <h4 className="p-4">캘린더 영역 (여행 기간 설정)</h4> */}
-      {/* </div> */}
+      <div className="w-full pb-5 pt-2">
+        {/* TODO 캘린더로 여행 기간 설정할 수 있도록 */}
+        <NewPlanCalender data={plan} set={set} />
+      </div>
       <div className="px-4 space-y-4">
         <label htmlFor="travel-mate" className="font-semibold">
           여행지
