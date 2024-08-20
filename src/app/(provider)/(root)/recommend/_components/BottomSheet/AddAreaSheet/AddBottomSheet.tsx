@@ -1,5 +1,6 @@
 "use client";
 import { api } from "@/apis/api";
+import { useWindowSize } from "@/app/(provider)/(root)/_hook/useWindowSize";
 import { getInsertData } from "@/app/(provider)/(root)/plan/_components/getInsertData";
 import { useAuth } from "@/contexts/auth.contexts";
 import useScheduleStore from "@/stores/schedule.store";
@@ -8,6 +9,7 @@ import { Schedule } from "@/types/plan";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { ReviewModal } from "../../ReviewModal";
 import { BottomSheet } from "../BottomSheet";
 import AddBottomSheetTitle from "./AddBottomSheetTitle";
 import PlanItem from "./PlanItem";
@@ -22,6 +24,7 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
   const [isClosing, setIsClosing] = useState(false);
   const [isOpening, setIsOpening] = useState(true);
   const [clickedPlan, setClickedPlan] = useState<number | null>(null);
+  const { width } = useWindowSize();
   const [day, setDay] = useState<number | null>(null);
   const { user, isLoggedIn } = useAuth();
 
@@ -80,10 +83,14 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
     }, 300);
   }, []);
 
-  return (
-    <BottomSheet onClose={onClose} height="472px">
-      <AddBottomSheetTitle areaId={area?.id} isPlan={planData ? true : false} />
-      <section className="no-scroll h-[328px] flex flex-col pt-4 gap-y-4 overflow-scroll">
+  const Content = (
+    <>
+      <AddBottomSheetTitle
+        areaId={area?.id}
+        isPlan={planData ? true : false}
+        onClose={onClose}
+      />
+      <section className="no-scroll h-[328px] md:h-[500px] md:mb-8 flex flex-col pt-4 gap-y-4 overflow-scroll">
         {planData &&
           planData.map((plan: any, idx: number) => {
             return (
@@ -98,7 +105,7 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
             );
           })}
       </section>
-      <div className="grid grid-cols-2 gap-3 pb-1">
+      <div className="grid grid-cols-2 gap-3 md:pb-5">
         <button
           className="h-10 text-center border-[0.6px] border-neutral-600 text-neutral-750 rounded-lg"
           type="button"
@@ -129,6 +136,13 @@ function AddBottomSheet({ onClose, area }: BottomSheetProps) {
           </button>
         )}
       </div>
+    </>
+  );
+  return width >= 768 ? (
+    <ReviewModal onClose={onClose}>{Content}</ReviewModal>
+  ) : (
+    <BottomSheet onClose={onClose} height="472px">
+      {Content}
     </BottomSheet>
   );
 }
