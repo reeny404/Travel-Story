@@ -51,10 +51,21 @@ const config: Config = {
       },
       gridTemplateRows: {
         schedule: "1.75rem 1fr",
-        "move-schedule": "2.5rem 1fr"
-      }
+        "move-schedule": "2.5rem 1fr",
+      },
     },
   },
+  safelist: [
+    {
+      pattern: /text-(brand|info|success|danger|neutral)-[0-9]{2,3}/,
+    },
+    {
+      pattern: /bg-(brand|info|success|danger|neutral)-[0-9]{2,3}/,
+    },
+    {
+      pattern: /border-(brand|info|success|danger|neutral)-[0-9]{2,3}/,
+    },
+  ],
 };
 
 export default config;

@@ -14,7 +14,12 @@ type RecentArea = {
   imageUrl: string | null;
 }[];
 
-function RecentArea() {
+type RecentAreaProps = {
+  className?: string;
+  isInitial?: boolean;
+};
+
+function RecentArea({ className, isInitial }: RecentAreaProps) {
   const supabase = createClient();
   const { isInitialized, user } = useAuth();
   const [recentList, setRecentList] = useState<RecentArea>();
@@ -27,9 +32,11 @@ function RecentArea() {
           .from("recents")
           .select("area")
           .eq("id", user.id);
+
         if (error) {
           console.error(error);
         }
+
         const recentList = data?.[0]?.area ?? [];
         return recentList as number[];
       }
@@ -42,6 +49,7 @@ function RecentArea() {
         .from("area")
         .select("id, krName,imageUrl")
         .in("id", recentArea);
+
       if (error) {
         console.error(error);
       }

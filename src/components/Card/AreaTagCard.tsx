@@ -1,8 +1,9 @@
-import { getIconPath } from "@/components/commons/Icon/getIconPath";
+import { useWindowSize } from "@/app/(provider)/(root)/_hook/useWindowSize";
 import { CATEGORY_LIST } from "@/constants/category";
-import { ICON } from "@/constants/icon";
 import { AreaTagCardProps, CategoryProps } from "@/types/Card";
 import Image from "next/image";
+import RatingIcons from "./RatingIcons";
+import SingleRatingIcon from "./SingleRatingIcon";
 
 export function Category({ tag }: CategoryProps) {
   const { icon, color, label } = CATEGORY_LIST[tag];
@@ -17,33 +18,31 @@ export function Category({ tag }: CategoryProps) {
 
 function AreaTagCard(props: AreaTagCardProps) {
   const { image, alt, title, tag, rating, desc, onClick } = props;
+  const { width } = useWindowSize();
 
   return (
     <div
-      className="flex items-center w-full py-3 cursor-pointer"
+      className="flex items-center w-full py-3 cursor-pointer md:flex-col md:py-0"
       onClick={onClick}
     >
-      <div className="relative flex-none w-[84px] h-[84px] mr-3 bg-neutral-200 rounded-lg overflow-hidden">
+      <div className="relative flex-none w-[84px] h-[84px] mr-3 bg-neutral-200 rounded-lg overflow-hidden aspect-square md:max-w-[300px] md:w-full md:max-h-[300px] md:h-full md:mr-0">
         <Image src={image} alt={alt} fill className="object-cover" />
       </div>
-      <div className="flex flex-col justify-center items-start text-sm">
-        <h2 className="text-base font-semibold text-ellipsis line-clamp-1 mb-1">
+      <div className="flex flex-col justify-center items-start text-sm md:max-w-[300px] md:w-full md:max-h-[300px] md:h-full md:justify-start md:mt-3 md:pb-5">
+        <h2 className="text-base font-semibold text-ellipsis line-clamp-1 mb-1 md:mb-2">
           {title}
         </h2>
         <div className="flex flex-1 justify-between w-full">
           <Category tag={tag} />
           <div className="flex gap-1">
-            <Image
-              alt="rating"
-              src={getIconPath(ICON.star.fill)}
-              width={14}
-              height={14}
-              className="px-[1px]"
-            />
-            <h4 className="text-neutral-500">{rating}</h4>
+            {width >= 768 ? (
+              <RatingIcons rating={+rating} type="small" />
+            ) : (
+              <SingleRatingIcon rating={+rating} />
+            )}
           </div>
         </div>
-        <h4 className="w-[95%] mt-2 text-neutral-600 text-ellipsis line-clamp-1">
+        <h4 className="w-[95%] mt-2 text-neutral-600 text-ellipsis line-clamp-1 md:hidden">
           {desc}
         </h4>
       </div>

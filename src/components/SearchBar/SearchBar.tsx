@@ -6,7 +6,7 @@ import useCountryFilterStore from "@/stores/searchFilter.store";
 import { createClient } from "@/supabase/client";
 import formatDate from "@/utils/searchDate";
 import { debounce } from "lodash";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import SvgIcon from "../commons/SvgIcon";
 
 type SearchBarProps = {
@@ -27,28 +27,31 @@ function SearchBar({
   const supabase = createClient();
   const { isInitialized, user } = useAuth();
   const { recentSearch, setRecentSearch } = useRecentStore();
-  const [prevSearch, setPrevSearch] = useState(recentSearch);
+  const [recentSearchTerm, setRecentSearchTerm] = useState(recentSearch);
+  const prevSearchTerm = useRef<string>(searchTerm);
 
   useEffect(() => {
     SvgIcon.preload("x");
   }, []);
 
   useEffect(() => {
-    setPrevSearch(recentSearch);
+    setRecentSearchTerm(recentSearch);
   }, [recentSearch]);
 
   // 추천 검색어 input창에 반영하기 위해 추가
   useEffect(() => {
-    setSearchTerm(initialValue || "");
+    setSearchTerm(initialValue);
   }, [initialValue]);
 
   const handleBlurSearch = async () => {
     if (searchTerm !== "" && isInitialized && user) {
-      if (prevSearch && prevSearch.length === 3) {
-        prevSearch.shift();
+      let newPrevSearch = [...recentSearchTerm];
+
+      if (newPrevSearch && newPrevSearch.length === 3) {
+        newPrevSearch = newPrevSearch.slice(1);
       }
-      const newArray = prevSearch
-        ? [...prevSearch, { search: searchTerm, date: formatDate() }]
+      const newArray = newPrevSearch
+        ? [...newPrevSearch, { search: searchTerm, date: formatDate() }]
         : [{ search: searchTerm, date: formatDate() }];
       setRecentSearch(newArray);
       await supabase.from("recents").upsert(
@@ -63,34 +66,40 @@ function SearchBar({
         }
       );
     }
-    setPlaceholder("‘'파리'로 떠나보실래요?");
+    setPlaceholder("'파리'로 떠나보실래요?");
+    prevSearchTerm.current = searchTerm;
   };
 
   const handleChangeTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    debounceSearch(e.target.value);
   };
 
-  const debounceSearch = useMemo(
+  const debouncedSearch = useMemo(
     () =>
-      debounce((value: string) => {
-        if (value.trim() && onSearch) {
-          onSearch(value.trim());
+      debounce((term: string) => {
+        if (term.trim() && onSearch) {
+          onSearch(term.trim());
         }
-      }, 400),
+      }, 500),
     [onSearch]
   );
 
-  // 디바운스 처리 중 input값이 변하면 깨지는 현상 방지
   useEffect(() => {
+    if (searchTerm.trim() !== "" && searchTerm !== prevSearchTerm.current) {
+      debouncedSearch(searchTerm);
+      prevSearchTerm.current = searchTerm;
+    }
+
     return () => {
-      debounceSearch.cancel();
+      debouncedSearch.cancel();
     };
-  }, [debounceSearch]);
+  }, [searchTerm, debouncedSearch]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    debounceSearch.flush();
+    if (searchTerm.trim() && onSearch) {
+      onSearch(searchTerm.trim());
+    }
   };
 
   const handleEmptySearchBar = () => {
@@ -127,10 +136,10 @@ function SearchBar({
 
   return (
     <form
-      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-default"
+      className="relative flex justify-between w-11/12 h-10 p-3 bg-white text-sm rounded-lg shadow-default md:max-w-[512px] md:w-full md:h-12 md:p-4"
       onSubmit={handleSearch}
     >
-      <div className="flex items-center w-full gap-2">
+      <div className="flex items-center w-full gap-2 md:gap-3 ">
         <SvgIcon
           name="search"
           width={20}
@@ -140,7 +149,7 @@ function SearchBar({
         />
 
         {countryFilter.name && (
-          <div className="flex items-center space-x-1 ml-1">
+          <div className="flex items-center space-x-1 ml-1 md:ml-2">
             <h5
               className="max-w-[7ch] text-brand-800 whitespace-nowrap cursor-pointer overflow-hidden text-ellipsis active:scale-95"
               onMouseDown={handleRemoveFilter}
@@ -167,7 +176,7 @@ function SearchBar({
             width={12}
             height={12}
             title="cancel"
-            className="cursor-pointer transition-transform duration-300 ease-in-out"
+            className="ml-1 cursor-pointer transition-transform duration-300 ease-in-out md:ml-2"
             onClick={handleEmptySearchBar}
           />
         )}
