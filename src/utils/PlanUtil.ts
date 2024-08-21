@@ -26,7 +26,7 @@ const calculateDuration = (
     const start = new Date(`2024-01-01T${startTime}`);
     const end = new Date(`2024-01-01T${endTime}`);
     const duration = Math.ceil((end.getTime() - start.getTime()) / 60000); // 분 단위로 계산
-    return `${duration}분`;
+    return isNaN(duration) ? "" : `${duration}분`;
   }
   return "";
 };

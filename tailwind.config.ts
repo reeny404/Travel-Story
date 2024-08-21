@@ -49,6 +49,9 @@ const config: Config = {
       aspectRatio: {
         "4/5": "4 / 5",
       },
+      gridTemplateCols: {
+        schedule: "1.75rem 1fr"
+      },
       gridTemplateRows: {
         schedule: "1.75rem 1fr",
         "move-schedule": "2.5rem 1fr",

@@ -28,26 +28,26 @@ function CreateScheduleButton({
   const buttonHoverColor = { bg: "hover:!bg-white", icon: "" };
 
   return (
-    <div className="w-full relative flex justify-end pr-4">
+    <div className="w-full relative flex justify-end pr-4 z-10">
       <div
         className={clsx(
           "fixed bottom-10 flex flex-col space-y-3 transition-[height] overflow-hidden",
           isShowButtons ? "h-[260px]" : "h-0"
         )}
       >
-        <CreateButton
-          // Icon={IconBookmark}
-          bg={buttonHoverColor.bg}
-        >
-          <Link href={pathTocreateByBookmark}>
+        <Link href={pathTocreateByBookmark}>
+          <CreateButton
+            // Icon={IconBookmark}
+            bg={buttonHoverColor.bg}
+          >
             <IconBookmark
               className={clsx(
                 "text-black group-hover:text-white",
                 buttonHoverColor.icon
               )}
             />
-          </Link>
-        </CreateButton>
+          </CreateButton>
+        </Link>
         <CreateButton bg={buttonHoverColor.bg}>
           <IconPin
             className={clsx(
