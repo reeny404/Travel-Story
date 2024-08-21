@@ -1,8 +1,8 @@
-"use client";
 import SvgIcon from "@/components/commons/SvgIcon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useRecentStore } from "@/stores/recent.store";
 import { createClient } from "@/supabase/client";
+import { RecnetSearch } from "@/types/recent";
 import { useEffect, useState } from "react";
 
 type RecentSearchProps = {
@@ -13,8 +13,7 @@ function RecentSearch({ onSearch }: RecentSearchProps) {
   const supabase = createClient();
   const { user, isInitialized, isLoggedIn } = useAuth();
   const { setRecentSearch } = useRecentStore();
-  const [recent, setRecent] =
-    useState<Array<{ search: string; date: string }>>();
+  const [recent, setRecent] = useState<RecnetSearch[]>();
 
   useEffect(() => {
     async function getRecentSearch() {
@@ -23,15 +22,15 @@ function RecentSearch({ onSearch }: RecentSearchProps) {
           .from("recents")
           .select("search")
           .eq("user_id", user.id)
-          .single();
+          .single<RecnetSearch[]>();
 
         if (error) {
           console.error(error);
           return;
         }
         if (data) {
-          setRecentSearch(data.search);
-          setRecent(data.search);
+          setRecentSearch(data);
+          setRecent(data);
         }
       }
     }
@@ -51,17 +50,18 @@ function RecentSearch({ onSearch }: RecentSearchProps) {
     });
     setRecent(deleteRecent);
     setRecentSearch(deleteRecent || []);
-    await supabase.from("recents").upsert(
-      [
-        {
-          user_id: user?.id,
-          search: deleteRecent,
-        },
-      ],
-      {
-        onConflict: "id",
-      }
-    );
+    // update 안에 무엇이 들어가야하는건지, 의도를 알 수 없어 주석처리했습니다
+    // await supabase.from("recents").upsert(
+    //   [
+    //     {
+    //       user_id: user?.id,
+    //       search: deleteRecent,
+    //     },
+    //   ],
+    //   {
+    //     onConflict: "id",
+    //   }
+    // );
   };
 
   return (

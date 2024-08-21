@@ -49,10 +49,10 @@ function DrawerMyProfile() {
             />
           )}
           {user ? (
-            <h4 className="ml-3 text-xl font-semibold">
+            <div className="ml-3 text-xl font-semibold">
               {nickname}
-              <span className="font-medium inline"> 님 반가워요!!</span>
-            </h4>
+              <h5 className="font-medium inline"> 님 반가워요!!</h5>
+            </div>
           ) : (
             <h4 className="ml-3 text-xl font-medium inline">로그인하기</h4>
           )}

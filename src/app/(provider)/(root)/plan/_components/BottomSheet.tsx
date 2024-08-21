@@ -227,10 +227,10 @@ function BottomSheet({
             onRead={handleRead}
           />
 
-          {(type === "place" || type === "customPlace") && (
+          {item?.id && (type === "place" || type === "customPlace") && (
             <Link
               className="block w-full mx-auto py-2 text-center border text-black  rounded-lg"
-              href={"/accountdetail/" + formData.id}
+              href={"/accountDetail/" + item.id}
             >
               가계부 추가
             </Link>
