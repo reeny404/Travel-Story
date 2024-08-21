@@ -45,7 +45,10 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
         const endDate = new Date(plan.endDate as string);
         const daysCount = DateUtil.getGapDay(startDate, endDate);
 
-        const daysArray = Array.from({ length: daysCount }, (_, i) => i + 1);
+        const daysArray = Array.from(
+          { length: daysCount ? daysCount : 1 },
+          (_, i) => i + 1
+        );
         setDays(daysArray);
 
         const formattedStartDate = DateUtil.format("yyyy.MM.dd", startDate);
@@ -56,14 +59,6 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
         console.error("Error fetching plan data:", error);
       });
   }, [planId]);
-
-  const handleOpen = (
-    type: BottomSheetType["type"],
-    status: BottomSheetType["status"]
-  ) => {
-    setBottomSheetConfig({ type, status });
-    setBottomSheetVisible(true);
-  };
 
   const handleClose = () => {
     setBottomSheetVisible(false);
@@ -76,7 +71,8 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
   const handleCreateSchedule = useCallback(
     (type: BottomSheetType["type"], status: BottomSheetType["status"]) =>
       () => {
-        handleOpen(type, status);
+        setBottomSheetConfig({ type, status });
+        setBottomSheetVisible(true);
       },
     []
   );
@@ -127,7 +123,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           </Link>
         </div>
       </div>
-      <div className="hidden md:block w-screen h-[300px] absolute top-40 left-0 right-0">
+      <div className="hidden md:block w-screen h-[315px] absolute top-40 left-0 right-0">
         <Image
           src="/plan/banner.jpg"
           alt="desktop-banner"
@@ -135,7 +131,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           className="object-cover"
         />
       </div>
-      <div className="min-h-screen bg-gray-50 relative -top-[52px] md:top-[300px]">
+      <div className="min-h-screen bg-gray-50 relative -top-[52px] md:top-[315px]">
         <section className="w-full sm:h-72 md:h-0 px-4 py-3 relative md:bottom-6">
           <Image
             src="/plan/banner.jpg"
@@ -161,7 +157,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           />
         </section>
         <article className="flex">
-          <div className="md:hidden">
+          <div className="md:hidden w-full">
             <ScheduleList planId={planId} selectedDay={selectedDay} />
           </div>
           <div className="hidden md:flex">

@@ -1,7 +1,6 @@
 import { createClient } from "@/supabase/server";
 import { ApiResponse } from "@/types/ApiResponse";
-import { OrderList, PlanChildType, PlanFull } from "@/types/plan";
-import { Tables } from "@/types/supabase";
+import { OrderList, PlanChildType, PlanFull, ScheduleWithArea } from "@/types/plan";
 import { NextRequest, NextResponse } from "next/server";
 import { AuthUtil } from "../../auth/AuthUtil";
 import { getTableManager } from "./PlanChildTable";
@@ -30,7 +29,7 @@ export async function GET(
     const supabase = createClient();
     const { data: plan, error } = await supabase
       .from("plan")
-      .select("*, schedules:schedule(*)")
+      .select("*, schedules:schedule(*, area(*))")
       .eq("id", planId)
       .single();
 
@@ -39,7 +38,7 @@ export async function GET(
     }
     const { orderList, schedules } = plan;
     const orders = (orderList as OrderList)[dayIndex] ?? [];
-    const filteredSchedules: Tables<"schedule">[] = orders
+    const filteredSchedules: ScheduleWithArea[] = orders
       .map((order) => {
         const schedule = schedules?.find(
           (schedule) => schedule.id === order.id
