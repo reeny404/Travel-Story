@@ -1,36 +1,21 @@
 "use client";
 
 import clsx from "clsx";
-import Link from "next/link";
-import { JSXElementConstructor } from "react";
+import { PropsWithChildren } from "react";
 
 type Props = {
-  Icon: JSXElementConstructor<{ className: string; onClick?: () => void }>;
-  onClick?: () => void;
-  href?: string;
-  color?: { bg: string; icon: string };
-};
+  bg: string | null;
+} & PropsWithChildren;
 
-function CreateButton({ Icon, onClick, href, color }: Props) {
+function CreateButton({ children, bg }: Props) {
   return (
     <div
       className={clsx(
         "w-12 h-12 flex items-center justify-center bg-lime-300 shadow-lg rounded-full cursor-pointer group hover:bg-gray-750",
-        color?.bg
+        bg
       )}
     >
-      {href ? (
-        <Link href={href}>
-          <Icon
-            className={clsx("text-black group-hover:text-white", color?.icon)}
-          />
-        </Link>
-      ) : (
-        <Icon
-          className={clsx("text-black group-hover:text-white", color?.icon)}
-          onClick={onClick}
-        />
-      )}
+      {children}
     </div>
   );
 }

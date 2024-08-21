@@ -1,13 +1,13 @@
 "use client";
 
 import clsx from "clsx";
+import Link from "next/link";
 import { useState } from "react";
 import CreateButton from "./CreateButton";
 import IconAdd from "./icons/IconAdd";
 import IconBookmark from "./icons/IconBookmark";
 import IconCar from "./icons/IconCar";
 import IconCheck from "./icons/IconCheck";
-import IconPin from "./icons/IconPin";
 
 type Props = {
   createSchedule: () => void;
@@ -35,39 +35,57 @@ function CreateScheduleButton({
         )}
       >
         <CreateButton
-          Icon={IconBookmark}
-          href={pathTocreateByBookmark}
-          color={buttonHoverColor}
-        />
-        <CreateButton
-          Icon={IconPin}
-          onClick={createSchedule}
-          color={buttonHoverColor}
-        />
-        <CreateButton
-          Icon={IconCar}
-          onClick={createMoveSchedule}
-          color={buttonHoverColor}
-        />
-        <CreateButton
-          Icon={IconCheck}
-          onClick={createMemo}
-          color={buttonHoverColor}
-        />
+          // Icon={IconBookmark}
+          bg={buttonHoverColor.bg}
+        >
+          <Link href={pathTocreateByBookmark}>
+            <IconBookmark
+              className={clsx(
+                "text-black group-hover:text-white",
+                buttonHoverColor.icon
+              )}
+            />
+          </Link>
+        </CreateButton>
+        <CreateButton bg={buttonHoverColor.bg}>
+          <IconBookmark
+            className={clsx(
+              "text-black group-hover:text-white",
+              buttonHoverColor.icon
+            )}
+            onClick={createSchedule}
+          />
+        </CreateButton>
+        <CreateButton bg={buttonHoverColor.bg}>
+          <IconCar
+            className={clsx(
+              "text-black group-hover:text-white",
+              buttonHoverColor.icon
+            )}
+            onClick={createMoveSchedule}
+          />
+        </CreateButton>
+        <CreateButton bg={buttonHoverColor.bg}>
+          <IconCheck
+            className={clsx(
+              "text-black group-hover:text-white",
+              buttonHoverColor.icon
+            )}
+            onClick={createMemo}
+          />
+        </CreateButton>
       </div>
       <div className="fixed bottom-3">
         <CreateButton
-          Icon={IconAdd}
-          onClick={onClick}
-          color={
-            isShowButtons
-              ? {
-                  bg: "!bg-white hover:brightness-95",
-                  icon: "group-hover:!text-black",
-                }
-              : undefined
-          }
-        />
+          bg={isShowButtons ? "!bg-white hover:brightness-95" : null}
+        >
+          <IconAdd
+            className={clsx("text-black group-hover:text-white", {
+              "group-hover:!text-black": isShowButtons,
+            })}
+            onClick={onClick}
+          />
+        </CreateButton>
       </div>
     </div>
   );
