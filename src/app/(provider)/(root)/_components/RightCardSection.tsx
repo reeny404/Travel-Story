@@ -11,7 +11,12 @@ import { useState } from "react";
 import { useWindowSize } from "../_hook/useWindowSize";
 
 const TITLE_PADDING = 189;
-
+const BREAKPOINTS = [
+  { width: 1280, slides: 4 },
+  { width: 768, slides: 3 },
+  { width: 620, slides: 2.3 },
+  { width: 500, slides: 1.7 },
+];
 type RightCardSectionProps = {
   textColor?: "primary" | "white";
   krCategory: string;
@@ -24,7 +29,8 @@ function RightCardSection({
   cardData,
 }: RightCardSectionProps) {
   const { width } = useWindowSize();
-  const slidesPerView = width > 620 ? 2.3 : width > 500 ? 1.7 : 1.3;
+  const slidesPerView =
+    BREAKPOINTS.find((b) => width >= b.width)?.slides || 1.3;
   const [isHovered, setIsHovered] = useState(false);
 
   const categoryData = HOMECARD_CATEGORY[krCategory];
