@@ -74,9 +74,10 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
   };
 
   const handleCreateSchedule = useCallback(
-    (type: BottomSheetType["type"], status: BottomSheetType["status"]) => {
-      handleOpen(type, status);
-    },
+    (type: BottomSheetType["type"], status: BottomSheetType["status"]) =>
+      () => {
+        handleOpen(type, status);
+      },
     []
   );
 
@@ -163,7 +164,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           <div className="md:hidden">
             <ScheduleList planId={planId} selectedDay={selectedDay} />
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:flex">
             {days.map((day) => (
               <div
                 key={day}
@@ -185,10 +186,10 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
         )}
 
         <CreateScheduleButton
-          createSchedule={() => handleCreateSchedule("customPlace", "add")}
+          createSchedule={handleCreateSchedule("customPlace", "add")}
           pathTocreateByBookmark={`/my/bookmarks?planId=${planId}&day=${selectedDay}`}
-          createMemo={() => handleCreateSchedule("memo", "add")}
-          createMoveSchedule={() => handleCreateSchedule("move", "add")}
+          createMemo={handleCreateSchedule("memo", "add")}
+          createMoveSchedule={handleCreateSchedule("move", "add")}
         />
       </div>
     </MainLayout>
