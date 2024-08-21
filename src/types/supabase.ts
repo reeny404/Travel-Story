@@ -12,9 +12,7 @@ export type Database = {
       accountBook: {
         Row: {
           amount: number;
-          areaId: number | null;
-          areaName: string;
-          areaType: string;
+          area: string | null;
           createdAt: string;
           desc: string;
           id: number;
@@ -22,13 +20,10 @@ export type Database = {
           planId: string;
           scheduleId: string;
           type: string;
-          userId: string;
         };
         Insert: {
           amount?: number;
-          areaId?: number | null;
-          areaName?: string;
-          areaType?: string;
+          area?: string | null;
           createdAt?: string;
           desc?: string;
           id?: number;
@@ -36,13 +31,10 @@ export type Database = {
           planId: string;
           scheduleId: string;
           type?: string;
-          userId: string;
         };
         Update: {
           amount?: number;
-          areaId?: number | null;
-          areaName?: string;
-          areaType?: string;
+          area?: string | null;
           createdAt?: string;
           desc?: string;
           id?: number;
@@ -50,7 +42,6 @@ export type Database = {
           planId?: string;
           scheduleId?: string;
           type?: string;
-          userId?: string;
         };
         Relationships: [
           {
@@ -65,13 +56,6 @@ export type Database = {
             columns: ["scheduleId"];
             isOneToOne: false;
             referencedRelation: "schedule";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "acouuntBook_userId_fkey1";
-            columns: ["userId"];
-            isOneToOne: false;
-            referencedRelation: "users";
             referencedColumns: ["id"];
           },
         ];
@@ -407,6 +391,8 @@ export type Database = {
           endDate: string;
           id: string;
           imagesUrl: string | null;
+          keywords: Json;
+          mate: string;
           orderList: Json;
           startDate: string;
           title: string;
@@ -418,6 +404,8 @@ export type Database = {
           endDate?: string;
           id?: string;
           imagesUrl?: string | null;
+          keywords?: Json;
+          mate?: string;
           orderList?: Json;
           startDate?: string;
           title?: string;
@@ -429,6 +417,8 @@ export type Database = {
           endDate?: string;
           id?: string;
           imagesUrl?: string | null;
+          keywords?: Json;
+          mate?: string;
           orderList?: Json;
           startDate?: string;
           title?: string;
@@ -539,19 +529,19 @@ export type Database = {
       users: {
         Row: {
           created_at: string;
-          email: string;
+          email: string | null;
           filter: Json | null;
           id: string;
-          image_url: string;
-          nickname: string;
+          image_url: string | null;
+          nickname: string | null;
         };
         Insert: {
           created_at?: string;
-          email?: string;
+          email?: string | null;
           filter?: Json | null;
           id?: string;
-          image_url?: string;
-          nickname?: string;
+          image_url?: string | null;
+          nickname?: string | null;
         };
         Update: {
           created_at?: string;

@@ -77,7 +77,7 @@ function MyProfile({ user }: { user: SupabaseUser }) {
       <div className="relative">
         <div className="relative aspect-square w-[88px] h-[88px] rounded-full bg-neutral-200">
           <Image
-            src={imageURL ?? "/icons/avatar.svg"}
+            src={imageURL ? imageURL : "/icons/avatar.svg"}
             alt="profile Image"
             fill
             className="object-cover rounded-full"

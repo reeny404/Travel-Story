@@ -1,25 +1,36 @@
-import { getIconPath } from "@/components/commons/Icon/getIconPath";
+"use client";
+
+import SvgIcon from "@/components/commons/SvgIcon";
 import ImageFrame from "@/components/Frame/ImageFrame";
-import { ICON } from "@/constants/icon";
+import { COUNTRY_LIST } from "@/constants/country";
+import useCountryFilterStore from "@/stores/searchFilter.store";
 import { PlanInsertType } from "@/types/plan";
 import { DateUtil } from "@/utils/DateUtil";
-import { useMemo } from "react";
+import { useState } from "react";
+import SearchFilter from "../../../search/_components/SearchFilter";
 import Input from "./Input";
+import NewPlanCalender from "./NewPlanCalender";
 
 type MyPlanDefaultProps = {
   data: PlanInsertType;
-  setData: (data: PlanInsertType) => void;
+  set: (plan: PlanInsertType) => void;
 };
 
-function NewPlanBase({ data: plan, setData }: MyPlanDefaultProps) {
-  const icon: string = useMemo(() => getIconPath(ICON.add.person.black), []);
+function NewPlanBase({ data: plan, set }: MyPlanDefaultProps) {
+  const { countryFilter } = useCountryFilterStore();
+  const [isFilterOpen, setIsFiterOpen] = useState<boolean>(false);
+  const handleToggleFilter = (open: boolean) => () => setIsFiterOpen(open);
+
+  const flagImg: string = COUNTRY_LIST.find(
+    (country) => country.krName === countryFilter.name
+  )?.imageUrl!;
 
   const startDate: Date = plan.startDate
     ? new Date(plan.startDate)
     : new Date();
   const endDate: Date = plan.endDate ? new Date(plan.endDate) : new Date();
   const setTitle = (text: string) => {
-    setData({
+    set({
       ...plan,
       title: text,
       startDate: DateUtil.format("yyyy-MM-dd", startDate),
@@ -36,7 +47,7 @@ function NewPlanBase({ data: plan, setData }: MyPlanDefaultProps) {
         <Input
           autoFocus
           id="travel-title"
-          placeholder="OOO님의 여행"
+          placeholder="닉네임님의 여행"
           className="py-2 border-b outline-none"
           text={plan.title ?? ""}
           setText={setTitle}
@@ -54,20 +65,31 @@ function NewPlanBase({ data: plan, setData }: MyPlanDefaultProps) {
           </span>
         </div>
       </div>
-      {/* <div className="w-full h-96 bg-gray-200"> */}
-      {/* TODO 캘린더로 여행 기간 설정할 수 있도록 */}
-      {/* <h4 className="p-4">캘린더 영역 (여행 기간 설정)</h4> */}
-      {/* </div> */}
+      <div className="w-full pb-5 pt-2">
+        {/* TODO 캘린더로 여행 기간 설정할 수 있도록 */}
+        <NewPlanCalender data={plan} set={set} />
+      </div>
       <div className="px-4 space-y-4">
         <label htmlFor="travel-mate" className="font-semibold">
-          여행 메이트
+          여행지
         </label>
-        <button className="px-4 py-1 flex justify-center items-center border  rounded-full border-black bg-gray-300 hover:brightness-105">
-          {/* TODO 사람 추가하는 아이콘 추가 */}
-          <ImageFrame src={icon} className="w-4 h-4 mr-2" />
-          추가하기
-        </button>
+        <div className="flex items-center space-x-2">
+          <button
+            className="p-2.5 flex justify-center items-center hover:brightness-105"
+            onClick={handleToggleFilter(true)}
+          >
+            <SvgIcon name="slider" width={16} height={16} title="filter" />
+          </button>
+          <div
+            className="px-5 py-2 flex space-x-3 items-center border border-neutral-300 rounded-lg"
+            onClick={handleToggleFilter(true)}
+          >
+            <ImageFrame src={flagImg} className="w-5 h-5" />
+            <span>{countryFilter.name}</span>
+          </div>
+        </div>
       </div>
+      {isFilterOpen && <SearchFilter onClose={handleToggleFilter(false)} />}
     </div>
   );
 }
