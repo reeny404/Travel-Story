@@ -16,7 +16,7 @@ function MyMenu() {
     router.push("/plan/list");
   };
   return (
-    <section className="flex w-full px-8 py-3 justify-around bg-white rounded-lg z-10">
+    <section className="flex w-full px-8 py-3 justify-evenly md:justify-evenly bg-white rounded-lg z-10 order-2 md:order-1 md:h-full md:items-center">
       <div className={pageMoveDiv} onClick={handleMyTravelClick}>
         <Image
           src={"/icons/calendar-black.svg"}
@@ -26,7 +26,7 @@ function MyMenu() {
         />
         <p className="text-sm font-normal mt-2">내 여행</p>
       </div>
-      <div className="w-[1px] bg-neutral-300"></div>
+      <div className="w-[1px] bg-neutral-300 h-[44px]"></div>
       <div className={pageMoveDiv} onClick={handleBookMarkClick}>
         <Image
           src={"/icons/lgBookmark-off.svg"}
@@ -36,7 +36,7 @@ function MyMenu() {
         />
         <p className="text-sm font-normal mt-2">보관함</p>
       </div>
-      <div className="w-[1px] bg-neutral-300"></div>
+      <div className="w-[1px] bg-neutral-300 h-[44px]"></div>
       <div className={pageMoveDiv} onClick={handleReviewClick}>
         <Image
           src={"/icons/star-black.svg"}

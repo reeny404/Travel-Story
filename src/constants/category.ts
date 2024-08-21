@@ -55,7 +55,7 @@ export const HOMECARD_CATEGORY: Record<string, HomeCardCategoryType> = {
     textTheme: "md:text-[#A25FFF]",
     cardBackgroundColor: "bg-purple-400",
     moreDesc: "더 많은 쇼핑센터 보러가기",
-    moreDescTextColor: "md:text-purple-600",
+    moreDescTextColor: "text-purple-600",
     moreDescIconColor: "purple-600",
   },
 };

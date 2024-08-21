@@ -10,9 +10,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useGetData from "../_hook/useGetData";
 import { useWindowSize } from "../_hook/useWindowSize";
+import MySchedule from "../my/_components/MySchedule";
 import HomeBanner from "./HomeBanner";
 import LeftCardSection from "./LeftCardSection";
-import MyTrip from "./MyTrip";
 import RightCardSection from "./RightCardSection";
 
 function Home() {
@@ -72,10 +72,11 @@ function Home() {
                 <SearchBar onSearch={handleSearch} isDisabled={true} />
               </div>
             </div>
-
-            <MyTrip />
           </>
         ) : null}
+
+        <MySchedule />
+
         <section className="mt-7">
           <CardType title="인기 여행지" type="fire" />
           <ArchCardSlider />

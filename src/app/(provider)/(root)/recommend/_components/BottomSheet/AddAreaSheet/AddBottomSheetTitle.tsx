@@ -53,11 +53,7 @@ function AddBottomSheetTitle({ areaId, isPlan, onClose }: AddBottomSheetTitle) {
         title={isPlan ? "어디에 추가하시겠어요?" : "새 일정을 만들어 주세요."}
         onClose={onClose}
       />
-      {isPending && (
-        <div className="absolute w-full h-full flex items-center justify-center">
-          loading
-        </div>
-      )}
+      {isPending && <div></div>}
       <button
         type="button"
         onClick={handleAddPlan}

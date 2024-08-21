@@ -1,8 +1,8 @@
 "use client";
 
 import { api } from "@/apis/api";
-import Icon from "@/components/commons/Icon";
 import MainLayout from "@/components/Layout/MainLayout";
+import Icon from "@/components/commons/Icon";
 import { ICON } from "@/constants/icon";
 import { Account, AccountType, PayType } from "@/types/Account";
 import { Schedule } from "@/types/plan";
@@ -153,7 +153,6 @@ export default function AccountDetailPage({
   const handleDeleteAccount = () => {
     if (account && account.id) {
       deleteAccountMutation.mutate(account.id);
-      (account.id);
     }
   };
 
