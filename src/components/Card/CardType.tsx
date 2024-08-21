@@ -1,3 +1,5 @@
+"use client";
+
 import { useWindowSize } from "@/app/(provider)/(root)/_hook/useWindowSize";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +15,7 @@ type CardTypeProps = {
 
 function CardType({ type, title, linkUrl }: CardTypeProps) {
   const { width } = useWindowSize();
+
   return (
     <div
       className={`h-full py-[10px] px-4 md:px-8 mb-2 flex items-center justify-between`}
