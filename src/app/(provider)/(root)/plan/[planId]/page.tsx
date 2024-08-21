@@ -163,7 +163,7 @@ function PlanDetailPage({ params: { planId } }: PlanDetailPageProps) {
           <div className="md:hidden">
             <ScheduleList planId={planId} selectedDay={selectedDay} />
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:flex">
             {days.map((day) => (
               <div
                 key={day}
