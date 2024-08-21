@@ -8,6 +8,7 @@ import IconAdd from "./icons/IconAdd";
 import IconBookmark from "./icons/IconBookmark";
 import IconCar from "./icons/IconCar";
 import IconCheck from "./icons/IconCheck";
+import IconPin from "./icons/IconPin";
 
 type Props = {
   createSchedule: () => void;
@@ -48,7 +49,7 @@ function CreateScheduleButton({
           </Link>
         </CreateButton>
         <CreateButton bg={buttonHoverColor.bg}>
-          <IconBookmark
+          <IconPin
             className={clsx(
               "text-black group-hover:text-white",
               buttonHoverColor.icon
