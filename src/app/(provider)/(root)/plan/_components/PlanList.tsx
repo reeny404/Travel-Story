@@ -12,11 +12,11 @@ function PlanList() {
   const { plans, fetchPlans } = usePlanStore();
 
   useEffect(() => {
-    if (!plans.length) {
+    if (!isInit || !plans.length) {
       fetchPlans();
     }
     setIsInit(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!isInit) {

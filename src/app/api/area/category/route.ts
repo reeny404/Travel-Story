@@ -37,10 +37,10 @@ export async function GET(request: NextRequest) {
   const categorizedData = {
     place: data.filter((item) => item.type === "place").slice(0, 10),
     restaurant: data.filter((item) => item.type === "restaurant").slice(0, 10),
-    shop: data.filter((item) => item.type === "shop").slice(0, 4),
+    shop: data.filter((item) => item.type === "shop").slice(0, 5),
     accommodation: data
       .filter((item) => item.type === "accommodation")
-      .slice(0, 4),
+      .slice(0, 5),
   };
 
   return NextResponse.json(categorizedData);

@@ -73,11 +73,11 @@ function MyProfile({ user }: { user: SupabaseUser }) {
   };
 
   return (
-    <section className="flex flex-col w-full items-center mt-12 mb-[29px] z-10">
+    <section className="flex flex-col w-full items-center mt-12 mb-[29px] z-10 md:flex-row md:bg-white md:rounded-lg md:p-8">
       <div className="relative">
         <div className="relative aspect-square w-[88px] h-[88px] rounded-full bg-neutral-200">
           <Image
-            src={imageURL ?? "/icons/avatar.svg"}
+            src={imageURL ? imageURL : "/icons/avatar.svg"}
             alt="profile Image"
             fill
             className="object-cover rounded-full"
@@ -95,34 +95,44 @@ function MyProfile({ user }: { user: SupabaseUser }) {
           htmlFor="file-input"
           className="absolute flex justify-center items-center w-7 h-7 bg-white rounded-full right-0 bottom-0"
         >
-          <SvgIcon name="picture" width={16} />
+          <button>
+            <SvgIcon name="picture" width={16} />
+          </button>
         </label>
       </div>
       {/* 닉네임 편집 시 */}
       {isEdit ? (
-        <form className="w-fit h-fit">
+        <form className="w-fit h-fit md:flex md:items-center">
           <input
             ref={inputRef}
             defaultValue={user.nickname || ""}
-            className="w-[150px] mt-4 py-1 px-3 rounded-lg outline-none"
+            className="w-[150px] mt-4 py-1 px-3 rounded-lg outline-none md:mt-0 md:border md:border-neutral-300 md:ml-2 md:text-xl"
           />
           <button
             onClick={(e) => handleNickChange(e)}
-            className=" ml-2 py-1 px-2 bg-primary text-white text-sm rounded-lg"
+            className=" ml-2 py-1 px-2 bg-primary text-white text-sm rounded-lg md:text-base"
           >
             등록
           </button>
         </form>
       ) : (
         // 닉네임 편집하지 않을 때
-        <div className="relative flex items-center mt-4">
-          <h5 className="text-xl leading-6 font-semibold">{user.nickname}</h5>
-          <SvgIcon
-            name="edit"
-            width={16}
-            onClick={handleNickClick}
-            className="absolute -right-5"
-          />
+        <div className="relative flex items-center mt-4 md:mt-0">
+          <h5 className="text-xl leading-6 font-semibold md:pl-8 md:flex">
+            {user.nickname}{" "}
+            <span className="hidden md:block md:font-medium">
+              {" "}
+              님 반가워요!
+            </span>
+          </h5>
+          <button>
+            <SvgIcon
+              name="edit"
+              width={16}
+              onClick={handleNickClick}
+              className="ml-2"
+            />
+          </button>
         </div>
       )}
     </section>

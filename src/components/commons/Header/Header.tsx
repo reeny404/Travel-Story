@@ -103,7 +103,7 @@ function Header({
         )}
       </div>
       {titleAlign === "center" && (
-        <h2 className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap overflow-hidden text-ellipsis font-medium sm:max-w-[170px]">
+        <h2 className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap overflow-hidden text-ellipsis font-medium md:max-w-[170px]">
           {title}
         </h2>
       )}

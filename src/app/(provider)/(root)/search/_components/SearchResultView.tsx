@@ -2,6 +2,7 @@
 
 import { api } from "@/apis/api";
 import AreaTagCard from "@/components/Card/AreaTagCard";
+import ArchCardSlider from "@/components/Slider/ArchCardSlider";
 import Tab from "@/components/Tab/Tab";
 import { TABS } from "@/constants/tabs";
 import { useTab } from "@/hooks/useTab";
@@ -12,6 +13,9 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useWindowSize } from "../../_hook/useWindowSize";
+import RecentArea from "./RecentArea";
+import SearchPageTitle from "./SearchPageTitle";
 
 const INITIAL_ITEMS = 3;
 
@@ -23,7 +27,9 @@ function SearchResultView({
   onLoadMore,
   onFold,
   totalResults,
+  searchTerm,
 }: SearchResultViewProps) {
+  const { width } = useWindowSize();
   const [filteredTabs, setFilteredTabs] = useState([...TABS.default]);
   const [nearbyPlaceCount, setNearbyPlaceCount] = useState<number>(3);
   const { currentTab, setCurrentTab } = useTab({ tabs: TABS.areaDetail });
@@ -151,66 +157,95 @@ function SearchResultView({
         : "접기";
 
     return (
-      <button
-        className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150"
-        onClick={handleSearchButtonClick}
-      >
-        {buttonText}
-      </button>
+      <div className="flex justify-center">
+        <button
+          className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150 md:w-[190px] md:h-12 md:px-7 md:py-3 md:border-neutral-350 md:mt-10"
+          onClick={handleSearchButtonClick}
+        >
+          {buttonText}
+        </button>
+      </div>
     );
   };
 
   return (
-    <main className="w-full px-4">
-      <Tab
-        TABS={filteredTabs}
-        currentTab={currentTab!}
-        setCurrentTab={(tab: string) =>
-          setCurrentTab(tab as keyof SearchResultsType)
-        }
-        frameClassName="top-[56px] shadow-area-section"
-      />
-      {filteredResults.map((result, index) => (
-        <Link
-          href={`/recommend/area/${result.id}`}
-          key={`${result.id}-${index}`}
-        >
-          <AreaTagCard
-            key={result.id}
-            image={result.imageUrl || "/sampleImg.jpg"}
-            alt={result.name}
-            title={result.krName ?? ""}
-            tag={getKrCategory(result.type ?? "")}
-            rating={result.rating ?? ""}
-            desc={result.description}
-          />
-        </Link>
-      ))}
-      {loadMoreOrFoldButton(validTab)}
+    <main className="w-full">
+      <section className="px-4 md:px-8">
+        <Tab
+          TABS={filteredTabs}
+          currentTab={currentTab!}
+          setCurrentTab={(tab: string) =>
+            setCurrentTab(tab as keyof SearchResultsType)
+          }
+          frameClassName="top-[56px] shadow-area-section"
+        />
 
-      {nearbyPlace && nearbyPlace.length > 0 && (
-        <div className="mt-8 ">
-          <h3 className="py-[10px] font-semibold">근처 가볼만한 곳</h3>
-          {nearbyPlace.slice(0, nearbyPlaceCount).map((place) => (
-            <Link href={`/recommend/area/${place.id}`} key={place.id}>
+        <SearchPageTitle
+          title={`"${searchTerm}" 검색 결과예요`}
+          isHidden
+          isTop
+        />
+        <div className="grid grid-flow-row grid-cols-1 md:grid-cols-3 lg:md:grid-cols-4 md:gap-8">
+          {filteredResults.map((result, index) => (
+            <Link
+              href={`/recommend/area/${result.id}`}
+              key={`${result.id}-${index}`}
+            >
               <AreaTagCard
-                image={place.imageUrl || "/sampleImg.jpg"}
-                alt={place.name}
-                title={place.krName ?? ""}
-                tag={getKrCategory(place.type ?? "")}
-                rating={place.rating ?? ""}
-                desc={place.description}
+                key={result.id}
+                image={result.imageUrl || "/sampleImg.jpg"}
+                alt={result.name}
+                title={result.krName ?? ""}
+                tag={getKrCategory(result.type ?? "")}
+                rating={result.rating ?? ""}
+                desc={result.description}
               />
             </Link>
           ))}
+        </div>
+        {loadMoreOrFoldButton(validTab)}
+      </section>
+
+      <RecentArea className="px-4 md:px-8" />
+
+      <section className="px-4 md:px-8">
+        <SearchPageTitle title="근처 가볼만 한 곳" />
+        <div className="grid grid-flow-row grid-cols-1 md:grid-cols-3 lg:md:grid-cols-4 md:gap-8">
+          {nearbyPlace && nearbyPlace.length > 0 && (
+            <>
+              {nearbyPlace.slice(0, nearbyPlaceCount).map((place, index) => (
+                <Link
+                  href={`/recommend/area/${place.id}`}
+                  key={`${place.id}-${index}`}
+                >
+                  <AreaTagCard
+                    image={place.imageUrl || "/sampleImg.jpg"}
+                    alt={place.name}
+                    title={place.krName ?? ""}
+                    tag={getKrCategory(place.type ?? "")}
+                    rating={place.rating ?? ""}
+                    desc={place.description}
+                  />
+                </Link>
+              ))}
+            </>
+          )}
+        </div>
+
+        <div className="flex justify-center">
           <button
-            className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150"
+            className="w-full h-10 mt-3 px-4 py-2 border-[0.6px] border-neutral-600 text-center bg-white rounded-lg cursor-pointer hover:opacity-80 active:bg-neutral-150 md:w-[190px] md:h-12 md:px-7 md:py-3 md:border-neutral-350 md:mt-10"
             onClick={isLoadEnd() ? handleFoldButton : handleLoadMore}
           >
             {isLoadEnd() ? "접기" : "더 둘러보기"}
           </button>
         </div>
-      )}
+      </section>
+
+      <section className="w-full mt-2 md:mb-12 lg:mb-16">
+        <SearchPageTitle title="인기 여행지" className="pl-4 md:pl-8" />
+        <ArchCardSlider />
+      </section>
     </main>
   );
 }

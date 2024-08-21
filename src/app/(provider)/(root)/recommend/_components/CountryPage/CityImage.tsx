@@ -9,7 +9,6 @@ type CityImageProps = {
 // href={`/recommend/country/${id}/detail`}
 function CityImage({ id, imageUrl, name }: CityImageProps) {
   const router = useRouter();
-
   return (
     <div
       onClick={() => router.push(`/recommend/city/${id}`)}

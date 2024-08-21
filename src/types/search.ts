@@ -23,6 +23,7 @@ export type SearchResultViewProps = {
   onLoadMore: (category: keyof SearchResultsType) => void;
   onFold: (category: keyof SearchResultsType) => void;
   totalResults: TotalResultsType;
+  searchTerm: string;
 };
 
 export type SearchResponse<T> = {
