@@ -54,7 +54,7 @@ export type BookmarkAPIType = {
   areaId: number;
 };
 
-type AreaTypes = "restaurant" | "place" | "shop" | "accommodation";
+export type AreaTypes = "restaurant" | "place" | "shop" | "accommodation";
 
 export type AreaReview = Tables<"areaReview"> & {
   imageUrls: string[];

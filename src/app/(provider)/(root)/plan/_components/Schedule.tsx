@@ -50,7 +50,7 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
         <div className="w-full p-3 bg-white text-sm shadow-default rounded-lg space-y-3 leading-5">
           {startTime && endTime && (
             <div className="flex items-center justify-between">
-              <div className="grid grid-flow-col space-x-2">
+              <div className="grid grid-flow-col grid-cols-schedule space-x-2">
                 <SvgIcon name="time" width={20} height={20} color="gray-400" />
                 <span>
                   {`${PlanUtil.formatTime(startTime)} - ${PlanUtil.formatTime(endTime)}`}
@@ -62,7 +62,7 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
             </div>
           )}
           {memo && (
-            <div className="grid grid-flow-col space-x-2">
+            <div className="grid grid-flow-col grid-cols-schedule space-x-2">
               <SvgIcon name="memo" width={20} height={20} color="gray-400" />
               <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
                 {memo}
@@ -70,7 +70,7 @@ function Schedule({ index, schedule, isLast, showMore }: Props) {
             </div>
           )}
           {place && (
-            <div className="grid grid-flow-col space-x-2">
+            <div className="grid grid-flow-col grid-cols-schedule space-x-2">
               <SvgIcon
                 name="location"
                 className="w-6 h-6 relative -left-0.5"
