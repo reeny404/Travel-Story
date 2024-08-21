@@ -48,12 +48,17 @@ function OnBoard() {
               height={24}
               title="arrow"
               hasStroke={true}
-              className="transform rotate-180"
+              className="transform rotate-180 cursor-pointer"
             />
           </div>
         ) : null}
         <div className="w-fit h-fit ml-auto" onClick={handleCancelClick}>
-          <SvgIcon name="cancel" width={20} height={20} />
+          <SvgIcon
+            name="cancel"
+            width={20}
+            height={20}
+            className="cursor-pointer"
+          />
         </div>
       </header>
       <ProgressBar />

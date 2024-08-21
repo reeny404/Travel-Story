@@ -85,16 +85,16 @@ function LgHeader({ onSearch }: { onSearch?: (term: string) => void }) {
       </div>
       <div className="flex flex-row w-full pt-3 pb-6 items-center lg:justify-between md:justify-center md:space-x-8">
         <Link href={"/"}>
-          <h1
+          <h2
             className={`${dmSerifDisplayFont.className} text-[28px] leading-[38px] whitespace-nowrap`}
           >
             Travel Story
-          </h1>
+          </h2>
         </Link>
         <div className="flex flex-row w-[600px] space-x-2">
           <SearchBar onSearch={handleSearch} initialValue={searchTerm} />
           <button
-            className="p-[10px] bg-white rounded-lg shadow-filter-icon hover:opacity-85 active:transform active:scale-95 cursor-pointer active:bg-gray-150"
+            className="flex justify-center items-center w-12 h-12 p-[10px] bg-white rounded-lg shadow-filter-icon hover:opacity-85 active:transform active:scale-95 cursor-pointer active:bg-gray-150"
             type="button"
             onClick={handleToggleFilter}
           >
