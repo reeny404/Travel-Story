@@ -56,11 +56,16 @@ function PlanRoutePage({ params: { planId } }: RoutePageProps) {
       <h2 className="hidden">여행 계획에 따른 지도 경로 보기</h2>
       <Map locations={routes} />
       {!schedules.length && (
-        <div className="fixed top-1/3 left-1/2 -translate-x-1/2 bg-white rounded-lg shadow-default">
+        <div className="sm:w-5/6 mb-10 fixed top-1/3 left-1/2 -translate-x-1/2 bg-white rounded-lg shadow-default">
           <NotFoundRoute planId={planId} />
         </div>
       )}
-      <div className="h-0 relative bottom-52">
+      <div
+        className={clsx(
+          "h-0 relative",
+          !schedules.length ? "bottom-[50px]" : "bottom-52"
+        )}
+      >
         <Swiper
           spaceBetween={10}
           slidesPerView={1.2}

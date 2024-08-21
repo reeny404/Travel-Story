@@ -161,7 +161,7 @@ function BottomSheet({
     >
       <form
         ref={formRef}
-        className={`absolute bottom-0 left-0 w-full min-h-[34rem] h-auto py-7 px-5 flex flex-col gap-6 rounded-t-3xl shadow-bottom-sheet bg-white transform ${
+        className={`absolute bottom-0 left-0 w-full min-h-1/2 h-auto py-7 px-5 flex flex-col gap-6 rounded-t-3xl shadow-bottom-sheet bg-white transform ${
           isClosing
             ? "translate-y-full"
             : isOpening
