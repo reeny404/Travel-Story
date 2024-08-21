@@ -1,4 +1,3 @@
-"use client";
 import SvgIcon from "@/components/commons/SvgIcon";
 import { useAuth } from "@/contexts/auth.contexts";
 import { useRecentStore } from "@/stores/recent.store";

@@ -10,9 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useGetData from "../_hook/useGetData";
+import MySchedule from "../my/_components/MySchedule";
 import Footer from "./Footer";
 import LeftCardSection from "./LeftCardSection";
-import MyTrip from "./MyTrip";
 import RightCardSection from "./RightCardSection";
 
 function Home() {
@@ -89,7 +89,7 @@ function Home() {
           </div>
         </div>
 
-        <MyTrip />
+        <MySchedule />
 
         <div className="mt-7">
           <CardType title="인기 여행지" type="fire" />
