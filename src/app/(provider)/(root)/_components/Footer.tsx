@@ -3,7 +3,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="w-full h-[297px] bg-gray-100 text-center text-sm pt-[64.5px] pb-[95.5px] px-[39px]">
-      <div className="text-gray-500 text-sm ">
+      <div className="text-gray-500 text-sm">
         <div className="p-1">
           <Link href="#" className="hover:underline">
             PC 버전

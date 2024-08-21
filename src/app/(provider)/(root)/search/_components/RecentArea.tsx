@@ -67,18 +67,17 @@ function RecentArea({ className, isInitial }: RecentAreaProps) {
 
   return (
     <div className="w-full text-primary font-semibold z-10">
-      <p className="px-4 py-[10px]">최근 본 장소</p>
+      <p className="px-4 py-[10px] md:text-xl md:mb-[6px]">최근 본 장소</p>
       <Swiper spaceBetween={12} slidesPerView="auto" grabCursor={true}>
         {recentList ? (
           recentList.map((item, index) => {
             return (
               <SwiperSlide
                 key={index}
-                className={`${index === 0 ? "ml-4" : ""}`}
-                style={{ width: "124px" }}
+                className={`${index === 0 ? "ml-4" : ""} w-[124px] md:w-[190px]`}
               >
                 <div
-                  className="relative w-[124px] h-[184px] cursor-pointer"
+                  className="relative w-[124px] h-[184px] cursor-pointer md:w-[190px] md:h-[300px]"
                   onClick={() => handleClickCard(index)}
                 >
                   <Image
@@ -87,7 +86,7 @@ function RecentArea({ className, isInitial }: RecentAreaProps) {
                     fill
                     className="object-cover rounded-lg"
                   />
-                  <p className="absolute w-full px-4 bottom-4 text-white font-semibold overflow-hidden text-ellipsis">
+                  <p className="absolute w-full px-4 bottom-4 text-white font-semibold overflow-hidden text-ellipsis md:text-xl">
                     {item.krName}
                   </p>
                 </div>
