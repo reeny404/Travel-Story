@@ -35,7 +35,7 @@ export const HOMECARD_CATEGORY: Record<string, HomeCardCategoryType> = {
     title: "Hotel",
     subTitle: "관광지 근처의 숙소를 구경해보세요.",
     textTheme: "md:text-info-500",
-    cardBackgroundColor: "text-info-500",
+    cardBackgroundColor: "bg-info-500",
     moreDesc: "더 많은 숙소 보러가기",
     moreDescTextColor: "text-info-700",
     moreDescIconColor: "info-700",
@@ -55,7 +55,7 @@ export const HOMECARD_CATEGORY: Record<string, HomeCardCategoryType> = {
     textTheme: "md:text-[#A25FFF]",
     cardBackgroundColor: "bg-purple-400",
     moreDesc: "더 많은 쇼핑센터 보러가기",
-    moreDescTextColor: "text-purple-600",
+    moreDescTextColor: "md:text-purple-600",
     moreDescIconColor: "purple-600",
   },
 };

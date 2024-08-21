@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useWindowSize } from "../_hook/useWindowSize";
 
-const TITLE_PADDING = 258;
+const TITLE_PADDING = 189;
 
 type RightCardSectionProps = {
   textColor?: "primary" | "white";
@@ -31,7 +31,6 @@ function RightCardSection({
   const {
     title,
     subTitle,
-    textTheme,
     cardBackgroundColor,
     moreDesc,
     moreDescTextColor,
@@ -44,28 +43,40 @@ function RightCardSection({
   });
 
   const titleColorClass = clsx({
-    "text-lime-700": krCategory === "관광지",
-    "text-danger-400": krCategory === "식당",
+    "md:text-lime-700": krCategory === "관광지",
+    "md:text-danger-400": krCategory === "식당",
+  });
+
+  const moreDescTextColorClass = clsx({
+    [moreDescTextColor]: width >= 768,
+    [`text-${textColor}`]: width < 768,
+  });
+
+  const moreDescBackgroundColorClass = clsx({
+    "md:bg-primary": textColor === "primary" && width >= 768,
+    "md:bg-white": textColor === "white" && width >= 768,
   });
 
   const hoverClass = clsx({
-    "hover:bg-primary hover:text-white": textColor === "white",
-    "hover:bg-white hover:text-primary": textColor !== "white",
+    "md:hover:bg-primary md:hover:text-white":
+      textColor === "white" && width >= 768,
+    "md:hover:bg-white md:hover:text-primary":
+      textColor !== "white" && width >= 768,
   });
 
   return (
-    <section className="relative w-full md:overflow-x-hidden">
+    <section className="relative w-full">
       <article
         className={clsx(
-          "w-[calc(100%-16px)] h-[704px] my-12 pt-[26px] rounded-tl-[20px] rounded-bl-[20px] md:max-w-[1723px] md:w-full md:h-[1016px] md:pt-[92px] md:pb-[66px]",
+          "relative w-[calc(100%-16px)] h-[704px] my-12 ml-4 pt-[26px] pb-4 rounded-tl-[20px] rounded-bl-[20px] md:max-w-[1643px] md:w-full md:h-[1016px] md:pt-[92px] md:pb-[66px]",
           backgroundColorClass
         )}
       >
         <div className="md:relative md:w-full md:h-[154px] md:mb-[104px]">
           <h2
             className={clsx(
-              `${dmSerifDisplayFont.className} relative w-full z-10 text-[44px] text-center md:absolute md:text-[128px] md:text-left ${textTheme}`,
-              titleColorClass // 제목 색상 클래스 적용
+              `${dmSerifDisplayFont.className} relative w-full z-10 text-[44px] text-center md:absolute md:text-[128px] md:text-left`,
+              titleColorClass
             )}
             style={{
               left: width >= 768 ? `-${TITLE_PADDING}px` : undefined,
@@ -76,7 +87,8 @@ function RightCardSection({
               <span
                 className="absolute left-0 top-0 w-full h-full"
                 style={{
-                  WebkitTextFillColor: textColor,
+                  WebkitTextFillColor:
+                    textColor === "primary" ? "#2A2A2A" : "white",
                   clipPath: `polygon(${TITLE_PADDING}px 0, 100% 0, 100% 100%, ${TITLE_PADDING}px 100%)`,
                 }}
               >
@@ -84,20 +96,19 @@ function RightCardSection({
               </span>
             )}
           </h2>
-          <h3
-            className={clsx(
-              "mb-[64px] font-medium text-center md:absolute md:left-[500px] md:top-[77%] md:text-xl md:text-left",
-              {
-                "text-primary": krCategory === "관광지",
-                "text-white": krCategory === "식당",
-              }
-            )}
-          >
-            {subTitle}
-          </h3>
-          <hr
-            className={`absolute max-w-[931px] w-full left-[735px] top-[85%] border-${textColor}`}
-          />
+          <div className="flex items-center justify-center w-full mb-[64px] md:pt-[115px]">
+            <h3
+              className={clsx("font-medium whitespace-nowrap md:text-xl", {
+                "text-primary md:pl-[530px]": krCategory === "관광지",
+                "text-white md:pl-[490px]": krCategory === "식당",
+              })}
+            >
+              {subTitle}
+            </h3>
+            {width > 0 && width >= 768 ? (
+              <hr className={`ml-4 flex-grow border-${textColor}`} />
+            ) : null}
+          </div>
         </div>
 
         <CardSlider
@@ -108,25 +119,33 @@ function RightCardSection({
 
         <div className="flex justify-end items-center md:mt-[116px] md:mx-8 md:my-2">
           <Link href="/recommend/country/1/detail">
-            <div
+            <button
               className={clsx(
-                "group flex justify-center items-center max-w-[284px] w-full h-12 px-4 py-2 text-sm rounded-full transition duration-300 md:text-xl md:px-6 md:py-2",
-                `bg-${textColor} ${moreDescTextColor}`,
+                "group flex justify-center items-center mt-[66px] px-4 text-xs md:max-w-[284px] md:w-full md:h-12 md:rounded-full md:transition md:duration-300 md:text-xl md:mt-0 md:px-4 md:py-2",
+                moreDescTextColorClass,
+                moreDescBackgroundColorClass,
                 hoverClass
               )}
+              type="button"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
               {moreDesc}
               <SvgIcon
                 name="angle-right"
-                width={width > 0 && width < 768 ? 16 : 20}
-                height={width > 0 && width < 768 ? 16 : 20}
+                width={width > 0 && width < 768 ? 16 : 24}
+                height={width > 0 && width < 768 ? 16 : 24}
                 title="arrow"
-                className="transition-colors duration-300 md:ml-2"
-                color={isHovered ? `${textColor}` : moreDescIconColor}
+                className="md:transition-colors md:duration-300"
+                color={
+                  width >= 768
+                    ? isHovered
+                      ? textColor
+                      : moreDescIconColor
+                    : textColor
+                }
               />
-            </div>
+            </button>
           </Link>
         </div>
       </article>

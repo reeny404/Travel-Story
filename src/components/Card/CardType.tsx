@@ -1,3 +1,4 @@
+import { useWindowSize } from "@/app/(provider)/(root)/_hook/useWindowSize";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,6 +12,7 @@ type CardTypeProps = {
 // 타입은 이미지의 파일명과 동일해야 합니다.
 
 function CardType({ type, title, linkUrl }: CardTypeProps) {
+  const { width } = useWindowSize();
   return (
     <div
       className={`h-full py-[10px] px-4 md:px-8 mb-2 flex items-center justify-between`}
@@ -21,13 +23,12 @@ function CardType({ type, title, linkUrl }: CardTypeProps) {
             <Image
               src={`/icons/emoji-${type}.svg`}
               alt="type"
-              width={16}
-              height={16}
-              className="w-4 h-4"
+              width={width >= 768 ? 24 : 16}
+              height={width >= 768 ? 24 : 16}
             />
           </div>
         )}
-        <div className="font-medium items-center">{title}</div>
+        <div className="font-medium items-center md:text-xl">{title}</div>
       </div>
       {linkUrl && (
         <Link href={linkUrl} className="h-full flex items-center ">

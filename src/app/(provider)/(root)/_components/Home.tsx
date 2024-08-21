@@ -10,7 +10,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useGetData from "../_hook/useGetData";
 import { useWindowSize } from "../_hook/useWindowSize";
-import Footer from "./Footer";
 import HomeBanner from "./HomeBanner";
 import LeftCardSection from "./LeftCardSection";
 import MyTrip from "./MyTrip";
@@ -21,17 +20,6 @@ function Home() {
   const router = useRouter();
   const cardData = useGetData();
   const { width } = useWindowSize();
-
-  // 중간발표 이후 추가기능 부분
-  // const {
-  //   data: popularCountries,
-  //   isPending,
-  //   error,
-  // } = useQuery<RecommendResponse<Country[]>, AxiosError>({
-  //   queryKey: ["popularCountries"],
-  //   queryFn: () => api.country.getCountries(),
-  //   staleTime: 1000 * 60 * 3,
-  // });
 
   const handleAvatarClick = () => {
     if (user) {
@@ -97,22 +85,9 @@ function Home() {
           krCategory="관광지"
           cardData={cardData.place}
         />
-        <LeftCardSection
-          title="Hotel"
-          subTitle="관광지 근처의 숙소를 구경해보세요!"
-          theme="bg-info-500"
-          krCategory="숙소"
-          cardData={cardData.accommodation}
-        />
+        <LeftCardSection krCategory="숙소" cardData={cardData.accommodation} />
         <RightCardSection krCategory="식당" cardData={cardData.restaurant} />
-        <LeftCardSection
-          title="Shopping"
-          subTitle="여행지의 추억을 불러일으키는 기념품"
-          theme="bg-purple-400"
-          krCategory="쇼핑"
-          cardData={cardData.shop}
-        />
-        <Footer />
+        <LeftCardSection krCategory="쇼핑" cardData={cardData.shop} />
       </main>
     </MainLayout>
   );

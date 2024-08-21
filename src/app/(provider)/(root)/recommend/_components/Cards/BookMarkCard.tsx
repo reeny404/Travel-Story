@@ -1,8 +1,12 @@
+"use client";
+
 import { useAuth } from "@/contexts/auth.contexts";
 import { useBookmarks } from "@/hooks/useBookmark";
 import { useModalStore } from "@/stores/modal.store";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { useWindowSize } from "../../../_hook/useWindowSize";
 
 export type BookMarkCardProps = {
   title: string;
@@ -13,6 +17,7 @@ export type BookMarkCardProps = {
   city: string;
   country: string;
   areaName: string;
+  isMain?: boolean;
 };
 
 function BookMarkCard({
@@ -24,9 +29,11 @@ function BookMarkCard({
   city,
   country,
   areaName,
+  isMain,
 }: BookMarkCardProps) {
   const { isBookmarked, addBookmark, deleteBookmark } = useBookmarks();
   const { openModal } = useModalStore();
+  const { width } = useWindowSize();
   const { isLoggedIn } = useAuth();
   const toggleBookmark = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -41,7 +48,14 @@ function BookMarkCard({
 
   return (
     <div className="relative" style={{ width: "calc(100% - 55.24px)" }}>
-      <div className="relative w-full h-[200px] bg-white rounded-lg shadow-bookmark-card overflow-hidden">
+      <div
+        className="relative w-full h-[200px] bg-white rounded-lg shadow-bookmark-card overflow-hidden"
+        style={
+          isMain && width >= 768
+            ? { width: "380px", height: "380px" }
+            : undefined
+        }
+      >
         <Link href={linkUrl}>
           <div className="w-full h-full relative">
             <Image
@@ -53,8 +67,20 @@ function BookMarkCard({
             />
           </div>
           <div className="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
-            <p className="text-white text-lg font-semibold">{areaName}</p>
-            <p className="text-white text-sm mt-1 line-clamp-2 overflow-hidden text-ellipsis">
+            <p
+              className={clsx(
+                "text-white font-semibold",
+                isMain && width >= 768 ? "text-2xl" : "text-lg"
+              )}
+            >
+              {areaName}
+            </p>
+            <p
+              className={clsx(
+                "text-white mt-1 line-clamp-2 overflow-hidden text-ellipsis",
+                isMain && width >= 768 ? "text-xl" : "text-sm"
+              )}
+            >
               {description}
             </p>
           </div>
