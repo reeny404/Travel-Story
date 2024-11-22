@@ -1,6 +1,5 @@
-#### [👊 프로젝트 노션 바로가기](https://www.notion.so/teamsparta/1-B1-cf05aab3c68a4955a33a2c82d764ff06)
-
-#### [👊 웹페이지 바로가기](https://final-project-b1.vercel.app/)
+##### [👊 프로젝트 노션 바로가기](https://www.notion.so/teamsparta/1-B1-cf05aab3c68a4955a33a2c82d764ff06)
+##### [👊 웹페이지 바로가기](https://final-project-b1.vercel.app/)
 
 <br>
 
@@ -52,7 +51,7 @@
  <br>
 
 #### 📊 Google Maps API를 활용한 실시간 지도 제공 기능
-
+  
  - 사용자의 여행 일정에 따라 지도에 해당 장소를 표시합니다.
  - 장소간의 경로를 선으로 이어 대략적인 경로를 표시하여 줍니다.
 
@@ -90,13 +89,21 @@
 
  <br>
 
+## 🖥️ screen shot
+|||||
+|---|---|---|---|
+| ![2024-10-04 11 52 28](https://github.com/user-attachments/assets/41c2c974-9c4b-4934-9634-e1801a3d060f) | ![2024-10-04 12 34 49](https://github.com/user-attachments/assets/9618401c-118f-40d2-981a-e22b174b9cb6) | ![2024-10-04 11 57 02](https://github.com/user-attachments/assets/7958f4de-1a95-4f3c-add5-c2d5643b4296) | ![2024-10-04 12 01 40](https://github.com/user-attachments/assets/7f1e7efc-b095-4c48-8bb5-d4de66f43b13) |
+| ![2024-10-04 12 26 55](https://github.com/user-attachments/assets/37947aaf-478d-45e2-a4f3-2b7c386584ba) | ![2024-10-04 12 23 33](https://github.com/user-attachments/assets/d44dd497-5977-4c45-8d0a-8d212119b40c) | ![2024-10-04 12 31 30](https://github.com/user-attachments/assets/9c95d411-9192-4730-aa51-3db6525cf8b9) | ![2024-10-04 12 33 08](https://github.com/user-attachments/assets/69cbecb6-1de4-481c-860e-b0201dc05d68)  |
+
+ 
+<br><br>
+
 ## ⚙ Development Environment
 
 `react: ^18.2.0` `react-google-maps/api: ^2.19.3,` `supabase/supabase-js: ^2.44.4` `webstomp-client: ^1.2.6` `axios: ^1.1.3``tanstack/react-query: ^5.51.9` `axios: ^1.7.2` `cookies-next: ^4.2.1` `clsx: ^0.29.0` `tailwindcss: ^3.4.1``class-variance-authority: ^0.7.0` `immer: ^10.1.1` `lodash: ^4.17.21` `zustand: ^4.5.4` `storybook/nextjs: ^8.2.5`
 
 <br><br>
 
-<br>
 
 ## 📝 Technologies & Tools (FE) 📝
 
@@ -127,8 +134,3 @@
 | [@reeny404](https://github.com/reeny404) | [@0dytpq0](https://github.com/0dytpq0) | [@hyeonseok98](https://github.com/hyeonseok98) | [@parkchowon](https://github.com/parkchowon) | [@LeeJunhyeok369](https://github.com/LeeJunhyeok369) |        |
 |                 TL / FE                  |                   FE                   |                       FE                       |                      FE                      |                        FE                         |   DS   |
 
-<br>
-<br>
-<br>
-
-◻ Copyright ©2024 Sparta-React 5th Final : B team 1 all rights reserved.
